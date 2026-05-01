@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     AuthService authService;
 
@@ -28,14 +32,17 @@ public class AuthController {
 
     @GetMapping("/ping")
     public ResponseEntity<String> ping() {
-        System.out.println("Backend Ping received!");
+        logger.info("Backend Ping received!");
         return ResponseEntity.ok("Pong");
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        logger.info("Attempting login for user: {}", loginRequest.getEmail());
+        
         // 1. Check if user exists first
         if (userRepository.findByEmail(loginRequest.getEmail()).isEmpty()) {
+            logger.warn("Login failed: Email {} not found", loginRequest.getEmail());
             return ResponseEntity
                     .badRequest()
                     .body("Error: Email not found. Please register first!");
@@ -43,6 +50,7 @@ public class AuthController {
 
         try {
             String jwt = authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
+            logger.info("User {} authenticated successfully", loginRequest.getEmail());
 
             User user = userRepository.findByEmail(loginRequest.getEmail()).get();
             List<String> roles = user.getRoles().stream().collect(Collectors.toList());
@@ -54,7 +62,7 @@ public class AuthController {
                     user.getEmail(),
                     roles));
         } catch (Exception e) {
-            System.err.println("Login error for " + loginRequest.getEmail() + ": " + e.getMessage());
+            logger.error("Authentication failed for user {}: {}", loginRequest.getEmail(), e.getMessage());
             e.printStackTrace();
             return ResponseEntity
                     .badRequest()
