@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api/*"
-  to = "https://indiglobalexpo.onrender.com/api/:splat"
+  to = "https://api.indiglobalexpo.com/api/:splat"
   status = 200
   force = true
 
