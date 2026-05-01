@@ -70,7 +70,8 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
+                        auth.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/sectors/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/test/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/health")).permitAll()

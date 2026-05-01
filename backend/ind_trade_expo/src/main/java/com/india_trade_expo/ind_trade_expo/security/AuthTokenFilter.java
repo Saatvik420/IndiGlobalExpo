@@ -28,7 +28,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        boolean shouldSkip = path.startsWith("/api/auth/") || path.startsWith("/api/sectors") || path.startsWith("/api/test/") || path.equals("/error");
+        boolean shouldSkip = path.equals("/") || path.startsWith("/api/auth/") || path.startsWith("/api/sectors") || path.startsWith("/api/test/") || path.equals("/error");
         if (shouldSkip) {
             System.out.println("AuthTokenFilter: Skipping authentication for public path: " + path);
         }
