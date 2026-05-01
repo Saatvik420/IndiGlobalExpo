@@ -6,9 +6,6 @@ const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const apiClient = axios.create({
   baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // Request Interceptor: Attach JWT Token to every request
@@ -16,14 +13,14 @@ apiClient.interceptors.request.use(
   (config) => {
     const userData = localStorage.getItem('user');
     if (userData) {
-      const user = JSON.parse(userData);
-      if (user && user.token) {
-        config.headers.set('Authorization', `Bearer ${user.token}`);
-      } else {
-        console.warn(`Request to ${config.url} missing token. User found: ${!!user}`);
+      try {
+        const user = JSON.parse(userData);
+        if (user && user.token && user.token !== 'null' && user.token !== 'undefined') {
+          config.headers['Authorization'] = `Bearer ${user.token}`;
+        }
+      } catch (e) {
+        console.error("Error parsing user data from localStorage", e);
       }
-    } else {
-      console.warn(`Request to ${config.url} missing user in localStorage`);
     }
     return config;
   },
