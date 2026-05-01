@@ -65,7 +65,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults())
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -94,12 +94,10 @@ public class WebSecurityConfig {
     private String allowedOrigins;
 
     @Bean
-    public org.springframework.web.filter.CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         
-        // If allowedOrigins is not set or is still the placeholder, allow all patterns
         if (allowedOrigins != null && !allowedOrigins.isEmpty() && !allowedOrigins.contains("${")) {
             List<String> originsList = Arrays.stream(allowedOrigins.split(","))
                     .map(String::trim)
@@ -110,19 +108,12 @@ public class WebSecurityConfig {
             config.setAllowedOriginPatterns(List.of("*"));
         }
         
-        config.setAllowedHeaders(Arrays.asList(
-            "Origin", 
-            "Content-Type", 
-            "Accept", 
-            "Authorization", 
-            "X-Requested-With", 
-            "Access-Control-Request-Method", 
-            "Access-Control-Request-Headers"
-        ));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedMethods(List.of("*"));
         
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-        return new org.springframework.web.filter.CorsFilter(source);
+        return source;
     }
 
 }
