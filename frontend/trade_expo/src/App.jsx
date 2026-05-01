@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { GlobalProvider } from './context/GlobalContext';
 import Home from './pages/Home';
@@ -14,9 +15,23 @@ import Legal from './pages/corporate/Legal';
 import Press from './pages/corporate/Press';
 import Privacy from './pages/corporate/Privacy';
 import Teams from './pages/corporate/Teams';
+import apiClient from './api/client';
 
 // Main Application Component - Triggering Netlify Build with new Env Variables
 function App() {
+  useEffect(() => {
+    // Ping the backend to wake it up (Render Free Tier cold start mitigation)
+    const wakeUpServer = async () => {
+      try {
+        await apiClient.get('/auth/health');
+        console.log("Backend is awake and healthy.");
+      } catch (error) {
+        console.error("Backend wake-up ping failed:", error.message);
+      }
+    };
+    wakeUpServer();
+  }, []);
+
   return (
     <GlobalProvider>
       <Routes>
