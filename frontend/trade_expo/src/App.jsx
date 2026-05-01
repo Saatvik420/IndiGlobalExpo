@@ -15,6 +15,7 @@ import Press from './pages/corporate/Press';
 import Privacy from './pages/corporate/Privacy';
 import Teams from './pages/corporate/Teams';
 
+// Main Application Component - Triggering Netlify Build with new Env Variables
 function App() {
   return (
     <GlobalProvider>
