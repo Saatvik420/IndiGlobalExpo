@@ -73,11 +73,12 @@ public class WebSecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
-                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/sectors/**")).permitAll()
-                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/test/**")).permitAll()
-                                .requestMatchers(AntPathRequestMatcher.antMatcher("/error")).permitAll()
-                                .requestMatchers(AntPathRequestMatcher.antMatcher(org.springframework.http.HttpMethod.OPTIONS, "/**")).permitAll()
+                        auth.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/sectors/**").permitAll()
+                                .requestMatchers("/api/test/**").permitAll()
+                                .requestMatchers("/api/health").permitAll()
+                                .requestMatchers("/error").permitAll()
+                                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

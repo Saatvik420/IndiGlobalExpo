@@ -36,6 +36,12 @@ public class AuthController {
         return ResponseEntity.ok("Pong");
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        logger.info("Health check requested");
+        return ResponseEntity.ok("Healthy");
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         logger.info("Attempting login for user: {}", loginRequest.getEmail());
