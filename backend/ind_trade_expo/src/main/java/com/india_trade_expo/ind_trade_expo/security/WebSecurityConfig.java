@@ -69,18 +69,13 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .headers(headers -> headers
-                        .crossOriginOpenerPolicy(coop -> coop
-                                .policy(org.springframework.security.web.header.writers.CrossOriginOpenerPolicyHeaderWriter.CrossOriginOpenerPolicy.SAME_ORIGIN_ALLOW_POPUPS)
-                        )
-                )
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(AntPathRequestMatcher.antMatcher(org.springframework.http.HttpMethod.OPTIONS, "/**")).permitAll()
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/sectors/**").permitAll()
-                                .requestMatchers("/api/test/**").permitAll()
-                                .requestMatchers("/api/health").permitAll()
-                                .requestMatchers("/error").permitAll()
+                        auth.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/sectors/**")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/test/**")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/health")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/error")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher(org.springframework.http.HttpMethod.OPTIONS, "/**")).permitAll()
                                 .anyRequest().authenticated()
                 );
 
@@ -90,26 +85,14 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    @Value("${ind_trade_expo.allowedOrigins:http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174}")
-    private String allowedOrigins;
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        
-        if (allowedOrigins != null && !allowedOrigins.isEmpty() && !allowedOrigins.contains("${")) {
-            List<String> originsList = Arrays.stream(allowedOrigins.split(","))
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .collect(Collectors.toList());
-            config.setAllowedOriginPatterns(originsList);
-        } else {
-            config.setAllowedOriginPatterns(List.of("*"));
-        }
-        
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowedMethods(List.of("*"));
+        // Disabling allowCredentials makes it much easier for browsers to accept '*' origins
+        config.setAllowCredentials(false); 
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
