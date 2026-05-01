@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,6 +23,18 @@ import java.util.Set;
 public class IndTradeExpoApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(IndTradeExpoApplication.class);
+
+	static {
+		try {
+			Dotenv dotenv = Dotenv.configure()
+					.ignoreIfMissing()
+					.load();
+			dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+			logger.info(".env variables loaded successfully");
+		} catch (Exception e) {
+			logger.warn("Could not load .env file: " + e.getMessage());
+		}
+	}
 
 	@Value("${spring.data.mongodb.uri}")
 	private String mongoUri;
