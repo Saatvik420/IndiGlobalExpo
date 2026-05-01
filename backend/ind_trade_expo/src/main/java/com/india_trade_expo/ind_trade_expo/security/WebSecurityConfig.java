@@ -18,6 +18,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,7 +65,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        http.cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -73,12 +75,12 @@ public class WebSecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll()
+                        auth.requestMatchers(AntPathRequestMatcher.antMatcher(org.springframework.http.HttpMethod.OPTIONS, "/**")).permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/sectors/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers("/api/health").permitAll()
                                 .requestMatchers("/error").permitAll()
-                                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
@@ -92,20 +94,35 @@ public class WebSecurityConfig {
     private String allowedOrigins;
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public org.springframework.web.filter.CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         
-        if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
-            String[] origins = allowedOrigins.split(",");
-            config.setAllowedOriginPatterns(Arrays.asList(origins));
+        // If allowedOrigins is not set or is still the placeholder, allow all patterns
+        if (allowedOrigins != null && !allowedOrigins.isEmpty() && !allowedOrigins.contains("${")) {
+            List<String> originsList = Arrays.stream(allowedOrigins.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .collect(Collectors.toList());
+            config.setAllowedOriginPatterns(originsList);
+        } else {
+            config.setAllowedOriginPatterns(List.of("*"));
         }
         
-        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        config.setAllowedHeaders(Arrays.asList(
+            "Origin", 
+            "Content-Type", 
+            "Accept", 
+            "Authorization", 
+            "X-Requested-With", 
+            "Access-Control-Request-Method", 
+            "Access-Control-Request-Headers"
+        ));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"));
+        
         source.registerCorsConfiguration("/**", config);
-        return source;
+        return new org.springframework.web.filter.CorsFilter(source);
     }
 
 }

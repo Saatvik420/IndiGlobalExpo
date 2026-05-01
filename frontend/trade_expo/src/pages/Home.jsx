@@ -37,7 +37,7 @@ const Home = () => {
 
     const timerInterval = setInterval(() => {
       const now = new Date().getTime();
-      const difference = targetDate - now;
+  const difference = targetDate - now;
 
       if (difference <= 0) {
         clearInterval(timerInterval);
