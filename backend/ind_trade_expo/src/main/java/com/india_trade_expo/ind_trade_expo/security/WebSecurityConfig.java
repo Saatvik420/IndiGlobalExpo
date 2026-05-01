@@ -20,6 +20,7 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.Customizer;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -86,12 +87,19 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+    @Value("${ind_trade_expo.allowedOrigins:http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174}")
+    private String allowedOrigins;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        // Using allowedOriginPatterns to be more flexible while allowing credentials
-        config.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174", "http://127.0.0.1:5174"));
+        
+        if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
+            String[] origins = allowedOrigins.split(",");
+            config.setAllowedOriginPatterns(Arrays.asList(origins));
+        }
+        
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
