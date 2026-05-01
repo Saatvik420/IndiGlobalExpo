@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo } from '@phosphor-icons/react';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -10,11 +9,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white py-24 border-t border-gray-200">
+    <footer className="bg-white py-24 border-t border-gray-200 relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
           <div className="md:col-span-1">
-            <h2 className="font-serif text-2xl font-bold tracking-widest uppercase mb-6 text-gray-900">
+            <h2 className="font-serif text-2xl font-bold tracking-widest uppercase mb-6 text-brand-dark">
               IndiGlobal<span className="font-sans font-light text-gray-500 text-xl ml-1">Expo</span>
             </h2>
             <p className="text-gray-500 text-sm font-light mb-8 max-w-xs">
@@ -76,7 +75,7 @@ const Footer = () => {
               <li className="pt-4">
                 <a 
                   href="mailto:info@brandvistaconsulting.com" 
-                  className="font-medium text-brand-dark hover:text-brand-accent transition-colors interactive cursor-pointer"
+                  className="font-medium text-brand-dark hover:text-brand-accent transition-colors interactive"
                 >
                   info@brandvistaconsulting.com
                 </a>
@@ -127,31 +126,31 @@ const Footer = () => {
           <div className="flex items-center gap-6">
             <a 
               href="#" 
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive cursor-pointer" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
               aria-label="Facebook"
             >
-              <FacebookLogo size={24} weight="fill" className="hover:scale-110 transition-transform" />
+              <i className="ph-fill ph-facebook-logo text-xl hover:scale-110 transition-transform"></i>
             </a>
             <a 
               href="#" 
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive cursor-pointer" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
               aria-label="Instagram"
             >
-              <InstagramLogo size={24} weight="fill" className="hover:scale-110 transition-transform" />
+              <i className="ph-fill ph-instagram-logo text-xl hover:scale-110 transition-transform"></i>
             </a>
             <a 
               href="#" 
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive cursor-pointer" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
               aria-label="LinkedIn"
             >
-              <LinkedinLogo size={24} weight="fill" className="hover:scale-110 transition-transform" />
+              <i className="ph-fill ph-linkedin-logo text-xl hover:scale-110 transition-transform"></i>
             </a>
             <a 
               href="#" 
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive cursor-pointer" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
               aria-label="Twitter"
             >
-              <TwitterLogo size={24} weight="fill" className="hover:scale-110 transition-transform" />
+              <i className="ph-fill ph-twitter-logo text-xl hover:scale-110 transition-transform"></i>
             </a>
           </div>
         </div>
@@ -161,3 +160,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

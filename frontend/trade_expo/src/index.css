@@ -9,31 +9,80 @@
 }
 
 /* Custom Reset & Base */
-html { scroll-behavior: smooth; }
-body { @apply font-sans text-brand-dark bg-white antialiased overflow-x-hidden; }
+@layer base {
+  html {
+    font-size: 15px; /* Slightly reduced base font size */
+  }
 
-/* Hide default cursor for custom cursor effect */
-@media (pointer: fine) {
-  body { cursor: none; }
-  a, button, input, textarea, select, .interactive { cursor: none; }
+  body {
+    @apply font-sans text-brand-dark bg-white antialiased overflow-x-hidden transition-colors duration-500;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+  
+  @media (pointer: fine) {
+    body, a, button, input, .interactive {
+      cursor: none !important;
+    }
+  }
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cfa670; border-radius: 4px; }
+/* Animations from abc roughage */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
-/* --- Animations --- */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
 
-/* Fade Up Initial */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes fadeUpAnim {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUpLogo {
+  to { transform: translateY(0); }
+}
+
+@keyframes progressLine {
+  to { transform: translateX(0); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out 3s infinite;
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
 .animate-fade-up {
   opacity: 0;
   transform: translateY(40px);
   animation: fadeUpAnim 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@keyframes fadeUpAnim {
-  to { opacity: 1; transform: translateY(0); }
-}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
 
 /* Scroll Reveal */
 .reveal-up {
@@ -41,107 +90,48 @@ body { @apply font-sans text-brand-dark bg-white antialiased overflow-x-hidden; 
   transform: translateY(60px);
   transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .reveal-up.active {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Floating Animation */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-.animate-float-delayed {
-  animation: float 6s ease-in-out 3s infinite;
+/* Page Loader Specifics */
+.loader-logo {
+  transform: translateY(100%);
 }
 
-/* Spinning Animation */
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.animate-spin-slow {
-  animation: spin-slow 12s linear infinite;
+.loader-line {
+  transform: translateX(-100%);
 }
 
-/* Marquee Animation */
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-.animate-marquee {
-  animation: marquee 25s linear infinite;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* --- Layout Components --- */
-
-/* Horizontal Scroll */
-.horizontal-section-wrapper { 
-  height: 400vh; 
-  position: relative; 
+::-webkit-scrollbar-track {
+  background: transparent;
 }
+
+::-webkit-scrollbar-thumb {
+  background: #cfa670;
+  border-radius: 4px;
+}
+
+/* Hero Overlays */
+.hero-overlay-home {
+  background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 100%);
+}
+
+/* Horizontal Scroll Specifics */
+.horizontal-section-wrapper { height: 400vh; position: relative; }
 .horizontal-sticky-container {
-  position: sticky; 
-  top: 0; 
-  height: 100vh;
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center;
-  overflow: hidden;
+    position: sticky; top: 0; height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
 }
 .horizontal-track {
-  display: flex; 
-  gap: 2rem; 
-  padding: 0 5vw;
-  will-change: transform;
-}
-
-/* Fullscreen Menu */
-.fullscreen-menu-clip {
-  clip-path: circle(0px at top right);
-  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-}
-.fullscreen-menu-clip.menu-open {
-  clip-path: circle(150% at top right);
-}
-
-/* Form Styles */
-.form-input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #e5e5e5;
-  padding: 1rem 0;
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  color: #1a1a1a;
-  @apply transition-colors duration-300;
-}
-.form-input:focus {
-  outline: none;
-  border-color: #cfa670;
-}
-
-/* Utility */
-.video-card video { pointer-events: none; }
-.legal-section { scroll-margin-top: 8rem; }
-body { transition: background-color 0.5s ease, color 0.5s ease; }
-
-/* Loader Specifics */
-@keyframes slideUpLogo {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-@keyframes progressLine {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-.loader-logo {
-  animation: slideUpLogo 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
-}
-.loader-line {
-  animation: progressLine 2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    display: flex; gap: 2rem; padding: 0 5vw;
+    will-change: transform;
 }

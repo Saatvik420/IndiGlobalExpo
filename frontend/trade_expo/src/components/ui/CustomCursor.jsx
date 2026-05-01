@@ -3,20 +3,22 @@ import { useEffect, useState } from 'react';
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [hovering, setHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
+      if (!isVisible) setIsVisible(true);
     };
 
     const handleMouseOver = (e) => {
-      if (e.target.closest('.interactive, a, button, input, textarea, select')) {
+      if (e.target.closest('a, button, input, .interactive')) {
         setHovering(true);
       }
     };
 
     const handleMouseOut = (e) => {
-      if (e.target.closest('.interactive, a, button, input, textarea, select')) {
+      if (e.target.closest('a, button, input, .interactive')) {
         setHovering(false);
       }
     };
@@ -32,43 +34,28 @@ const CustomCursor = () => {
       document.body.removeEventListener('mouseover', handleMouseOver);
       document.body.removeEventListener('mouseout', handleMouseOut);
     };
-  }, []);
+  }, [isVisible]);
 
-  if (!window.matchMedia('(pointer: fine)').matches) return null;
+  if (!window.matchMedia('(pointer: fine)').matches || !isVisible) return null;
 
   return (
     <>
       <div 
-        className="cursor-dot hidden md:block fixed"
+        className={`cursor-dot hidden md:block fixed pointer-events-none rounded-full z-[999999] bg-brand-accent transition-opacity duration-300 ${hovering ? 'opacity-0' : 'opacity-100'}`}
         style={{
           top: position.y,
           left: position.x,
           width: '8px',
           height: '8px',
-          backgroundColor: '#cfa670',
-          borderRadius: '50%',
           transform: 'translate(-50%, -50%)',
-          zIndex: 999999,
-          pointerEvents: 'none',
-          opacity: hovering ? 0 : 1,
-          transition: 'opacity 0.3s'
         }}
       />
       <div 
-        className="cursor-outline hidden md:block fixed"
+        className={`cursor-outline hidden md:block fixed pointer-events-none rounded-full z-[999999] border transition-all duration-100 ${hovering ? 'w-[70px] h-[70px] bg-brand-accent/15 border-brand-accent mix-blend-exclusion' : 'w-[40px] h-[40px] border-brand-accent/50'}`}
         style={{
           top: position.y,
           left: position.x,
-          width: hovering ? '70px' : '40px',
-          height: hovering ? '70px' : '40px',
-          border: `1px solid ${hovering ? '#cfa670' : 'rgba(207, 166, 112, 0.5)'}`,
-          borderRadius: '50%',
           transform: 'translate(-50%, -50%)',
-          zIndex: 999999,
-          pointerEvents: 'none',
-          backgroundColor: hovering ? 'rgba(207, 166, 112, 0.15)' : 'transparent',
-          mixBlendMode: hovering ? 'exclusion' : 'normal',
-          transition: 'width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s'
         }}
       />
     </>
