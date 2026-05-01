@@ -65,7 +65,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        http.cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -75,7 +75,6 @@ public class WebSecurityConfig {
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/test/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/health")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/error")).permitAll()
-                                .requestMatchers(AntPathRequestMatcher.antMatcher(org.springframework.http.HttpMethod.OPTIONS, "/**")).permitAll()
                                 .anyRequest().authenticated()
                 );
 
@@ -85,18 +84,7 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        // Disabling allowCredentials makes it much easier for browsers to accept '*' origins
-        config.setAllowCredentials(false); 
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+    // CORS is now handled by SimpleCorsFilter.java
+
 
 }
