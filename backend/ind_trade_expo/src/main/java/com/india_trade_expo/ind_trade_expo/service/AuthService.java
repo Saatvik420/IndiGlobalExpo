@@ -16,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -24,6 +26,8 @@ import java.util.UUID;
 
 @Service
 public class AuthService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -42,9 +46,11 @@ public class AuthService {
     private static final String CLIENT_ID = "722892188739-0vhusmm3efogu28v3jjur1vbs6u0d8q7.apps.googleusercontent.com";
 
     public String authenticateUser(String email, String password) {
+        logger.info("Attempting authentication in AuthService for user: {}", email);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password));
 
+        logger.info("Authentication manager returned successfully for user: {}", email);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtUtils.generateJwtToken(authentication);
     }
