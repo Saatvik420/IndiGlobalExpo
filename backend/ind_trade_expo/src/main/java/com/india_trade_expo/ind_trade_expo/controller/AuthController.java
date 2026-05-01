@@ -72,7 +72,7 @@ public class AuthController {
             e.printStackTrace();
             return ResponseEntity
                     .badRequest()
-                    .body("Error: Invalid password or server error!");
+                    .body("Error: " + e.getMessage());
         }
     }
 
