@@ -44,6 +44,10 @@ const Tickets = () => {
   useEffect(() => {
     if (isLoggedIn && user) {
       setUserDetails(user);
+      // Automatically move to step 2 (Select Pass) if logged in
+      if (step === 0 || step === 'login' || step === 1) {
+        setStep(2);
+      }
     }
   }, [isLoggedIn, user]);
 
