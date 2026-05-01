@@ -19,5 +19,10 @@ export const adminService = {
   updateExhibitorStatus: async (id, status) => {
     const response = await apiClient.put(`/admin/exhibitors/${id}/status?status=${status}`);
     return response.data;
+  },
+
+  deleteUser: async (id) => {
+    const response = await apiClient.delete(`/admin/users/${id}`);
+    return response.data;
   }
 };

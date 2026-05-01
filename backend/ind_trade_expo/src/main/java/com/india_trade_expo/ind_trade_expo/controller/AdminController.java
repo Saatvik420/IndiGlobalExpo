@@ -39,4 +39,10 @@ public class AdminController {
     public ResponseEntity<Exhibitor> updateExhibitorStatus(@PathVariable String id, @RequestParam String status) {
         return ResponseEntity.ok(adminService.updateExhibitorStatus(id, status));
     }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
+        adminService.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully!");
+    }
 }

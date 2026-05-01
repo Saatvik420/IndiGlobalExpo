@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface TicketRepository extends MongoRepository<Ticket, String> {
     List<Ticket> findByUserId(String userId);
+    void deleteByUserId(String userId);
     Optional<Ticket> findByStripePaymentIntentId(String stripePaymentIntentId);
 }

@@ -48,4 +48,15 @@ public class AdminService {
         
         return exhibitorRepository.save(exhibitor);
     }
+
+    public void deleteUser(String userId) {
+        // 1. Delete associated tickets
+        ticketRepository.deleteByUserId(userId);
+        
+        // 2. Delete associated exhibitor record if exists
+        exhibitorRepository.deleteByUserId(userId);
+        
+        // 3. Delete the user
+        userRepository.deleteById(userId);
+    }
 }

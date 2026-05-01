@@ -71,6 +71,18 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteUser = async (userId, userName) => {
+    if (window.confirm(`Are you sure you want to delete user "${userName}"? This will also remove all their tickets and exhibitor data. This action CANNOT be undone.`)) {
+      try {
+        await adminService.deleteUser(userId);
+        fetchData(); // Refresh data
+      } catch (error) {
+        console.error('Failed to delete user', error);
+        alert('Error deleting user. Please try again.');
+      }
+    }
+  };
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -188,6 +200,7 @@ const AdminDashboard = () => {
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Mail</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Phone Number</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Company & Designation</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark text-right">Actions</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
@@ -232,6 +245,16 @@ const AdminDashboard = () => {
                                 <td className="py-4 text-sm">
                                   <p className="font-bold text-brand-accent uppercase tracking-wider text-[11px]">{u.company || 'N/A'}</p>
                                   <p className="text-xs text-gray-500 italic">{u.designation || 'N/A'}</p>
+                                </td>
+                                <td className="py-4 text-right">
+                                  {u.id !== user.id && (
+                                    <button 
+                                      onClick={() => handleDeleteUser(u.id, `${u.firstName} ${u.lastName}`)}
+                                      className="text-red-500 hover:text-red-700 text-[10px] font-bold uppercase tracking-widest transition-colors"
+                                    >
+                                      Delete User
+                                    </button>
+                                  )}
                                 </td>
                               </tr>
                             );

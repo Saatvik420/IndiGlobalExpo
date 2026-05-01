@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface ExhibitorRepository extends MongoRepository<Exhibitor, String> {
     Optional<Exhibitor> findByUserId(String userId);
+    void deleteByUserId(String userId);
 }
