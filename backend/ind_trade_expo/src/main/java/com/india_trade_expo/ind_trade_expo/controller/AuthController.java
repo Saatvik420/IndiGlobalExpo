@@ -105,48 +105,67 @@ public class AuthController {
 
     @PostMapping("/register/visitor")
     public ResponseEntity<?> registerVisitor(@Valid @RequestBody VisitorRegisterRequest signUpRequest) {
-        System.out.println("Backend: Registering visitor for email: " + signUpRequest.getEmail());
-        if (userRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Email is already in use!");
+        logger.info("Registering visitor: {}", signUpRequest.getEmail());
+        
+        try {
+            if (userRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
+                logger.warn("Registration failed: Email {} already in use", signUpRequest.getEmail());
+                return ResponseEntity
+                        .badRequest()
+                        .body("Error: Email is already in use!");
+            }
+
+            authService.registerVisitor(
+                    signUpRequest.getFirstName(),
+                    signUpRequest.getLastName(),
+                    signUpRequest.getEmail(),
+                    signUpRequest.getPassword(),
+                    signUpRequest.getMobileNumber(),
+                    signUpRequest.getCompany(),
+                    signUpRequest.getDesignation(),
+                    signUpRequest.getCountry()
+            );
+            
+            logger.info("Visitor registered successfully: {}", signUpRequest.getEmail());
+            return ResponseEntity.ok("Visitor registered successfully!");
+        } catch (Exception e) {
+            logger.error("Visitor registration failed: {}", e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-
-        authService.registerVisitor(
-                signUpRequest.getFirstName(),
-                signUpRequest.getLastName(),
-                signUpRequest.getEmail(),
-                signUpRequest.getPassword(),
-                signUpRequest.getMobileNumber(),
-                signUpRequest.getCompany(),
-                signUpRequest.getDesignation(),
-                signUpRequest.getCountry()
-        );
-
-        return ResponseEntity.ok("Visitor registered successfully!");
     }
 
     @PostMapping("/register/exhibitor")
     public ResponseEntity<?> registerExhibitor(@Valid @RequestBody ExhibitorRegisterRequest signUpRequest) {
-        if (userRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Email is already in use!");
+        logger.info("Registering exhibitor: {}", signUpRequest.getEmail());
+        
+        try {
+            if (userRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
+                logger.warn("Registration failed: Email {} already in use", signUpRequest.getEmail());
+                return ResponseEntity
+                        .badRequest()
+                        .body("Error: Email is already in use!");
+            }
+
+            authService.registerExhibitor(
+                    signUpRequest.getFirstName(),
+                    signUpRequest.getLastName(),
+                    signUpRequest.getEmail(),
+                    signUpRequest.getPassword(),
+                    signUpRequest.getMobileNumber(),
+                    signUpRequest.getCountry(),
+                    signUpRequest.getDesignation(),
+                    signUpRequest.getCompanyName(),
+                    signUpRequest.getSector(),
+                    signUpRequest.getWebsite()
+            );
+
+            logger.info("Exhibitor registered successfully: {}", signUpRequest.getEmail());
+            return ResponseEntity.ok("Exhibitor registration application submitted!");
+        } catch (Exception e) {
+            logger.error("Exhibitor registration failed: {}", e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-
-        authService.registerExhibitor(
-                signUpRequest.getFirstName(),
-                signUpRequest.getLastName(),
-                signUpRequest.getEmail(),
-                signUpRequest.getPassword(),
-                signUpRequest.getMobileNumber(),
-                signUpRequest.getCountry(),
-                signUpRequest.getDesignation(),
-                signUpRequest.getCompanyName(),
-                signUpRequest.getSector(),
-                signUpRequest.getWebsite()
-        );
-
-        return ResponseEntity.ok("Exhibitor registration application submitted!");
     }
 }
