@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { Buildings, Copyright, WarningCircle, Link, Scales } from '@phosphor-icons/react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
+import FullscreenMenu from '../../components/layout/FullscreenMenu';
 import PageLoader from '../../components/layout/PageLoader';
 import CustomCursor from '../../components/ui/CustomCursor';
+import TicketWidget from '../../components/ui/TicketWidget';
 
 const Legal = () => {
   useEffect(() => {
@@ -16,6 +18,7 @@ const Legal = () => {
         }
       });
     }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+    
     document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
 
     return () => revealObserver.disconnect();
@@ -23,17 +26,19 @@ const Legal = () => {
 
   return (
     <>
-      <PageLoader title="Legal Notice" />
+      <PageLoader title="Legal<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Notice</span>" />
       <CustomCursor />
-      <Header logoColor="text-white" />
-      
+      <Header />
+      <FullscreenMenu />
+      <TicketWidget />
+
       {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[350px] flex items-center overflow-hidden bg-brand-dark">
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark to-[#2a2a2a] z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark to-[#2a2a2a] z-0"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16">
-          <div className="max-w-3xl text-center md:text-left">
-            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4 animate-fade-up">Corporate Information</p>
-            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-8 animate-fade-up delay-100">
+          <div className="max-w-3xl">
+            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4 reveal-up">Corporate Information</p>
+            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-8 reveal-up delay-100">
               Legal <span className="italic font-light text-brand-accent">Notice.</span>
             </h2>
           </div>
@@ -61,9 +66,9 @@ const Legal = () => {
 
             {/* Main Legal Content */}
             <div className="w-full md:w-2/3 lg:w-3/4 reveal-up delay-100">
-              <div className="text-gray-500 font-light max-w-none">
+              <div className="prose prose-lg text-gray-500 font-light max-w-none">
                 
-                <div id="publisher" className="scroll-mt-32 mb-16">
+                <div id="publisher" className="mb-16 scroll-mt-32">
                   <div className="flex items-center gap-3 mb-4">
                     <Buildings weight="fill" className="text-2xl text-brand-accent" />
                     <h3 className="font-serif text-3xl text-brand-dark m-0">1. Publisher Information</h3>
@@ -71,20 +76,20 @@ const Legal = () => {
                   <p className="leading-relaxed">
                     IndiGlobal Expo is published, operated, and managed by <strong>IndiGlobal Exhibitions Pvt. Ltd.</strong>, a registered company under the Companies Act of India.<br /><br />
                     <strong>Registered Office:</strong><br />
-                    Brand Vista Consulting Ltd, Apartment 208, Beecham House Clayponds Lane<br />
-                    Brentford, England, TW8 0GX<br /><br />
+                    Yashobhoomi Convention Centre Complex, Sector 25, Dwarka<br />
+                    New Delhi, India 110077<br /><br />
                     <strong>Contact:</strong><br />
                     Phone: +91 11 2345 6789<br />
                     Email: <a href="mailto:legal@indiglobalexpo.com" className="text-brand-accent hover:underline interactive">legal@indiglobalexpo.com</a>
                   </p>
                 </div>
 
-                <div id="intellectual" className="scroll-mt-32 mb-16">
+                <div id="intellectual" className="mb-16 scroll-mt-32">
                   <div className="flex items-center gap-3 mb-4">
                     <Copyright weight="fill" className="text-2xl text-brand-accent" />
                     <h3 className="font-serif text-3xl text-brand-dark m-0">2. Intellectual Property Rights</h3>
                   </div>
-                  <p className="leading-relaxed mb-4">
+                  <p className="leading-relaxed">
                     All content present on this website—including but not limited to text, editorial content, graphics, custom logos, high-resolution images, audio clips, digital downloads, data compilations, and software—is the exclusive property of IndiGlobal Exhibitions Pvt. Ltd. or its accredited content suppliers.
                   </p>
                   <p className="leading-relaxed">
@@ -92,12 +97,12 @@ const Legal = () => {
                   </p>
                 </div>
 
-                <div id="liability" className="scroll-mt-32 mb-16">
+                <div id="liability" className="mb-16 scroll-mt-32">
                   <div className="flex items-center gap-3 mb-4">
                     <WarningCircle weight="fill" className="text-2xl text-brand-accent" />
                     <h3 className="font-serif text-3xl text-brand-dark m-0">3. Disclaimer of Liability</h3>
                   </div>
-                  <p className="leading-relaxed mb-4">
+                  <p className="leading-relaxed">
                     The information provided on this website is for general informational purposes only. While we endeavor to keep the information fully up-to-date and correct, IndiGlobal Exhibitions Pvt. Ltd. makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability with respect to the website or the information, products, services, pricing, or related graphics contained on the website.
                   </p>
                   <p className="leading-relaxed">
@@ -105,7 +110,7 @@ const Legal = () => {
                   </p>
                 </div>
 
-                <div id="links" className="scroll-mt-32 mb-16">
+                <div id="links" className="mb-16 scroll-mt-32">
                   <div className="flex items-center gap-3 mb-4">
                     <Link weight="fill" className="text-2xl text-brand-accent" />
                     <h3 className="font-serif text-3xl text-brand-dark m-0">4. External Links</h3>

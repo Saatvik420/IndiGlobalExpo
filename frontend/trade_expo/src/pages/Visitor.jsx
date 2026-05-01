@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GlobeHemisphereEast, SquaresFour, Handshake, Package, Lightbulb, CaretRight, CheckCircle, Calendar, AirplaneLanding, LetterCircleP, Buildings, ArrowRight, Headset, Ticket } from '@phosphor-icons/react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
+import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
-import { useGlobal } from '../context/GlobalContext';
-import VisitorDashboard from './VisitorDashboard';
+import TicketWidget from '../components/ui/TicketWidget';
+
+// Import Assets
+import heroImg from '../assets/Hero poster (unsplash).jfif';
+import factsheetPdf from '../assets/Factsheet business facilities - Novotel Amsterdam City-1 copy (1).pdf';
 
 const Visitor = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useGlobal();
 
   useEffect(() => {
     // Scroll reveal observer
@@ -22,6 +24,7 @@ const Visitor = () => {
         }
       });
     }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+    
     document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
 
     return () => revealObserver.disconnect();
@@ -29,28 +32,23 @@ const Visitor = () => {
 
   const handleNavigate = (path) => {
     navigate(path);
+    window.scrollTo(0, 0);
   };
-
-  if (isLoggedIn) {
-    return <VisitorDashboard />;
-  }
 
   return (
     <>
-      <PageLoader title="Visitor Info" />
+      <PageLoader title="Visitor<span class='font-sans font-light opacity-70 text-3xl ml-1'>Information</span>" />
       <CustomCursor />
-      <Header logoColor="text-white" />
-      
+      <Header />
+      <FullscreenMenu />
+      <TicketWidget />
+
       {/* Visitor Hero Section */}
       <section className="relative h-[65vh] min-h-[500px] flex items-center overflow-hidden bg-brand-dark">
-        <img 
-          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2000&q=80" 
-          alt="Exhibition Hall" 
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-luminosity"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/50 z-0" />
+        <img src={heroImg} alt="Exhibition Hall" className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/50 z-0"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16 text-center md:text-left">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16">
           <div className="max-w-3xl">
             <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4 animate-fade-up">Plan Your Experience</p>
             <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-6 animate-fade-up delay-100">
@@ -59,11 +57,8 @@ const Visitor = () => {
             <p className="text-gray-300 font-light text-lg mb-8 max-w-xl animate-fade-up delay-200">
               Experience India’s Innovation, Craftsmanship & Excellence at IndiGlobal Expo.
             </p>
-            <div className="flex items-center justify-center md:justify-start gap-6 text-white animate-fade-up delay-200">
-              <button 
-                onClick={() => handleNavigate('/tickets')}
-                className="interactive bg-brand-accent text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors cursor-pointer"
-              >
+            <div className="flex items-center gap-6 text-white animate-fade-up delay-200">
+              <button onClick={() => handleNavigate('/tickets')} className="interactive bg-brand-accent text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors">
                 Register Now
               </button>
             </div>
@@ -81,280 +76,165 @@ const Visitor = () => {
                 Discover the Best of India – <span className="italic text-brand-accent">All in One Place.</span>
               </h3>
               <div className="space-y-6 text-gray-500 font-light leading-relaxed">
-                <p>
-                  IndiGlobalExpo invites visitors from across the globe to explore a dynamic showcase of India’s most promising industries, products, and innovations. Hosted in key international destinations, the expo brings together leading Indian brands and emerging enterprises under one roof—offering a unique opportunity to discover high-quality products, build partnerships, and experience the diversity of India’s business landscape.
-                </p>
-                <p>
-                  Whether you are a buyer, distributor, investor, or industry enthusiast, IndiGlobalExpo is your gateway to India.
-                </p>
+                <p>IndiGlobalExpo is not just an exhibition—it is a movement to take India’s innovation, craftsmanship, and entrepreneurial spirit to the world. We offer a unique opportunity for businesses to access high-potential international markets, build global partnerships, and showcase "Made in India" excellence.</p>
+                <p>Whether you are a buyer, investor, or an industry enthusiast, IndiGlobalExpo provides a platform to engage directly with decision-makers and explore cutting-edge solutions across 15+ high-growth sectors.</p>
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4 reveal-up delay-100">
-              <div className="bg-brand-dark p-10 text-white rounded-sm flex flex-col justify-center transform hover:-translate-y-1 transition-transform cursor-default">
-                <h4 className="text-5xl font-serif mb-2">10k+</h4>
-                <p className="text-xs uppercase tracking-widest text-brand-accent font-bold">Daily Visitors Expected</p>
-              </div>
-              <div className="bg-brand-accent p-10 text-white rounded-sm flex flex-col justify-center transform hover:-translate-y-1 transition-transform cursor-default">
-                <h4 className="text-5xl font-serif mb-2">2</h4>
-                <p className="text-xs uppercase tracking-widest font-bold">Exciting Days</p>
-              </div>
-              <div className="bg-brand-light border border-gray-200 p-8 col-span-2 rounded-sm shadow-sm flex items-center gap-6 transform hover:-translate-y-1 transition-transform cursor-default">
-                <GlobeHemisphereEast size={40} className="text-brand-accent" />
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-12 border-t border-gray-100 pt-10">
                 <div>
-                  <h4 className="font-serif text-xl text-brand-dark mb-1">A Truly Global Experience</h4>
-                  <p className="text-sm text-gray-500 font-light">Hosted across international cities, ensuring accessibility for global audiences.</p>
+                  <h4 className="font-serif text-3xl text-brand-dark mb-1">20k+</h4>
+                  <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Attendees</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Visit Section */}
-      <section className="py-24 bg-brand-light border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 reveal-up">
-            <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-4">Why Visit IndiGlobalExpo?</h2>
-            <p className="text-gray-500 font-light text-lg">Your premier platform to connect, source, and discover.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Card 1 */}
-            <div className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-xl rounded-sm transition-all duration-500 hover:-translate-y-2 reveal-up interactive cursor-pointer group">
-              <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-accent transition-colors duration-500">
-                <SquaresFour size={24} className="text-brand-accent group-hover:text-white transition-colors duration-500" />
-              </div>
-              <h4 className="font-serif text-xl text-brand-dark mb-3">Explore Diverse Industries</h4>
-              <p className="text-gray-500 font-light text-sm leading-relaxed">Discover products and services across multiple sectors—from healthcare and technology to fashion, food, and lifestyle.</p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-xl rounded-sm transition-all duration-500 hover:-translate-y-2 reveal-up delay-100 interactive cursor-pointer group">
-              <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-accent transition-colors duration-500">
-                <Handshake size={24} className="text-brand-accent group-hover:text-white transition-colors duration-500" />
-              </div>
-              <h4 className="font-serif text-xl text-brand-dark mb-3">Connect with Suppliers</h4>
-              <p className="text-gray-500 font-light text-sm leading-relaxed">Meet trusted, verified manufacturers, exporters, and service providers looking to expand globally.</p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-xl rounded-sm transition-all duration-500 hover:-translate-y-2 reveal-up delay-200 interactive cursor-pointer group">
-              <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-accent transition-colors duration-500">
-                <Package size={24} className="text-brand-accent group-hover:text-white transition-colors duration-500" />
-              </div>
-              <h4 className="font-serif text-xl text-brand-dark mb-3">Source High-Quality Products</h4>
-              <p className="text-gray-500 font-light text-sm leading-relaxed">Find innovative, cost-effective, and globally competitive offerings directly from India.</p>
-            </div>
-
-            {/* Card 4 */}
-            <div className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-xl rounded-sm transition-all duration-500 hover:-translate-y-2 reveal-up interactive cursor-pointer group">
-              <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-accent transition-colors duration-500">
-                <Lightbulb size={24} className="text-brand-accent group-hover:text-white transition-colors duration-500" />
-              </div>
-              <h4 className="font-serif text-xl text-brand-dark mb-3">Discover New Trends</h4>
-              <p className="text-gray-500 font-light text-sm leading-relaxed">Stay ahead with invaluable insights into emerging products, technologies, and market trends.</p>
-            </div>
-
-            {/* Card 5 */}
-            <div className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-xl rounded-sm transition-all duration-500 hover:-translate-y-2 reveal-up delay-100 md:col-span-2 lg:col-span-1 interactive cursor-pointer group">
-              <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-accent transition-colors duration-500">
-                <GlobeHemisphereEast size={24} className="text-brand-accent group-hover:text-white transition-colors duration-500" />
-              </div>
-              <h4 className="font-serif text-xl text-brand-dark mb-3">Build Global Partnerships</h4>
-              <p className="text-gray-500 font-light text-sm leading-relaxed">Network with business leaders, entrepreneurs, and decision-makers from India and around the world.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sectors & Target Audience */}
-      <section className="py-24 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16">
-            {/* What You'll Discover */}
-            <div className="reveal-up">
-              <h3 className="font-serif text-3xl md:text-4xl text-brand-dark mb-8">What You’ll Discover</h3>
-              <p className="text-gray-500 font-light mb-8">From traditional craftsmanship to cutting-edge innovation, experience the full spectrum of <span className="italic font-serif text-brand-dark">"Made in India"</span>. We showcase a wide range of sectors, including:</p>
-              
-              <ul className="space-y-4">
-                <li className="flex items-center gap-4 text-gray-600 font-light border-b border-gray-100 pb-3">
-                  <CheckCircle weight="fill" className="text-brand-accent text-xl" /> Healthcare & Medical Equipment
-                </li>
-                <li className="flex items-center gap-4 text-gray-600 font-light border-b border-gray-100 pb-3">
-                  <CheckCircle weight="fill" className="text-brand-accent text-xl" /> Food & Beverages
-                </li>
-                <li className="flex items-center gap-4 text-gray-600 font-light border-b border-gray-100 pb-3">
-                  <CheckCircle weight="fill" className="text-brand-accent text-xl" /> Textiles, Garments & Fashion
-                </li>
-                <li className="flex items-center gap-4 text-gray-600 font-light border-b border-gray-100 pb-3">
-                  <CheckCircle weight="fill" className="text-brand-accent text-xl" /> Gems & Jewelry
-                </li>
-                <li className="flex items-center gap-4 text-gray-600 font-light border-b border-gray-100 pb-3">
-                  <CheckCircle weight="fill" className="text-brand-accent text-xl" /> IT & Digital Solutions
-                </li>
-                <li className="flex items-center gap-4 text-gray-600 font-light border-b border-gray-100 pb-3">
-                  <CheckCircle weight="fill" className="text-brand-accent text-xl" /> Manufacturing & Engineering
-                </li>
-                <li className="flex items-center gap-4 text-gray-600 font-light">
-                  <CheckCircle weight="fill" className="text-brand-accent text-xl" /> Consumer Goods & Lifestyle Products
-                </li>
-              </ul>
-            </div>
-
-            {/* Who Should Visit */}
-            <div className="bg-brand-dark p-10 md:p-14 rounded-sm text-white reveal-up delay-100 shadow-2xl">
-              <h3 className="font-serif text-3xl md:text-4xl text-white mb-8">Who Should Visit?</h3>
-              <ul className="space-y-5 font-light text-gray-300">
-                <li className="flex items-center gap-4 hover:translate-x-2 transition-transform cursor-default">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-brand-accent"><CaretRight /></div>
-                  Importers & Distributors
-                </li>
-                <li className="flex items-center gap-4 hover:translate-x-2 transition-transform cursor-default">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-brand-accent"><CaretRight /></div>
-                  Retailers & Wholesalers
-                </li>
-                <li className="flex items-center gap-4 hover:translate-x-2 transition-transform cursor-default">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-brand-accent"><CaretRight /></div>
-                  Corporate Buyers
-                </li>
-                <li className="flex items-center gap-4 hover:translate-x-2 transition-transform cursor-default">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-brand-accent"><CaretRight /></div>
-                  Investors & Venture Capitalists
-                </li>
-                <li className="flex items-center gap-4 hover:translate-x-2 transition-transform cursor-default">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-brand-accent"><CaretRight /></div>
-                  Industry Professionals
-                </li>
-                <li className="flex items-center gap-4 hover:translate-x-2 transition-transform cursor-default">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-brand-accent"><CaretRight /></div>
-                  Trade Associations & Government Delegates
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Plan Your Visit Action Plan */}
-      <section className="py-24 bg-brand-light text-center border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-6 reveal-up">
-          <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-4">Your Itinerary</p>
-          <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-12">Plan Your Visit</h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-            <div className="bg-white p-6 border border-gray-100 rounded-sm shadow-sm">
-              <h4 className="font-bold text-brand-dark mb-2 text-sm uppercase tracking-widest">1. Explore</h4>
-              <p className="text-gray-500 font-light text-sm">Explore exhibitors and vast product categories.</p>
-            </div>
-            <div className="bg-white p-6 border border-gray-100 rounded-sm shadow-sm">
-              <h4 className="font-bold text-brand-dark mb-2 text-sm uppercase tracking-widest">2. Schedule</h4>
-              <p className="text-gray-500 font-light text-sm">Schedule key B2B meetings with verified suppliers.</p>
-            </div>
-            <div className="bg-white p-6 border border-gray-100 rounded-sm shadow-sm">
-              <h4 className="font-bold text-brand-dark mb-2 text-sm uppercase tracking-widest">3. Attend</h4>
-              <p className="text-gray-500 font-light text-sm">Attend product showcases and networking sessions.</p>
-            </div>
-            <div className="bg-white p-6 border border-gray-100 rounded-sm shadow-sm">
-              <h4 className="font-bold text-brand-dark mb-2 text-sm uppercase tracking-widest">4. Discover</h4>
-              <p className="text-gray-500 font-light text-sm">Discover entirely new sourcing opportunities.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Detailed Logistics Grid */}
-      <section id="details" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 reveal-up">
-            <h2 className="font-serif text-3xl md:text-4xl text-brand-dark">Event Logistics</h2>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Dates & Hours */}
-            <div className="bg-brand-light p-10 shadow-sm rounded-sm border border-gray-100 reveal-up hover:-translate-y-2 transition-transform duration-500 interactive cursor-default group">
-              <Calendar size={48} className="text-brand-accent mb-6" />
-              <h4 className="font-serif text-2xl text-brand-dark mb-6">Days & Opening Hours</h4>
-              <ul className="space-y-4 text-sm text-gray-500 font-light">
-                <li className="flex justify-between pb-4 border-b border-gray-200">
-                  <span className="font-medium text-brand-dark">Tuesday, September 29</span> 
-                  <span>10:00 - 17:00</span>
-                </li>
-                <li className="flex justify-between pb-4 border-b border-gray-200">
-                  <span className="font-medium text-brand-dark">Wednesday, September 30</span> 
-                  <span>10:00 - 17:00</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Arrivals */}
-            <div className="bg-brand-light p-10 shadow-sm rounded-sm border border-gray-100 reveal-up hover:-translate-y-2 transition-transform duration-500 delay-100 interactive cursor-default group">
-              <AirplaneLanding size={48} className="text-brand-accent mb-6" />
-              <h4 className="font-serif text-2xl text-brand-dark mb-6">Arrivals</h4>
-              <div className="space-y-4 text-sm text-gray-500 font-light leading-relaxed">
-                <p><strong className="text-brand-dark font-medium">By Air:</strong> Schiphol Airport.</p>
-                <p><strong className="text-brand-dark font-medium">By Train:</strong> Amsterdam RAI Station.</p>
-                <p><strong className="text-brand-dark font-medium">By car:</strong> From The Hague/Schiphol (A4): exit 109 and turn left. From Amersfoort (A1): exit 109 and turn left. Novotel is on your right side.</p>
-              </div>
-            </div>
-
-            {/* Parking */}
-            <div className="bg-brand-light p-10 shadow-sm rounded-sm border border-gray-100 reveal-up hover:-translate-y-2 transition-transform duration-500 delay-200 interactive cursor-default group">
-              <LetterCircleP size={48} className="text-brand-accent mb-6" />
-              <h4 className="font-serif text-2xl text-brand-dark mb-6">Parking</h4>
-              <div className="space-y-4 text-sm text-gray-500 font-light leading-relaxed">
-                <p>Ample multi-level underground parking is available across Basement 1 & 2 directly beneath the halls.</p>
-                <p>EV charging stations are securely located at Entry Gate 3.</p>
-                <p>Premium Valet service is available starting at the main drop-off zone for registered VIP guests.</p>
-              </div>
-            </div>
-
-            {/* Accommodations */}
-            <div className="bg-brand-dark p-12 shadow-2xl rounded-sm col-span-full reveal-up relative overflow-hidden group mt-8">
-              <div className="absolute right-0 top-0 w-1/2 h-full opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-700">
-                <Buildings size={300} weight="fill" className="text-white absolute -right-10 -top-10" />
-              </div>
-              <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                 <div>
-                  <h4 className="font-serif text-3xl text-white mb-4">Accommodations</h4>
-                  <p className="text-gray-400 font-light max-w-xl leading-relaxed">We have negotiated exclusive, discounted rates with leading luxury and business hotels near the venue for our international delegates, visitors, and exhibitors.</p>
+                  <h4 className="font-serif text-3xl text-brand-dark mb-1">500+</h4>
+                  <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Exhibitors</p>
                 </div>
-                <div className="flex flex-wrap gap-4">
-                  <span className="px-6 py-3 border border-white/20 text-white text-xs uppercase tracking-widest rounded-sm bg-white/5 cursor-default">5-Star Partners</span>
-                  <span className="px-6 py-3 border border-white/20 text-white text-xs uppercase tracking-widest rounded-sm bg-white/5 cursor-default">Business Hotels</span>
-                  <button 
-                    onClick={() => handleNavigate('/tickets')}
-                    className="px-6 py-3 bg-brand-accent text-white text-xs font-bold uppercase tracking-widest rounded-sm hover:bg-white hover:text-brand-dark transition-colors interactive shadow-lg cursor-pointer"
-                  >
-                    Register & Book
-                  </button>
+                <div>
+                  <h4 className="font-serif text-3xl text-brand-dark mb-1">15+</h4>
+                  <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Sectors</p>
                 </div>
+              </div>
+            </div>
+
+            <div className="relative reveal-up delay-200">
+              <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80" alt="Networking" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 hover:scale-105" />
+              </div>
+              <div className="absolute -bottom-6 -right-6 bg-brand-accent p-8 text-white hidden md:block">
+                <p className="font-serif text-2xl italic">"A Global stage for Indian excellence."</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-24 bg-brand-light text-center border-t border-gray-200">
-        <div className="max-w-4xl mx-auto px-6 reveal-up">
-          <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-6">Be Part of a Global Business Movement</h2>
-          <p className="text-gray-500 font-light text-lg mb-10 leading-relaxed">
-            IndiGlobalExpo is more than an exhibition—it is a platform that connects the world with India’s potential. Join thousands of global visitors and experience the innovation, quality, and diversity that India has to offer.
-          </p>
-          <p className="text-brand-dark font-medium mb-8">Gain access to exclusive networking opportunities and discover world-class products.</p>
-          
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <button 
-              onClick={() => handleNavigate('/tickets')}
-              className="bg-brand-dark text-white px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive shadow-xl cursor-pointer"
-            >
-              Register Now
+      {/* WHY VISIT SECTION */}
+      <section className="py-24 bg-brand-light relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20 reveal-up">
+            <h2 className="font-serif text-5xl text-brand-dark mb-4">Why Visit?</h2>
+            <div className="w-24 h-1 bg-brand-accent mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { title: 'Global Exposure', icon: 'ph-globe', desc: 'Experience the latest trends and innovations from various Indian industries under one roof.' },
+              { title: 'B2B Networking', icon: 'ph-users-three', desc: 'Connect directly with manufacturers, suppliers, and distributors for strategic partnerships.' },
+              { title: 'Market Expansion', icon: 'ph-trend-up', desc: 'Identify new business opportunities and explore high-potential export ready products.' },
+              { title: 'Brand Positioning', icon: 'ph-star', desc: 'Engage with top-tier Indian brands and understand their global value proposition.' },
+              { title: 'Industry Insights', icon: 'ph-lightbulb', desc: 'Attend summits and seminars featuring industry leaders and market experts.' },
+              { title: 'Cultural Experience', icon: 'ph-mask-happy', desc: 'Witness the rich heritage and contemporary craftsmanship of India in Amsterdam.' }
+            ].map((item, i) => (
+              <div key={i} className="bg-white p-10 border border-gray-100 hover:border-brand-accent transition-all duration-500 reveal-up group">
+                <i className={`ph ${item.icon} text-4xl text-brand-dark group-hover:text-brand-accent mb-6 block transition-colors`}></i>
+                <h4 className="font-serif text-2xl text-brand-dark mb-3">{item.title}</h4>
+                <p className="text-gray-500 text-sm font-light leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TRAVEL & LOGISTICS */}
+      <section className="py-24 bg-white relative z-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-3 gap-1px bg-gray-100 border border-gray-100 reveal-up">
+            {/* Logistic 1 */}
+            <div className="bg-white p-12 hover:bg-brand-dark group transition-colors duration-500">
+              <i className="ph ph-map-pin text-4xl text-brand-accent mb-8"></i>
+              <h4 className="font-serif text-3xl text-brand-dark group-hover:text-white mb-6 transition-colors">The Venue</h4>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">Novotel Amsterdam City Hotel <br />Europaboulevard 10, 1083 AD Amsterdam, Netherlands.</p>
+              <div className="flex flex-col gap-4 items-start">
+                <a href="https://maps.app.goo.gl/9ZpZ" target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-2">View on Maps</a>
+                <a href={factsheetPdf} download className="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-white/60 hover:text-brand-accent transition-colors">Download Factsheet</a>
+              </div>
+            </div>
+            {/* Logistic 2 */}
+            <div className="bg-white p-12 hover:bg-brand-dark group transition-colors duration-500">
+              <i className="ph ph-calendar-blank text-4xl text-brand-accent mb-8"></i>
+              <h4 className="font-serif text-3xl text-brand-dark group-hover:text-white mb-6 transition-colors">Date & Time</h4>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">December 29 – 30, 2026 <br />09:00 AM – 06:00 PM (CET)</p>
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-2">Save to Calendar</span>
+            </div>
+            {/* Logistic 3 */}
+            <div className="bg-white p-12 hover:bg-brand-dark group transition-colors duration-500">
+              <i className="ph ph-airplane-tilt text-4xl text-brand-accent mb-8"></i>
+              <h4 className="font-serif text-3xl text-brand-dark group-hover:text-white mb-6 transition-colors">Accommodation</h4>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">Exclusive rates available at Novotel and partner hotels for registered attendees.</p>
+              <button onClick={() => handleNavigate('/contact')} className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-2">Inquire Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SCHEDULE PREVIEW */}
+      <section className="py-24 bg-brand-dark text-white relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16 reveal-up">
+            <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-4">What to Expect</p>
+            <h2 className="font-serif text-5xl mb-6">Event Schedule</h2>
+          </div>
+
+          <div className="space-y-12">
+            {/* Day 1 */}
+            <div className="border-l-2 border-brand-accent/30 pl-8 relative reveal-up">
+              <div className="absolute w-4 h-4 bg-brand-accent rounded-full -left-[9px] top-2"></div>
+              <h4 className="font-serif text-3xl text-brand-accent mb-2">Day 1: Opening & Networking</h4>
+              <p className="text-gray-400 mb-6 uppercase tracking-widest text-xs font-bold">Dec 29, 2026</p>
+              <ul className="space-y-4 text-gray-300 font-light">
+                <li className="flex gap-4">
+                  <span className="text-white font-bold min-w-[80px]">09:00 AM</span>
+                  <span>Inauguration & VIP Keynote Speeches</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-white font-bold min-w-[80px]">11:00 AM</span>
+                  <span>Exhibition Hall Open & B2B Meetings Begin</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-white font-bold min-w-[80px]">02:00 PM</span>
+                  <span>Sector-specific Innovation Summits</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-white font-bold min-w-[80px]">07:00 PM</span>
+                  <span>Networking Dinner (Exhibitors & VIPs)</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Day 2 */}
+            <div className="border-l-2 border-brand-accent/30 pl-8 relative reveal-up delay-200">
+              <div className="absolute w-4 h-4 bg-brand-accent rounded-full -left-[9px] top-2"></div>
+              <h4 className="font-serif text-3xl text-brand-accent mb-2">Day 2: Trade & Closing</h4>
+              <p className="text-gray-400 mb-6 uppercase tracking-widest text-xs font-bold">Dec 30, 2026</p>
+              <ul className="space-y-4 text-gray-300 font-light">
+                <li className="flex gap-4">
+                  <span className="text-white font-bold min-w-[80px]">10:00 AM</span>
+                  <span>Global Investors & Buyers Round-table</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-white font-bold min-w-[80px]">01:00 PM</span>
+                  <span>Workshops on Market Entry Strategies</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-white font-bold min-w-[80px]">04:00 PM</span>
+                  <span>Closing Ceremony & Excellence Awards</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CALL TO ACTION */}
+      <section className="py-24 bg-white text-center">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 reveal-up">
+          <h2 className="font-serif text-5xl text-brand-dark leading-tight mb-8">Ready to join the premier <br /><span className="italic text-brand-accent">Trade Experience?</span></h2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <button onClick={() => handleNavigate('/tickets')} className="w-full sm:w-auto bg-brand-dark text-white px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-brand-accent transition-all duration-500 interactive">
+              Get Your Tickets
             </button>
-            <button 
-              onClick={() => handleNavigate('/contact')}
-              className="bg-white border border-gray-200 text-brand-dark px-10 py-5 text-sm font-bold uppercase tracking-widest hover:border-brand-dark transition-colors interactive flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Headset size={20} /> Need Assistance?
+            <button onClick={() => handleNavigate('/contact')} className="w-full sm:w-auto border border-gray-200 text-brand-dark px-10 py-5 text-sm font-bold uppercase tracking-widest hover:border-brand-dark transition-all duration-500 interactive">
+              Contact for Group Visits
             </button>
           </div>
         </div>

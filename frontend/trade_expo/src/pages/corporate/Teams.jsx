@@ -1,11 +1,16 @@
 import { useEffect } from 'react';
-import { ChartLineUp, UsersThree, Globe, GlobeStand, Handshake, Check, CheckCircle } from '@phosphor-icons/react';
+import { useNavigate } from 'react-router-dom';
+import { ChartLineUp, UsersThree, Globe, GlobeStand, Handshake, EnvelopeSimple } from '@phosphor-icons/react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
+import FullscreenMenu from '../../components/layout/FullscreenMenu';
 import PageLoader from '../../components/layout/PageLoader';
 import CustomCursor from '../../components/ui/CustomCursor';
+import TicketWidget from '../../components/ui/TicketWidget';
 
 const Teams = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Scroll reveal observer
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -16,6 +21,7 @@ const Teams = () => {
         }
       });
     }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+    
     document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
 
     return () => revealObserver.disconnect();
@@ -25,20 +31,17 @@ const Teams = () => {
     <>
       <PageLoader title="Organising Partner" />
       <CustomCursor />
-      <Header logoColor="text-white" />
-      
+      <Header />
+      <FullscreenMenu />
+
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center overflow-hidden bg-brand-dark">
-        <img 
-          src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80" 
-          alt="Corporate Vision" 
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-luminosity"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/60 z-0" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16">
-          <div className="max-w-3xl text-center md:text-left">
-            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4 animate-fade-up">The Visionaries Behind The Platform</p>
-            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-8 animate-fade-up delay-100">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80" alt="Corporate Vision" className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/60 z-0"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16 text-center md:text-left">
+          <div className="max-w-3xl">
+            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4 reveal-up">The Visionaries Behind The Platform</p>
+            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-8 reveal-up delay-100">
               About The <br /><span className="italic font-light text-brand-accent">Organizer.</span>
             </h2>
           </div>
@@ -105,7 +108,7 @@ const Teams = () => {
               <p className="text-gray-500 font-light max-w-2xl">Our flagship international platform created with a singular, clear vision: to present India to the world.</p>
             </div>
             <div className="hidden md:block">
-              <GlobeStand size={48} className="text-brand-accent/30" />
+              <GlobeStand className="text-5xl text-brand-accent/30" />
             </div>
           </div>
 
@@ -145,16 +148,13 @@ const Teams = () => {
       {/* Connect CTA */}
       <section className="py-24 bg-brand-dark text-white text-center">
         <div className="max-w-3xl mx-auto px-6 reveal-up">
-          <Handshake weight="fill" size={48} className="text-brand-accent mb-6 inline-block" />
+          <Handshake weight="fill" className="text-5xl text-brand-accent mb-6 inline-block" />
           <h2 className="font-serif text-4xl md:text-5xl mb-6">Empowering Growth</h2>
           <p className="text-gray-400 font-light text-lg mb-10 leading-relaxed">
             Brand Vista Consulting Solutions continues its mission of connecting ideas, industries, and opportunities—empowering businesses to grow beyond borders and contributing to a stronger global ecosystem.
           </p>
-          <button 
-            onClick={() => window.location.href = '/contact'}
-            className="interactive inline-flex items-center gap-3 bg-brand-accent text-white px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors shadow-xl cursor-pointer"
-          >
-            Contact Us Today
+          <button onClick={() => navigate('/contact')} className="interactive inline-flex items-center gap-3 bg-brand-accent text-white px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors shadow-xl">
+            <EnvelopeSimple size={24} /> Contact Us Today
           </button>
         </div>
       </section>
