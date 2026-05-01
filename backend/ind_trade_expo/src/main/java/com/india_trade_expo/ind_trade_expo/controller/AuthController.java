@@ -54,9 +54,11 @@ public class AuthController {
                     user.getEmail(),
                     roles));
         } catch (Exception e) {
+            System.err.println("Login error for " + loginRequest.getEmail() + ": " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity
                     .badRequest()
-                    .body("Error: Invalid password!");
+                    .body("Error: Invalid password or server error!");
         }
     }
 
