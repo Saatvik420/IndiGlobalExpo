@@ -9,6 +9,7 @@ import TicketWidget from '../components/ui/TicketWidget';
 
 // Import Assets
 import heroImg from '../assets/Hero poster (unsplash).jfif';
+import layoutPdf from '../assets/Factsheet business facilities - Novotel Amsterdam City-1 copy (1).pdf';
 
 const ExhibitionLayout = () => {
   useEffect(() => {
@@ -56,8 +57,8 @@ const ExhibitionLayout = () => {
 
         <div className="mt-12 reveal-up">
           <a 
-            href="/assets/Factsheet business facilities - Novotel Amsterdam City-1 copy (1).pdf" 
-            download 
+            href={layoutPdf} 
+            download="Exhibition_Layout.pdf" 
             className="interactive inline-flex items-center gap-3 bg-brand-dark text-white px-8 py-4 rounded-full font-medium hover:bg-brand-accent transition-all duration-300"
           >
             <DownloadSimple size={24} />
