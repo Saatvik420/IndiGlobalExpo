@@ -20,11 +20,12 @@
     letter-spacing: 0.01em;
   }
   
-  @media (pointer: fine) {
+  /* Removed global cursor: none to prevent issues when CustomCursor fails */
+  /* @media (pointer: fine) {
     body, a, button, input, .interactive {
       cursor: none !important;
     }
-  }
+  } */
 }
 
 /* Animations from abc roughage */

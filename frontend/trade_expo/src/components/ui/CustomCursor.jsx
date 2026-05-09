@@ -8,7 +8,11 @@ const CustomCursor = () => {
   useEffect(() => {
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+      if (!isVisible) {
+        setIsVisible(true);
+        // Only hide the real cursor when we know the custom one is ready
+        document.body.style.cursor = 'none';
+      }
     };
 
     const handleMouseOver = (e) => {
@@ -33,6 +37,8 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.body.removeEventListener('mouseover', handleMouseOver);
       document.body.removeEventListener('mouseout', handleMouseOut);
+      // Restore cursor on cleanup
+      document.body.style.cursor = 'auto';
     };
   }, [isVisible]);
 
@@ -40,6 +46,13 @@ const CustomCursor = () => {
 
   return (
     <>
+      <style>
+        {`
+          a, button, input, .interactive {
+            cursor: none !important;
+          }
+        `}
+      </style>
       <div 
         className={`cursor-dot hidden md:block fixed pointer-events-none rounded-full z-[999999] bg-brand-accent transition-opacity duration-300 ${hovering ? 'opacity-0' : 'opacity-100'}`}
         style={{

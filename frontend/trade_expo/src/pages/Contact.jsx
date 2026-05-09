@@ -201,7 +201,7 @@ const Contact = () => {
                 <div className="mt-10">
                   <button type="submit" disabled={isSubmitting} className={`w-full sm:w-auto bg-brand-dark text-white px-12 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2 ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}>
                     {isSubmitting ? (
-                      <><Spinner className="animate-spin text-lg" /> Sending...</>
+                      <><CircleNotch className="animate-spin text-lg" /> Sending...</>
                     ) : (
                       <><PaperPlaneTilt /> Send Message</>
                     )}
