@@ -33,13 +33,11 @@ public class ContactController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
     public List<ContactMessage> getAllMessages() {
         return contactMessageRepository.findAllByOrderByCreatedAtDesc();
     }
 
     @PutMapping("/read/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> markAsRead(@PathVariable String id) {
         return contactMessageRepository.findById(id)
                 .map(msg -> {
@@ -51,7 +49,6 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteMessage(@PathVariable String id) {
         contactMessageRepository.deleteById(id);
         return ResponseEntity.ok("Message deleted successfully");

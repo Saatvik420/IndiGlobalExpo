@@ -28,8 +28,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body("Error: " + ex.getMessage());
     }
 
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDeniedException(org.springframework.security.access.AccessDeniedException ex) {
+        return ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied: You do not have permission to access this resource.");
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneralExceptions(Exception ex) {
+        ex.printStackTrace(); // Log the stack trace to Render logs
         return ResponseEntity.internalServerError().body("An unexpected error occurred: " + ex.getMessage());
     }
 }
