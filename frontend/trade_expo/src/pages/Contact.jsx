@@ -10,6 +10,7 @@ import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
+import { contactService } from '../services/contactService';
 
 // Import Assets
 import heroImg from '../assets/Hero poster (unsplash).jfif';
@@ -17,6 +18,7 @@ import heroImg from '../assets/Hero poster (unsplash).jfif';
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,12 +37,23 @@ const Contact = () => {
     return () => revealObserver.disconnect();
   }, []);
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
     
-    // Simulate network request
-    setTimeout(() => {
+    const formData = new FormData(e.target);
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
+      mobile: formData.get('mobile'),
+      subject: formData.get('inquiryType'),
+      message: formData.get('message'),
+    };
+
+    try {
+      await contactService.submitInquiry(data);
       setIsSubmitting(false);
       setShowSuccess(true);
       e.target.reset();
@@ -49,7 +62,11 @@ const Contact = () => {
       setTimeout(() => {
         setShowSuccess(false);
       }, 5000);
-    }, 1500);
+    } catch (err) {
+      console.error("Error submitting contact form:", err);
+      setError("Something went wrong. Please try again later.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -161,14 +178,18 @@ const Contact = () => {
                     <input type="email" id="email" name="email" required className="w-full bg-transparent border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive" placeholder="jane.doe@example.com" />
                   </div>
                   <div className="md:col-span-2">
+                    <label htmlFor="mobile" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Mobile Number *</label>
+                    <input type="tel" id="mobile" name="mobile" required className="w-full bg-transparent border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive" placeholder="+91 98765 43210" />
+                  </div>
+                  <div className="md:col-span-2">
                     <label htmlFor="inquiryType" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Subject / Inquiry Type *</label>
                     <select id="inquiryType" name="inquiryType" required className="w-full bg-white border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive cursor-none">
                       <option value="" disabled>Select an option</option>
-                      <option value="exhibiting">Exhibiting Inquiry</option>
-                      <option value="visiting">Visitor & Tickets Support</option>
-                      <option value="sponsorship">Sponsorship & Partnerships</option>
-                      <option value="media">Press & Media</option>
-                      <option value="other">Other</option>
+                      <option value="Exhibiting Inquiry">Exhibiting Inquiry</option>
+                      <option value="Visitor & Tickets Support">Visitor & Tickets Support</option>
+                      <option value="Sponsorship & Partnerships">Sponsorship & Partnerships</option>
+                      <option value="Press & Media">Press & Media</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div className="md:col-span-2">
@@ -192,6 +213,13 @@ const Contact = () => {
                   <div className="mt-6 p-4 bg-green-50 text-green-700 text-sm border border-green-100 rounded-sm flex items-center gap-3">
                     <CheckCircle weight="fill" className="text-xl" />
                     Your message has been sent successfully. We will be in touch shortly!
+                  </div>
+                )}
+
+                {/* Error Message */}
+                {error && (
+                  <div className="mt-6 p-4 bg-red-50 text-red-700 text-sm border border-red-100 rounded-sm">
+                    {error}
                   </div>
                 )}
               </form>

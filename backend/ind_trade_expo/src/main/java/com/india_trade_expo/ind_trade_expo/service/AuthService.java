@@ -43,6 +43,9 @@ public class AuthService {
     @Autowired
     ExhibitorRepository exhibitorRepository;
 
+    @Autowired
+    EmailService emailService;
+
     private static final String CLIENT_ID = "722892188739-0vhusmm3efogu28v3jjur1vbs6u0d8q7.apps.googleusercontent.com";
 
     public String authenticateUser(String email, String password) {
@@ -69,6 +72,7 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+        emailService.sendWelcomeEmail(user);
     }
 
     public void registerExhibitor(String firstName, String lastName, String email, String password, String mobileNumber, String country, String designation, String companyName, String sector, String website) {
@@ -95,6 +99,7 @@ public class AuthService {
         exhibitor.setRegistrationDate(java.time.LocalDateTime.now());
 
         exhibitorRepository.save(exhibitor);
+        emailService.sendWelcomeEmail(savedUser);
     }
 
     @org.springframework.transaction.annotation.Transactional

@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
+@org.springframework.scheduling.annotation.EnableAsync
 public class IndTradeExpoApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(IndTradeExpoApplication.class);

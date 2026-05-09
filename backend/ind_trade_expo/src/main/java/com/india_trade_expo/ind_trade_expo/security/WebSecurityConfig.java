@@ -73,6 +73,7 @@ public class WebSecurityConfig {
                         auth.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/sectors/**")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/contact/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/test/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/health")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/error")).permitAll()

@@ -28,6 +28,9 @@ public class TicketService {
     @Autowired
     ExhibitorRepository exhibitorRepository;
 
+    @Autowired
+    EmailService emailService;
+
     // @Autowired
     // StripeService stripeService;
 
@@ -60,6 +63,9 @@ public class TicketService {
 
         ticketRepository.save(ticket);
         System.out.println("Dummy ticket saved successfully with Booking ID: " + bookingId);
+
+        // Send confirmation email
+        emailService.sendTicketConfirmation(user, ticket);
 
         // Auto-approve exhibitor if the ticket is for an exhibitor booth (Simulating success logic)
         if (ticketType != null && (ticketType.contains("Booth") || ticketType.contains("Island"))) {

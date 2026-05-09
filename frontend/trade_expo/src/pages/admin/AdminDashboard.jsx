@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, ShieldCheck, SignOut, MagnifyingGlass } from '@phosphor-icons/react';
+import { User, ShieldCheck, SignOut, MagnifyingGlass, ChatCircleText, Check, Trash } from '@phosphor-icons/react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import PageLoader from '../../components/layout/PageLoader';
 import CustomCursor from '../../components/ui/CustomCursor';
 import { useGlobal } from '../../context/GlobalContext';
 import { adminService } from '../../services/adminService';
+import { contactService } from '../../services/contactService';
 import apiClient from '../../api/client';
 
 const AdminDashboard = () => {
@@ -16,6 +17,7 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [exhibitors, setExhibitors] = useState([]);
   const [tickets, setTickets] = useState([]);
+  const [queries, setQueries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visitorSearch, setVisitorSearch] = useState('');
   const [exhibitorSearch, setExhibitorSearch] = useState('');
@@ -35,15 +37,17 @@ const AdminDashboard = () => {
     setFetchError(null);
     try {
       console.log("AdminDashboard: Fetching data...");
-      const [usersData, exhibitorsData, ticketsData] = await Promise.all([
+      const [usersData, exhibitorsData, ticketsData, queriesData] = await Promise.all([
         adminService.getAllUsers(),
         adminService.getAllExhibitors(),
-        adminService.getAllTickets()
+        adminService.getAllTickets(),
+        contactService.getAllInquiries()
       ]);
       
       setUsers(usersData || []);
       setExhibitors(exhibitorsData || []);
       setTickets(ticketsData || []);
+      setQueries(queriesData || []);
       console.log("AdminDashboard: Sync complete. Users found:", usersData?.length);
     } catch (error) {
       console.error('AdminDashboard: Fetch failed', error);
@@ -79,6 +83,26 @@ const AdminDashboard = () => {
       } catch (error) {
         console.error('Failed to delete user', error);
         alert('Error deleting user. Please try again.');
+      }
+    }
+  };
+
+  const handleMarkAsRead = async (id) => {
+    try {
+      await contactService.markAsRead(id);
+      fetchData();
+    } catch (error) {
+      console.error('Failed to mark as read', error);
+    }
+  };
+
+  const handleDeleteQuery = async (id) => {
+    if (window.confirm('Delete this inquiry?')) {
+      try {
+        await contactService.deleteInquiry(id);
+        fetchData();
+      } catch (error) {
+        console.error('Failed to delete query', error);
       }
     }
   };
@@ -121,7 +145,7 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Debug Info */}
           <div className="mb-4 p-2 bg-black text-green-400 text-[10px] font-mono rounded">
-            DEBUG: User Email: {user?.email} | Roles: {JSON.stringify(user?.roles)} | User Count: {users.length} | Loading: {isLoading ? 'YES' : 'NO'}
+            DEBUG: User Email: {user?.email} | Roles: {JSON.stringify(user?.roles)} | User Count: {users.length} | Queries: {queries.length} | Loading: {isLoading ? 'YES' : 'NO'}
           </div>
           
           <div className="flex justify-between items-center mb-12">
@@ -141,7 +165,8 @@ const AdminDashboard = () => {
           <div className="flex gap-4 mb-8 border-b border-gray-200 pb-px overflow-x-auto">
             {[
               { id: 'visitors', label: 'All Registered Users', icon: <User size={20} /> },
-              { id: 'exhibitors_users', label: 'Exhibitors Status', icon: <ShieldCheck size={20} /> }
+              { id: 'exhibitors_users', label: 'Exhibitors Status', icon: <ShieldCheck size={20} /> },
+              { id: 'queries', label: 'User Queries', icon: <ChatCircleText size={20} /> }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -153,6 +178,11 @@ const AdminDashboard = () => {
                 {tab.icon} {tab.label}
                 {activeTab === tab.id && (
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-accent" />
+                )}
+                {tab.id === 'queries' && queries.filter(q => !q.read).length > 0 && (
+                  <span className="ml-1 bg-red-500 text-white text-[8px] px-1.5 py-0.5 rounded-full">
+                    {queries.filter(q => !q.read).length}
+                  </span>
                 )}
               </button>
             ))}
@@ -351,6 +381,71 @@ const AdminDashboard = () => {
                               </tr>
                             );
                           })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'queries' && (
+                  <div>
+                    <h3 className="text-2xl font-serif text-brand-dark mb-6">User Inquiries</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-gray-100">
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">From</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Subject & Message</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Date</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50">
+                          {queries.map((q) => (
+                            <tr key={q.id} className={`hover:bg-brand-light/50 transition-colors ${!q.read ? 'bg-blue-50/30' : ''}`}>
+                              <td className="py-4 text-sm">
+                                <p className="font-medium text-brand-dark">{q.firstName} {q.lastName}</p>
+                                <p className="text-xs text-gray-400">{q.email}</p>
+                                <p className="text-xs text-gray-400">{q.mobile}</p>
+                              </td>
+                              <td className="py-4 text-sm max-w-md">
+                                <p className="font-bold text-brand-accent uppercase tracking-wider text-[11px] mb-1">{q.subject}</p>
+                                <p className="text-gray-600 text-xs leading-relaxed line-clamp-2">{q.message}</p>
+                              </td>
+                              <td className="py-4 text-xs text-gray-500">
+                                {new Date(q.createdAt).toLocaleDateString()}
+                                <br />
+                                {new Date(q.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </td>
+                              <td className="py-4 text-right">
+                                <div className="flex justify-end gap-3">
+                                  {!q.read && (
+                                    <button 
+                                      onClick={() => handleMarkAsRead(q.id)}
+                                      className="text-green-600 hover:text-green-800 transition-colors"
+                                      title="Mark as Read"
+                                    >
+                                      <Check size={18} />
+                                    </button>
+                                  )}
+                                  <button 
+                                    onClick={() => handleDeleteQuery(q.id)}
+                                    className="text-red-500 hover:text-red-700 transition-colors"
+                                    title="Delete"
+                                  >
+                                    <Trash size={18} />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {queries.length === 0 && (
+                            <tr>
+                              <td colSpan="4" className="py-12 text-center text-gray-400 italic text-sm">
+                                No inquiries found.
+                              </td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
