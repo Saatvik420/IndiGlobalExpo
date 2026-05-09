@@ -45,4 +45,23 @@ public class AdminController {
         adminService.deleteUser(id);
         return ResponseEntity.ok("User deleted successfully!");
     }
+
+    // --- Contact Queries ---
+
+    @GetMapping("/queries")
+    public ResponseEntity<List<com.india_trade_expo.ind_trade_expo.model.ContactMessage>> getAllQueries() {
+        return ResponseEntity.ok(adminService.getAllQueries());
+    }
+
+    @PutMapping("/queries/{id}/read")
+    public ResponseEntity<?> markQueryAsRead(@PathVariable String id) {
+        adminService.markQueryAsRead(id);
+        return ResponseEntity.ok("Query marked as read");
+    }
+
+    @DeleteMapping("/queries/{id}")
+    public ResponseEntity<?> deleteQuery(@PathVariable String id) {
+        adminService.deleteQuery(id);
+        return ResponseEntity.ok("Query deleted successfully");
+    }
 }

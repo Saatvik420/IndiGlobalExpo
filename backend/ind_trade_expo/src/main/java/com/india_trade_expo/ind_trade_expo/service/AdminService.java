@@ -22,6 +22,9 @@ public class AdminService {
     @Autowired
     TicketRepository ticketRepository;
 
+    @Autowired
+    com.india_trade_expo.ind_trade_expo.repository.ContactMessageRepository contactMessageRepository;
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -32,6 +35,21 @@ public class AdminService {
 
     public List<com.india_trade_expo.ind_trade_expo.model.Ticket> getAllTickets() {
         return ticketRepository.findAll();
+    }
+
+    public List<com.india_trade_expo.ind_trade_expo.model.ContactMessage> getAllQueries() {
+        return contactMessageRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    public void markQueryAsRead(String id) {
+        contactMessageRepository.findById(id).ifPresent(msg -> {
+            msg.setRead(true);
+            contactMessageRepository.save(msg);
+        });
+    }
+
+    public void deleteQuery(String id) {
+        contactMessageRepository.deleteById(id);
     }
 
     public Exhibitor updateExhibitorStatus(String id, String status) {

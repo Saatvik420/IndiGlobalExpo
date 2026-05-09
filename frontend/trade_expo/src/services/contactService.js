@@ -7,17 +7,17 @@ export const contactService = {
   },
 
   getAllInquiries: async () => {
-    const response = await apiClient.get('/contact/all');
+    const response = await apiClient.get('/admin/queries');
     return response.data;
   },
 
   markAsRead: async (id) => {
-    const response = await apiClient.put(`/contact/read/${id}`);
+    const response = await apiClient.put(`/admin/queries/${id}/read`);
     return response.data;
   },
 
   deleteInquiry: async (id) => {
-    const response = await apiClient.delete(`/contact/${id}`);
+    const response = await apiClient.delete(`/admin/queries/${id}`);
     return response.data;
   }
 };
