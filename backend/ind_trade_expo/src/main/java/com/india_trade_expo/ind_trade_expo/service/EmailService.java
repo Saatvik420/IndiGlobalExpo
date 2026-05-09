@@ -43,16 +43,16 @@ public class EmailService {
 
     public void sendAdminRegistrationNotification(User user) {
         System.out.println("EMAIL DEBUG: Starting Admin Notification for user: " + user.getEmail());
-        String subject = "NEW USER REGISTERED: " + user.getFirstName() + " " + user.getLastName();
-        String content = "<h1>New User Registration</h1>" +
-                "<p>A new user has registered on the platform.</p>" +
-                "<p><strong>Name:</strong> " + user.getFirstName() + " " + user.getLastName() + "</p>" +
+        String subject = "🚨 NEW USER JOINED: " + user.getFirstName() + " " + user.getLastName();
+        String content = "<h1>New User Registration Details</h1>" +
+                "<p><strong>Full Name:</strong> " + user.getFirstName() + " " + user.getLastName() + "</p>" +
                 "<p><strong>Email:</strong> " + user.getEmail() + "</p>" +
-                "<p><strong>Mobile:</strong> " + user.getMobileNumber() + "</p>" +
-                "<p><strong>Company:</strong> " + user.getCompany() + "</p>" +
-                "<p><strong>Designation:</strong> " + user.getDesignation() + "</p>" +
-                "<p><strong>Country:</strong> " + user.getCountry() + "</p>" +
-                "<p><strong>Role:</strong> " + (user.getRoles().contains("ROLE_EXHIBITOR") ? "Exhibitor" : "Visitor") + "</p>";
+                "<p><strong>Mobile:</strong> " + (user.getMobileNumber() != null ? user.getMobileNumber() : "N/A") + "</p>" +
+                "<p><strong>Company Name:</strong> " + (user.getCompany() != null ? user.getCompany() : "N/A") + "</p>" +
+                "<p><strong>Designation:</strong> " + (user.getDesignation() != null ? user.getDesignation() : "N/A") + "</p>" +
+                "<p><strong>Country:</strong> " + (user.getCountry() != null ? user.getCountry() : "N/A") + "</p>" +
+                "<p><strong>Registered As:</strong> " + (user.getRoles().contains("ROLE_EXHIBITOR") ? "Exhibitor" : "Visitor") + "</p>" +
+                "<p><em>Note: You can manage this user in your Admin Dashboard.</em></p>";
         
         sendHtmlEmail(adminReceiver, subject, content);
     }
@@ -76,15 +76,16 @@ public class EmailService {
 
     public void sendAdminTicketNotification(User user, Ticket ticket) {
         System.out.println("EMAIL DEBUG: Starting Admin Ticket Notification for: " + ticket.getBookingId());
-        String subject = "NEW TICKET PURCHASED: " + ticket.getBookingId();
+        String subject = "💰 PAYMENT RECEIVED: " + ticket.getBookingId() + " from " + user.getFirstName();
         
         String content = "<h1>New Ticket Purchase Alert</h1>" +
-                "<p>A user has successfully purchased a ticket.</p>" +
-                "<p><strong>User:</strong> " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")</p>" +
-                "<p><strong>Ticket Type:</strong> " + ticket.getTicketType() + "</p>" +
-                "<p><strong>Amount Paid:</strong> $" + ticket.getPrice() + "</p>" +
+                "<p><strong>User:</strong> " + user.getFirstName() + " " + user.getLastName() + "</p>" +
+                "<p><strong>Email:</strong> " + user.getEmail() + "</p>" +
+                "<p><strong>Ticket Purchased:</strong> " + ticket.getTicketType() + "</p>" +
+                "<p><strong>Price Paid:</strong> $" + ticket.getPrice() + "</p>" +
                 "<p><strong>Booking ID:</strong> " + ticket.getBookingId() + "</p>" +
-                "<p><strong>Payment Status:</strong> " + ticket.getPaymentStatus() + "</p>";
+                "<p><strong>Payment Status:</strong> SUCCESS (PAID)</p>" +
+                "<p><strong>Transaction ID:</strong> " + ticket.getStripePaymentIntentId() + "</p>";
         
         sendHtmlEmail(adminReceiver, subject, content);
     }
