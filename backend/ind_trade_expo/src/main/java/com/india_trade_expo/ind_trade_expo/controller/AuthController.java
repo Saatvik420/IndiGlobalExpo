@@ -136,6 +136,7 @@ public class AuthController {
 
     @PostMapping("/register/exhibitor")
     public ResponseEntity<?> registerExhibitor(@Valid @RequestBody ExhibitorRegisterRequest signUpRequest) {
+        System.out.println("--- RECEIVED EXHIBITOR REGISTRATION REQUEST for: " + signUpRequest.getEmail());
         logger.info("Registering exhibitor: {}", signUpRequest.getEmail());
         
         try {
