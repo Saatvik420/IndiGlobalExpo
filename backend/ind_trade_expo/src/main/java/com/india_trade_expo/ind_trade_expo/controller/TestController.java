@@ -19,7 +19,7 @@ public class TestController {
         try {
             System.out.println("--- MANUAL MAIL TEST TRIGGERED ---");
             emailService.sendSystemHealthEmail();
-            return ResponseEntity.ok("Test email sent! Check Mailtrap.");
+            return ResponseEntity.ok("Test email sent! Check your inbox.");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Mail test failed: " + e.getMessage());
         }
