@@ -4,6 +4,9 @@ import axios from 'axios';
 // Using proxy path for development
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
+console.log("--- API CLIENT INITIALIZED ---");
+console.log("Base URL is set to:", API_URL);
+
 const apiClient = axios.create({
   baseURL: API_URL,
 });
@@ -11,6 +14,7 @@ const apiClient = axios.create({
 // Request Interceptor: Attach JWT Token to every request
 apiClient.interceptors.request.use(
   (config) => {
+    console.log(`📡 Sending ${config.method.toUpperCase()} to: ${config.baseURL}${config.url}`);
     const userData = localStorage.getItem('user');
     if (userData) {
       try {
