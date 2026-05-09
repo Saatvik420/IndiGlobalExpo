@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -19,7 +20,8 @@ public class ContactController {
     @PostMapping("/submit")
     public ResponseEntity<?> submitContactForm(@RequestBody ContactMessage message) {
         try {
-            message.setCreatedAt(LocalDateTime.now());
+            // Save date as a formatted string for cross-platform stability
+            message.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             message.setRead(false);
             contactMessageRepository.save(message);
             return ResponseEntity.ok("Message submitted successfully");

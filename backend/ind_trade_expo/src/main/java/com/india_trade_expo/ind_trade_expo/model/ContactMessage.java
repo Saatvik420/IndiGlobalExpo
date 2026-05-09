@@ -3,8 +3,6 @@ package com.india_trade_expo.ind_trade_expo.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
-
 @Document(collection = "contact_messages")
 public class ContactMessage {
     @Id
@@ -15,12 +13,12 @@ public class ContactMessage {
     private String mobile;
     private String subject;
     private String message;
-    private LocalDateTime createdAt;
+    private String createdAt; // Changed to String for stability
     private boolean read;
 
     public ContactMessage() {}
 
-    public ContactMessage(String id, String firstName, String lastName, String email, String mobile, String subject, String message, LocalDateTime createdAt, boolean read) {
+    public ContactMessage(String id, String firstName, String lastName, String email, String mobile, String subject, String message, String createdAt, boolean read) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,8 +48,8 @@ public class ContactMessage {
     public void setSubject(String subject) { this.subject = subject; }
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
     public boolean isRead() { return read; }
     public void setRead(boolean read) { this.read = read; }
 
@@ -63,7 +61,7 @@ public class ContactMessage {
         private String mobile;
         private String subject;
         private String message;
-        private LocalDateTime createdAt;
+        private String createdAt;
         private boolean read;
 
         public ContactMessageBuilder id(String id) { this.id = id; return this; }
@@ -73,7 +71,7 @@ public class ContactMessage {
         public ContactMessageBuilder mobile(String mobile) { this.mobile = mobile; return this; }
         public ContactMessageBuilder subject(String subject) { this.subject = subject; return this; }
         public ContactMessageBuilder message(String message) { this.message = message; return this; }
-        public ContactMessageBuilder createdAt(LocalDateTime createdAt) { this.createdAt = createdAt; return this; }
+        public ContactMessageBuilder createdAt(String createdAt) { this.createdAt = createdAt; return this; }
         public ContactMessageBuilder read(boolean read) { this.read = read; return this; }
 
         public ContactMessage build() {
