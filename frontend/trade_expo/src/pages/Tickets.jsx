@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  IdentificationBadge, Storefront, CreditCard, Check, Spinner, Ticket, 
+  IdentificationBadge, Storefront, CreditCard, Check, CircleNotch, Ticket, 
   User as UserIcon, ArrowRight, X, SignIn, UserPlus, ArrowLeft, CheckCircle, FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo
 } from '@phosphor-icons/react';
 import Header from '../components/layout/Header';
@@ -11,6 +11,7 @@ import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import { useGlobal } from '../context/GlobalContext';
 import { authService } from '../services/authService';
+import { ticketService } from '../services/ticketService';
 import { getErrorMessage } from '../utils/errorHelper';
 
 const Tickets = () => {
@@ -119,26 +120,30 @@ const Tickets = () => {
     setStep(3);
   };
 
-  const handlePayment = (e) => {
+  const handlePayment = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
+    setError('');
     
-    setTimeout(() => {
-      const dummyBookingId = "#IGX-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-      const dummyTicket = {
-        id: "dummy_" + Date.now(),
-        type: currentTicket.type,
-        price: currentTicket.price,
-        bookingId: dummyBookingId,
-        date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        role: currentRole
+    try {
+      console.log("Processing payment for:", currentTicket.type);
+      const paymentData = {
+        ticketType: currentTicket.type,
+        price: currentTicket.price
       };
 
-      setBookingId(dummyBookingId);
-      addTicket(dummyTicket);
+      const response = await ticketService.purchaseTicket(paymentData);
+      console.log("Payment successful on backend:", response);
+
+      setBookingId(response.ticket.bookingId);
+      addTicket(response.ticket);
       setStep(4);
+    } catch (err) {
+      console.error("Payment failed:", err);
+      setError(getErrorMessage(err, 'Payment failed. Please try again.'));
+    } finally {
       setIsProcessing(false);
-    }, 1500);
+    }
   };
 
   const visitorTickets = [
@@ -293,7 +298,7 @@ const Tickets = () => {
                   {error && <p className="text-red-500 text-xs font-bold text-center mb-4">{error}</p>}
                   
                   <button type="submit" disabled={isLoggingIn} className="w-full bg-brand-dark text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2">
-                    {isLoggingIn ? <Spinner size={18} className="animate-spin" /> : 'Log In'} <ArrowRight size={16} />
+                    {isLoggingIn ? <CircleNotch size={18} className="animate-spin" /> : 'Log In'} <ArrowRight size={16} />
                   </button>
                   
                   <div className="flex flex-col items-center gap-4 mt-8 pt-8 border-t border-gray-100">
@@ -350,7 +355,7 @@ const Tickets = () => {
                       <ArrowLeft /> Change Role
                     </button>
                     <button type="submit" disabled={isLoggingIn} className="w-full sm:w-auto bg-brand-dark text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive">
-                      {isLoggingIn ? <Spinner size={18} className="animate-spin" /> : 'Create Account'}
+                      {isLoggingIn ? <CircleNotch size={18} className="animate-spin" /> : 'Create Account'}
                     </button>
                   </div>
                   
@@ -447,7 +452,7 @@ const Tickets = () => {
                         <ArrowLeft /> Change Selection
                       </button>
                       <button type="submit" disabled={isProcessing} className="w-full sm:w-auto bg-brand-accent text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-dark transition-all interactive flex justify-center items-center gap-2">
-                        {isProcessing ? <Spinner size={18} className="animate-spin" /> : 'Pay'} <span>€{currentTicket.price.toLocaleString()}</span>
+                        {isProcessing ? <CircleNotch size={18} className="animate-spin" /> : 'Pay'} <span>€{currentTicket.price.toLocaleString()}</span>
                       </button>
                     </div>
                   </form>

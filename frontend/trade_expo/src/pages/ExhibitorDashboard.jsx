@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Ticket, Storefront, ShieldCheck, SignOut, ClockCounterClockwise, ArrowRight, Spinner, CheckCircle, XCircle } from '@phosphor-icons/react';
+import { User, Ticket, Storefront, ShieldCheck, SignOut, ClockCounterClockwise, ArrowRight, CircleNotch, CheckCircle, XCircle } from '@phosphor-icons/react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import PageLoader from '../components/layout/PageLoader';
@@ -132,7 +132,7 @@ const ExhibitorDashboard = () => {
                       }`}>
                         {application.status === 'APPROVED' && <CheckCircle weight="fill" />}
                         {application.status === 'REJECTED' && <XCircle weight="fill" />}
-                        {application.status === 'PENDING' && <Spinner className="animate-spin" />}
+                        {application.status === 'PENDING' && <CircleNotch className="animate-spin" />}
                         {application.status}
                       </div>
                       <p className="text-[10px] text-gray-400 uppercase tracking-widest">Submitted on {new Date(application.registrationDate).toLocaleDateString()}</p>
