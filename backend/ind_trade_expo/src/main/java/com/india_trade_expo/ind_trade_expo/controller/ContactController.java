@@ -19,38 +19,51 @@ public class ContactController {
     @Autowired
     ContactMessageRepository contactMessageRepository;
 
-    @Autowired
-    EmailService emailService;
-
     @PostMapping("/submit")
     public ResponseEntity<?> submitContactForm(@RequestBody ContactMessage message) {
-        message.setCreatedAt(LocalDateTime.now());
-        message.setRead(false);
-        
-        contactMessageRepository.save(message);
-        
-        return ResponseEntity.ok("Message submitted successfully");
+        try {
+            message.setCreatedAt(LocalDateTime.now());
+            message.setRead(false);
+            contactMessageRepository.save(message);
+            return ResponseEntity.ok("Message submitted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error saving message: " + e.getMessage());
+        }
     }
 
     @GetMapping("/all")
-    public List<ContactMessage> getAllMessages() {
-        return contactMessageRepository.findAllByOrderByCreatedAtDesc();
+    public ResponseEntity<?> getAllMessages() {
+        try {
+            List<ContactMessage> messages = contactMessageRepository.findAllByOrderByCreatedAtDesc();
+            return ResponseEntity.ok(messages);
+        } catch (Exception e) {
+            e.printStackTrace(); // This will show in Render logs
+            return ResponseEntity.internalServerError().body("Database Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/read/{id}")
     public ResponseEntity<?> markAsRead(@PathVariable String id) {
-        return contactMessageRepository.findById(id)
-                .map(msg -> {
-                    msg.setRead(true);
-                    contactMessageRepository.save(msg);
-                    return ResponseEntity.ok("Message marked as read");
-                })
-                .orElse(ResponseEntity.notFound().build());
+        try {
+            return contactMessageRepository.findById(id)
+                    .map(msg -> {
+                        msg.setRead(true);
+                        contactMessageRepository.save(msg);
+                        return ResponseEntity.ok("Message marked as read");
+                    })
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error updating message: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMessage(@PathVariable String id) {
-        contactMessageRepository.deleteById(id);
-        return ResponseEntity.ok("Message deleted successfully");
+        try {
+            contactMessageRepository.deleteById(id);
+            return ResponseEntity.ok("Message deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error deleting message: " + e.getMessage());
+        }
     }
 }
