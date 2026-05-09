@@ -54,6 +54,8 @@ public class IndTradeExpoApplication {
 		System.out.println("PRE-STARTUP DIAGNOSTICS:");
 		System.out.println("MONGO_URI present: " + (System.getenv("MONGO_URI") != null));
 		System.out.println("MAIL_HOST present: " + (System.getenv("MAIL_HOST") != null));
+		System.out.println("--- Available Env Keys ---");
+		System.getenv().keySet().forEach(key -> System.out.println("Key found: " + key));
 		System.out.println("=========================================");
 
 		SpringApplication.run(IndTradeExpoApplication.class, args);
