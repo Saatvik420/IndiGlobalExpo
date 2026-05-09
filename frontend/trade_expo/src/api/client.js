@@ -2,13 +2,14 @@ import axios from 'axios';
 
 // The base URL can be moved to a .env file later
 // Using proxy path for development
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+// Force the frontend to talk directly to the working Render backend
+const RENDER_BACKEND_URL = "https://indiglobal-backend-staging.onrender.com/api";
 
-console.log("--- API CLIENT INITIALIZED ---");
-console.log("Base URL is set to:", API_URL);
+console.log("--- API CLIENT DIRECT CONNECT ---");
+console.log("Targeting Backend at:", RENDER_BACKEND_URL);
 
 const apiClient = axios.create({
-  baseURL: API_URL,
+  baseURL: RENDER_BACKEND_URL,
 });
 
 // Request Interceptor: Attach JWT Token to every request
