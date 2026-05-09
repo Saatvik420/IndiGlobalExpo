@@ -51,6 +51,10 @@ public class IndTradeExpoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(IndTradeExpoApplication.class, args);
+		System.out.println("--- APPLICATION STARTED SUCCESSFULLY ---");
+		System.out.println("Checking Mail Config:");
+		System.out.println("Host: " + System.getenv("MAIL_HOST"));
+		System.out.println("User: " + System.getenv("MAIL_USERNAME"));
 	}
 
 	@Bean
