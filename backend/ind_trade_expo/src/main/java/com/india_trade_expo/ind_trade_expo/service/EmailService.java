@@ -31,6 +31,7 @@ public class EmailService {
 
     @Async
     public void sendWelcomeEmail(User user) {
+        logger.info("EMAIL DEBUG: Starting Welcome Email process for: {}", user.getEmail());
         String subject = "Welcome to India Trade Expo 2026!";
         String content = "<h1>Hello " + user.getFirstName() + ",</h1>" +
                 "<p>Thank you for registering for the India Trade Expo 2026. We are excited to have you with us!</p>" +
@@ -43,6 +44,7 @@ public class EmailService {
 
     @Async
     public void sendAdminRegistrationNotification(User user) {
+        logger.info("EMAIL DEBUG: Starting Admin Notification for user: {}", user.getEmail());
         String subject = "NEW USER REGISTERED: " + user.getFirstName() + " " + user.getLastName();
         String content = "<h1>New User Registration</h1>" +
                 "<p>A new user has registered on the platform.</p>" +
@@ -59,6 +61,7 @@ public class EmailService {
 
     @Async
     public void sendTicketConfirmation(User user, Ticket ticket) {
+        logger.info("EMAIL DEBUG: Starting Ticket Confirmation for: {} (Booking: {})", user.getEmail(), ticket.getBookingId());
         String subject = "Thank you for registering for the Event! - " + ticket.getBookingId();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         
@@ -74,16 +77,9 @@ public class EmailService {
         sendHtmlEmail(user.getEmail(), subject, content);
     }
 
-    // Contact acknowledgment removed as per request to show in dashboard only
-    /*
-    @Async
-    public void sendContactUsAcknowledgment(ContactMessage message) {
-        ...
-    }
-    */
-
     private void sendHtmlEmail(String to, String subject, String htmlContent) {
         try {
+            logger.info("EMAIL DEBUG: Attempting to connect to SMTP server to send to: {}", to);
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             
@@ -93,9 +89,9 @@ public class EmailService {
             helper.setText(htmlContent, true);
             
             mailSender.send(message);
-            logger.info("Email sent successfully to: {}", to);
+            logger.info("EMAIL DEBUG: Success! Email sent to: {}", to);
         } catch (MessagingException e) {
-            logger.error("Failed to send email to: {}. Error: {}", to, e.getMessage());
+            logger.error("EMAIL DEBUG: Failed to send email to: {}. Error: {}", to, e.getMessage());
         }
     }
 }
