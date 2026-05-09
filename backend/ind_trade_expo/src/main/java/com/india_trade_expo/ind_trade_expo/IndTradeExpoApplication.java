@@ -50,11 +50,14 @@ public class IndTradeExpoApplication {
 	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
+		System.out.println("=========================================");
+		System.out.println("PRE-STARTUP DIAGNOSTICS:");
+		System.out.println("MONGO_URI present: " + (System.getenv("MONGO_URI") != null));
+		System.out.println("MAIL_HOST present: " + (System.getenv("MAIL_HOST") != null));
+		System.out.println("=========================================");
+
 		SpringApplication.run(IndTradeExpoApplication.class, args);
 		System.out.println("--- APPLICATION STARTED SUCCESSFULLY ---");
-		System.out.println("Checking Config:");
-		System.out.println("Mongo URI defined: " + (System.getenv("MONGO_URI") != null));
-		System.out.println("Mail Host: " + System.getenv("MAIL_HOST"));
 	}
 
 	@Bean
