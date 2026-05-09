@@ -41,12 +41,7 @@ public class AdminService {
     }
 
     public List<ContactMessage> getAllQueries() {
-        try {
-            return contactMessageRepository.findAll();
-        } catch (Exception e) {
-            System.err.println("Database error in AdminService.getAllQueries: " + e.getMessage());
-            throw e;
-        }
+        return contactMessageRepository.findAll();
     }
 
     public void markQueryAsRead(String id) {
