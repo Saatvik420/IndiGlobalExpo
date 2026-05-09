@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   GlobeHemisphereEast, UsersThree, Star, ChartLineUp, LightbulbFilament, 
-  RocketLaunch, Check, CheckCircle, Ticket, X, Spinner, ArrowRight 
-} from '@phosphor-icons/react';
-import Header from '../components/layout/Header';
+  RocketLaunch, Check, CheckCircle, Ticket, X, CircleNotch, ArrowRight
+  } from '@phosphor-icons/react';import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
