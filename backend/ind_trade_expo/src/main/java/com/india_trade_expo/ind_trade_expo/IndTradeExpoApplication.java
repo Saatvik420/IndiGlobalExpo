@@ -16,13 +16,13 @@ public class IndTradeExpoApplication {
 		System.out.println("###################################################");
 		
 		// Confirming environment variables before Spring even starts
-		String mongoUrl = System.getenv("MONGODB_URL");
-		String mailHost = System.getenv("MAIL_HOST");
+		String mailUser = System.getenv("MAIL_USERNAME");
+		String mailPass = System.getenv("MAIL_PASSWORD");
 		
 		System.out.println("Checking Environment:");
-		System.out.println("MONGODB_URL present: " + (mongoUrl != null));
-		System.out.println("MAIL_HOST present: " + (mailHost != null));
-		if (mailHost != null) System.out.println("Active Mail Host: " + mailHost);
+		System.out.println("MAIL_HOST present: " + (System.getenv("MAIL_HOST") != null));
+		System.out.println("MAIL_USER length: " + (mailUser != null ? mailUser.length() : 0));
+		System.out.println("MAIL_PASS length: " + (mailPass != null ? mailPass.length() : 0));
 		
 		SpringApplication.run(IndTradeExpoApplication.class, args);
 	}
