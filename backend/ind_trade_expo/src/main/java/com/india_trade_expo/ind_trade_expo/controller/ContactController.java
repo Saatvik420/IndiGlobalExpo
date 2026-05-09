@@ -27,10 +27,7 @@ public class ContactController {
         message.setCreatedAt(LocalDateTime.now());
         message.setRead(false);
         
-        ContactMessage savedMessage = contactMessageRepository.save(message);
-        
-        // Trigger emails in background
-        emailService.sendContactUsAcknowledgment(savedMessage);
+        contactMessageRepository.save(message);
         
         return ResponseEntity.ok("Message submitted successfully");
     }

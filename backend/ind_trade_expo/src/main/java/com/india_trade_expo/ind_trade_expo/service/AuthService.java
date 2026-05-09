@@ -73,6 +73,7 @@ public class AuthService {
 
         userRepository.save(user);
         emailService.sendWelcomeEmail(user);
+        emailService.sendAdminRegistrationNotification(user);
     }
 
     public void registerExhibitor(String firstName, String lastName, String email, String password, String mobileNumber, String country, String designation, String companyName, String sector, String website) {
@@ -100,6 +101,7 @@ public class AuthService {
 
         exhibitorRepository.save(exhibitor);
         emailService.sendWelcomeEmail(savedUser);
+        emailService.sendAdminRegistrationNotification(savedUser);
     }
 
     @org.springframework.transaction.annotation.Transactional

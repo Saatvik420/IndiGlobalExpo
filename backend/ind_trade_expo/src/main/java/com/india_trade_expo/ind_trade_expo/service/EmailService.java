@@ -26,7 +26,7 @@ public class EmailService {
     @Value("${spring.mail.properties.mail.from}")
     private String fromEmail;
 
-    @Value("${MAIL_ADMIN_RECEIVER:admin@indiatradeexpo.com}")
+    @Value("${MAIL_ADMIN_RECEIVER:saatvikdon@gmail.com}")
     private String adminReceiver;
 
     @Async
@@ -42,43 +42,45 @@ public class EmailService {
     }
 
     @Async
+    public void sendAdminRegistrationNotification(User user) {
+        String subject = "NEW USER REGISTERED: " + user.getFirstName() + " " + user.getLastName();
+        String content = "<h1>New User Registration</h1>" +
+                "<p>A new user has registered on the platform.</p>" +
+                "<p><strong>Name:</strong> " + user.getFirstName() + " " + user.getLastName() + "</p>" +
+                "<p><strong>Email:</strong> " + user.getEmail() + "</p>" +
+                "<p><strong>Mobile:</strong> " + user.getMobileNumber() + "</p>" +
+                "<p><strong>Company:</strong> " + user.getCompany() + "</p>" +
+                "<p><strong>Designation:</strong> " + user.getDesignation() + "</p>" +
+                "<p><strong>Country:</strong> " + user.getCountry() + "</p>" +
+                "<p><strong>Role:</strong> " + (user.getRoles().contains("ROLE_EXHIBITOR") ? "Exhibitor" : "Visitor") + "</p>";
+        
+        sendHtmlEmail(adminReceiver, subject, content);
+    }
+
+    @Async
     public void sendTicketConfirmation(User user, Ticket ticket) {
-        String subject = "Ticket Confirmation - " + ticket.getBookingId();
+        String subject = "Thank you for registering for the Event! - " + ticket.getBookingId();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         
-        String content = "<h1>Ticket Purchased Successfully!</h1>" +
+        String content = "<h1>Registration Confirmed!</h1>" +
                 "<p>Hi " + user.getFirstName() + ",</p>" +
-                "<p>Your ticket for <strong>" + ticket.getTicketType() + "</strong> has been confirmed.</p>" +
+                "<p>Thank you for registering for the India Trade Expo 2026. Your ticket for <strong>" + ticket.getTicketType() + "</strong> is confirmed.</p>" +
                 "<p><strong>Booking ID:</strong> " + ticket.getBookingId() + "</p>" +
                 "<p><strong>Amount Paid:</strong> $" + ticket.getPrice() + "</p>" +
                 "<p><strong>Purchase Date:</strong> " + ticket.getPurchaseDate().format(formatter) + "</p>" +
-                "<br><p>Show this Booking ID at the entrance for entry.</p>" +
+                "<br><p>Please present this Booking ID at the venue entrance.</p>" +
                 "<br><p>Best Regards,<br>India Trade Expo Team</p>";
 
         sendHtmlEmail(user.getEmail(), subject, content);
     }
 
+    // Contact acknowledgment removed as per request to show in dashboard only
+    /*
     @Async
     public void sendContactUsAcknowledgment(ContactMessage message) {
-        String userSubject = "We've received your inquiry: " + message.getSubject();
-        String userContent = "<h1>Hi " + message.getFirstName() + ",</h1>" +
-                "<p>Thank you for reaching out to us. We have received your query regarding: <strong>" + message.getSubject() + "</strong></p>" +
-                "<p>Our team will review your message and get back to you shortly.</p>" +
-                "<br><p>Message Summary:<br><em>" + message.getMessage() + "</em></p>" +
-                "<br><p>Best Regards,<br>India Trade Expo Team</p>";
-
-        sendHtmlEmail(message.getEmail(), userSubject, userContent);
-
-        // Send notification to Admin
-        String adminSubject = "NEW INQUIRY: " + message.getSubject();
-        String adminContent = "<h1>New Contact Inquiry</h1>" +
-                "<p><strong>From:</strong> " + message.getFirstName() + " " + message.getLastName() + " (" + message.getEmail() + ")</p>" +
-                "<p><strong>Mobile:</strong> " + message.getMobile() + "</p>" +
-                "<p><strong>Subject:</strong> " + message.getSubject() + "</p>" +
-                "<p><strong>Message:</strong></p><p>" + message.getMessage() + "</p>";
-        
-        sendHtmlEmail(adminReceiver, adminSubject, adminContent);
+        ...
     }
+    */
 
     private void sendHtmlEmail(String to, String subject, String htmlContent) {
         try {
