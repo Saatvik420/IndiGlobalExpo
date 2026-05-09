@@ -36,21 +36,41 @@ const AdminDashboard = () => {
     setIsLoading(true);
     setFetchError(null);
     try {
-      console.log("AdminDashboard: Fetching data...");
+      console.log("AdminDashboard: Syncing data components...");
+      
+      // Fetch each component individually to prevent one failure from breaking the whole dashboard
+      const fetchUsers = adminService.getAllUsers().catch(err => {
+        console.error("Dashboard: User fetch failed", err);
+        return [];
+      });
+      
+      const fetchExhibitors = adminService.getAllExhibitors().catch(err => {
+        console.error("Dashboard: Exhibitor fetch failed", err);
+        return [];
+      });
+      
+      const fetchTickets = adminService.getAllTickets().catch(err => {
+        console.error("Dashboard: Ticket fetch failed", err);
+        return [];
+      });
+      
+      const fetchQueries = contactService.getAllInquiries().catch(err => {
+        console.error("Dashboard: Queries fetch failed (500 Error)", err);
+        return []; // Return empty array so the UI doesn't crash
+      });
+
       const [usersData, exhibitorsData, ticketsData, queriesData] = await Promise.all([
-        adminService.getAllUsers(),
-        adminService.getAllExhibitors(),
-        adminService.getAllTickets(),
-        contactService.getAllInquiries()
+        fetchUsers, fetchExhibitors, fetchTickets, fetchQueries
       ]);
       
       setUsers(usersData || []);
       setExhibitors(exhibitorsData || []);
       setTickets(ticketsData || []);
       setQueries(queriesData || []);
-      console.log("AdminDashboard: Sync complete. Users found:", usersData?.length);
+      
+      console.log("AdminDashboard: Sync complete.");
     } catch (error) {
-      console.error('AdminDashboard: Fetch failed', error);
+      console.error('AdminDashboard: Global Fetch failed', error);
       setFetchError(error.message || 'Network Error - Backend unreachable');
     } finally {
       setIsLoading(false);
