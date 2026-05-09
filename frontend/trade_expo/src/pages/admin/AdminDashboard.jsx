@@ -246,7 +246,7 @@ const AdminDashboard = () => {
                         <thead>
                           <tr className="border-b border-gray-100">
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">User Name (Role)</th>
-                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Payment & Ticket</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Payment Status</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Mail</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Phone Number</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Company & Designation</th>
@@ -275,14 +275,17 @@ const AdminDashboard = () => {
                                   {userTickets.length > 0 ? (
                                     <div className="flex flex-col gap-1">
                                       {userTickets.map(t => (
-                                        <span key={t.id} className="px-2 py-1 text-[9px] font-bold rounded-full uppercase tracking-widest bg-green-100 text-green-700 w-fit">
-                                          {t.ticketType} - PAID
-                                        </span>
+                                        <div key={t.id} className="group relative">
+                                          <span className="px-2 py-1 text-[9px] font-bold rounded-full uppercase tracking-widest bg-green-600 text-white w-fit flex items-center gap-1">
+                                            <ShieldCheck size={10} weight="fill" /> PAID: {t.ticketType}
+                                          </span>
+                                          <p className="text-[8px] text-gray-400 mt-0.5 font-mono">{t.bookingId}</p>
+                                        </div>
                                       ))}
                                     </div>
                                   ) : (
-                                    <span className="px-2 py-1 text-[9px] font-bold rounded-full uppercase tracking-widest bg-yellow-100 text-yellow-700">
-                                      PENDING PAYMENT
+                                    <span className="px-2 py-1 text-[9px] font-bold rounded-full uppercase tracking-widest bg-gray-100 text-gray-400 border border-gray-200">
+                                      NOT PURCHASED
                                     </span>
                                   )}
                                 </td>

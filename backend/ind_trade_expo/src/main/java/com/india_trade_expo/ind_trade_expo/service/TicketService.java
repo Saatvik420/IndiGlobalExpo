@@ -49,12 +49,13 @@ public class TicketService {
         // DUMMY PAYMENT SYSTEM: Skipping real Stripe PaymentIntent creation
         String dummyPaymentIntentId = "pi_dummy_" + generateRandomString(12);
 
-        // UNIQUE BOOKING ID ALGORITHM: IGX-YEAR-TIMESTAMP-RANDOM
-        java.time.LocalDateTime now = java.time.LocalDateTime.now();
-        String bookingId = String.format("#IGX-%d%02d-%s", 
-                now.getYear(), 
-                now.getDayOfYear(),
-                generateRandomString(4));
+        // ABSOLUTE UNIQUE ID: REG-[YEAR]-[NANO-TIME]-[RANDOM]
+        long timestamp = System.nanoTime();
+        String uniqueSuffix = generateRandomString(4);
+        String bookingId = String.format("IGX-REG-%d-%X-%s", 
+                java.time.Year.now().getValue(),
+                timestamp,
+                uniqueSuffix);
 
         Ticket ticket = Ticket.builder()
                 .userId(user.getId())
