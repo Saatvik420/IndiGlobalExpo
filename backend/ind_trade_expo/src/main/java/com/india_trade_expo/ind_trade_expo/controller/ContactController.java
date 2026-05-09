@@ -2,7 +2,6 @@ package com.india_trade_expo.ind_trade_expo.controller;
 
 import com.india_trade_expo.ind_trade_expo.model.ContactMessage;
 import com.india_trade_expo.ind_trade_expo.repository.ContactMessageRepository;
-import com.india_trade_expo.ind_trade_expo.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,17 +31,22 @@ public class ContactController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getAllMessages() {
         try {
-            List<ContactMessage> messages = contactMessageRepository.findAllByOrderByCreatedAtDesc();
+            System.out.println("Contact API: Fetching all messages...");
+            List<ContactMessage> messages = contactMessageRepository.findAll();
+            System.out.println("Contact API: Found " + messages.size() + " messages.");
             return ResponseEntity.ok(messages);
         } catch (Exception e) {
-            e.printStackTrace(); // This will show in Render logs
+            System.err.println("Contact API Error: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body("Database Error: " + e.getMessage());
         }
     }
 
     @PutMapping("/read/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> markAsRead(@PathVariable String id) {
         try {
             return contactMessageRepository.findById(id)
@@ -58,6 +62,7 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteMessage(@PathVariable String id) {
         try {
             contactMessageRepository.deleteById(id);
