@@ -75,6 +75,7 @@ public class WebSecurityConfig {
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/sectors/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/contact/submit")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/admin/**")).hasRole("ADMIN")
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/support/**")).hasRole("ADMIN")
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/test/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/health")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/error")).permitAll()

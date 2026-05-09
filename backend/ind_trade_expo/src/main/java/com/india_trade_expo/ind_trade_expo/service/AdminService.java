@@ -2,12 +2,9 @@ package com.india_trade_expo.ind_trade_expo.service;
 
 import com.india_trade_expo.ind_trade_expo.model.Exhibitor;
 import com.india_trade_expo.ind_trade_expo.model.User;
-import com.india_trade_expo.ind_trade_expo.model.Ticket;
-import com.india_trade_expo.ind_trade_expo.model.ContactMessage;
 import com.india_trade_expo.ind_trade_expo.repository.ExhibitorRepository;
 import com.india_trade_expo.ind_trade_expo.repository.TicketRepository;
 import com.india_trade_expo.ind_trade_expo.repository.UserRepository;
-import com.india_trade_expo.ind_trade_expo.repository.ContactMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +22,6 @@ public class AdminService {
     @Autowired
     TicketRepository ticketRepository;
 
-    @Autowired
-    ContactMessageRepository contactMessageRepository;
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -36,23 +30,8 @@ public class AdminService {
         return exhibitorRepository.findAll();
     }
 
-    public List<Ticket> getAllTickets() {
+    public List<com.india_trade_expo.ind_trade_expo.model.Ticket> getAllTickets() {
         return ticketRepository.findAll();
-    }
-
-    public List<ContactMessage> getAllQueries() {
-        return contactMessageRepository.findAll();
-    }
-
-    public void markQueryAsRead(String id) {
-        contactMessageRepository.findById(id).ifPresent(msg -> {
-            msg.setRead(true);
-            contactMessageRepository.save(msg);
-        });
-    }
-
-    public void deleteQuery(String id) {
-        contactMessageRepository.deleteById(id);
     }
 
     public Exhibitor updateExhibitorStatus(String id, String status) {
