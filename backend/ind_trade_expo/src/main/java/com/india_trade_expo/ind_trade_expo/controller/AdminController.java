@@ -1,5 +1,6 @@
 package com.india_trade_expo.ind_trade_expo.controller;
 
+import com.india_trade_expo.ind_trade_expo.model.ContactMessage;
 import com.india_trade_expo.ind_trade_expo.model.Exhibitor;
 import com.india_trade_expo.ind_trade_expo.model.User;
 import com.india_trade_expo.ind_trade_expo.service.AdminService;
@@ -9,7 +10,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -19,10 +22,7 @@ public class AdminController {
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
-        System.out.println("Admin API: Fetching all users...");
-        List<User> users = adminService.getAllUsers();
-        System.out.println("Admin API: Found " + users.size() + " users.");
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(adminService.getAllUsers());
     }
 
     @GetMapping("/exhibitors")
@@ -49,8 +49,22 @@ public class AdminController {
     // --- Contact Queries ---
 
     @GetMapping("/queries")
-    public ResponseEntity<List<com.india_trade_expo.ind_trade_expo.model.ContactMessage>> getAllQueries() {
-        return ResponseEntity.ok(adminService.getAllQueries());
+    public ResponseEntity<?> getAllQueries() {
+        try {
+            System.out.println("Admin API: Fetching all queries...");
+            List<ContactMessage> queries = adminService.getAllQueries();
+            System.out.println("Admin API: Successfully fetched " + queries.size() + " queries.");
+            return ResponseEntity.ok(queries);
+        } catch (Exception e) {
+            System.err.println("Admin API Error in /queries: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Admin API Error: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/queries/test")
+    public ResponseEntity<String> testAdminApi() {
+        return ResponseEntity.ok("Admin API is reachable and you are authorized!");
     }
 
     @PutMapping("/queries/{id}/read")
