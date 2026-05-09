@@ -49,16 +49,23 @@ public class IndTradeExpoApplication {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public static void main(String[] args) {
-		System.out.println("=========================================");
-		System.out.println("PRE-STARTUP DIAGNOSTICS:");
-		System.out.println("MONGODB_URL present: " + (System.getenv("MONGODB_URL") != null));
-		System.out.println("MONGO_URI present: " + (System.getenv("MONGO_URI") != null));
-		System.out.println("MAIL_HOST present: " + (System.getenv("MAIL_HOST") != null));
-		System.out.println("=========================================");
+	@Autowired
+	private com.india_trade_expo.ind_trade_expo.service.EmailService emailService;
 
-		SpringApplication.run(IndTradeExpoApplication.class, args);
+	public static void main(String[] args) {
+		org.springframework.context.ConfigurableApplicationContext context = SpringApplication.run(IndTradeExpoApplication.class, args);
+		System.out.println("=========================================");
 		System.out.println("--- APPLICATION STARTED SUCCESSFULLY ---");
+		
+		// Attempt a startup email test
+		try {
+			com.india_trade_expo.ind_trade_expo.service.EmailService service = context.getBean(com.india_trade_expo.ind_trade_expo.service.EmailService.class);
+			System.out.println("TESTING MAIL CONNECTION...");
+			service.sendSystemHealthEmail();
+		} catch (Exception e) {
+			System.out.println("STARTUP MAIL TEST FAILED: " + e.getMessage());
+		}
+		System.out.println("=========================================");
 	}
 
 	@Bean

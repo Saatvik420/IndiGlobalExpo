@@ -139,6 +139,11 @@ public class AuthService {
                             .build();
                     User saved = userRepository.save(newUser);
                     System.out.println("New Google user saved with ID: " + saved.getId());
+                    
+                    // Send Welcome Emails for Google registration
+                    emailService.sendWelcomeEmail(saved);
+                    emailService.sendAdminRegistrationNotification(saved);
+                    
                     return saved;
                 });
 

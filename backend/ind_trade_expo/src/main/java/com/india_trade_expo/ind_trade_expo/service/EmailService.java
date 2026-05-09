@@ -5,8 +5,6 @@ import com.india_trade_expo.ind_trade_expo.model.Ticket;
 import com.india_trade_expo.ind_trade_expo.model.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 public class EmailService {
-    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -28,8 +25,12 @@ public class EmailService {
     @Value("${MAIL_ADMIN_RECEIVER:saatvikdon@gmail.com}")
     private String adminReceiver;
 
+    public void sendSystemHealthEmail() {
+        sendHtmlEmail(adminReceiver, "System Health Check", "<h1>System is Live</h1><p>The India Trade Expo notification system has started successfully.</p>");
+    }
+
     public void sendWelcomeEmail(User user) {
-        logger.info("EMAIL DEBUG: Starting Welcome Email process for: {}", user.getEmail());
+        System.out.println("EMAIL DEBUG: Starting Welcome Email process for: " + user.getEmail());
         String subject = "Welcome to India Trade Expo 2026!";
         String content = "<h1>Hello " + user.getFirstName() + ",</h1>" +
                 "<p>Thank you for registering for the India Trade Expo 2026. We are excited to have you with us!</p>" +
@@ -41,7 +42,7 @@ public class EmailService {
     }
 
     public void sendAdminRegistrationNotification(User user) {
-        logger.info("EMAIL DEBUG: Starting Admin Notification for user: {}", user.getEmail());
+        System.out.println("EMAIL DEBUG: Starting Admin Notification for user: " + user.getEmail());
         String subject = "NEW USER REGISTERED: " + user.getFirstName() + " " + user.getLastName();
         String content = "<h1>New User Registration</h1>" +
                 "<p>A new user has registered on the platform.</p>" +
@@ -57,7 +58,7 @@ public class EmailService {
     }
 
     public void sendTicketConfirmation(User user, Ticket ticket) {
-        logger.info("EMAIL DEBUG: Starting Ticket Confirmation for: {} (Booking: {})", user.getEmail(), ticket.getBookingId());
+        System.out.println("EMAIL DEBUG: Starting Ticket Confirmation for: " + user.getEmail() + " (Booking: " + ticket.getBookingId() + ")");
         String subject = "Thank you for registering for the Event! - " + ticket.getBookingId();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         
@@ -75,7 +76,7 @@ public class EmailService {
 
     private void sendHtmlEmail(String to, String subject, String htmlContent) {
         try {
-            logger.info("EMAIL DEBUG: Attempting to connect to SMTP server to send to: {}", to);
+            System.out.println("EMAIL DEBUG: Connecting to SMTP server to send to: " + to);
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             
@@ -85,9 +86,9 @@ public class EmailService {
             helper.setText(htmlContent, true);
             
             mailSender.send(message);
-            logger.info("EMAIL DEBUG: Success! Email sent to: {}", to);
+            System.out.println("EMAIL DEBUG: Success! Email sent to: " + to);
         } catch (Exception e) {
-            logger.error("EMAIL DEBUG: CRITICAL FAILURE sending email to: {}. Error: {}", to, e.getMessage());
+            System.out.println("EMAIL DEBUG: CRITICAL FAILURE sending email to: " + to + ". Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
