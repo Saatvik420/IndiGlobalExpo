@@ -346,6 +346,10 @@ const Tickets = () => {
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Company / Organization *</label>
                       <input type="text" name="company" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="Design Studio LLC" />
                     </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Mobile / Phone Number *</label>
+                      <input type="tel" name="mobile" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="+91 98765 43210" />
+                    </div>
                   </div>
                   
                   {error && <p className="text-red-500 text-xs font-bold text-center mb-6">{error}</p>}

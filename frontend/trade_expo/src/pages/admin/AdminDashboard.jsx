@@ -359,6 +359,9 @@ const AdminDashboard = () => {
                                   <p className="text-xs text-gray-400">{u?.designation || 'N/A'} @ {u?.company || 'N/A'}</p>
                                   <p className="text-xs text-gray-500">{u?.country || 'N/A'}</p>
                                 </td>
+                                <td className="py-4 text-sm font-medium text-gray-700">
+                                  {u?.mobileNumber || u?.mobile || 'N/A'}
+                                </td>
                                 <td className="py-4 text-sm">
                                   <p className="font-bold text-brand-accent">{ex.sector}</p>
                                   {userTickets.length > 0 ? (
