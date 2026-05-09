@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
@@ -29,7 +28,6 @@ public class EmailService {
     @Value("${MAIL_ADMIN_RECEIVER:saatvikdon@gmail.com}")
     private String adminReceiver;
 
-    @Async
     public void sendWelcomeEmail(User user) {
         logger.info("EMAIL DEBUG: Starting Welcome Email process for: {}", user.getEmail());
         String subject = "Welcome to India Trade Expo 2026!";
@@ -42,7 +40,6 @@ public class EmailService {
         sendHtmlEmail(user.getEmail(), subject, content);
     }
 
-    @Async
     public void sendAdminRegistrationNotification(User user) {
         logger.info("EMAIL DEBUG: Starting Admin Notification for user: {}", user.getEmail());
         String subject = "NEW USER REGISTERED: " + user.getFirstName() + " " + user.getLastName();
@@ -59,7 +56,6 @@ public class EmailService {
         sendHtmlEmail(adminReceiver, subject, content);
     }
 
-    @Async
     public void sendTicketConfirmation(User user, Ticket ticket) {
         logger.info("EMAIL DEBUG: Starting Ticket Confirmation for: {} (Booking: {})", user.getEmail(), ticket.getBookingId());
         String subject = "Thank you for registering for the Event! - " + ticket.getBookingId();
@@ -90,8 +86,9 @@ public class EmailService {
             
             mailSender.send(message);
             logger.info("EMAIL DEBUG: Success! Email sent to: {}", to);
-        } catch (MessagingException e) {
-            logger.error("EMAIL DEBUG: Failed to send email to: {}. Error: {}", to, e.getMessage());
+        } catch (Exception e) {
+            logger.error("EMAIL DEBUG: CRITICAL FAILURE sending email to: {}. Error: {}", to, e.getMessage());
+            e.printStackTrace();
         }
     }
 }
