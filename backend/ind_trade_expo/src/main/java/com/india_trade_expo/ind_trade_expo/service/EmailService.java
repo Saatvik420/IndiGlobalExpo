@@ -74,6 +74,21 @@ public class EmailService {
         sendHtmlEmail(user.getEmail(), subject, content);
     }
 
+    public void sendAdminTicketNotification(User user, Ticket ticket) {
+        System.out.println("EMAIL DEBUG: Starting Admin Ticket Notification for: " + ticket.getBookingId());
+        String subject = "NEW TICKET PURCHASED: " + ticket.getBookingId();
+        
+        String content = "<h1>New Ticket Purchase Alert</h1>" +
+                "<p>A user has successfully purchased a ticket.</p>" +
+                "<p><strong>User:</strong> " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")</p>" +
+                "<p><strong>Ticket Type:</strong> " + ticket.getTicketType() + "</p>" +
+                "<p><strong>Amount Paid:</strong> $" + ticket.getPrice() + "</p>" +
+                "<p><strong>Booking ID:</strong> " + ticket.getBookingId() + "</p>" +
+                "<p><strong>Payment Status:</strong> " + ticket.getPaymentStatus() + "</p>";
+        
+        sendHtmlEmail(adminReceiver, subject, content);
+    }
+
     private void sendHtmlEmail(String to, String subject, String htmlContent) {
         try {
             System.out.println("EMAIL DEBUG: Connecting to SMTP server to send to: " + to);
