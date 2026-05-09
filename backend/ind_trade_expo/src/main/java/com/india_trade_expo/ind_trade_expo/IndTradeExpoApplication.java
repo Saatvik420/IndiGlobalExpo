@@ -57,14 +57,19 @@ public class IndTradeExpoApplication {
 		System.out.println("=========================================");
 		System.out.println("--- APPLICATION STARTED SUCCESSFULLY ---");
 		
-		// Attempt a startup email test
-		try {
-			com.india_trade_expo.ind_trade_expo.service.EmailService service = context.getBean(com.india_trade_expo.ind_trade_expo.service.EmailService.class);
-			System.out.println("TESTING MAIL CONNECTION...");
-			service.sendSystemHealthEmail();
-		} catch (Exception e) {
-			System.out.println("STARTUP MAIL TEST FAILED: " + e.getMessage());
-		}
+		// Run a delayed mail test (after 10 seconds)
+		new java.util.Timer().schedule(new java.util.TimerTask() {
+			@Override
+			public void run() {
+				try {
+					com.india_trade_expo.ind_trade_expo.service.EmailService service = context.getBean(com.india_trade_expo.ind_trade_expo.service.EmailService.class);
+					System.out.println("--- STARTING DELAYED MAIL TEST ---");
+					service.sendSystemHealthEmail();
+				} catch (Exception e) {
+					System.out.println("DELAYED MAIL TEST FAILED: " + e.getMessage());
+				}
+			}
+		}, 10000); // 10 second delay
 		System.out.println("=========================================");
 	}
 
