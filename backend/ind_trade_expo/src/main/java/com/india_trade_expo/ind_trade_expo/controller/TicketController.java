@@ -15,7 +15,6 @@ public class TicketController {
     @Autowired
     TicketService ticketService;
 
-    /* 
     @PostMapping("/purchase")
     public ResponseEntity<?> purchaseTicket(@RequestBody TicketPurchaseRequest request) {
         try {
@@ -33,7 +32,6 @@ public class TicketController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    */
 
     @GetMapping("/history")
     public ResponseEntity<List<Ticket>> getHistory() {
