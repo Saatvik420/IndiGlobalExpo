@@ -52,9 +52,9 @@ public class IndTradeExpoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IndTradeExpoApplication.class, args);
 		System.out.println("--- APPLICATION STARTED SUCCESSFULLY ---");
-		System.out.println("Checking Mail Config:");
-		System.out.println("Host: " + System.getenv("MAIL_HOST"));
-		System.out.println("User: " + System.getenv("MAIL_USERNAME"));
+		System.out.println("Checking Config:");
+		System.out.println("Mongo URI defined: " + (System.getenv("MONGO_URI") != null));
+		System.out.println("Mail Host: " + System.getenv("MAIL_HOST"));
 	}
 
 	@Bean
