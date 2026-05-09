@@ -59,6 +59,7 @@ public class AuthService {
     }
 
     public void registerVisitor(String firstName, String lastName, String email, String password, String mobileNumber, String company, String designation, String country) {
+        System.out.println("🔥 AUTH_SERVICE: Starting Visitor Registration for: " + email);
         User user = User.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -72,11 +73,15 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+        System.out.println("🔥 AUTH_SERVICE: User saved to DB successfully. Triggering Emails...");
+        
         emailService.sendWelcomeEmail(user);
         emailService.sendAdminRegistrationNotification(user);
+        System.out.println("🔥 AUTH_SERVICE: Email triggers complete.");
     }
 
     public void registerExhibitor(String firstName, String lastName, String email, String password, String mobileNumber, String country, String designation, String companyName, String sector, String website) {
+        System.out.println("🔥 AUTH_SERVICE: Starting Exhibitor Registration for: " + email);
         User user = User.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -100,8 +105,11 @@ public class AuthService {
         exhibitor.setRegistrationDate(java.time.LocalDateTime.now());
 
         exhibitorRepository.save(exhibitor);
+        System.out.println("🔥 AUTH_SERVICE: Exhibitor & User saved to DB. Triggering Emails...");
+
         emailService.sendWelcomeEmail(savedUser);
         emailService.sendAdminRegistrationNotification(savedUser);
+        System.out.println("🔥 AUTH_SERVICE: Email triggers complete.");
     }
 
     @org.springframework.transaction.annotation.Transactional

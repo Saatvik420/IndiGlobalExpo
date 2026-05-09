@@ -62,11 +62,13 @@ public class TicketService {
                 .build();
 
         ticketRepository.save(ticket);
-        System.out.println("Dummy ticket saved successfully with Booking ID: " + bookingId);
+        System.out.println("🔥 TICKET_SERVICE: Ticket saved to DB: " + bookingId);
 
         // Send confirmation emails
+        System.out.println("🔥 TICKET_SERVICE: Triggering user and admin emails...");
         emailService.sendTicketConfirmation(user, ticket);
         emailService.sendAdminTicketNotification(user, ticket);
+        System.out.println("🔥 TICKET_SERVICE: Email triggers complete.");
 
         // Auto-approve exhibitor if the ticket is for an exhibitor booth (Simulating success logic)
         if (ticketType != null && (ticketType.contains("Booth") || ticketType.contains("Island"))) {
