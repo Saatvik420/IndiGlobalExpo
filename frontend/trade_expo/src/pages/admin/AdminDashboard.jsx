@@ -407,6 +407,58 @@ const AdminDashboard = () => {
                   </div>
                 )}
 
+                {activeTab === 'payments' && (
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-2xl font-serif text-brand-dark">Transaction Ledger</h3>
+                      <p className="text-xs text-gray-400">Total Sales: {tickets.length}</p>
+                    </div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-gray-100">
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Booking ID</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">User Details</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Ticket Type</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Amount</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50">
+                          {tickets.map((t) => {
+                            const u = getUserById(t.userId);
+                            return (
+                              <tr key={t.id} className="hover:bg-brand-light/50 transition-colors">
+                                <td className="py-4 text-sm font-bold text-brand-accent">
+                                  {t.bookingId}
+                                </td>
+                                <td className="py-4 text-sm">
+                                  <p className="font-medium text-brand-dark">{u ? `${u.firstName} ${u.lastName}` : 'Unknown'}</p>
+                                  <p className="text-xs text-gray-400">{u?.email || 'N/A'}</p>
+                                </td>
+                                <td className="py-4 text-sm">
+                                  <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-bold uppercase">
+                                    {t.ticketType}
+                                  </span>
+                                </td>
+                                <td className="py-4 text-sm font-bold">
+                                  €{t.price.toLocaleString()}
+                                </td>
+                                <td className="py-4 text-xs text-gray-500">
+                                  {new Date(t.purchaseDate).toLocaleDateString()}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                          {tickets.length === 0 && (
+                            <tr><td colSpan="5" className="py-12 text-center text-gray-400 italic">No transactions found.</td></tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
                 {activeTab === 'queries' && (
                   <div>
                     <h3 className="text-2xl font-serif text-brand-dark mb-6">User Inquiries</h3>
