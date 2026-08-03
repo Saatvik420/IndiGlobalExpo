@@ -105,7 +105,7 @@ const Teams = () => {
           <div className="mb-16 reveal-up text-center md:text-left flex flex-col md:flex-row justify-between items-end">
             <div>
               <h3 className="font-serif text-4xl text-brand-dark mb-4">The IndiGlobalExpo Vision</h3>
-              <p className="text-gray-500 font-light max-w-2xl">Our flagship international platform created with a singular, clear vision: to present India to the world.</p>
+              <p className="text-gray-500 font-light max-w-2xl">Our flagship international platform created with a singular, clear vision: to present Asia to the world.</p>
             </div>
             <div className="hidden md:block">
               <GlobeStand className="text-5xl text-brand-accent/30" />
@@ -118,7 +118,7 @@ const Teams = () => {
               <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15f?auto=format&fit=crop&w=400&q=80" alt="Showcasing Excellence" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-brand-accent/20" />
               <h5 className="font-serif text-lg text-brand-dark mb-1">Showcasing Excellence</h5>
               <p className="text-[10px] uppercase tracking-widest font-bold text-brand-accent mb-3">Industrial Strength</p>
-              <p className="text-xs font-light text-gray-500 leading-relaxed">A global showcase of India's innovation, quality, and entrepreneurial excellence.</p>
+              <p className="text-xs font-light text-gray-500 leading-relaxed">A global showcase of Asia's innovation, quality, and entrepreneurial excellence.</p>
             </div>
             {/* Vision 2 */}
             <div className="bg-white p-6 border border-gray-100 shadow-sm text-center rounded-sm hover:-translate-y-2 transition-transform duration-300 reveal-up delay-200">
@@ -136,10 +136,10 @@ const Teams = () => {
             </div>
             {/* Vision 4 */}
             <div className="bg-white p-6 border border-gray-100 shadow-sm text-center rounded-sm hover:-translate-y-2 transition-transform duration-300 reveal-up delay-400">
-              <img src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?auto=format&fit=crop&w=400&q=80" alt="Made In India" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-brand-accent/20" />
-              <h5 className="font-serif text-lg text-brand-dark mb-1">Made In India</h5>
+              <img src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?auto=format&fit=crop&w=400&q=80" alt="Made In Asia" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-brand-accent/20" />
+              <h5 className="font-serif text-lg text-brand-dark mb-1">Made In Asia</h5>
               <p className="text-[10px] uppercase tracking-widest font-bold text-brand-accent mb-3">Global Competitiveness</p>
-              <p className="text-xs font-light text-gray-500 leading-relaxed">Strengthening the visibility and global footprint of Made in India products globally.</p>
+              <p className="text-xs font-light text-gray-500 leading-relaxed">Strengthening the visibility and global footprint of Made in Asia products globally.</p>
             </div>
           </div>
         </div>

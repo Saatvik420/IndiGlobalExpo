@@ -86,7 +86,7 @@ const Sectors = () => {
                 <span className="text-brand-accent font-bold tracking-widest uppercase text-xs">Sector 01</span>
                 <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-6">Healthcare & Medical Devices</h2>
                 <p className="text-gray-500 font-light text-lg leading-relaxed mb-8">
-                  India is rapidly becoming a leading hub for advanced medical devices, reliable pharmaceuticals, and cutting-edge healthcare technology. This sector brings together manufacturers of hospital equipment, diagnostic tools, and wellness products connecting them with global healthcare providers.
+                  Asia is rapidly becoming a leading hub for advanced medical devices, reliable pharmaceuticals, and cutting-edge healthcare technology. This sector brings together manufacturers of hospital equipment, diagnostic tools, and wellness products connecting them with global healthcare providers.
                 </p>
                 <ul className="space-y-4 font-light text-gray-600">
                   <li className="flex items-center gap-3"><i className="ph-fill ph-check-circle text-brand-accent"></i> Advanced Diagnostic Equipment</li>
@@ -112,7 +112,7 @@ const Sectors = () => {
                 <span className="text-brand-accent font-bold tracking-widest uppercase text-xs">Sector 02</span>
                 <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-6">Information Tech & Digital Solutions</h2>
                 <p className="text-gray-500 font-light text-lg leading-relaxed mb-8">
-                  Showcasing India's renowned IT prowess. From disruptive startup innovations and Artificial Intelligence to enterprise software and cloud infrastructure, connect with the minds driving the global digital transformation.
+                  Showcasing Asia's renowned IT prowess. From disruptive startup innovations and Artificial Intelligence to enterprise software and cloud infrastructure, connect with the minds driving the global digital transformation.
                 </p>
                 <ul className="space-y-4 font-light text-gray-600">
                   <li className="flex items-center gap-3"><i className="ph-fill ph-check-circle text-brand-accent"></i> AI & Machine Learning</li>
@@ -132,7 +132,7 @@ const Sectors = () => {
                 <span className="text-brand-accent font-bold tracking-widest uppercase text-xs">Sector 03</span>
                 <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-6">Food & Beverages & Agri-Products</h2>
                 <p className="text-gray-500 font-light text-lg leading-relaxed mb-8">
-                  A global taste of India. This sector presents premium spices, organic agri-products, processed foods, and culinary innovations ready for international retail, wholesale, and hospitality distribution.
+                  A global taste of Asia. This sector presents premium spices, organic agri-products, processed foods, and culinary innovations ready for international retail, wholesale, and hospitality distribution.
                 </p>
                 <ul className="space-y-4 font-light text-gray-600">
                   <li className="flex items-center gap-3"><i className="ph-fill ph-check-circle text-brand-accent"></i> Premium Spices & Organic Foods</li>
@@ -158,7 +158,7 @@ const Sectors = () => {
                 <span className="text-brand-accent font-bold tracking-widest uppercase text-xs">Sector 04</span>
                 <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-6">Textiles & Fashion Apparels</h2>
                 <p className="text-gray-500 font-light text-lg leading-relaxed mb-8">
-                  From rich traditional weaves to contemporary modern fashion. Explore a wide array of sustainable fabrics, designer apparel, and home textiles crafted by India's finest manufacturers for the global stage.
+                  From rich traditional weaves to contemporary modern fashion. Explore a wide array of sustainable fabrics, designer apparel, and home textiles crafted by Asia's finest manufacturers for the global stage.
                 </p>
                 <ul className="space-y-4 font-light text-gray-600">
                   <li className="flex items-center gap-3"><i className="ph-fill ph-check-circle text-brand-accent"></i> Sustainable & Woven Fabrics</li>
@@ -178,7 +178,7 @@ const Sectors = () => {
                 <span className="text-brand-accent font-bold tracking-widest uppercase text-xs">Sector 05</span>
                 <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-6">Gems & Jewelry</h2>
                 <p className="text-gray-500 font-light text-lg leading-relaxed mb-8">
-                  Experience unmatched craftsmanship. Discover exquisite fine jewelry, expertly cut precious stones, and bespoke diamond creations that blend India's rich heritage with modern, global design trends.
+                  Experience unmatched craftsmanship. Discover exquisite fine jewelry, expertly cut precious stones, and bespoke diamond creations that blend Asia's rich heritage with modern, global design trends.
                 </p>
                 <ul className="space-y-4 font-light text-gray-600">
                   <li className="flex items-center gap-3"><i className="ph-fill ph-check-circle text-brand-accent"></i> Fine Diamond & Gold Jewelry</li>
@@ -224,7 +224,7 @@ const Sectors = () => {
                 <span className="text-brand-accent font-bold tracking-widest uppercase text-xs">Sector 07</span>
                 <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-6">Consumer Goods & Handicrafts</h2>
                 <p className="text-gray-500 font-light text-lg leading-relaxed mb-8">
-                  Elevate everyday living. Connecting international buyers with India's unique home decor, lifestyle products, and authentic artisan handicrafts that are in high demand across global retail markets.
+                  Elevate everyday living. Connecting international buyers with Asia's unique home decor, lifestyle products, and authentic artisan handicrafts that are in high demand across global retail markets.
                 </p>
                 <ul className="space-y-4 font-light text-gray-600">
                   <li className="flex items-center gap-3"><i className="ph-fill ph-check-circle text-brand-accent"></i> Premium Home Decor</li>

@@ -63,7 +63,7 @@ const Press = () => {
               <div>
                 <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-3">Press Release • March 15, 2026</p>
                 <h4 className="font-serif text-2xl text-brand-dark mb-4 group-hover:text-brand-accent transition-colors">IndiGlobal Expo 2026 Announces Expanded Tech Pavilion</h4>
-                <p className="text-gray-500 font-light text-sm mb-6 leading-relaxed">Due to overwhelming international demand, the upcoming expo will feature a newly expanded pavilion dedicated entirely to India's booming IT and SaaS startup sectors.</p>
+                <p className="text-gray-500 font-light text-sm mb-6 leading-relaxed">Due to overwhelming international demand, the upcoming expo will feature a newly expanded pavilion dedicated entirely to Asia's booming IT and SaaS startup sectors.</p>
               </div>
               <button className="interactive text-brand-dark font-medium text-sm flex items-center gap-2 hover:text-brand-accent transition-colors group-hover:translate-x-2 w-fit"><ArrowRight size={16} /> Read Full Story</button>
             </div>

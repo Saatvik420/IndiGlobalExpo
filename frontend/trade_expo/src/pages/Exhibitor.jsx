@@ -70,7 +70,7 @@ const Exhibitor = () => {
             Why Exhibit With Us?
           </h3>
           <p className="text-gray-500 font-light text-lg leading-relaxed mb-6">
-            IndiGlobalExpo is your gateway to the global marketplace. Designed exclusively to promote Indian industries worldwide, the expo offers a powerful platform to showcase your products, services, and innovations to an international audience across multiple countries.
+            IndiGlobalExpo is your gateway to the global marketplace. Designed exclusively to promote Asian industries worldwide, the expo offers a powerful platform to showcase your products, services, and innovations to an international audience across multiple countries.
           </p>
           <p className="text-gray-500 font-light text-lg leading-relaxed">
             Whether you are an established exporter or an emerging brand, IndiGlobalExpo provides the visibility, connections, and opportunities needed to grow beyond domestic markets.
@@ -224,9 +224,9 @@ const Exhibitor = () => {
           </p>
 
           <div className="bg-white p-12 md:p-16 border border-gray-100 shadow-xl rounded-sm reveal-up delay-200">
-            <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-6">Be Part of India’s Global Growth Story</h2>
+            <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-6">Be Part of Asia’s Global Growth Story</h2>
             <p className="text-gray-500 font-light mb-10 max-w-2xl mx-auto">
-              IndiGlobalExpo is more than an exhibition—it’s a platform to take India’s excellence to the world. Join a growing community of forward-looking businesses that are shaping India’s global presence.
+              IndiGlobalExpo is more than an exhibition—it’s a platform to take Asia’s excellence to the world. Join a growing community of forward-looking businesses that are shaping Asia’s global presence.
             </p>
             <div className="flex flex-col items-center justify-center">
               <p className="text-xs font-bold uppercase tracking-widest text-brand-accent mb-4">Book Your Space Today</p>

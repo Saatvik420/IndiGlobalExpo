@@ -32,8 +32,8 @@ const Home = () => {
   const trackRef = useRef(null);
 
   useEffect(() => {
-    // Target Date: December 29, 2026
-    const targetDate = new Date('2026-09-29T09:00:00').getTime();
+    // Target Date: December 17, 2026
+    const targetDate = new Date('2026-12-17T09:00:00').getTime();
 
     const timerInterval = setInterval(() => {
       const now = new Date().getTime();
@@ -119,17 +119,17 @@ const Home = () => {
             </div>
             
             <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-[1.05] mb-8 animate-fade-up delay-100">
-              Showcasing India <br /><span className="italic font-light text-brand-accent">to the World.</span>
+              Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World.</span>
             </h2>
             
             <div className="flex flex-col sm:flex-row sm:items-center text-white/90 gap-6 sm:gap-12 mb-10 animate-fade-up delay-300">
               <div className="flex items-center gap-3">
                 <i className="ph ph-calendar-blank text-xl text-brand-accent"></i>
-                <span className="font-light tracking-widest uppercase text-[10px]">September 29 – 30, 2026</span>
+                <span className="font-light tracking-widest uppercase text-[10px]">December 17 – 18, 2026</span>
               </div>
               <div className="flex items-center gap-3">
                 <i className="ph ph-map-pin text-xl text-brand-accent"></i>
-                <span className="font-light tracking-widest uppercase text-[10px]">Novotel Amsterdam Hotel, The Netherlands</span>
+                <span className="font-light tracking-widest uppercase text-[10px]">Bangkok, Thailand</span>
               </div>
             </div>
 
@@ -187,19 +187,19 @@ const Home = () => {
           <div className="text-center mb-16">
             <i className="ph-fill ph-globe-hemisphere-west text-4xl text-brand-light mb-6 inline-block"></i>
             <h2 className="font-serif text-3xl md:text-4xl leading-tight text-brand-dark">
-              IndiGlobalExpo is a premier international trade fair platform designed to connect Indian businesses with <span className="italic text-brand-accent">global markets.</span>
+              IndiGlobalExpo is a premier international trade fair platform designed to connect Asian businesses with <span className="italic text-brand-accent">global markets.</span>
             </h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 text-gray-500 font-light text-base leading-relaxed">
             <div className="reveal-up delay-100">
-              <p className="mb-6">Bringing together companies from diverse sectors, the expo travels across key international destinations, creating powerful opportunities for Indian brands to showcase their products, services, innovation, and capabilities on a global stage.</p>
-              <p>From established enterprises to emerging brands, IndiGlobalExpo serves as a gateway for Indian industries to expand their footprint, build strategic partnerships, and explore new markets worldwide.</p>
+              <p className="mb-6">Bringing together companies from diverse sectors, the expo travels across key international destinations, creating powerful opportunities for Asian brands to showcase their products, services, innovation, and capabilities on a global stage.</p>
+              <p>From established enterprises to emerging brands, IndiGlobalExpo serves as a gateway for Asian industries to expand their footprint, build strategic partnerships, and explore new markets worldwide.</p>
             </div>
             <div className="border-l border-brand-accent/30 pl-8 md:pl-12 reveal-up delay-200">
               <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 text-brand-dark">Our Vision</h4>
               <p className="font-serif text-xl text-brand-dark italic leading-relaxed">
-                "To position India as a global hub of innovation, quality, and excellence by enabling businesses to access international opportunities and build lasting global connections."
+                "To position Asia as a global hub of innovation, quality, and excellence by enabling businesses to access international opportunities and build lasting global connections."
               </p>
             </div>
           </div>
@@ -324,13 +324,13 @@ const Home = () => {
                 {[
                   "Access high-potential international markets.",
                   "Build global partnerships and distribution networks.",
-                  "Showcase \"Made in India\" excellence to a worldwide audience.",
+                  "Showcase \"Made in Asia\" excellence to a worldwide audience.",
                   "Engage directly with decision-makers and buyers.",
                   "Enhance export readiness and competitiveness."
                 ].map((item, i) => (
                   <li key={i} className={`flex items-start gap-4 reveal-up delay-[${(i+1)*100}ms] hover:translate-x-3 hover:text-white transition-all duration-300 cursor-default group`}>
                     <i className="ph-fill ph-check-circle text-brand-accent text-xl mt-0.5 group-hover:scale-110 transition-transform"></i>
-                    <span dangerouslySetInnerHTML={{ __html: item.replace('"Made in India"', '<span class="italic font-serif text-white">"Made in India"</span>') }}></span>
+                    <span dangerouslySetInnerHTML={{ __html: item.replace('"Made in Asia"', '<span class="italic font-serif text-white">"Made in Asia"</span>') }}></span>
                   </li>
                 ))}
               </ul>
@@ -360,7 +360,7 @@ const Home = () => {
             <div className="bg-gradient-to-br from-white/10 to-white/0 border border-white/10 p-10 rounded-sm reveal-up group interactive hover:-translate-y-2 hover:border-brand-accent/50 hover:shadow-[0_20px_50px_rgba(207,166,112,0.1)] transition-all duration-500">
               <i className="ph ph-globe-hemisphere-east text-4xl text-brand-accent mb-6 block animate-float group-hover:scale-110 transition-transform duration-500"></i>
               <h3 className="font-serif text-2xl mb-4 text-white group-hover:text-brand-accent transition-colors">Global Reach</h3>
-              <p className="font-serif text-lg text-gray-300 italic leading-relaxed group-hover:text-white transition-colors">"Connecting Indian excellence with global demand across strategic markets."</p>
+              <p className="font-serif text-lg text-gray-300 italic leading-relaxed group-hover:text-white transition-colors">"Connecting Asian excellence with global demand across strategic markets."</p>
             </div>
             <div className="reveal-up delay-[200ms]">
               <p className="text-gray-400 font-light leading-relaxed text-base">
@@ -373,7 +373,7 @@ const Home = () => {
           <div className="mt-24 pt-16 border-t border-gray-800 text-center max-w-4xl mx-auto">
             <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-4 reveal-up">Join the Movement</p>
             <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-6 reveal-up delay-[100ms]">
-              IndiGlobalExpo is not just an exhibition—it is a movement to take India’s innovation, craftsmanship, and entrepreneurial spirit to the world.
+              IndiGlobalExpo is not just an exhibition—it is a movement to take Asia’s innovation, craftsmanship, and entrepreneurial spirit to the world.
             </h2>
             <p className="text-gray-400 font-light mb-10 text-base reveal-up delay-[200ms]">
               Be a part of IndiGlobalExpo and unlock global possibilities. For participation, partnerships, and sponsorship opportunities, connect with us today and take your business beyond borders.

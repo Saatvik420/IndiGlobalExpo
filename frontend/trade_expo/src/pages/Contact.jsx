@@ -123,7 +123,7 @@ const Contact = () => {
                     <MapPin className="text-2xl text-brand-accent mt-1" />
                     <div>
                       <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2">Venue Address</h4>
-                      <p className="font-light text-gray-300 leading-relaxed">Novotel Amsterdam Hotel<br />Europaboulevard 10, 1083 AD Amsterdam,<br />The Netherlands</p>
+                      <p className="font-light text-gray-300 leading-relaxed">Bangkok, Thailand</p>
                     </div>
                   </div>
                   
@@ -233,14 +233,14 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-[400px] w-full bg-gray-200 rounded-sm border border-gray-100 overflow-hidden relative interactive group">
             {/* Interactive Google Map Embed */}
-            <iframe src="https://maps.google.com/maps?q=Novotel%20Amsterdam%20Hotel,%20Europaboulevard%2010,%20Amsterdam&t=&z=14&ie=UTF8&iwloc=&output=embed" className="absolute inset-0 w-full h-full grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://maps.google.com/maps?q=Bangkok,%20Thailand&t=&z=14&ie=UTF8&iwloc=&output=embed" className="absolute inset-0 w-full h-full grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
             
             <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
             
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center bg-white p-6 shadow-xl rounded-sm pointer-events-none group-hover:opacity-0 transition-opacity duration-700">
               <MapPin weight="fill" className="text-4xl text-brand-accent mb-2 animate-bounce" />
-              <p className="font-serif text-lg text-brand-dark font-bold">Novotel Amsterdam Hotel</p>
-              <p className="text-xs uppercase tracking-widest text-gray-500 font-bold mt-1">Amsterdam</p>
+              <p className="font-serif text-lg text-brand-dark font-bold">Bangkok, Thailand</p>
+              <p className="text-xs uppercase tracking-widest text-gray-500 font-bold mt-1">Thailand</p>
             </div>
           </div>
         </div>
