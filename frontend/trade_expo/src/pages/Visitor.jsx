@@ -205,7 +205,7 @@ const Visitor = () => {
             <div className="border-l-2 border-brand-accent/30 pl-8 relative reveal-up delay-200">
               <div className="absolute w-4 h-4 bg-brand-accent rounded-full -left-[9px] top-2"></div>
               <h4 className="font-serif text-3xl text-brand-accent mb-2">Day 2: Trade & Closing</h4>
-              <p className="text-gray-400 mb-6 uppercase tracking-widest text-xs font-bold">Dec 18, 2026</p>
+              <p className="text-gray-400 mb-6 uppercase tracking-widest text-xs font-bold">Dec 17, 2026</p>
               <ul className="space-y-4 text-gray-300 font-light">
                 <li className="flex gap-4">
                   <span className="text-white font-bold min-w-[80px]">10:00 AM</span>
