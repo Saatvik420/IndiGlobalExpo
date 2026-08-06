@@ -153,7 +153,7 @@ const Visitor = () => {
             <div className="bg-white p-12 hover:bg-brand-dark group transition-colors duration-500">
               <i className="ph ph-calendar-blank text-4xl text-brand-accent mb-8"></i>
               <h4 className="font-serif text-3xl text-brand-dark group-hover:text-white mb-6 transition-colors">Date & Time</h4>
-              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">December 17 – 18, 2026 <br />09:00 AM – 06:00 PM (ICT)</p>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">December 17, 2026 <br />09:00 AM – 06:00 PM (ICT)</p>
               <span className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-2">Save to Calendar</span>
             </div>
             {/* Logistic 3 */}
