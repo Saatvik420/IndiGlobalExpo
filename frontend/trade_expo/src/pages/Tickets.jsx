@@ -152,8 +152,8 @@ const Tickets = () => {
   ];
 
   const exhibitorTickets = [
-    { type: 'Standard Booth', price: 1500, features: ['9 sqm (3x3m) Shell Scheme', 'Fully built shell structure', 'Fascia name board', '2 Exhibitor Badges', 'Basic electricity & lighting'] },
-    { type: 'Premium Island', price: 3500, features: ['18 sqm (6x3m) Open Space', 'Raw space for custom build', 'Prime location in sector hall', '5 Exhibitor VIP Badges', 'Website logo placement'] }
+    { type: 'Standard Booth', price: 4500, features: ['9 sqm (3x3m) Shell Scheme', 'Fully built shell structure', 'Fascia name board', '2 Exhibitor Badges', 'Basic electricity & lighting'] },
+    { type: 'Premium Island', price: 8000, features: ['18 sqm (6x3m) Open Space', 'Raw space for custom build', 'Prime location in sector hall', '5 Exhibitor VIP Badges', 'Website logo placement'] }
   ];
 
   return (
