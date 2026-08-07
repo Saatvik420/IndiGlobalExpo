@@ -115,35 +115,18 @@ const Tickets = () => {
     }
   };
 
+  const [showInterestModal, setShowInterestModal] = useState(false);
+
   const selectPass = (type, price) => {
     setCurrentTicket({ type, price });
-    setStep(3);
-  };
-
-  const handlePayment = async (e) => {
-    e.preventDefault();
-    setIsProcessing(true);
-    setError('');
-    
-    try {
-      console.log("Processing payment for:", currentTicket.type);
-      const paymentData = {
-        ticketType: currentTicket.type,
-        price: currentTicket.price
-      };
-
-      const response = await ticketService.purchaseTicket(paymentData);
-      console.log("Payment successful on backend:", response);
-
-      setBookingId(response.ticket.bookingId);
-      addTicket(response.ticket);
-      setStep(4);
-    } catch (err) {
-      console.error("Payment failed:", err);
-      setError(getErrorMessage(err, 'Payment failed. Please try again.'));
-    } finally {
-      setIsProcessing(false);
-    }
+    setShowInterestModal(true);
+    ticketService.purchaseTicket({ ticketType: type, price })
+      .then(response => {
+        if (response?.ticket) {
+          addTicket(response.ticket);
+        }
+      })
+      .catch(err => console.log('Pass interest noted:', err));
   };
 
   const visitorTickets = [
@@ -189,11 +172,11 @@ const Tickets = () => {
         <div className="w-full max-w-5xl mx-auto relative z-10">
           
           {/* Progress Stepper */}
-          {step !== 0 && step !== 'login' && step !== 4 && (
+          {step !== 0 && step !== 'login' && (
             <div className="mb-12 reveal-up">
-              <div className="flex items-center justify-center relative max-w-3xl mx-auto">
+              <div className="flex items-center justify-center relative max-w-xl mx-auto">
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] h-[1px] bg-gray-200 z-0"></div>
-                <div className="absolute left-[10%] top-1/2 transform -translate-y-1/2 h-[1px] bg-brand-accent z-0 transition-all duration-700" style={{ width: step === 1 ? '0%' : step === 2 ? '40%' : '80%' }}></div>
+                <div className="absolute left-[10%] top-1/2 transform -translate-y-1/2 h-[1px] bg-brand-accent z-0 transition-all duration-700" style={{ width: step === 1 ? '40%' : '80%' }}></div>
                 
                 <div className="flex w-full justify-between relative z-10">
                   <div className="flex flex-col items-center gap-3">
@@ -208,13 +191,9 @@ const Tickets = () => {
                   </div>
                   <div className="flex flex-col items-center gap-3">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-sm transition-colors duration-300 border-2 ${step >= 2 ? 'bg-brand-accent text-white border-brand-light' : 'bg-white text-gray-400 border-gray-200'}`}>
-                      {step > 2 ? <Check size={14} weight="bold" /> : '2'}
+                      2
                     </div>
                     <span className={`text-[10px] uppercase tracking-widest font-bold transition-colors duration-300 ${step >= 2 ? 'text-brand-accent' : 'text-gray-400'}`}>Select Pass</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-sm transition-colors duration-300 border-2 ${step >= 3 ? 'bg-brand-accent text-white border-brand-light' : 'bg-white text-gray-400 border-gray-200'}`}>3</div>
-                    <span className={`text-[10px] uppercase tracking-widest font-bold transition-colors duration-300 ${step >= 3 ? 'text-brand-accent' : 'text-gray-400'}`}>Payment</span>
                   </div>
                 </div>
               </div>
@@ -319,7 +298,7 @@ const Tickets = () => {
             <div className="reveal-up">
               <div className="bg-white p-10 md:p-16 rounded-sm shadow-2xl max-w-2xl mx-auto border border-gray-100">
                 <div className="mb-10 text-center">
-                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 1 of 3</p>
+                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 1 of 2</p>
                   <h2 className="font-serif text-4xl text-brand-dark mb-2">{currentRole} Registration</h2>
                   <p className="text-gray-500 font-light text-sm">Register to secure your access to the portal.</p>
                 </div>
@@ -376,7 +355,7 @@ const Tickets = () => {
           {step === 2 && (
             <div className="reveal-up w-full">
               <div className="text-center mb-10">
-                <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 2 of 3</p>
+                <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 2 of 2</p>
                 <h2 className="font-serif text-4xl text-brand-dark mb-2">
                   {currentRole === 'Exhibitor' ? 'Select Your Booth' : 'Select Your Pass'}
                 </h2>
@@ -414,131 +393,43 @@ const Tickets = () => {
             </div>
           )}
 
-          {/* STEP 3: PAYMENT */}
-          {step === 3 && (
-            <div className="reveal-up w-full">
-              <div className="text-center mb-10">
-                <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 3 of 3</p>
-                <h2 className="font-serif text-4xl text-brand-dark mb-2">Checkout</h2>
-              </div>
+          {/* Interest Dialogue Box / Modal */}
+          {showInterestModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn">
+              <div className="bg-white rounded-sm shadow-2xl max-w-lg w-full p-8 md:p-10 relative text-center border border-gray-100 transform transition-all">
+                <button 
+                  onClick={() => setShowInterestModal(false)}
+                  className="absolute top-4 right-4 text-gray-400 hover:text-brand-dark transition-colors p-2 rounded-full hover:bg-gray-100"
+                  aria-label="Close"
+                >
+                  <X size={20} />
+                </button>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div className="lg:col-span-2 bg-white p-10 shadow-2xl rounded-sm border border-gray-100">
-                  <h2 className="font-serif text-2xl text-brand-dark mb-6 border-b border-gray-100 pb-4">Secure Payment</h2>
-                  
-                  <form onSubmit={handlePayment}>
-                    <div className="space-y-6">
-                      <div>
-                        <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Name on Card *</label>
-                        <input type="text" name="cardName" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="Jane Doe" />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Card Number *</label>
-                        <div className="relative">
-                          <input type="text" name="cardNumber" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light tracking-widest" placeholder="0000 0000 0000 0000" />
-                          <CreditCard size={24} className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-300" />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-8">
-                        <div>
-                          <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Expiry Date *</label>
-                          <input type="text" name="cardExpiry" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light tracking-widest" placeholder="MM / YY" />
-                        </div>
-                        <div>
-                          <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">CVC *</label>
-                          <input type="text" name="cardCvc" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light tracking-widest" placeholder="123" />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 mt-6">
-                      <button type="button" onClick={() => setStep(2)} className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-brand-dark transition-colors interactive flex items-center gap-2">
-                        <ArrowLeft /> Change Selection
-                      </button>
-                      <button type="submit" disabled={isProcessing} className="w-full sm:w-auto bg-brand-accent text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-dark transition-all interactive flex justify-center items-center gap-2">
-                        {isProcessing ? <CircleNotch size={18} className="animate-spin" /> : 'Pay'} <span>€{currentTicket.price.toLocaleString()}</span>
-                      </button>
-                    </div>
-                  </form>
+                <div className="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-6 border border-brand-accent/20">
+                  <CheckCircle size={48} weight="fill" className="text-brand-accent" />
                 </div>
 
-                {/* Summary Sidebar */}
-                <div className="bg-white p-8 shadow-sm flex flex-col justify-between h-full rounded-sm border border-gray-200">
-                  <div>
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-brand-dark mb-6 border-b border-gray-200 pb-4">Order Summary</h3>
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="font-serif text-lg text-brand-dark font-semibold">{currentTicket.type}</span>
-                      <span className="font-light text-gray-600">x 1</span>
-                    </div>
-                    <ul className="space-y-2 mb-8">
-                      <li className="text-xs text-gray-500 font-light flex items-center gap-2"><CheckCircle weight="fill" className="text-brand-accent" /> IndiGlobal Expo 2026</li>
-                      <li className="text-xs text-gray-500 font-light flex items-center gap-2"><CheckCircle weight="fill" className="text-brand-accent" /> Role: {currentRole}</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="border-t border-gray-200 pt-6">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-light text-gray-500">Subtotal</span>
-                      <span className="text-sm text-brand-dark">€{currentTicket.price.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-sm font-light text-gray-500">Taxes & Fees</span>
-                      <span className="text-sm text-brand-dark">Included</span>
-                    </div>
-                    <div className="flex justify-between items-end mt-4 pt-4 border-t border-brand-accent/30">
-                      <span className="text-xs font-bold uppercase tracking-widest text-brand-dark">Total</span>
-                      <span className="font-serif text-3xl text-brand-dark">€{currentTicket.price.toLocaleString()}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+                <h3 className="font-serif text-3xl text-brand-dark mb-4">Interest Received</h3>
+                
+                <p className="text-gray-600 font-light text-base leading-relaxed mb-8">
+                  Thank you for your interest. The team will get in touch with you soon to complete the registration process.
+                </p>
 
-          {/* STEP 4: SUCCESS */}
-          {step === 4 && (
-            <div className="reveal-up w-full">
-              <div className="bg-white p-10 md:p-16 rounded-sm shadow-2xl max-w-2xl mx-auto text-center relative overflow-hidden border border-gray-100">
-                <div className="absolute top-0 left-0 w-full h-2 bg-brand-accent"></div>
-                
-                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-100">
-                  <Check size={40} weight="bold" className="text-green-500" />
-                </div>
-                <h2 className="font-serif text-4xl text-brand-dark mb-4">Registration Complete!</h2>
-                <p className="text-gray-500 font-light text-sm mb-10">Your transaction was successful. You are officially registered for IndiGlobal Expo 2026.</p>
-                
-                <div className="bg-brand-light p-6 border border-gray-100 rounded-sm mb-10 text-left">
-                  <div className="border-b border-gray-200 pb-4 mb-4 flex justify-between items-end">
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Booking Reference</p>
-                      <p className="font-serif text-xl text-brand-dark tracking-wider">{bookingId}</p>
-                    </div>
-                    <Ticket size={32} weight="fill" className="text-brand-accent opacity-50" />
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs uppercase tracking-widest text-gray-400 font-bold">Account</span>
-                      <span className="text-sm font-medium text-brand-dark">{userDetails.firstName} {userDetails.lastName}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs uppercase tracking-widest text-gray-400 font-bold">Role</span>
-                      <span className="text-sm font-medium text-brand-dark">{currentRole}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs uppercase tracking-widest text-gray-400 font-bold">Selection</span>
-                      <span className="text-sm font-medium text-brand-dark">{currentTicket.type}</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-4 border-t border-gray-200 mt-2">
-                      <span className="text-xs uppercase tracking-widest text-brand-dark font-bold">Amount Paid</span>
-                      <span className="font-serif text-2xl text-brand-accent">€{currentTicket.price.toLocaleString()}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="">
-                  <button onClick={() => navigate('/')} className="inline-flex bg-brand-dark text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive">
-                    Return to Homepage
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <button
+                    onClick={() => {
+                      setShowInterestModal(false);
+                      navigate('/');
+                    }}
+                    className="bg-brand-dark text-white px-8 py-3.5 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive shadow-lg"
+                  >
+                    Return to Home
+                  </button>
+                  <button
+                    onClick={() => setShowInterestModal(false)}
+                    className="border border-gray-200 text-gray-600 px-6 py-3.5 text-xs font-bold uppercase tracking-widest hover:border-brand-dark hover:text-brand-dark transition-colors interactive"
+                  >
+                    Close
                   </button>
                 </div>
               </div>
