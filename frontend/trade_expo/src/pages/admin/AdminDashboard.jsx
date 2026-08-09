@@ -448,7 +448,7 @@ const AdminDashboard = () => {
                                   </span>
                                 </td>
                                 <td className="py-4 text-sm font-bold">
-                                  €{t.price.toLocaleString()}
+                                  ${t.price.toLocaleString()}
                                 </td>
                                 <td className="py-4 text-xs text-gray-500">
                                   {new Date(t.purchaseDate).toLocaleDateString()}

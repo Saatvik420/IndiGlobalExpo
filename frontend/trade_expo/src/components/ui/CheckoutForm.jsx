@@ -72,7 +72,7 @@ const CheckoutForm = ({ clientSecret, ticket, onPaymentSuccess, onPaymentError, 
           disabled={isProcessing || !stripe}
           className="w-full sm:w-auto bg-brand-accent text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-dark transition-all interactive flex justify-center items-center gap-2 cursor-pointer disabled:opacity-70"
         >
-          {isProcessing ? <CircleNotch size={18} className="animate-spin" /> : null} Pay €{price.toLocaleString()}
+          {isProcessing ? <CircleNotch size={18} className="animate-spin" /> : null} Pay ${price.toLocaleString()}
         </button>
       </div>
     </form>

@@ -323,7 +323,7 @@ const Profile = () => {
                           </div>
                         </div>
                         <div className="flex flex-row md:flex-col items-center md:items-end justify-between mt-6 md:mt-0 gap-2">
-                          <p className="text-sm font-bold text-brand-dark">€{t.price.toLocaleString()}</p>
+                          <p className="text-sm font-bold text-brand-dark">${t.price.toLocaleString()}</p>
                           <p className="text-[10px] text-gray-400 uppercase tracking-widest">{t.date}</p>
                         </div>
                         <div className="flex items-center gap-4 mt-6 md:mt-0 md:ml-8 pt-4 md:pt-0 border-t md:border-t-0 border-gray-200">

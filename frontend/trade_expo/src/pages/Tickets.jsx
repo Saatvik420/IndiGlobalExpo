@@ -131,11 +131,11 @@ const Tickets = () => {
 
   const visitorTickets = [
     { type: 'Trade Visitor', price: 45, features: ['Access to all Sectors', 'Digital Event Directory', 'Public Lounges'] },
-    { type: 'All-Access VIP', price: 290, features: ['Access to all Sectors', 'B2B Matchmaking App', 'VIP Lounge Access', '3-Day Premium Access'] }
+    { type: 'All-Access VIP', price: 290, features: ['Access to all Sectors', 'B2B Matchmaking App', 'VIP Lounge Access', '1-Day Premium Access'] }
   ];
 
   const exhibitorTickets = [
-    { type: 'Standard Booth', price: 4500, features: ['9 sqm (3x3m) Shell Scheme', 'Fully built shell structure', 'Fascia name board', '2 Exhibitor Badges', 'Basic electricity & lighting'] },
+    { type: 'Standard Booth', price: 4000, features: ['9 sqm (3x3m) Shell Scheme', 'Fully built shell structure', 'Fascia name board', '2 Exhibitor Badges', 'Basic electricity & lighting'] },
     { type: 'Premium Island', price: 8000, features: ['18 sqm (6x3m) Open Space', 'Raw space for custom build', 'Prime location in sector hall', '5 Exhibitor VIP Badges', 'Website logo placement'] }
   ];
 
@@ -366,10 +366,10 @@ const Tickets = () => {
                     {index === 1 && <div className="absolute top-0 right-0 bg-brand-accent text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1">Recommended</div>}
                     <h3 className={`font-serif text-2xl mb-2 ${index === 1 ? 'text-white' : 'text-brand-dark'}`}>{ticket.type}</h3>
                     <p className={`text-xs tracking-widest uppercase font-bold mb-6 ${index === 1 ? 'text-brand-accent' : 'text-gray-400'}`}>
-                      {currentRole === 'Exhibitor' ? (index === 0 ? '9 sqm (3x3m) Shell Scheme' : '18 sqm (6x3m) Open Space') : (index === 0 ? '1-Day Access' : '3-Day Premium Access')}
+                      {currentRole === 'Exhibitor' ? (index === 0 ? '9 sqm (3x3m) Shell Scheme' : '18 sqm (6x3m) Open Space') : (index === 0 ? '1-Day Access' : '1-Day Premium Access')}
                     </p>
                     <div className={`mb-8 border-b pb-8 ${index === 1 ? 'border-gray-800' : 'border-gray-100'}`}>
-                      <span className={`text-5xl font-serif ${index === 1 ? 'text-white' : 'text-brand-dark'}`}>€{ticket.price.toLocaleString()}</span>
+                      <span className={`text-5xl font-serif ${index === 1 ? 'text-white' : 'text-brand-dark'}`}>${ticket.price.toLocaleString()}</span>
                       {currentRole === 'Visitor' && <span className="text-gray-400 text-sm font-light">/ person</span>}
                     </div>
                     <ul className="space-y-4 mb-10 flex-1">
