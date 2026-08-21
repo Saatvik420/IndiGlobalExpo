@@ -122,7 +122,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 uppercase tracking-widest font-bold">
-          <p>&copy; 2026 IndiGlobal Expo. All rights reserved.</p>
+          <p>&copy; 2027 IndiGlobal Expo. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a 
               href="#" 

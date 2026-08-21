@@ -205,7 +205,7 @@ const Tickets = () => {
             <div className="reveal-up">
               <div className="text-center mb-12">
                 <h2 className="text-5xl md:text-6xl font-serif text-brand-dark mb-4">Choose Your Path</h2>
-                <p className="text-gray-500 font-light text-lg">Select how you would like to participate in IndiGlobal Expo 2026.</p>
+                <p className="text-gray-500 font-light text-lg">Select how you would like to participate in IndiGlobal Expo 2027.</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -481,7 +481,7 @@ const Tickets = () => {
           </div>
           
           <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 uppercase tracking-widest font-bold">
-            <p>&copy; 2026 IndiGlobal Expo. All rights reserved.</p>
+            <p>&copy; 2027 IndiGlobal Expo. All rights reserved.</p>
             <div className="flex items-center gap-6">
               <button className="text-gray-400 hover:text-brand-accent transition-colors interactive"><FacebookLogo size={24} weight="fill" /></button>
               <button className="text-gray-400 hover:text-brand-accent transition-colors interactive"><InstagramLogo size={24} weight="fill" /></button>

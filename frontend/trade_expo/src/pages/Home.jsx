@@ -32,8 +32,8 @@ const Home = () => {
   const trackRef = useRef(null);
 
   useEffect(() => {
-    // Target Date: December 17, 2026
-    const targetDate = new Date('2026-12-17T09:00:00').getTime();
+    // Target Date: January 22, 2027
+    const targetDate = new Date('2027-01-22T09:00:00').getTime();
 
     const timerInterval = setInterval(() => {
       const now = new Date().getTime();
@@ -125,7 +125,7 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row sm:items-center text-white/90 gap-6 sm:gap-12 mb-10 animate-fade-up delay-300">
               <div className="flex items-center gap-3">
                 <i className="ph ph-calendar-blank text-xl text-brand-accent"></i>
-                <span className="font-light tracking-widest uppercase text-[10px]">December 17, 2026</span>
+                <span className="font-light tracking-widest uppercase text-[10px]">January 22, 2027</span>
               </div>
               <div className="flex items-center gap-3">
                 <i className="ph ph-map-pin text-xl text-brand-accent"></i>
