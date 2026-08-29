@@ -76,16 +76,17 @@ const Footer = () => {
           <div>
             <h4 className="text-xs font-bold uppercase tracking-widest mb-6 text-brand-dark">Contact</h4>
             <ul className="space-y-2 font-light text-gray-500 text-sm">
-              <li>Brand Vista Consulting Ltd.</li>
-              <li>Apartment 208, Beecham House</li>
-              <li>Clayponds Lane, Brentford</li>
-              <li>England, TW8 0GX</li>
+              <li className="font-medium text-brand-dark">IndiGlobalExpo</li>
+              <li>C/O GTTCI</li>
+              <li>Areness House, 5, Sardar Patel Marg</li>
+              <li>Diplomatic Enclave, Chanakyapuri</li>
+              <li>New Delhi - 110021, India</li>
               <li className="pt-4">
                 <a 
-                  href="mailto:info@brandvistaconsulting.com" 
+                  href="mailto:info@indiglobalexpo.com" 
                   className="font-medium text-brand-dark hover:text-brand-accent transition-colors interactive"
                 >
-                  info@brandvistaconsulting.com
+                  info@indiglobalexpo.com
                 </a>
               </li>
             </ul>

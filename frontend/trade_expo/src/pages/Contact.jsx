@@ -115,7 +115,13 @@ const Contact = () => {
                     <Buildings className="text-2xl text-brand-accent mt-1" />
                     <div>
                       <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2">Corporate Office</h4>
-                      <p className="font-light text-gray-300 leading-relaxed">Brand Vista Consulting Ltd.<br />Apartment 208, Beecham House,<br />Clayponds Lane, Brentford,<br />England, TW8 0GX</p>
+                      <p className="font-light text-gray-300 leading-relaxed">
+                        IndiGlobalExpo<br />
+                        C/O GTTCI<br />
+                        Areness House, 5, Sardar Patel Marg,<br />
+                        Diplomatic Enclave, Chanakyapuri,<br />
+                        New Delhi - 110021, India
+                      </p>
                     </div>
                   </div>
                   

@@ -76,11 +76,12 @@ const Legal = () => {
                   <p className="leading-relaxed">
                     IndiGlobal Expo is published, operated, and managed by <strong>IndiGlobal Exhibitions Pvt. Ltd.</strong>, a registered company under the Companies Act of India.<br /><br />
                     <strong>Registered Office:</strong><br />
-                    Yashobhoomi Convention Centre Complex, Sector 25, Dwarka<br />
-                    New Delhi, India 110077<br /><br />
+                    IndiGlobalExpo, C/O GTTCI<br />
+                    Areness House, 5, Sardar Patel Marg, Diplomatic Enclave, Chanakyapuri<br />
+                    New Delhi - 110021, India<br /><br />
                     <strong>Contact:</strong><br />
                     Phone: +91 11 2345 6789<br />
-                    Email: <a href="mailto:legal@indiglobalexpo.com" className="text-brand-accent hover:underline interactive">legal@indiglobalexpo.com</a>
+                    Email: <a href="mailto:info@indiglobalexpo.com" className="text-brand-accent hover:underline interactive">info@indiglobalexpo.com</a>
                   </p>
                 </div>
 
