@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
+import logoColorImg from '../../assets/IndiGlobal Expo Logo.png';
+import logoWhiteImg from '../../assets/IndiGlobal Expo Logo White.png';
 
 const Header = ({ logoColor = 'text-white' }) => {
   const navigate = useNavigate();
@@ -43,9 +45,11 @@ const Header = ({ logoColor = 'text-white' }) => {
             className="flex-shrink-0 flex items-center cursor-pointer interactive z-[70]" 
             onClick={() => handleNavigate('/')}
           >
-            <h1 className={`font-serif text-2xl font-bold tracking-widest uppercase transition-colors duration-300 ${displayLogoColor}`}>
-              IndiGlobal<span className="font-sans font-light opacity-70 text-xl ml-1">Expo</span>
-            </h1>
+            <img 
+              src={isMenuOpen ? logoWhiteImg : (isDarkText || logoColor.includes('text-brand-dark') ? logoColorImg : logoWhiteImg)} 
+              alt="IndiGlobal Expo" 
+              className="h-10 sm:h-12 w-auto object-contain transition-all duration-300 hover:scale-105"
+            />
           </div>
 
           {/* Right Side */}

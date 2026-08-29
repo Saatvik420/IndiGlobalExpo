@@ -23,6 +23,8 @@ import itHover from '../assets/Information tech(unsplash).jfif';
 import foodHover from '../assets/Food and beverages(unsplash).jfif';
 import gemsHover from '../assets/gems and jewelry(unsplash).jfif';
 import heroPoster from '../assets/Hero poster (unsplash).jfif';
+import logoImg from '../assets/IndiGlobal Expo Logo.png';
+import logoWhiteImg from '../assets/IndiGlobal Expo Logo White.png';
 
 const Home = () => {
 
@@ -185,7 +187,11 @@ const Home = () => {
       <section id="about" className="py-24 bg-white overflow-hidden relative z-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
           <div className="text-center mb-16">
-            <i className="ph-fill ph-globe-hemisphere-west text-4xl text-brand-light mb-6 inline-block"></i>
+            <img 
+              src={logoImg} 
+              alt="IndiGlobal Expo - Connect • Collaborate • Grow" 
+              className="h-16 md:h-20 w-auto object-contain mx-auto mb-8 hover:scale-105 transition-transform" 
+            />
             <h2 className="font-serif text-3xl md:text-4xl leading-tight text-brand-dark">
               IndiGlobalExpo is a premier international trade fair platform designed to connect Asian businesses with <span className="italic text-brand-accent">global markets.</span>
             </h2>

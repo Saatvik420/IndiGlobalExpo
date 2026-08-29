@@ -16,6 +16,7 @@ import heroPosterImg from '../../assets/Hero poster (unsplash).jfif';
 import manufacturingImg from '../../assets/manufacturing.jpg';
 import ITImg from '../../assets/Information Tech.jpg';
 import textilesImg from '../../assets/textiles.jpg';
+import logoImg from '../../assets/IndiGlobal Expo Logo.png';
 
 const Teams = () => {
   const navigate = useNavigate();
@@ -111,8 +112,9 @@ const Teams = () => {
       {/* The Vision Board */}
       <section className="py-24 bg-brand-light">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="mb-16 reveal-up text-center md:text-left flex flex-col md:flex-row justify-between items-end">
+          <div className="mb-16 reveal-up text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
+              <img src={logoImg} alt="IndiGlobal Expo Logo" className="h-12 md:h-14 w-auto object-contain mb-6 mx-auto md:mx-0" />
               <h3 className="font-serif text-4xl text-brand-dark mb-4">The IndiGlobalExpo Vision</h3>
               <p className="text-gray-500 font-light max-w-2xl">Our flagship international platform created with a singular, clear vision: to present Asia to the world.</p>
             </div>

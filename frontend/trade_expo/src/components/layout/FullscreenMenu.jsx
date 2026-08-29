@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useGlobal } from '../../context/GlobalContext';
+import logoWhiteImg from '../../assets/IndiGlobal Expo Logo White.png';
 
 const FullscreenMenu = () => {
   const navigate = useNavigate();
@@ -20,7 +21,16 @@ const FullscreenMenu = () => {
         clipPath: isMenuOpen ? 'circle(150% at top right)' : 'circle(0px at top right)'
       }}
     >
-      <nav className="flex flex-col items-center space-y-8 text-center">
+      <div className={`mb-10 transition-all duration-500 ${isMenuOpen ? 'opacity-100 translate-y-0 delay-100' : 'opacity-0 -translate-y-4'}`}>
+        <img 
+          src={logoWhiteImg} 
+          alt="IndiGlobal Expo" 
+          className="h-12 md:h-14 w-auto object-contain cursor-pointer hover:scale-105 transition-transform"
+          onClick={() => handleNavigate('/')}
+        />
+      </div>
+
+      <nav className="flex flex-col items-center space-y-6 md:space-y-8 text-center">
         <button 
           onClick={() => handleNavigate('/')} 
           className={`font-serif text-4xl md:text-6xl text-white hover:text-brand-accent transition-all duration-500 interactive ${isMenuOpen ? 'opacity-100 translate-y-0 delay-100' : 'opacity-0 translate-y-5'}`}

@@ -7,6 +7,8 @@ import FullscreenMenu from '../../components/layout/FullscreenMenu';
 import PageLoader from '../../components/layout/PageLoader';
 import CustomCursor from '../../components/ui/CustomCursor';
 import TicketWidget from '../../components/ui/TicketWidget';
+import logoImg from '../../assets/IndiGlobal Expo Logo.png';
+import logoWhiteImg from '../../assets/IndiGlobal Expo Logo White.png';
 
 const Press = () => {
   const navigate = useNavigate();
@@ -236,6 +238,57 @@ const Press = () => {
               <button className="interactive inline-flex items-center justify-center gap-3 bg-brand-dark text-white px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors shadow-xl w-full sm:w-auto">
                 <FileZip size={20} /> Download Kit (45MB)
               </button>
+            </div>
+          </div>
+
+          {/* Official Logos & Brand Marks */}
+          <div className="mt-20 pt-16 border-t border-gray-200">
+            <div className="text-center mb-12 reveal-up">
+              <span className="text-brand-accent font-semibold tracking-widest uppercase text-xs mb-2 block">Brand Assets</span>
+              <h3 className="font-serif text-3xl md:text-4xl text-brand-dark">Official Logo & Identity</h3>
+              <p className="text-gray-500 font-light max-w-xl mx-auto mt-2">Download official high-resolution vector and raster assets for digital and print media.</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* Primary Color Logo */}
+              <div className="bg-white p-8 border border-gray-200 rounded-sm shadow-sm flex flex-col items-center justify-between reveal-up">
+                <div className="w-full flex items-center justify-center p-8 bg-gray-50 rounded-sm mb-6 border border-gray-100 min-h-[160px]">
+                  <img src={logoImg} alt="IndiGlobal Expo Primary Logo" className="h-14 w-auto object-contain" />
+                </div>
+                <div className="w-full flex justify-between items-center pt-2">
+                  <div>
+                    <h5 className="font-serif text-lg text-brand-dark font-medium">Primary Logo (Full Color)</h5>
+                    <p className="text-xs text-gray-400 font-light">For light backgrounds & print</p>
+                  </div>
+                  <a 
+                    href="/indiglobal_expo_logo.png" 
+                    download="IndiGlobal_Expo_Logo.png" 
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-brand-dark transition-colors interactive border border-brand-accent/30 hover:border-brand-dark px-4 py-2 rounded-sm"
+                  >
+                    Download PNG
+                  </a>
+                </div>
+              </div>
+
+              {/* White Logo */}
+              <div className="bg-white p-8 border border-gray-200 rounded-sm shadow-sm flex flex-col items-center justify-between reveal-up delay-100">
+                <div className="w-full flex items-center justify-center p-8 bg-brand-dark rounded-sm mb-6 min-h-[160px]">
+                  <img src={logoWhiteImg} alt="IndiGlobal Expo White Logo" className="h-14 w-auto object-contain" />
+                </div>
+                <div className="w-full flex justify-between items-center pt-2">
+                  <div>
+                    <h5 className="font-serif text-lg text-brand-dark font-medium">White Logo (Light Text)</h5>
+                    <p className="text-xs text-gray-400 font-light">For dark backgrounds & banners</p>
+                  </div>
+                  <a 
+                    href="/indiglobal_expo_logo_white.png" 
+                    download="IndiGlobal_Expo_Logo_White.png" 
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-brand-dark transition-colors interactive border border-brand-accent/30 hover:border-brand-dark px-4 py-2 rounded-sm"
+                  >
+                    Download PNG
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -440,57 +440,7 @@ const Tickets = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-24 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
-            <div className="md:col-span-1 reveal-up">
-              <h2 className="font-serif text-2xl font-bold tracking-widest uppercase mb-6 text-brand-dark">
-                IndiGlobal<span className="font-sans font-light text-gray-500 text-xl ml-1">Expo</span>
-              </h2>
-              <p className="text-gray-500 text-sm font-light mb-8 max-w-xs">The premier international trade fair for interiors, inspiration, and lifestyle.</p>
-            </div>
-            <div className="reveal-up delay-100">
-              <h4 className="text-xs font-bold uppercase tracking-widest mb-6 text-brand-dark">Navigation</h4>
-              <ul className="space-y-4 font-light text-gray-500 text-sm">
-                <li><button onClick={() => navigate('/')} className="hover:text-brand-accent transition-colors interactive">Home</button></li>
-                <li><button onClick={() => navigate('/exhibitor')} className="hover:text-brand-accent transition-colors interactive">Exhibit With Us</button></li>
-                <li><button onClick={() => navigate('/tickets')} className="hover:text-brand-accent transition-colors interactive">Get Tickets</button></li>
-                <li><button onClick={() => navigate('/contact')} className="hover:text-brand-accent transition-colors interactive">Contact Us</button></li>
-              </ul>
-            </div>
-            <div className="reveal-up delay-300">
-              <h4 className="text-xs font-bold uppercase tracking-widest mb-6 text-brand-dark">Contact</h4>
-              <ul className="space-y-2 font-light text-gray-500 text-sm">
-                <li>Brand Vista Consulting Ltd.</li>
-                <li>Apartment 208, Beecham House</li>
-                <li>Clayponds Lane, Brentford</li>
-                <li>England, TW8 0GX</li>
-                <li className="pt-4"><a href="mailto:info@brandvistaconsulting.com" className="font-medium text-brand-dark hover:text-brand-accent transition-colors interactive">info@brandvistaconsulting.com</a></li>
-              </ul>
-            </div>
-            
-            <div className="reveal-up delay-400">
-              <h4 className="text-xs font-bold uppercase tracking-widest mb-6 text-brand-dark">Corporate</h4>
-              <ul className="space-y-4 font-light text-gray-500 text-sm">
-                <li><button onClick={() => navigate('/corporate/teams')} className="hover:text-brand-accent transition-colors interactive">Organising Partner</button></li>
-                <li><button onClick={() => navigate('/corporate/press')} className="hover:text-brand-accent transition-colors interactive">Press & Media</button></li>
-                <li><button onClick={() => navigate('/corporate/legal')} className="hover:text-brand-accent transition-colors interactive">Legal Notice</button></li>
-                <li><button onClick={() => navigate('/corporate/privacy')} className="hover:text-brand-accent transition-colors interactive">Data & Privacy</button></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 uppercase tracking-widest font-bold">
-            <p>&copy; 2027 IndiGlobal Expo. All rights reserved.</p>
-            <div className="flex items-center gap-6">
-              <button className="text-gray-400 hover:text-brand-accent transition-colors interactive"><FacebookLogo size={24} weight="fill" /></button>
-              <button className="text-gray-400 hover:text-brand-accent transition-colors interactive"><InstagramLogo size={24} weight="fill" /></button>
-              <button className="text-gray-400 hover:text-brand-accent transition-colors interactive"><LinkedinLogo size={24} weight="fill" /></button>
-              <button className="text-gray-400 hover:text-brand-accent transition-colors interactive"><TwitterLogo size={24} weight="fill" /></button>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import logoImg from '../../assets/IndiGlobal Expo Logo.png';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -13,9 +14,16 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
           <div className="md:col-span-1">
-            <h2 className="font-serif text-2xl font-bold tracking-widest uppercase mb-6 text-brand-dark">
-              IndiGlobal<span className="font-sans font-light text-gray-500 text-xl ml-1">Expo</span>
-            </h2>
+            <div 
+              onClick={() => handleNavigate('/')} 
+              className="cursor-pointer inline-block mb-6"
+            >
+              <img 
+                src={logoImg} 
+                alt="IndiGlobal Expo - Connect • Collaborate • Grow" 
+                className="h-12 w-auto object-contain hover:opacity-90 transition-opacity"
+              />
+            </div>
             <p className="text-gray-500 text-sm font-light mb-8 max-w-xs">
               The premier international trade fair for interiors, inspiration, and lifestyle.
             </p>
