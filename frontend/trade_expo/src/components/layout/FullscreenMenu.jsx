@@ -25,7 +25,7 @@ const FullscreenMenu = () => {
         <img 
           src={logoWhiteImg} 
           alt="IndiGlobal Expo" 
-          className="h-12 md:h-14 w-auto object-contain cursor-pointer hover:scale-105 transition-transform"
+          className="h-14 md:h-16 w-auto object-contain cursor-pointer hover:scale-105 transition-transform"
           onClick={() => handleNavigate('/')}
         />
       </div>

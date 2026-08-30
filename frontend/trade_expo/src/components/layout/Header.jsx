@@ -48,7 +48,7 @@ const Header = ({ logoColor = 'text-white' }) => {
             <img 
               src={isMenuOpen ? logoWhiteImg : (isDarkText || logoColor.includes('text-brand-dark') ? logoColorImg : logoWhiteImg)} 
               alt="IndiGlobal Expo" 
-              className="h-10 sm:h-12 w-auto object-contain transition-all duration-300 hover:scale-105"
+              className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-all duration-300 hover:scale-105"
             />
           </div>
 
