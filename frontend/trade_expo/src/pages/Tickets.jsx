@@ -45,6 +45,11 @@ const Tickets = () => {
   useEffect(() => {
     if (isLoggedIn && user) {
       setUserDetails(user);
+      if (user.roles?.includes('ROLE_EXHIBITOR')) {
+        setCurrentRole('Exhibitor');
+      } else if (!currentRole) {
+        setCurrentRole('Visitor');
+      }
       // Automatically move to step 2 (Select Pass) if logged in
       if (step === 0 || step === 'login' || step === 1) {
         setStep(2);
@@ -117,10 +122,10 @@ const Tickets = () => {
 
   const [showInterestModal, setShowInterestModal] = useState(false);
 
-  const selectPass = (type, price) => {
-    setCurrentTicket({ type, price });
+  const selectPass = (type) => {
+    setCurrentTicket({ type, price: 0 });
     setShowInterestModal(true);
-    ticketService.purchaseTicket({ ticketType: type, price })
+    ticketService.purchaseTicket({ ticketType: type, price: 0 })
       .then(response => {
         if (response?.ticket) {
           addTicket(response.ticket);
@@ -130,13 +135,51 @@ const Tickets = () => {
   };
 
   const visitorTickets = [
-    { type: 'Trade Visitor', price: 45, features: ['Access to all Sectors', 'Digital Event Directory', 'Public Lounges'] },
-    { type: 'All-Access VIP', price: 290, features: ['Access to all Sectors', 'B2B Matchmaking App', 'VIP Lounge Access', '1-Day Premium Access'] }
+    { 
+      type: '1-Day Access', 
+      badge: '1-Day Access', 
+      features: [
+        'Access to all Sectors', 
+        'Digital Event Directory', 
+        'Public Lounges & Networking Zones', 
+        'Single Day Event Access'
+      ] 
+    },
+    { 
+      type: '2-Day Access', 
+      badge: '2-Day Access', 
+      features: [
+        'Access to all Sectors (Both Days)', 
+        'B2B Matchmaking App & Directory', 
+        'VIP Lounge & Networking Access', 
+        '2-Day Full Event Access'
+      ] 
+    }
   ];
 
   const exhibitorTickets = [
-    { type: 'Standard Booth', price: 4000, features: ['9 sqm (3x3m) Shell Scheme', 'Fully built shell structure', 'Fascia name board', '2 Exhibitor Badges', 'Basic electricity & lighting'] },
-    { type: 'Premium Island', price: 8000, features: ['18 sqm (6x3m) Open Space', 'Raw space for custom build', 'Prime location in sector hall', '5 Exhibitor VIP Badges', 'Website logo placement'] }
+    { 
+      type: 'Standard Booth', 
+      badge: '9 sqm (3x3m) Shell Scheme', 
+      features: [
+        '9 sqm (3x3m) Shell Scheme', 
+        'Fully built shell structure', 
+        'Fascia name board', 
+        '2 Exhibitor Badges', 
+        'Basic electricity & lighting'
+      ] 
+    },
+    { 
+      type: 'Premium Booth', 
+      badge: '18 sqm (6x3m) Open Space', 
+      features: [
+        '18 sqm (6x3m) Open Space', 
+        'Raw space for custom build', 
+        'Prime location in sector hall', 
+        '5 Exhibitor VIP Badges', 
+        'Website logo placement'
+      ] 
+    }
   ];
 
   return (
@@ -354,24 +397,49 @@ const Tickets = () => {
           {/* STEP 2: SELECT PASS */}
           {step === 2 && (
             <div className="reveal-up w-full">
-              <div className="text-center mb-10">
+              <div className="text-center mb-6">
                 <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 2 of 2</p>
                 <h2 className="font-serif text-4xl text-brand-dark mb-2">
                   {currentRole === 'Exhibitor' ? 'Select Your Booth' : 'Select Your Pass'}
                 </h2>
               </div>
+
+              {/* Role Toggle Switch */}
+              <div className="flex justify-center mb-10">
+                <div className="inline-flex p-1 bg-gray-100 rounded-sm border border-gray-200">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentRole('Visitor')}
+                    className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all rounded-sm ${
+                      currentRole === 'Visitor'
+                        ? 'bg-brand-dark text-white shadow'
+                        : 'text-gray-600 hover:text-brand-dark'
+                    }`}
+                  >
+                    Visitor Passes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentRole('Exhibitor')}
+                    className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all rounded-sm ${
+                      currentRole === 'Exhibitor'
+                        ? 'bg-brand-dark text-white shadow'
+                        : 'text-gray-600 hover:text-brand-dark'
+                    }`}
+                  >
+                    Exhibitor Booths
+                  </button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {(currentRole === 'Visitor' ? visitorTickets : exhibitorTickets).map((ticket, index) => (
                   <div key={index} className={`p-10 shadow-xl hover:-translate-y-2 transition-all duration-500 rounded-sm flex flex-col interactive border ${index === 1 ? 'bg-brand-dark border-brand-accent shadow-2xl relative' : 'bg-white border-gray-100'}`}>
                     {index === 1 && <div className="absolute top-0 right-0 bg-brand-accent text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1">Recommended</div>}
                     <h3 className={`font-serif text-2xl mb-2 ${index === 1 ? 'text-white' : 'text-brand-dark'}`}>{ticket.type}</h3>
-                    <p className={`text-xs tracking-widest uppercase font-bold mb-6 ${index === 1 ? 'text-brand-accent' : 'text-gray-400'}`}>
-                      {currentRole === 'Exhibitor' ? (index === 0 ? '9 sqm (3x3m) Shell Scheme' : '18 sqm (6x3m) Open Space') : (index === 0 ? '1-Day Access' : '1-Day Premium Access')}
+                    <p className={`text-xs tracking-widest uppercase font-bold mb-8 pb-6 border-b ${index === 1 ? 'text-brand-accent border-gray-800' : 'text-gray-400 border-gray-100'}`}>
+                      {ticket.badge}
                     </p>
-                    <div className={`mb-8 border-b pb-8 ${index === 1 ? 'border-gray-800' : 'border-gray-100'}`}>
-                      <span className={`text-5xl font-serif ${index === 1 ? 'text-white' : 'text-brand-dark'}`}>${ticket.price.toLocaleString()}</span>
-                      {currentRole === 'Visitor' && <span className="text-gray-400 text-sm font-light">/ person</span>}
-                    </div>
                     <ul className="space-y-4 mb-10 flex-1">
                       {ticket.features.map((feature, i) => (
                         <li key={i} className={`flex items-center gap-3 text-sm font-light ${index === 1 ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -379,7 +447,7 @@ const Tickets = () => {
                         </li>
                       ))}
                     </ul>
-                    <button onClick={() => selectPass(ticket.type, ticket.price)} className={`w-full py-4 font-bold uppercase tracking-widest text-xs transition-colors interactive ${index === 1 ? 'bg-brand-accent text-white hover:bg-white hover:text-brand-dark' : 'border border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white'}`}>
+                    <button onClick={() => selectPass(ticket.type)} className={`w-full py-4 font-bold uppercase tracking-widest text-xs transition-colors interactive ${index === 1 ? 'bg-brand-accent text-white hover:bg-white hover:text-brand-dark' : 'border border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white'}`}>
                       {currentRole === 'Exhibitor' ? 'Reserve Booth' : 'Select Pass'}
                     </button>
                   </div>
