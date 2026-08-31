@@ -201,35 +201,6 @@ const Home = () => {
       {/* Event Highlights & 3D Presentation Showcase Slider */}
       <EventShowcaseSlider />
 
-      {/* About & Vision Section */}
-      <section id="about" className="py-28 md:py-36 bg-white overflow-hidden relative z-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
-          <div className="text-center mb-16">
-            <img 
-              src={logoImg} 
-              alt="IndiGlobal Expo - Connect • Collaborate • Grow" 
-              className="h-16 md:h-20 w-auto object-contain mx-auto mb-8 hover:scale-105 transition-transform" 
-            />
-            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-brand-dark">
-              IndiGlobalExpo is a premier international trade fair platform designed to connect Asian businesses with <span className="italic text-brand-accent">global markets.</span>
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 text-gray-500 font-light text-base leading-relaxed">
-            <div className="reveal-up delay-100">
-              <p className="mb-6">Bringing together companies from diverse sectors, the expo travels across key international destinations, creating powerful opportunities for Asian brands to showcase their products, services, innovation, and capabilities on a global stage.</p>
-              <p>From established enterprises to emerging brands, IndiGlobalExpo serves as a gateway for Asian industries to expand their footprint, build strategic partnerships, and explore new markets worldwide.</p>
-            </div>
-            <div className="border-l border-brand-accent/30 pl-8 md:pl-12 reveal-up delay-200">
-              <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 text-brand-dark">Our Vision</h4>
-              <p className="font-serif text-xl text-brand-dark italic leading-relaxed">
-                "To position Asia as a global hub of innovation, quality, and excellence by enabling businesses to access international opportunities and build lasting global connections."
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* WHAT WE OFFER */}
       <section id="what-we-offer" className="py-32 bg-brand-light relative z-20 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -376,6 +347,33 @@ const Home = () => {
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+
+          {/* IndiGlobalExpo Overview & Vision (Shifted here with matching luxury dark theme) */}
+          <div id="about" className="border-t border-gray-800 pt-20 mt-20">
+            <div className="text-center mb-16 reveal-up">
+              <img 
+                src={logoWhiteImg} 
+                alt="IndiGlobal Expo - Connect • Collaborate • Grow" 
+                className="h-16 md:h-20 w-auto object-contain mx-auto mb-8 hover:scale-105 transition-transform drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]" 
+              />
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-tight text-white max-w-4xl mx-auto">
+                IndiGlobalExpo is a premier international trade fair platform designed to connect Asian businesses with <span className="italic text-brand-accent font-light">global markets.</span>
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-gray-300 font-light text-base leading-relaxed items-stretch">
+              <div className="reveal-up delay-100 space-y-6">
+                <p>Bringing together companies from diverse sectors, the expo travels across key international destinations, creating powerful opportunities for Asian brands to showcase their products, services, innovation, and capabilities on a global stage.</p>
+                <p>From established enterprises to emerging brands, IndiGlobalExpo serves as a gateway for Asian industries to expand their footprint, build strategic partnerships, and explore new markets worldwide.</p>
+              </div>
+              <div className="bg-gradient-to-br from-white/10 to-white/0 border border-white/10 border-l-4 border-l-brand-accent p-8 md:p-10 rounded-sm reveal-up delay-200 flex flex-col justify-center">
+                <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 text-brand-accent">Our Vision</h4>
+                <p className="font-serif text-xl sm:text-2xl text-white italic leading-relaxed">
+                  "To position Asia as a global hub of innovation, quality, and excellence by enabling businesses to access international opportunities and build lasting global connections."
+                </p>
+              </div>
             </div>
           </div>
 
