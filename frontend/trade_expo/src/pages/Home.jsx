@@ -115,75 +115,76 @@ const Home = () => {
         </video>
         <div className="absolute inset-0 hero-overlay-home z-0"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-20">
-          <div className="max-w-4xl">
-            {/* Event Logo on Left Side */}
-            <div className="animate-fade-up mb-6">
-              <div className="inline-block bg-white/95 backdrop-blur-md px-5 py-3 rounded-xl shadow-2xl border border-white/40">
-                <img 
-                  src={confluenceLogo} 
-                  alt="India-ASEAN Global Confluence 2027 Logo" 
-                  className="h-12 sm:h-14 md:h-16 w-auto object-contain" 
-                />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-20">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+            {/* Left Column: Hero Details */}
+            <div className="md:col-span-7">
+              <div className="animate-fade-up overflow-hidden mb-4">
+                <p className="text-brand-accent font-bold tracking-widest uppercase text-[10px]">A Premier International Trade Fair</p>
+              </div>
+              
+              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-bold leading-[1.05] mb-6 sm:mb-8 animate-fade-up delay-100">
+                Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World.</span>
+              </h2>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center text-white/90 gap-4 sm:gap-12 mb-8 sm:mb-10 animate-fade-up delay-300">
+                <div className="flex items-center gap-3">
+                  <i className="ph ph-calendar-blank text-xl text-brand-accent"></i>
+                  <span className="font-light tracking-widest uppercase text-[10px]">January 22, 2027</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <i className="ph ph-map-pin text-xl text-brand-accent"></i>
+                  <span className="font-light tracking-widest uppercase text-[10px]">Bangkok, Thailand</span>
+                </div>
+              </div>
+
+              {/* Countdown Timer */}
+              <div className="flex items-center gap-3 sm:gap-6 md:gap-8 mb-8 sm:mb-12 animate-fade-up delay-500">
+                <div className="text-center">
+                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-brand-accent mb-1">{timeLeft.days}</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Days</span>
+                </div>
+                <div className="text-white/20 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-center">
+                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.hours}</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Hours</span>
+                </div>
+                <div className="text-white/20 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-center">
+                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.minutes}</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Minutes</span>
+                </div>
+                <div className="text-white/20 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-center">
+                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.seconds}</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Seconds</span>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-up delay-[600ms]">
+                <button 
+                  onClick={() => handleNavigate('/visitor')} 
+                  className="bg-white text-brand-dark px-8 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-brand-accent hover:text-white transition-colors interactive"
+                >
+                  Visitor Info
+                </button>
+                <button 
+                  onClick={() => handleNavigate('/sectors')} 
+                  className="text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest border border-white/30 hover:border-white transition-colors interactive"
+                >
+                  View Sectors
+                </button>
               </div>
             </div>
 
-            <div className="animate-fade-up overflow-hidden mb-4">
-              <p className="text-brand-accent font-bold tracking-widest uppercase text-[10px]">A Premier International Trade Fair</p>
-            </div>
-            
-            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-[1.05] mb-8 animate-fade-up delay-100">
-              Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World.</span>
-            </h2>
-            
-            <div className="flex flex-col sm:flex-row sm:items-center text-white/90 gap-6 sm:gap-12 mb-10 animate-fade-up delay-300">
-              <div className="flex items-center gap-3">
-                <i className="ph ph-calendar-blank text-xl text-brand-accent"></i>
-                <span className="font-light tracking-widest uppercase text-[10px]">January 22, 2027</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <i className="ph ph-map-pin text-xl text-brand-accent"></i>
-                <span className="font-light tracking-widest uppercase text-[10px]">Bangkok, Thailand</span>
-              </div>
-            </div>
-
-            {/* Countdown Timer */}
-            <div className="flex items-center gap-4 md:gap-8 mb-12 animate-fade-up delay-500">
-              <div className="text-center">
-                <span className="block font-serif text-3xl md:text-4xl text-brand-accent mb-1">{timeLeft.days}</span>
-                <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Days</span>
-              </div>
-              <div className="text-white/20 font-serif text-2xl md:text-4xl pb-5">:</div>
-              <div className="text-center">
-                <span className="block font-serif text-3xl md:text-4xl text-white mb-1">{timeLeft.hours}</span>
-                <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Hours</span>
-              </div>
-              <div className="text-white/20 font-serif text-2xl md:text-4xl pb-5">:</div>
-              <div className="text-center">
-                <span className="block font-serif text-3xl md:text-4xl text-white mb-1">{timeLeft.minutes}</span>
-                <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Minutes</span>
-              </div>
-              <div className="text-white/20 font-serif text-2xl md:text-4xl pb-5">:</div>
-              <div className="text-center">
-                <span className="block font-serif text-3xl md:text-4xl text-white mb-1">{timeLeft.seconds}</span>
-                <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Seconds</span>
-              </div>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-up delay-[600ms]">
-              <button 
-                onClick={() => handleNavigate('/visitor')} 
-                className="bg-white text-brand-dark px-8 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-brand-accent hover:text-white transition-colors interactive"
-              >
-                Visitor Info
-              </button>
-              <button 
-                onClick={() => handleNavigate('/sectors')} 
-                className="text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest border border-white/30 hover:border-white transition-colors interactive"
-              >
-                View Sectors
-              </button>
+            {/* Right Column: Transparent Logo directly on video background */}
+            <div className="md:col-span-5 flex items-center justify-center md:justify-end animate-fade-up delay-200">
+              <img 
+                src={confluenceLogo} 
+                alt="India-ASEAN Global Confluence 2027 Logo" 
+                className="w-full max-w-[320px] sm:max-w-[380px] md:max-w-[440px] h-auto object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.7)] hover:scale-105 transition-transform duration-500" 
+              />
             </div>
           </div>
         </div>
