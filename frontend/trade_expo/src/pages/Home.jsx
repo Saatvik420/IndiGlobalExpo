@@ -202,7 +202,7 @@ const Home = () => {
       <EventShowcaseSlider />
 
       {/* About & Vision Section */}
-      <section id="about" className="py-24 bg-white overflow-hidden relative z-20">
+      <section id="about" className="py-28 md:py-36 bg-white overflow-hidden relative z-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
           <div className="text-center mb-16">
             <img 
@@ -422,7 +422,7 @@ const Home = () => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-24 bg-brand-light relative z-20 border-t border-gray-200">
+      <section id="faq" className="py-28 md:py-36 bg-brand-light relative z-20 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal-up">
             <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-4">Got Questions?</p>
