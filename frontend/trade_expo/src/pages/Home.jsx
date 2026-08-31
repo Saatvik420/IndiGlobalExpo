@@ -116,14 +116,14 @@ const Home = () => {
         <div className="absolute inset-0 hero-overlay-home z-0"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
             {/* Left Column: Hero Details */}
-            <div className="lg:col-span-7 xl:col-span-7">
+            <div className="md:col-span-7">
               <div className="animate-fade-up overflow-hidden mb-4">
                 <p className="text-brand-accent font-bold tracking-widest uppercase text-[10px]">A Premier International Trade Fair</p>
               </div>
               
-              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-bold leading-[1.05] mb-6 sm:mb-8 animate-fade-up delay-100">
+              <h2 className="text-4xl sm:text-6xl md:text-7xl font-serif text-white font-bold leading-[1.05] mb-6 sm:mb-8 animate-fade-up delay-100">
                 Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World.</span>
               </h2>
               
@@ -179,7 +179,7 @@ const Home = () => {
             </div>
 
             {/* Right Column: Event Logo Showcase */}
-            <div className="lg:col-span-5 xl:col-span-5 flex justify-center lg:justify-end animate-fade-up delay-300">
+            <div className="md:col-span-5 flex justify-center md:justify-end animate-fade-up delay-300">
               <div className="relative group max-w-sm sm:max-w-md w-full">
                 {/* Ambient glow accent */}
                 <div className="absolute -inset-2 bg-gradient-to-r from-brand-accent/30 via-orange-500/20 to-blue-500/20 rounded-2xl blur-xl opacity-60 group-hover:opacity-100 transition duration-700"></div>
