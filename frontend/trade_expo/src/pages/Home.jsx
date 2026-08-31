@@ -25,6 +25,7 @@ import gemsHover from '../assets/gems and jewelry(unsplash).jfif';
 import heroPoster from '../assets/Hero poster (unsplash).jfif';
 import logoImg from '../assets/IndiGlobal Expo Logo.png';
 import logoWhiteImg from '../assets/IndiGlobal Expo Logo White.png';
+import confluenceLogo from '../assets/slides/logo.png';
 
 const Home = () => {
 
@@ -116,6 +117,17 @@ const Home = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-20">
           <div className="max-w-4xl">
+            {/* Event Logo on Left Side */}
+            <div className="animate-fade-up mb-6">
+              <div className="inline-block bg-white/95 backdrop-blur-md px-5 py-3 rounded-xl shadow-2xl border border-white/40">
+                <img 
+                  src={confluenceLogo} 
+                  alt="India-ASEAN Global Confluence 2027 Logo" 
+                  className="h-12 sm:h-14 md:h-16 w-auto object-contain" 
+                />
+              </div>
+            </div>
+
             <div className="animate-fade-up overflow-hidden mb-4">
               <p className="text-brand-accent font-bold tracking-widest uppercase text-[10px]">A Premier International Trade Fair</p>
             </div>
