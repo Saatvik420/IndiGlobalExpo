@@ -26,6 +26,7 @@ import heroPoster from '../assets/Hero poster (unsplash).jfif';
 import logoImg from '../assets/IndiGlobal Expo Logo.png';
 import logoWhiteImg from '../assets/IndiGlobal Expo Logo White.png';
 import confluenceLogo from '../assets/slides/logo.png';
+import bannerImg from '../assets/slides/banner.png';
 
 const Home = () => {
 
@@ -193,6 +194,19 @@ const Home = () => {
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-fade-up delay-[700ms]">
           <span className="text-[8px] text-white/60 uppercase tracking-widest font-bold">Scroll</span>
           <div className="w-px h-12 bg-gradient-to-b from-brand-accent to-transparent"></div>
+        </div>
+      </section>
+
+      {/* Event Banner Section */}
+      <section className="relative z-20 bg-white py-12 md:py-16 border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="reveal-up rounded-2xl overflow-hidden shadow-2xl border border-gray-200/70 bg-white transition-all duration-500 hover:shadow-3xl">
+            <img 
+              src={bannerImg} 
+              alt="India-ASEAN Global Confluence 2027 Official Banner" 
+              className="w-full h-auto object-contain block mx-auto hover:scale-[1.01] transition-transform duration-500" 
+            />
+          </div>
         </div>
       </section>
 
