@@ -6,6 +6,7 @@ import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
+import EventShowcaseSlider from '../components/ui/EventShowcaseSlider';
 
 // Import Assets
 import heroVideo from '../assets/Black and white video of people.mp4';
@@ -197,18 +198,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Event Banner Section */}
-      <section className="relative z-20 bg-white py-12 md:py-16 border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="reveal-up rounded-2xl overflow-hidden shadow-2xl border border-gray-200/70 bg-white transition-all duration-500 hover:shadow-3xl">
-            <img 
-              src={bannerImg} 
-              alt="India-ASEAN Global Confluence 2027 Official Banner" 
-              className="w-full h-auto object-contain block mx-auto hover:scale-[1.01] transition-transform duration-500" 
-            />
-          </div>
-        </div>
-      </section>
+      {/* Event Highlights & 3D Presentation Showcase Slider */}
+      <EventShowcaseSlider />
 
       {/* About & Vision Section */}
       <section id="about" className="py-24 bg-white overflow-hidden relative z-20">
