@@ -11,80 +11,41 @@ const slidesData = [
   {
     id: 'banner',
     title: 'India–ASEAN Global Confluence 2027',
-    tagline: 'A Premier International Trade & Investment Gateway',
     category: 'Official Banner',
     badge: 'Event Overview',
-    highlights: [
-      'Host City: Bangkok, Thailand',
-      'Event Dates: January 21st & 22nd, 2027',
-      'Focus: Trade, Investment, Innovation & Sustainable Growth',
-    ],
-    description:
-      'Strengthening bilateral trade partnerships between Indian and ASEAN industries, creating global corridors for cross-border expansion.',
+    caption: 'Strengthening India–ASEAN Partnership: Trade, Investment, Innovation & Sustainable Growth • Jan 21-22, 2027 | Bangkok, Thailand',
     image: bannerImg,
   },
   {
     id: 'glance',
     title: 'Confluence at a Glance',
-    tagline: 'Scale, Participation & Projected Global Impact',
     category: 'Key Metrics',
     badge: 'Scale & Numbers',
-    highlights: [
-      '50+ Leading Global Exhibitors',
-      '500+ Qualified B2B Trade Visitors',
-      '25+ In-Depth Knowledge & Panel Sessions',
-      '200+ International Leaders & 100x PR Value',
-    ],
-    description:
-      'A high-density international congregation delivering unprecedented business exposure, direct B2B matchmaking, and multi-sector MOU signings.',
+    caption: '50+ Exhibitors • 500+ B2B Trade Visitors • 25+ Knowledge Sessions • 200+ Global Leaders • 100x PR Value',
     image: glanceImg,
   },
   {
     id: 'priorities',
     title: 'Strategic Priorities',
-    tagline: 'Actionable Pillars for Regional Economic Growth',
     category: 'Strategic Vision',
     badge: 'Core Objectives',
-    highlights: [
-      'Bilateral & Regional Trade & Investment',
-      'Manufacturing, Supply-Chain & Infrastructure Cooperation',
-      'Tech, Digital Economy & Innovation Alliances',
-      'Green Initiatives & Startup Ecosystem Integration',
-    ],
-    description:
-      'Facilitating high-level institutional cooperation, policymaker dialogues, and cross-border ventures across essential economic drivers.',
+    caption: 'Bilateral Trade, Cross-Border Investments, Supply-Chain Resilience, Digital Economy & Green Growth Initiatives',
     image: prioritiesImg,
   },
   {
     id: 'sectors',
     title: 'Key Industry Sectors',
-    tagline: 'A Wide Spectrum of Global Industry Domains',
     category: 'Industry Focus',
     badge: 'Participating Sectors',
-    highlights: [
-      'AI, Technology & Smart Cities',
-      'Healthcare, Pharma & Life Sciences',
-      'Renewable Energy, Climate Action & ESG',
-      'Logistics, Manufacturing, Retail & Hospitality',
-    ],
-    description:
-      'Curated delegations and multi-sector pavilions connecting established multinational enterprises, SMEs, and high-growth disruptors.',
+    caption: 'AI & Technology, Smart Infrastructure, Renewable Energy, Healthcare & Life Sciences, Manufacturing & Logistics',
     image: sectorsImg,
   },
   {
     id: 'benefits',
     title: 'Benefits of Participation',
-    tagline: 'Maximum ROI, Authority & Worldwide Outreach',
     category: 'Participant Value',
-    badge: 'Exhibitor Advantage',
-    highlights: [
-      'Deliver Keynotes & High-Profile Panel Addresses',
-      'Dedicated Exhibition Booths & Product Demos',
-      'Direct Access to Investors, Decision-Makers & Policymakers',
-      'Extensive Global Brand Visibility & Media PR Outreach',
-    ],
-    description:
-      'Accelerate your international presence, establish credibility as an industry leader, and sign valuable commercial contracts.',
+    badge: 'Exhibitor Benefits',
+    caption: 'Keynote Addresses, Dedicated Booths, Direct Access to Decision-Makers, Global Brand Visibility & Strategic Alliances',
     image: benefitsImg,
   },
 ];
@@ -94,13 +55,12 @@ const EventShowcaseSlider = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [modalImage, setModalImage] = useState(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
   const [progress, setProgress] = useState(0);
-  
-  const autoPlayTimerRef = useRef(null);
-  const progressIntervalRef = useRef(null);
-  const slideDuration = 6000; // 6 seconds per slide
+
+  const autoPlayRef = useRef(null);
+  const slideDuration = 5500; // 5.5s per slide
 
   const nextSlide = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % slidesData.length);
@@ -112,31 +72,31 @@ const EventShowcaseSlider = () => {
     setProgress(0);
   }, []);
 
-  const goToSlide = (index) => {
-    setActiveIndex(index);
+  const goToSlide = (idx) => {
+    setActiveIndex(idx);
     setProgress(0);
   };
 
-  // Smooth Progress Bar & Autoplay
+  // Autoplay & Progress timer
   useEffect(() => {
     if (!isPlaying || isHovered || modalImage) {
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
       return;
     }
 
-    const stepMs = 50;
-    progressIntervalRef.current = setInterval(() => {
+    const step = 50;
+    autoPlayRef.current = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           nextSlide();
           return 0;
         }
-        return prev + (stepMs / slideDuration) * 100;
+        return prev + (step / slideDuration) * 100;
       });
-    }, stepMs);
+    }, step);
 
     return () => {
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     };
   }, [isPlaying, isHovered, modalImage, nextSlide]);
 
@@ -154,266 +114,208 @@ const EventShowcaseSlider = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide, modalImage]);
 
-  // 3D Parallax Tilt Effect on Mouse Move
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -12;
-    setTilt({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setIsHovered(false);
-  };
-
-  // Mobile Touch Gestures
+  // Touch Swipe for mobile
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
+    setTouchEnd(null);
   };
 
-  const handleTouchEnd = (e) => {
-    if (touchStart === null) return;
-    const touchEnd = e.changedTouches[0].clientX;
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
     const diff = touchStart - touchEnd;
-    if (diff > 45) nextSlide();
-    if (diff < -45) prevSlide();
+    if (diff > 40) nextSlide();
+    if (diff < -40) prevSlide();
     setTouchStart(null);
+    setTouchEnd(null);
   };
 
   const currentSlide = slidesData[activeIndex];
 
   return (
-    <section className="relative z-20 py-24 sm:py-28 md:py-36 bg-gradient-to-b from-[#fbfbfb] via-white to-[#f7f7f7] border-y border-gray-200/70 overflow-hidden">
-      {/* Ambient Lighting Orbs */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-accent/4 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <section className="relative z-20 py-20 md:py-28 bg-gradient-to-b from-[#fcfcfc] via-white to-[#f7f7f7] border-y border-gray-200/70 overflow-hidden">
+      {/* Subtle Background Glow Mesh */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header with Generous Spacing */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20 reveal-up">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/25 text-brand-accent text-[11px] font-bold uppercase tracking-widest mb-5 shadow-xs">
-            <i className="ph-fill ph-presentation-chart text-xs"></i>
+        {/* Centered Heading Details */}
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12 reveal-up">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/25 text-brand-accent text-[11px] font-bold uppercase tracking-widest mb-4 shadow-xs">
+            <i className="ph-fill ph-presentation text-xs"></i>
             <span>Official Event Presentation</span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark font-bold leading-tight mb-5">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark font-bold leading-tight mb-4">
             India–ASEAN Global <span className="italic font-light text-brand-accent">Confluence 2027</span>
           </h2>
 
-          <p className="text-gray-500 font-light text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Discover the strategic vision, key metrics, participating industry sectors, and high-impact partnership opportunities.
+          <p className="text-gray-500 font-light text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+            Official conference deck, event highlights, sector verticals, and strategic bilateral opportunities.
           </p>
         </div>
 
-        {/* Category Tabs (Spacious & Clean) */}
-        <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 flex-wrap mb-12 md:mb-16 reveal-up delay-100">
+        {/* Centered Category Tabs right below Heading */}
+        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-8 md:mb-10 reveal-up delay-100">
           {slidesData.map((slide, idx) => {
             const isActive = idx === activeIndex;
             return (
               <button
                 key={slide.id}
                 onClick={() => goToSlide(idx)}
-                className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-[13px] font-semibold uppercase tracking-wider transition-all duration-300 interactive flex items-center gap-2.5 ${
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 interactive flex items-center gap-2 ${
                   isActive
-                    ? 'bg-brand-dark text-white shadow-xl shadow-brand-dark/15 scale-105 border border-brand-dark ring-2 ring-brand-accent/30'
-                    : 'bg-white text-gray-600 hover:text-brand-dark hover:bg-gray-50 border border-gray-200 shadow-xs hover:border-brand-accent/40'
+                    ? 'bg-brand-dark text-white shadow-md scale-105 border border-brand-dark'
+                    : 'bg-white text-gray-600 hover:text-brand-dark hover:bg-gray-50 border border-gray-200 hover:border-brand-accent/40'
                 }`}
               >
-                <span className={`w-2 h-2 rounded-full transition-colors ${isActive ? 'bg-brand-accent' : 'bg-gray-300'}`}></span>
+                <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-brand-accent' : 'bg-gray-300'}`}></span>
                 <span>{slide.category}</span>
               </button>
             );
           })}
         </div>
 
-        {/* Main Spacious Showcase Stage (Split Screen: Info on Left, 3D Canvas on Right) */}
-        <div 
-          className="bg-white rounded-3xl p-6 sm:p-8 md:p-12 lg:p-14 border border-gray-200/90 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.07),0_8px_20px_rgba(207,166,112,0.06)] reveal-up delay-200"
+        {/* Centered Banner Showcase Stage */}
+        <div
+          className="relative max-w-4xl mx-auto reveal-up delay-200"
           onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={handleMouseLeave}
+          onMouseLeave={() => setIsHovered(false)}
           onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Main Centered Card Frame */}
+          <div className="relative rounded-2xl md:rounded-3xl bg-white p-3 sm:p-5 md:p-6 border border-gray-200/90 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1),0_10px_25px_rgba(207,166,112,0.08)] group">
             
-            {/* Left Column: Rich Context, Highlights & Navigation */}
-            <div className="lg:col-span-5 flex flex-col justify-between space-y-6 md:space-y-8">
-              
-              {/* Header meta badge */}
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-mono font-bold text-brand-accent bg-brand-accent/10 px-3 py-1 rounded-full border border-brand-accent/20">
-                    SLIDE 0{activeIndex + 1} / 0{slidesData.length}
-                  </span>
-                  <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
-                    {currentSlide.badge}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-brand-dark leading-tight mb-2">
-                  {currentSlide.title}
-                </h3>
-
-                <p className="text-brand-accent text-sm sm:text-base font-medium italic">
-                  {currentSlide.tagline}
-                </p>
+            {/* Top Bar inside Banner Card */}
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-3 px-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+                <span className="text-[11px] font-bold uppercase tracking-widest text-brand-dark">
+                  {currentSlide.badge}
+                </span>
               </div>
 
-              {/* Description */}
-              <p className="text-gray-500 font-light text-sm sm:text-base leading-relaxed">
-                {currentSlide.description}
-              </p>
-
-              {/* Key Bullet Highlights */}
-              <div className="bg-gray-50/80 rounded-2xl p-5 sm:p-6 border border-gray-100 space-y-3">
-                <h4 className="text-[11px] font-bold uppercase tracking-wider text-brand-dark flex items-center gap-2">
-                  <i className="ph-fill ph-check-circle text-brand-accent text-base"></i>
-                  Key Highlights
-                </h4>
-                <ul className="space-y-2.5 text-xs sm:text-sm text-gray-600 font-light">
-                  {currentSlide.highlights.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5 leading-snug">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0"></span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Controls Bar: Prev/Next, Play/Pause & Zoom */}
-              <div className="pt-2 flex flex-wrap items-center justify-between gap-4 border-t border-gray-100">
-                <div className="flex items-center gap-2.5">
-                  <button
-                    onClick={prevSlide}
-                    aria-label="Previous slide"
-                    className="w-11 h-11 rounded-full bg-white border border-gray-200 text-brand-dark hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 shadow-xs flex items-center justify-center interactive group hover:-translate-x-0.5"
-                  >
-                    <i className="ph ph-caret-left text-lg font-bold group-hover:scale-110 transition-transform"></i>
-                  </button>
-
-                  <button
-                    onClick={() => setIsPlaying(!isPlaying)}
-                    aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
-                    className="px-3.5 h-11 rounded-full bg-white border border-gray-200 text-gray-700 hover:text-brand-dark hover:border-brand-dark transition-all duration-300 shadow-xs flex items-center gap-2 text-xs font-semibold interactive"
-                  >
-                    <i className={`ph-fill ${isPlaying ? 'ph-pause' : 'ph-play'} text-brand-accent text-xs`}></i>
-                    <span className="uppercase tracking-wider text-[11px]">{isPlaying ? 'Pause' : 'Play'}</span>
-                  </button>
-
-                  <button
-                    onClick={nextSlide}
-                    aria-label="Next slide"
-                    className="w-11 h-11 rounded-full bg-white border border-gray-200 text-brand-dark hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 shadow-xs flex items-center justify-center interactive group hover:translate-x-0.5"
-                  >
-                    <i className="ph ph-caret-right text-lg font-bold group-hover:scale-110 transition-transform"></i>
-                  </button>
-                </div>
-
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono font-bold text-gray-400">
+                  0{activeIndex + 1} / 0{slidesData.length}
+                </span>
                 <button
                   onClick={() => setModalImage(currentSlide)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-brand-dark bg-gray-100 hover:bg-brand-accent hover:text-white transition-all duration-300 shadow-xs interactive"
+                  className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-brand-dark transition-colors interactive flex items-center gap-1 text-xs font-medium"
+                  title="Enlarge slide"
                 >
                   <i className="ph ph-arrows-out-simple text-sm"></i>
-                  <span>Enlarge Slide</span>
+                  <span className="hidden sm:inline text-[11px] uppercase tracking-wider font-semibold">Zoom</span>
                 </button>
               </div>
-
-              {/* Progress Line */}
-              <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                <div 
-                  className="bg-brand-accent h-full transition-all duration-75 rounded-full"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
-
             </div>
 
-            {/* Right Column: 3D Interactive Slide Canvas */}
-            <div className="lg:col-span-7 flex items-center justify-center">
-              <div
-                onMouseMove={handleMouseMove}
-                onClick={() => setModalImage(currentSlide)}
-                className="relative w-full max-w-[560px] lg:max-w-[620px] aspect-[4/3] sm:aspect-[16/11] md:aspect-[16/11] bg-gradient-to-b from-gray-50 via-white to-gray-100/60 rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-200/90 shadow-xl group cursor-zoom-in transition-transform duration-300 ease-out select-none flex items-center justify-center"
-                style={{
-                  perspective: '1200px',
-                  transform: `perspective(1200px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
-                }}
-              >
-                {/* 3D Floating Glow Border Accent */}
-                <div className="absolute inset-0 rounded-2xl md:rounded-3xl border-2 border-brand-accent/20 group-hover:border-brand-accent/60 transition-colors pointer-events-none"></div>
+            {/* Centered Banner Image Container with Smooth Slide Animation */}
+            <div
+              onClick={() => setModalImage(currentSlide)}
+              className="relative w-full h-[320px] sm:h-[420px] md:h-[500px] lg:h-[540px] bg-gradient-to-b from-gray-50 via-white to-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 sm:p-4 border border-gray-100 cursor-zoom-in group/img"
+            >
+              <img
+                key={currentSlide.id}
+                src={currentSlide.image}
+                alt={currentSlide.title}
+                className="max-h-full max-w-full object-contain mx-auto rounded-lg drop-shadow-md transition-all duration-500 group-hover/img:scale-[1.01] animate-fade-in"
+                loading="lazy"
+              />
 
-                {/* Top Overlay Badge */}
-                <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-brand-dark/80 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest shadow-md flex items-center gap-1.5">
-                  <i className="ph-fill ph-magnifying-glass-plus text-brand-accent text-xs"></i>
-                  <span>Click to Zoom</span>
-                </div>
-
-                {/* Slide Image */}
-                <img
-                  key={currentSlide.id}
-                  src={currentSlide.image}
-                  alt={currentSlide.title}
-                  className="max-h-full max-w-full object-contain rounded-xl drop-shadow-[0_15px_30px_rgba(0,0,0,0.12)] transition-all duration-700 ease-out group-hover:scale-[1.02] animate-fade-in"
-                  loading="lazy"
-                />
-
-                {/* Hover Reveal Overlay */}
-                <div className="absolute inset-0 bg-brand-dark/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl md:rounded-3xl flex items-center justify-center gap-2 text-white text-xs font-bold uppercase tracking-wider">
-                  <i className="ph-fill ph-arrows-out-simple text-xl text-brand-accent"></i>
-                  <span>View High Resolution Slide</span>
-                </div>
+              {/* Hover Zoom Hint */}
+              <div className="absolute inset-0 bg-brand-dark/20 backdrop-blur-[2px] opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 rounded-xl flex items-center justify-center gap-2 text-white text-xs font-bold uppercase tracking-wider pointer-events-none">
+                <i className="ph-fill ph-magnifying-glass-plus text-xl text-brand-accent"></i>
+                <span>Click to View Fullscreen</span>
               </div>
             </div>
 
-          </div>
-        </div>
+            {/* Centered Caption & Title Below Image */}
+            <div className="pt-4 sm:pt-5 text-center px-2">
+              <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-brand-dark mb-1.5">
+                {currentSlide.title}
+              </h3>
+              <p className="text-gray-500 text-xs sm:text-sm font-light max-w-2xl mx-auto leading-relaxed">
+                {currentSlide.caption}
+              </p>
+            </div>
 
-        {/* Thumbnail Filmstrip (Clean, Spacious, Clickable Cards Below) */}
-        <div className="mt-12 md:mt-16 reveal-up delay-300">
-          <div className="text-center mb-6">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400">
-              Interactive Slide Deck
-            </span>
+            {/* Left & Right Floating Navigation Arrows on the card */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prevSlide();
+              }}
+              aria-label="Previous slide"
+              className="absolute left-2 sm:-left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-gray-200 text-brand-dark shadow-lg hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 flex items-center justify-center interactive z-20 group hover:-translate-x-1"
+            >
+              <i className="ph ph-caret-left text-lg font-bold group-hover:scale-110 transition-transform"></i>
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                nextSlide();
+              }}
+              aria-label="Next slide"
+              className="absolute right-2 sm:-right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-gray-200 text-brand-dark shadow-lg hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 flex items-center justify-center interactive z-20 group hover:translate-x-1"
+            >
+              <i className="ph ph-caret-right text-lg font-bold group-hover:scale-110 transition-transform"></i>
+            </button>
+
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-            {slidesData.map((slide, idx) => {
-              const isActive = idx === activeIndex;
-              return (
-                <div
-                  key={slide.id}
+          {/* Centered Controls, Dots & Autoplay Bar Below */}
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
+            
+            {/* Play/Pause Button */}
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
+              className="px-3.5 py-1.5 rounded-full bg-white border border-gray-200 text-gray-600 hover:text-brand-dark hover:border-brand-dark transition-all duration-300 shadow-xs flex items-center gap-1.5 text-xs font-semibold interactive"
+            >
+              <i className={`ph-fill ${isPlaying ? 'ph-pause' : 'ph-play'} text-brand-accent text-xs`}></i>
+              <span className="uppercase tracking-wider text-[10px]">{isPlaying ? 'Pause' : 'Play'}</span>
+            </button>
+
+            {/* Centered Indicator Dots */}
+            <div className="flex items-center gap-2">
+              {slidesData.map((_, idx) => (
+                <button
+                  key={idx}
                   onClick={() => goToSlide(idx)}
-                  className={`group relative rounded-2xl p-3 bg-white border transition-all duration-400 interactive cursor-pointer flex flex-col justify-between ${
-                    isActive
-                      ? 'border-brand-accent shadow-lg ring-2 ring-brand-accent/20 scale-[1.03] -translate-y-1'
-                      : 'border-gray-200/80 hover:border-brand-accent/50 hover:shadow-md hover:-translate-y-0.5'
+                  aria-label={`Go to slide ${idx + 1}`}
+                  className={`h-2.5 rounded-full transition-all duration-400 interactive ${
+                    idx === activeIndex
+                      ? 'w-8 bg-brand-accent shadow-xs'
+                      : 'w-2.5 bg-gray-300 hover:bg-gray-400'
                   }`}
-                >
-                  {/* Thumbnail Image */}
-                  <div className="w-full h-28 sm:h-32 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2.5 border border-gray-100">
-                    <img
-                      src={slide.image}
-                      alt={slide.title}
-                      className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
+                />
+              ))}
+            </div>
 
-                  {/* Thumbnail Info */}
-                  <div className="text-center">
-                    <span className="text-[9px] font-mono font-bold uppercase text-brand-accent block mb-0.5">
-                      0{idx + 1} • {slide.category}
-                    </span>
-                    <h5 className="font-serif text-xs font-bold text-brand-dark line-clamp-1">
-                      {slide.title}
-                    </h5>
-                  </div>
-                </div>
-              );
-            })}
+            {/* Slide Category Label */}
+            <div className="text-right hidden sm:block">
+              <span className="text-[10px] uppercase tracking-widest text-brand-accent font-bold">
+                Slide 0{activeIndex + 1} of 0{slidesData.length}
+              </span>
+            </div>
+
           </div>
+
+          {/* Centered Subtle Autoplay Progress Bar */}
+          <div className="mt-4 max-w-md mx-auto bg-gray-100 h-1 rounded-full overflow-hidden">
+            <div 
+              className="bg-brand-accent h-full transition-all duration-75 rounded-full"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+
         </div>
 
       </div>
@@ -458,7 +360,7 @@ const EventShowcaseSlider = () => {
 
             {/* Modal Bottom Details */}
             <div className="w-full pt-4 mt-2 text-center text-xs text-gray-500 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-2">
-              <p className="font-light">{modalImage.description}</p>
+              <p className="font-light">{modalImage.caption}</p>
               <span className="text-[11px] text-gray-400">Click anywhere outside or press ESC to dismiss</span>
             </div>
           </div>
