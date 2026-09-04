@@ -26,7 +26,7 @@ import gemsHover from '../assets/gems and jewelry(unsplash).jfif';
 import heroPoster from '../assets/Hero poster (unsplash).jfif';
 import logoImg from '../assets/IndiGlobal Expo Logo.png';
 import logoWhiteImg from '../assets/IndiGlobal Expo Logo White.png';
-import confluenceLogo from '../assets/slides/logo.png';
+import confluenceLogo from '../assets/slides/Indian Asean Global Confluence Logo with GTTCI Logo.png';
 
 const Home = () => {
 

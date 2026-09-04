@@ -143,19 +143,10 @@ const EventShowcaseSlider = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Centered Heading Details */}
-        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12 reveal-up">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/25 text-brand-accent text-[11px] font-bold uppercase tracking-widest mb-4 shadow-xs">
-            <i className="ph-fill ph-presentation text-xs"></i>
-            <span>Official Event Presentation</span>
-          </div>
-
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark font-bold leading-tight mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8 reveal-up">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brand-dark font-bold leading-tight">
             India–ASEAN Global <span className="italic font-light text-brand-accent">Confluence 2027</span>
           </h2>
-
-          <p className="text-gray-500 font-light text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Official conference deck, event highlights, sector verticals, and strategic bilateral opportunities.
-          </p>
         </div>
 
         {/* Centered Category Tabs right below Heading */}
