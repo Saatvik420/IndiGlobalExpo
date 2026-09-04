@@ -27,11 +27,14 @@ import heroPoster from '../assets/Hero poster (unsplash).jfif';
 import logoImg from '../assets/IndiGlobal Expo Logo.png';
 import logoWhiteImg from '../assets/IndiGlobal Expo Logo White.png';
 import confluenceLogo from '../assets/slides/Indian Asean Global Confluence Logo with GTTCI Logo.png';
+import exhibitionHallImg from '../assets/slides/exhibition/7beb29d93c.jpg';
+import conferenceStageImg from '../assets/slides/exhibition/ad3e3c5fdc.jpg';
 
 const Home = () => {
 
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
+  const [previewImg, setPreviewImg] = useState(null);
   const horizontalSectionRef = useRef(null);
   const trackRef = useRef(null);
 
@@ -235,11 +238,50 @@ const Home = () => {
               <p className="text-[13px] font-light text-gray-500 leading-relaxed">Strengthen your presence as a recognized global player with unmatched credibility.</p>
             </div>
             {/* Card 5 */}
-            <div className="bg-white p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2 lg:col-span-2 flex flex-col md:flex-row items-start md:items-center gap-6">
-              <i className="ph ph-lightbulb text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500"></i>
+            <div className="bg-white p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
+              <i className="ph ph-lightbulb text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500 mb-6"></i>
+              <h4 className="font-serif text-xl text-brand-dark mb-3">Industry Insights</h4>
+              <p className="text-[13px] font-light text-gray-500 leading-relaxed">Gain invaluable exposure to international trends, modern business practices, and innovations shaping the future of global trade.</p>
+            </div>
+
+            {/* Card 6: Exhibition and Conference */}
+            <div className="bg-white p-8 sm:p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2 flex flex-col justify-between">
               <div>
-                <h4 className="font-serif text-xl text-brand-dark mb-2">Industry Insights</h4>
-                <p className="text-[13px] font-light text-gray-500 leading-relaxed max-w-xl">Gain invaluable exposure to international trends, modern business practices, and innovations shaping the future of global trade.</p>
+                <i className="ph ph-buildings text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500 mb-6 block"></i>
+                <h4 className="font-serif text-xl text-brand-dark mb-3">Exhibition and Conference</h4>
+                <p className="text-[13px] font-light text-gray-500 leading-relaxed mb-6">Dynamic international exhibition arenas and high-impact multilateral conference stages.</p>
+              </div>
+
+              {/* Two Exhibition & Conference Photos */}
+              <div className="grid grid-cols-2 gap-3 mt-auto pt-2">
+                <div 
+                  onClick={() => setPreviewImg({ src: exhibitionHallImg, title: 'Trade Exhibition Hall' })}
+                  className="relative rounded-sm overflow-hidden h-24 sm:h-28 bg-gray-100 group/img shadow-xs border border-gray-100 cursor-zoom-in"
+                  title="Click to zoom Exhibition"
+                >
+                  <img 
+                    src={exhibitionHallImg} 
+                    alt="Trade Exhibition" 
+                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent flex items-end p-2 pointer-events-none">
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-white drop-shadow-xs">Exhibition</span>
+                  </div>
+                </div>
+                <div 
+                  onClick={() => setPreviewImg({ src: conferenceStageImg, title: 'International Conference Stage' })}
+                  className="relative rounded-sm overflow-hidden h-24 sm:h-28 bg-gray-100 group/img shadow-xs border border-gray-100 cursor-zoom-in"
+                  title="Click to zoom Conference"
+                >
+                  <img 
+                    src={conferenceStageImg} 
+                    alt="International Conference" 
+                    className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent flex items-end p-2 pointer-events-none">
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-white drop-shadow-xs">Conference</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -442,6 +484,40 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal for Exhibition & Conference Image Previews */}
+      {previewImg && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-sm animate-fade-in"
+          onClick={() => setPreviewImg(null)}
+        >
+          <div 
+            className="relative max-w-4xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-6 flex flex-col items-center animate-scale-up border border-white/20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-full flex items-center justify-between pb-3 border-b border-gray-100 mb-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">
+                {previewImg.title}
+              </span>
+              <button 
+                onClick={() => setPreviewImg(null)}
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-brand-dark hover:text-white text-gray-700 transition-colors flex items-center justify-center interactive"
+                aria-label="Close image preview"
+              >
+                <i className="ph ph-x text-sm"></i>
+              </button>
+            </div>
+            <div className="relative w-full max-h-[72vh] flex items-center justify-center overflow-hidden rounded-xl bg-gray-50">
+              <img 
+                src={previewImg.src} 
+                alt={previewImg.title} 
+                className="max-h-[70vh] w-auto object-contain rounded-lg shadow-md"
+              />
+            </div>
+            <p className="text-[11px] text-gray-400 mt-3">Click anywhere outside or close button to dismiss</p>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>
