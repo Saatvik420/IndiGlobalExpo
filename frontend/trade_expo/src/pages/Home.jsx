@@ -27,7 +27,6 @@ import heroPoster from '../assets/Hero poster (unsplash).jfif';
 import logoImg from '../assets/IndiGlobal Expo Logo.png';
 import logoWhiteImg from '../assets/IndiGlobal Expo Logo White.png';
 import confluenceLogo from '../assets/slides/logo.png';
-import bannerImg from '../assets/slides/banner.png';
 
 const Home = () => {
 

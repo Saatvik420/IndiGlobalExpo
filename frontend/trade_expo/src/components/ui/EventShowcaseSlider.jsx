@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 // Slide Images from assets/slides
-import bannerImg from '../../assets/slides/banner.png';
-import glanceImg from '../../assets/slides/Screenshot 2026-08-30 124544.png';
-import prioritiesImg from '../../assets/slides/Screenshot 2026-08-30 124943.png';
-import sectorsImg from '../../assets/slides/Screenshot 2026-08-30 124921.png';
-import benefitsImg from '../../assets/slides/Screenshot 2026-08-30 124629.png';
+import bannerImg from '../../assets/slides/Official Banner.png';
+import glanceImg from '../../assets/slides/Key Metrics.png';
+import prioritiesImg from '../../assets/slides/Strategic Vision.png';
+import sectorsImg from '../../assets/slides/Industry Focus.png';
+import benefitsImg from '../../assets/slides/Participation Value.png';
 
 const slidesData = [
   {
@@ -13,7 +13,7 @@ const slidesData = [
     title: 'India–ASEAN Global Confluence 2027',
     category: 'Official Banner',
     badge: 'Event Overview',
-    caption: 'Strengthening India–ASEAN Partnership: Trade, Investment, Innovation & Sustainable Growth • Jan 21-22, 2027 | Bangkok, Thailand',
+    caption: 'Strengthening India–ASEAN Partnership: Trade, Investment, Innovation, Infrastructure & Sustainable Growth • Jan 21-22, 2027 | Bangkok, Thailand',
     image: bannerImg,
   },
   {
@@ -21,7 +21,7 @@ const slidesData = [
     title: 'Confluence at a Glance',
     category: 'Key Metrics',
     badge: 'Scale & Numbers',
-    caption: '50+ Exhibitors • 500+ B2B Trade Visitors • 25+ Knowledge Sessions • 200+ Global Leaders • 100x PR Value',
+    caption: '50+ Strong Exhibitors • 500+ Strong B2B Visitors • 25+ Knowledge Sessions • 200+ Leaders Participation • 100x PR Value',
     image: glanceImg,
   },
   {
@@ -29,7 +29,7 @@ const slidesData = [
     title: 'Strategic Priorities',
     category: 'Strategic Vision',
     badge: 'Core Objectives',
-    caption: 'Bilateral Trade, Cross-Border Investments, Supply-Chain Resilience, Digital Economy & Green Growth Initiatives',
+    caption: 'Bilateral Trade, Cross-Border Investments, Supply-Chain & Infrastructure Cooperation, Digital Economy & Green Initiatives',
     image: prioritiesImg,
   },
   {
@@ -37,7 +37,7 @@ const slidesData = [
     title: 'Key Industry Sectors',
     category: 'Industry Focus',
     badge: 'Participating Sectors',
-    caption: 'AI & Technology, Smart Infrastructure, Renewable Energy, Healthcare & Life Sciences, Manufacturing & Logistics',
+    caption: 'AI & Tech, Smart Cities, Clean Energy, Healthcare, Manufacturing, Logistics, Agri-Food, FinTech & Startups',
     image: sectorsImg,
   },
   {
