@@ -9,7 +9,6 @@ import TicketWidget from '../components/ui/TicketWidget';
 import EventShowcaseSlider from '../components/ui/EventShowcaseSlider';
 
 // Import Assets
-import heroVideo from '../assets/Black and white video of people.mp4';
 import healthcareImg from '../assets/Healthcare.jpg';
 import itImg from '../assets/Information Tech.jpg';
 import foodImg from '../assets/food and beverages.jpg';
@@ -114,10 +113,15 @@ const Home = () => {
 
       {/* Cinematic Hero Section */}
       <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
-          <source src={heroVideo} type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 hero-overlay-home z-0"></div>
+        <img 
+          src="/background1.jpg" 
+          alt="IndiGlobal Expo Hero Background" 
+          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none brightness-90 contrast-[1.05]" 
+          style={{ objectPosition: 'center 38%' }}
+          loading="eager"
+          fetchPriority="high"
+        />
+        <div className="absolute inset-0 hero-overlay-home z-0 pointer-events-none"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-20">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
@@ -182,7 +186,7 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right Column: Transparent Logo directly on video background */}
+            {/* Right Column: Transparent Logo directly on hero background */}
             <div className="md:col-span-5 flex items-center justify-center md:justify-end animate-fade-up delay-200">
               <img 
                 src={confluenceLogo} 
