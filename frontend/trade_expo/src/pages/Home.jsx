@@ -112,11 +112,11 @@ const Home = () => {
       <TicketWidget />
 
       {/* Cinematic Hero Section */}
-      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-[#080a0f]">
+      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
         <img 
           src="/background1.jpg" 
           alt="IndiGlobal Expo Hero Background" 
-          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none opacity-45 brightness-75 contrast-125" 
+          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none" 
           style={{ objectPosition: 'center 38%' }}
           loading="eager"
           fetchPriority="high"
@@ -179,7 +179,7 @@ const Home = () => {
                 </button>
                 <button 
                   onClick={() => handleNavigate('/sectors')} 
-                  className="text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest border border-white/30 hover:border-white transition-colors interactive"
+                  className="text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest border border-white/30 hover:border-white transition-colors interactive bg-black/25 backdrop-blur-sm shadow-md"
                 >
                   View Sectors
                 </button>
