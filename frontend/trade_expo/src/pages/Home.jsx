@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -29,13 +29,66 @@ import confluenceLogo from '../assets/slides/Indian Asean Global Confluence Logo
 import exhibitionHallImg from '../assets/slides/exhibition/7beb29d93c.jpg';
 import conferenceStageImg from '../assets/slides/exhibition/ad3e3c5fdc.jpg';
 
+// Official Hero Background Slideshow Assets
+const heroSlides = [
+  {
+    id: 'slide-1',
+    image: '/background1.jpg',
+    alt: 'IndiGlobal Expo World Trade Map',
+    position: 'center 38%',
+    animationClass: 'animate-hero-pan-zoom',
+    title: 'Global Trade Hub',
+    subtitle: 'Worldwide Corridors'
+  },
+  {
+    id: 'slide-2',
+    image: '/background2.jpg',
+    alt: 'IndiGlobal Expo International Connectivity and Flight Corridors',
+    position: 'center center',
+    animationClass: 'animate-hero-pan-drift',
+    title: 'International Connectivity',
+    subtitle: 'Cross-Border Networks'
+  }
+];
+
 const Home = () => {
 
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
   const [previewImg, setPreviewImg] = useState(null);
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+  const slideTimerRef = useRef(null);
   const horizontalSectionRef = useRef(null);
   const trackRef = useRef(null);
+
+  const resetSlideTimer = useCallback(() => {
+    if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+    slideTimerRef.current = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6500);
+  }, []);
+
+  useEffect(() => {
+    resetSlideTimer();
+    return () => {
+      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+    };
+  }, [resetSlideTimer]);
+
+  const nextHeroSlide = () => {
+    setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    resetSlideTimer();
+  };
+
+  const prevHeroSlide = () => {
+    setCurrentHeroSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+    resetSlideTimer();
+  };
+
+  const goToHeroSlide = (index) => {
+    setCurrentHeroSlide(index);
+    resetSlideTimer();
+  };
 
   useEffect(() => {
     // Target Date: January 22, 2027
@@ -111,16 +164,31 @@ const Home = () => {
       <FullscreenMenu />
       <TicketWidget />
 
-      {/* Cinematic Hero Section */}
+      {/* Cinematic Hero Section with Slideshow */}
       <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
-        <img 
-          src="/background1.jpg" 
-          alt="IndiGlobal Expo Hero Background" 
-          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none" 
-          style={{ objectPosition: 'center 38%' }}
-          loading="eager"
-          fetchPriority="high"
-        />
+        {/* Animated Background Slideshow */}
+        {heroSlides.map((slide, idx) => {
+          const isActive = currentHeroSlide === idx;
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10 pointer-events-none'
+              }`}
+            >
+              <img 
+                src={slide.image} 
+                alt={slide.alt} 
+                className={`w-full h-full object-cover select-none pointer-events-none ${
+                  isActive ? slide.animationClass : 'scale-100'
+                }`} 
+                style={{ objectPosition: slide.position }}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                fetchPriority={idx === 0 ? 'high' : 'auto'}
+              />
+            </div>
+          );
+        })}
         <div className="absolute inset-0 hero-overlay-home z-0 pointer-events-none"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-20">
@@ -198,9 +266,49 @@ const Home = () => {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-fade-up delay-[700ms]">
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 animate-fade-up delay-[700ms]">
           <span className="text-[8px] text-white/60 uppercase tracking-widest font-bold">Scroll</span>
           <div className="w-px h-12 bg-gradient-to-b from-brand-accent to-transparent"></div>
+        </div>
+
+        {/* Official Hero Slideshow Controller & Indicators */}
+        <div className="absolute bottom-8 sm:bottom-10 right-4 sm:right-8 md:right-12 z-20 flex items-center gap-2.5 sm:gap-4 bg-black/40 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-white/15 text-white shadow-xl animate-fade-up">
+          <button
+            onClick={prevHeroSlide}
+            aria-label="Previous Slide"
+            className="w-6 sm:w-7 h-6 sm:h-7 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-colors interactive"
+          >
+            <i className="ph ph-caret-left text-xs sm:text-sm"></i>
+          </button>
+
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {heroSlides.map((slide, idx) => (
+              <button
+                key={slide.id}
+                onClick={() => goToHeroSlide(idx)}
+                className="group flex flex-col items-center py-1 px-0.5 interactive"
+                aria-label={`Switch to slide ${idx + 1}: ${slide.title}`}
+              >
+                <div className="w-7 sm:w-10 h-1 bg-white/25 rounded-full overflow-hidden relative">
+                  {currentHeroSlide === idx && (
+                    <div className="h-full bg-brand-accent rounded-full animate-slide-progress"></div>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <span className="text-[9px] sm:text-[10px] font-mono text-white/80 tracking-wider">
+            0{currentHeroSlide + 1} <span className="text-white/40">/</span> 0{heroSlides.length}
+          </span>
+
+          <button
+            onClick={nextHeroSlide}
+            aria-label="Next Slide"
+            className="w-6 sm:w-7 h-6 sm:h-7 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-colors interactive"
+          >
+            <i className="ph ph-caret-right text-xs sm:text-sm"></i>
+          </button>
         </div>
       </section>
 

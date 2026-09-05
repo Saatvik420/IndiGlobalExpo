@@ -131,6 +131,46 @@
   }
 }
 
+/* Hero Slideshow & Motion Animations */
+@keyframes heroPanZoom {
+  0% {
+    transform: scale(1) translate(0%, 0%);
+  }
+  100% {
+    transform: scale(1.08) translate(-1.2%, -0.8%);
+  }
+}
+
+@keyframes heroPanDrift {
+  0% {
+    transform: scale(1.08) translate(1%, 0.8%);
+  }
+  100% {
+    transform: scale(1) translate(-0.8%, -0.4%);
+  }
+}
+
+@keyframes slideProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-hero-pan-zoom {
+  animation: heroPanZoom 8s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+}
+
+.animate-hero-pan-drift {
+  animation: heroPanDrift 8s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+}
+
+.animate-slide-progress {
+  animation: slideProgress 6.5s linear infinite;
+}
+
 /* Horizontal Scroll Specifics */
 .horizontal-section-wrapper { height: 400vh; position: relative; }
 .horizontal-sticky-container {
