@@ -112,11 +112,11 @@ const Home = () => {
       <TicketWidget />
 
       {/* Cinematic Hero Section */}
-      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-[#080a0f]">
         <img 
           src="/background1.jpg" 
           alt="IndiGlobal Expo Hero Background" 
-          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none brightness-90 contrast-[1.05]" 
+          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none opacity-45 brightness-75 contrast-125" 
           style={{ objectPosition: 'center 38%' }}
           loading="eager"
           fetchPriority="high"
@@ -128,14 +128,14 @@ const Home = () => {
             {/* Left Column: Hero Details */}
             <div className="md:col-span-7">
               <div className="animate-fade-up overflow-hidden mb-4">
-                <p className="text-brand-accent font-bold tracking-widest uppercase text-[10px]">A Premier International Trade Fair</p>
+                <p className="text-brand-accent font-bold tracking-widest uppercase text-[10px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">A Premier International Trade Fair</p>
               </div>
               
-              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-bold leading-[1.05] mb-6 sm:mb-8 animate-fade-up delay-100">
+              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-bold leading-[1.05] mb-6 sm:mb-8 animate-fade-up delay-100 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
                 Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World.</span>
               </h2>
               
-              <div className="flex flex-col sm:flex-row sm:items-center text-white/90 gap-4 sm:gap-12 mb-8 sm:mb-10 animate-fade-up delay-300">
+              <div className="flex flex-col sm:flex-row sm:items-center text-white/95 gap-4 sm:gap-12 mb-8 sm:mb-10 animate-fade-up delay-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 <div className="flex items-center gap-3">
                   <i className="ph ph-calendar-blank text-xl text-brand-accent"></i>
                   <span className="font-light tracking-widest uppercase text-[10px]">January 22, 2027</span>
@@ -147,25 +147,25 @@ const Home = () => {
               </div>
 
               {/* Countdown Timer */}
-              <div className="flex items-center gap-3 sm:gap-6 md:gap-8 mb-8 sm:mb-12 animate-fade-up delay-500">
+              <div className="inline-flex items-center gap-3 sm:gap-6 md:gap-8 mb-8 sm:mb-12 animate-fade-up delay-500 bg-black/60 backdrop-blur-md px-5 sm:px-7 py-3 sm:py-4 rounded-xl border border-white/15 shadow-2xl">
                 <div className="text-center">
                   <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-brand-accent mb-1">{timeLeft.days}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Days</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Days</span>
                 </div>
-                <div className="text-white/20 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-white/30 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
                 <div className="text-center">
                   <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.hours}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Hours</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Hours</span>
                 </div>
-                <div className="text-white/20 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-white/30 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
                 <div className="text-center">
                   <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.minutes}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Minutes</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Minutes</span>
                 </div>
-                <div className="text-white/20 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-white/30 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
                 <div className="text-center">
                   <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.seconds}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/60 font-bold">Seconds</span>
+                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Seconds</span>
                 </div>
               </div>
 
