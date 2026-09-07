@@ -34,8 +34,8 @@ const Header = ({ logoColor = 'text-white' }) => {
       id="mainHeader"
       className={`fixed w-full top-0 z-[60] transition-all duration-500 ${
         isScrolled && !isMenuOpen
-          ? 'bg-white/85 backdrop-blur-md border-b border-black/5 h-20' 
-          : 'bg-transparent border-b border-transparent h-24'
+          ? 'bg-white/85 backdrop-blur-md border-b border-black/5 h-16 sm:h-20' 
+          : 'bg-transparent border-b border-transparent h-20 sm:h-24'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
@@ -48,7 +48,7 @@ const Header = ({ logoColor = 'text-white' }) => {
             <img 
               src={isMenuOpen ? logoWhiteImg : (isDarkText || logoColor.includes('text-brand-dark') ? logoColorImg : logoWhiteImg)} 
               alt="IndiGlobal Expo" 
-              className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-all duration-300 hover:scale-105"
+              className="h-10 sm:h-12 md:h-16 w-auto max-w-[180px] sm:max-w-none object-contain transition-all duration-300 hover:scale-105"
             />
           </div>
 

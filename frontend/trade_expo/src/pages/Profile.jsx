@@ -104,49 +104,50 @@ const Profile = () => {
       <Header logoColor="text-brand-dark" />
       <TicketWidget />
       
-      <main className="min-h-screen pt-32 pb-24 bg-brand-light">
+      <main className="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-24 bg-brand-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
             
             {/* Left Sidebar: Profile Card */}
-            <div className="lg:w-1/3 space-y-8">
-              <div className="bg-brand-dark text-white rounded-sm shadow-2xl p-10 relative overflow-hidden reveal-up">
+            <div className="lg:w-1/3 space-y-6 sm:space-y-8">
+              <div className="bg-brand-dark text-white rounded-sm shadow-2xl p-6 sm:p-10 relative overflow-hidden reveal-up">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent opacity-5 -mr-16 -mt-16 rounded-full"></div>
                 
                 <div className="relative z-10 flex flex-col items-center text-center">
-                  <div className="w-24 h-24 bg-brand-accent/20 rounded-full flex items-center justify-center mb-6 border border-brand-accent/30 relative group">
-                    <User size={48} weight="fill" className="text-brand-accent" />
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-brand-accent/20 rounded-full flex items-center justify-center mb-4 sm:mb-6 border border-brand-accent/30 relative group">
+                    <User size={40} weight="fill" className="text-brand-accent sm:hidden" />
+                    <User size={48} weight="fill" className="text-brand-accent hidden sm:block" />
                   </div>
-                  <h2 className="font-serif text-3xl mb-1">{user.firstName} {user.lastName}</h2>
-                  <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-6">Verified Member</p>
+                  <h2 className="font-serif text-2xl sm:text-3xl mb-1">{user.firstName} {user.lastName}</h2>
+                  <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6">Verified Member</p>
                   
-                  <div className="w-full space-y-4 pt-8 border-t border-white/10 text-left">
-                    <div className="flex items-center gap-3 text-sm text-gray-400">
-                      <EnvelopeSimple size={18} className="text-brand-accent" />
-                      <span>{user.email}</span>
+                  <div className="w-full space-y-3 sm:space-y-4 pt-6 sm:pt-8 border-t border-white/10 text-left">
+                    <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400 truncate">
+                      <EnvelopeSimple size={18} className="text-brand-accent flex-shrink-0" />
+                      <span className="truncate">{user.email}</span>
                     </div>
                     {user.mobile && (
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <Phone size={18} className="text-brand-accent" />
+                      <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400">
+                        <Phone size={18} className="text-brand-accent flex-shrink-0" />
                         <span>{user.mobile}</span>
                       </div>
                     )}
                     {user.company && (
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <Buildings size={18} className="text-brand-accent" />
+                      <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400">
+                        <Buildings size={18} className="text-brand-accent flex-shrink-0" />
                         <span>{user.company}</span>
                       </div>
                     )}
                     {user.designation && (
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <Briefcase size={18} className="text-brand-accent" />
+                      <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400">
+                        <Briefcase size={18} className="text-brand-accent flex-shrink-0" />
                         <span>{user.designation}</span>
                       </div>
                     )}
                     {user.country && (
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <Globe size={18} className="text-brand-accent" />
+                      <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-400">
+                        <Globe size={18} className="text-brand-accent flex-shrink-0" />
                         <span>{user.country}</span>
                       </div>
                     )}
@@ -154,7 +155,7 @@ const Profile = () => {
                   
                   <button 
                     onClick={handleLogout}
-                    className="mt-10 w-full py-4 border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-accent hover:border-brand-accent transition-all duration-300 interactive flex items-center justify-center gap-2 cursor-pointer"
+                    className="mt-6 sm:mt-10 w-full py-3.5 sm:py-4 border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-accent hover:border-brand-accent transition-all duration-300 interactive flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <SignOut size={18} /> Logout
                   </button>
@@ -162,14 +163,14 @@ const Profile = () => {
               </div>
 
               {/* Activity Timeline */}
-              <div className="bg-white border border-gray-100 rounded-sm shadow-xl p-8 reveal-up delay-100">
-                <h4 className="text-xs font-bold uppercase tracking-widest text-brand-dark mb-6 border-b border-gray-100 pb-4 flex items-center gap-2">
+              <div className="bg-white border border-gray-100 rounded-sm shadow-xl p-6 sm:p-8 reveal-up delay-100">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-brand-dark mb-4 sm:mb-6 border-b border-gray-100 pb-4 flex items-center gap-2">
                   <ClockCounterClockwise size={18} weight="bold" /> Recent Activity
                 </h4>
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {user.activities && user.activities.length > 0 ? (
                     user.activities.slice(0, 5).map((activity, index) => (
-                      <div key={index} className="flex gap-4 relative">
+                      <div key={index} className="flex gap-3 sm:gap-4 relative">
                         {index !== user.activities.length - 1 && index < 4 && (
                           <div className="absolute left-[11px] top-8 bottom-[-24px] w-px bg-gray-100"></div>
                         )}
@@ -177,7 +178,7 @@ const Profile = () => {
                           {getActivityIcon(activity.type)}
                         </div>
                         <div>
-                          <p className="text-sm text-brand-dark font-medium leading-tight mb-1">{activity.message}</p>
+                          <p className="text-xs sm:text-sm text-brand-dark font-medium leading-tight mb-1">{activity.message}</p>
                           <p className="text-[10px] text-gray-400 uppercase tracking-widest">{activity.date}</p>
                         </div>
                       </div>
@@ -190,12 +191,12 @@ const Profile = () => {
             </div>
 
             {/* Right Main Content */}
-            <div className="lg:w-2/3 space-y-8">
+            <div className="lg:w-2/3 space-y-6 sm:space-y-8">
               
               {/* Account Settings */}
-              <div className="bg-white rounded-sm shadow-xl border border-gray-100 p-10 reveal-up">
-                <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-6">
-                  <h3 className="font-serif text-3xl text-brand-dark">Account Details</h3>
+              <div className="bg-white rounded-sm shadow-xl border border-gray-100 p-6 sm:p-10 reveal-up">
+                <div className="flex justify-between items-center mb-6 sm:mb-8 border-b border-gray-100 pb-4 sm:pb-6">
+                  <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark">Account Details</h3>
                   <button 
                     onClick={() => setIsEditing(!isEditing)}
                     className="flex items-center gap-2 text-brand-accent hover:text-brand-dark transition-colors font-bold text-xs uppercase tracking-widest interactive cursor-pointer"
@@ -211,8 +212,8 @@ const Profile = () => {
                   </div>
                 )}
 
-                <form onSubmit={handleUpdateProfile} className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <form onSubmit={handleUpdateProfile} className="space-y-6 sm:space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
                     <div>
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-2">First Name</label>
                       <input 
@@ -306,27 +307,27 @@ const Profile = () => {
               </div>
 
               {/* Ticket History */}
-              <div className="bg-white rounded-sm shadow-xl border border-gray-100 p-10 reveal-up delay-200">
-                <h3 className="font-serif text-3xl text-brand-dark mb-8 border-b border-gray-100 pb-6">My Bookings</h3>
+              <div className="bg-white rounded-sm shadow-xl border border-gray-100 p-6 sm:p-10 reveal-up delay-200">
+                <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-6 sm:mb-8 border-b border-gray-100 pb-4 sm:pb-6">My Bookings</h3>
                 
                 {user.tickets && user.tickets.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {user.tickets.map((t, i) => (
-                      <div key={i} className="flex flex-col md:flex-row md:items-center justify-between p-6 bg-brand-light rounded-sm border border-gray-100 hover:border-brand-accent/30 transition-colors group">
-                        <div className="flex items-center gap-6">
-                          <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-brand-accent border border-gray-100 shadow-sm group-hover:bg-brand-accent group-hover:text-white transition-all">
-                            <Ticket size={28} />
+                      <div key={i} className="flex flex-col md:flex-row md:items-center justify-between p-4 sm:p-6 bg-brand-light rounded-sm border border-gray-100 hover:border-brand-accent/30 transition-colors group">
+                        <div className="flex items-center gap-4 sm:gap-6">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center text-brand-accent border border-gray-100 shadow-sm group-hover:bg-brand-accent group-hover:text-white transition-all flex-shrink-0">
+                            <Ticket size={24} className="sm:text-2xl" />
                           </div>
                           <div>
-                            <p className="font-serif text-xl text-brand-dark">{t.type}</p>
+                            <p className="font-serif text-lg sm:text-xl text-brand-dark">{t.type}</p>
                             <p className="text-[10px] uppercase font-bold tracking-widest text-brand-accent">{t.role} Pass</p>
                           </div>
                         </div>
-                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between mt-6 md:mt-0 gap-2">
+                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between mt-4 md:mt-0 gap-1 sm:gap-2">
                           <p className="text-sm font-bold text-brand-dark">${t.price.toLocaleString()}</p>
                           <p className="text-[10px] text-gray-400 uppercase tracking-widest">{t.date}</p>
                         </div>
-                        <div className="flex items-center gap-4 mt-6 md:mt-0 md:ml-8 pt-4 md:pt-0 border-t md:border-t-0 border-gray-200">
+                        <div className="flex items-center gap-4 mt-4 md:mt-0 md:ml-8 pt-3 md:pt-0 border-t md:border-t-0 border-gray-200">
                            <button className="text-[10px] uppercase font-bold tracking-widest text-gray-400 hover:text-brand-accent transition-colors flex items-center gap-1 cursor-pointer">
                              <Receipt size={16} /> Receipt
                            </button>
@@ -337,12 +338,12 @@ const Profile = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 bg-brand-light/50 rounded-sm border border-dashed border-gray-200">
-                    <Ticket size={48} className="text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-500 font-light mb-6">You haven't purchased any tickets yet.</p>
+                  <div className="text-center py-8 sm:py-12 bg-brand-light/50 rounded-sm border border-dashed border-gray-200">
+                    <Ticket size={40} className="text-gray-300 mx-auto mb-3 sm:mb-4 sm:text-5xl" />
+                    <p className="text-gray-500 font-light text-sm sm:text-base mb-4 sm:mb-6">You haven't purchased any tickets yet.</p>
                     <button 
                       onClick={() => navigate('/tickets')}
-                      className="bg-brand-dark text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex items-center gap-2 mx-auto cursor-pointer"
+                      className="bg-brand-dark text-white px-6 sm:px-8 py-3.5 sm:py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex items-center gap-2 mx-auto cursor-pointer"
                     >
                       Browse Passes <ArrowRight size={16} />
                     </button>

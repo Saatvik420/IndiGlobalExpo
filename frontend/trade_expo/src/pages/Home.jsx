@@ -165,7 +165,7 @@ const Home = () => {
       <TicketWidget />
 
       {/* Cinematic Hero Section with Slideshow */}
-      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+      <section className="relative min-h-screen py-24 sm:py-28 md:py-0 md:h-screen flex items-center overflow-hidden">
         {/* Animated Background Slideshow */}
         {heroSlides.map((slide, idx) => {
           const isActive = currentHeroSlide === idx;
@@ -191,76 +191,78 @@ const Home = () => {
         })}
         <div className="absolute inset-0 hero-overlay-home z-0 pointer-events-none"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-10 sm:mt-16 md:mt-20">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
             {/* Left Column: Hero Details */}
             <div className="md:col-span-7">
-              <div className="animate-fade-up overflow-hidden mb-4">
+              <div className="animate-fade-up overflow-hidden mb-3 sm:mb-4">
                 <p className="text-brand-accent font-bold tracking-widest uppercase text-[10px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">A Premier International Trade Fair</p>
               </div>
               
-              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-bold leading-[1.05] mb-6 sm:mb-8 animate-fade-up delay-100 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+              <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-white font-bold leading-[1.1] mb-5 sm:mb-8 animate-fade-up delay-100 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
                 Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World.</span>
               </h2>
               
-              <div className="flex flex-col sm:flex-row sm:items-center text-white/95 gap-4 sm:gap-12 mb-8 sm:mb-10 animate-fade-up delay-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                <div className="flex items-center gap-3">
-                  <i className="ph ph-calendar-blank text-xl text-brand-accent"></i>
-                  <span className="font-light tracking-widest uppercase text-[10px]">January 22, 2027</span>
+              <div className="flex flex-row flex-wrap sm:items-center text-white/95 gap-3 sm:gap-6 md:gap-12 mb-6 sm:mb-8 md:mb-10 animate-fade-up delay-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <i className="ph ph-calendar-blank text-lg sm:text-xl text-brand-accent"></i>
+                  <span className="font-light tracking-widest uppercase text-[9px] sm:text-[10px]">January 22, 2027</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <i className="ph ph-map-pin text-xl text-brand-accent"></i>
-                  <span className="font-light tracking-widest uppercase text-[10px]">Bangkok, Thailand</span>
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <i className="ph ph-map-pin text-lg sm:text-xl text-brand-accent"></i>
+                  <span className="font-light tracking-widest uppercase text-[9px] sm:text-[10px]">Bangkok, Thailand</span>
                 </div>
               </div>
 
               {/* Countdown Timer */}
-              <div className="inline-flex items-center gap-3 sm:gap-6 md:gap-8 mb-8 sm:mb-12 animate-fade-up delay-500 bg-black/60 backdrop-blur-md px-5 sm:px-7 py-3 sm:py-4 rounded-xl border border-white/15 shadow-2xl">
+              <div className="inline-flex items-center gap-2.5 sm:gap-6 md:gap-8 mb-6 sm:mb-10 md:mb-12 animate-fade-up delay-500 bg-black/60 backdrop-blur-md px-3.5 sm:px-7 py-2.5 sm:py-4 rounded-xl border border-white/15 shadow-2xl max-w-full justify-between sm:justify-center">
                 <div className="text-center">
-                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-brand-accent mb-1">{timeLeft.days}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Days</span>
+                  <span className="block font-serif text-xl sm:text-3xl md:text-4xl text-brand-accent mb-0.5 sm:mb-1">{timeLeft.days}</span>
+                  <span className="text-[7px] sm:text-[8px] tracking-widest uppercase text-white/70 font-bold">Days</span>
                 </div>
-                <div className="text-white/30 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-white/30 font-serif text-lg sm:text-2xl md:text-4xl pb-3 sm:pb-5">:</div>
                 <div className="text-center">
-                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.hours}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Hours</span>
+                  <span className="block font-serif text-xl sm:text-3xl md:text-4xl text-white mb-0.5 sm:mb-1">{timeLeft.hours}</span>
+                  <span className="text-[7px] sm:text-[8px] tracking-widest uppercase text-white/70 font-bold">Hours</span>
                 </div>
-                <div className="text-white/30 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-white/30 font-serif text-lg sm:text-2xl md:text-4xl pb-3 sm:pb-5">:</div>
                 <div className="text-center">
-                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.minutes}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Minutes</span>
+                  <span className="block font-serif text-xl sm:text-3xl md:text-4xl text-white mb-0.5 sm:mb-1">{timeLeft.minutes}</span>
+                  <span className="text-[7px] sm:text-[8px] tracking-widest uppercase text-white/70 font-bold">Minutes</span>
                 </div>
-                <div className="text-white/30 font-serif text-xl sm:text-2xl md:text-4xl pb-4 sm:pb-5">:</div>
+                <div className="text-white/30 font-serif text-lg sm:text-2xl md:text-4xl pb-3 sm:pb-5">:</div>
                 <div className="text-center">
-                  <span className="block font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1">{timeLeft.seconds}</span>
-                  <span className="text-[8px] tracking-widest uppercase text-white/70 font-bold">Seconds</span>
+                  <span className="block font-serif text-xl sm:text-3xl md:text-4xl text-white mb-0.5 sm:mb-1">{timeLeft.seconds}</span>
+                  <span className="text-[7px] sm:text-[8px] tracking-widest uppercase text-white/70 font-bold">Seconds</span>
                 </div>
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-up delay-[600ms]">
+              <div className="flex flex-row items-center gap-3 sm:gap-4 animate-fade-up delay-[600ms] w-full sm:w-auto">
                 <button 
                   onClick={() => handleNavigate('/visitor')} 
-                  className="bg-white text-brand-dark px-8 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-brand-accent hover:text-white transition-colors interactive"
+                  className="flex-1 sm:flex-initial text-center bg-white text-brand-dark px-6 sm:px-8 py-3.5 sm:py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-brand-accent hover:text-white transition-colors interactive shadow-lg"
                 >
                   Visitor Info
                 </button>
                 <button 
                   onClick={() => handleNavigate('/sectors')} 
-                  className="text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest border border-white/30 hover:border-white transition-colors interactive bg-black/25 backdrop-blur-sm shadow-md"
+                  className="flex-1 sm:flex-initial text-center text-white px-6 sm:px-8 py-3.5 sm:py-4 text-[10px] font-bold uppercase tracking-widest border border-white/30 hover:border-white transition-colors interactive bg-black/25 backdrop-blur-sm shadow-md"
                 >
                   View Sectors
                 </button>
               </div>
             </div>
 
-            {/* Right Column: Transparent Logo directly on hero background */}
+            {/* Right Column: Logo with clean white background in first row */}
             <div className="md:col-span-5 flex items-center justify-center md:justify-end animate-fade-up delay-200">
-              <img 
-                src={confluenceLogo} 
-                alt="India-ASEAN Global Confluence 2027 Logo" 
-                className="w-full max-w-[320px] sm:max-w-[380px] md:max-w-[440px] h-auto object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.7)] hover:scale-105 transition-transform duration-500" 
-              />
+              <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-white/60 flex items-center justify-center max-w-[280px] sm:max-w-[340px] md:max-w-[420px] w-full transition-transform duration-500 hover:scale-105">
+                <img 
+                  src={confluenceLogo} 
+                  alt="India-ASEAN Global Confluence 2027 Logo" 
+                  className="w-full h-auto object-contain" 
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -272,7 +274,7 @@ const Home = () => {
         </div>
 
         {/* Official Hero Slideshow Controller & Indicators */}
-        <div className="absolute bottom-8 sm:bottom-10 right-4 sm:right-8 md:right-12 z-20 flex items-center gap-2.5 sm:gap-4 bg-black/40 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-white/15 text-white shadow-xl animate-fade-up">
+        <div className="absolute bottom-4 sm:bottom-10 left-4 sm:left-auto sm:right-8 md:right-12 z-20 flex items-center gap-2 sm:gap-4 bg-black/50 backdrop-blur-md px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/15 text-white shadow-xl animate-fade-up">
           <button
             onClick={prevHeroSlide}
             aria-label="Previous Slide"
@@ -289,7 +291,7 @@ const Home = () => {
                 className="group flex flex-col items-center py-1 px-0.5 interactive"
                 aria-label={`Switch to slide ${idx + 1}: ${slide.title}`}
               >
-                <div className="w-7 sm:w-10 h-1 bg-white/25 rounded-full overflow-hidden relative">
+                <div className="w-6 sm:w-10 h-1 bg-white/25 rounded-full overflow-hidden relative">
                   {currentHeroSlide === idx && (
                     <div className="h-full bg-brand-accent rounded-full animate-slide-progress"></div>
                   )}
@@ -316,48 +318,48 @@ const Home = () => {
       <EventShowcaseSlider />
 
       {/* WHAT WE OFFER */}
-      <section id="what-we-offer" className="py-32 bg-brand-light relative z-20 border-t border-gray-200">
+      <section id="what-we-offer" className="py-16 sm:py-24 md:py-32 bg-brand-light relative z-20 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 reveal-up">
-            <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-4">A Dynamic Business Ecosystem</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-6">What We Offer</h2>
-            <p className="text-gray-500 font-light text-base max-w-2xl mx-auto">IndiGlobalExpo is more than an exhibition—it fosters growth, visibility, and collaboration.</p>
+          <div className="text-center mb-10 sm:mb-16 reveal-up">
+            <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-3 sm:mb-4">A Dynamic Business Ecosystem</p>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark mb-4 sm:mb-6">What We Offer</h2>
+            <p className="text-gray-500 font-light text-sm sm:text-base max-w-2xl mx-auto">IndiGlobalExpo is more than an exhibition—it fosters growth, visibility, and collaboration.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-up delay-100">
             {/* Card 1 */}
-            <div className="bg-white p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
               <i className="ph ph-globe text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500 mb-6"></i>
               <h4 className="font-serif text-xl text-brand-dark mb-3">Global Exposure</h4>
               <p className="text-[13px] font-light text-gray-500 leading-relaxed">Showcase your brand across multiple international markets and gain unprecedented visibility.</p>
             </div>
             {/* Card 2 */}
-            <div className="bg-brand-dark p-10 border border-brand-dark hover:border-brand-accent hover:shadow-2xl transition-all duration-500 interactive group rounded-sm text-white transform hover:-translate-y-2 md:scale-105 relative z-10">
+            <div className="bg-brand-dark p-6 sm:p-8 md:p-10 border border-brand-dark hover:border-brand-accent hover:shadow-2xl transition-all duration-500 interactive group rounded-sm text-white transform hover:-translate-y-2 md:scale-105 relative z-10">
               <i className="ph ph-users-three text-3xl text-brand-accent mb-6"></i>
               <h4 className="font-serif text-xl text-white mb-3">B2B & B2C Networking</h4>
               <p className="text-[13px] font-light text-gray-400 leading-relaxed">Connect directly with leading buyers, distributors, investors, and prominent industry leaders.</p>
             </div>
             {/* Card 3 */}
-            <div className="bg-white p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
               <i className="ph ph-trend-up text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500 mb-6"></i>
               <h4 className="font-serif text-xl text-brand-dark mb-3">Market Expansion</h4>
               <p className="text-[13px] font-light text-gray-500 leading-relaxed">Explore new territories dynamically and unlock highly lucrative export opportunities.</p>
             </div>
             {/* Card 4 */}
-            <div className="bg-white p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
               <i className="ph ph-star text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500 mb-6"></i>
               <h4 className="font-serif text-xl text-brand-dark mb-3">Brand Positioning</h4>
               <p className="text-[13px] font-light text-gray-500 leading-relaxed">Strengthen your presence as a recognized global player with unmatched credibility.</p>
             </div>
             {/* Card 5 */}
-            <div className="bg-white p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2">
               <i className="ph ph-lightbulb text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500 mb-6"></i>
               <h4 className="font-serif text-xl text-brand-dark mb-3">Industry Insights</h4>
               <p className="text-[13px] font-light text-gray-500 leading-relaxed">Gain invaluable exposure to international trends, modern business practices, and innovations shaping the future of global trade.</p>
             </div>
 
             {/* Card 6: Exhibition and Conference */}
-            <div className="bg-white p-8 sm:p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2 flex flex-col justify-between">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 hover:border-brand-accent hover:shadow-xl transition-all duration-500 interactive group rounded-sm transform hover:-translate-y-2 flex flex-col justify-between">
               <div>
                 <i className="ph ph-buildings text-3xl text-brand-dark group-hover:text-brand-accent transition-colors duration-500 mb-6 block"></i>
                 <h4 className="font-serif text-xl text-brand-dark mb-3">Exhibition and Conference</h4>
@@ -403,10 +405,10 @@ const Home = () => {
       {/* HORIZONTAL SCROLL SECTORS */}
       <section id="sectors" ref={horizontalSectionRef} className="horizontal-section-wrapper bg-brand-dark text-white h-[400vh] relative">
         <div className="horizontal-sticky-container sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 flex justify-between items-end">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12 flex justify-between items-end">
             <div>
-              <p className="text-brand-accent tracking-widest text-[10px] uppercase mb-4 font-bold">A wide spectrum of industries</p>
-              <h2 className="font-serif text-4xl md:text-5xl">Sectors We Cover</h2>
+              <p className="text-brand-accent tracking-widest text-[10px] uppercase mb-3 sm:mb-4 font-bold">A wide spectrum of industries</p>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl">Sectors We Cover</h2>
             </div>
             <div className="hidden md:block">
               <span className="text-[10px] tracking-widest uppercase text-white/50 flex items-center gap-2">
@@ -415,7 +417,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="horizontal-track flex gap-8 px-[5vw] transition-transform duration-100 ease-out" ref={trackRef}>
+          <div className="horizontal-track flex gap-4 sm:gap-8 px-[5vw] transition-transform duration-100 ease-out" ref={trackRef}>
             {[
               { id: 'healthcare', title: 'Healthcare', subtitle: '& Medical Devices', img: healthcareImg, hoverImg: healthcareHover, tags: ['Advanced Equipment', 'Pharmaceuticals'] },
               { id: 'it', title: 'Information Tech', subtitle: '& Digital Solutions', img: itImg, hoverImg: itHover, tags: ['Software Services', 'AI & Infrastructure'] },
@@ -428,7 +430,7 @@ const Home = () => {
               <div 
                 key={index} 
                 onClick={() => handleNavigate('/sectors', `#${sector.id}`)}
-                className="relative w-[85vw] md:w-[45vw] h-[60vh] flex-shrink-0 group interactive overflow-hidden rounded-sm cursor-pointer"
+                className="relative w-[85vw] sm:w-[65vw] md:w-[45vw] h-[52vh] sm:h-[58vh] md:h-[60vh] flex-shrink-0 group interactive overflow-hidden rounded-sm cursor-pointer"
               >
                 <img src={sector.img} alt={sector.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700" />
                 <img 
@@ -437,10 +439,10 @@ const Home = () => {
                   className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-110 group-hover:scale-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 p-10 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <h3 className="text-brand-accent font-serif text-3xl md:text-4xl mb-2">{sector.title}</h3>
-                  <h3 className="text-white font-serif text-2xl md:text-3xl mb-4">{sector.subtitle}</h3>
-                  <div className="text-[11px] text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-light flex flex-wrap gap-4">
+                <div className="absolute bottom-0 left-0 p-5 sm:p-8 md:p-10 w-full transform translate-y-0 sm:translate-y-4 sm:group-hover:translate-y-0 transition-transform duration-500">
+                  <h3 className="text-brand-accent font-serif text-2xl sm:text-3xl md:text-4xl mb-1 sm:mb-2">{sector.title}</h3>
+                  <h3 className="text-white font-serif text-xl sm:text-2xl md:text-3xl mb-2 sm:mb-4">{sector.subtitle}</h3>
+                  <div className="text-[11px] text-gray-300 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500 delay-100 font-light flex flex-wrap gap-2.5 sm:gap-4">
                     {sector.tags.map((tag, i) => (
                       <span key={i}><i className="ph-fill ph-check-circle text-brand-accent"></i> {tag}</span>
                     ))}
@@ -453,7 +455,7 @@ const Home = () => {
       </section>
 
       {/* PARTICIPATE & GLOBAL REACH */}
-      <section id="participate" className="py-24 md:py-32 bg-brand-dark text-white relative overflow-hidden z-20">
+      <section id="participate" className="py-16 sm:py-24 md:py-32 bg-brand-dark text-white relative overflow-hidden z-20">
         {/* Decorative Animated Accent */}
         <div className="absolute top-[-20%] right-[-10%] w-[80%] h-[120%] opacity-[0.03] pointer-events-none animate-spin-slow origin-center mix-blend-screen">
           <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -464,11 +466,11 @@ const Home = () => {
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-16 md:gap-24">
             {/* Why Participate */}
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl mb-8 text-brand-accent reveal-up">Why Participate?</h2>
-              <ul className="space-y-6 font-light text-gray-300 text-base">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-8 text-brand-accent reveal-up">Why Participate?</h2>
+              <ul className="space-y-4 sm:space-y-6 font-light text-gray-300 text-sm sm:text-base">
                 {[
                   "Access high-potential international markets.",
                   "Build global partnerships and distribution networks.",
@@ -476,8 +478,8 @@ const Home = () => {
                   "Engage directly with decision-makers and buyers.",
                   "Enhance export readiness and competitiveness."
                 ].map((item, i) => (
-                  <li key={i} className={`flex items-start gap-4 reveal-up delay-[${(i+1)*100}ms] hover:translate-x-3 hover:text-white transition-all duration-300 cursor-default group`}>
-                    <i className="ph-fill ph-check-circle text-brand-accent text-xl mt-0.5 group-hover:scale-110 transition-transform"></i>
+                  <li key={i} className={`flex items-start gap-3 sm:gap-4 reveal-up delay-[${(i+1)*100}ms] hover:translate-x-3 hover:text-white transition-all duration-300 cursor-default group`}>
+                    <i className="ph-fill ph-check-circle text-brand-accent text-lg sm:text-xl mt-0.5 group-hover:scale-110 transition-transform"></i>
                     <span dangerouslySetInnerHTML={{ __html: item.replace('"Made in Asia"', '<span class="italic font-serif text-white">"Made in Asia"</span>') }}></span>
                   </li>
                 ))}
@@ -486,8 +488,8 @@ const Home = () => {
 
             {/* Who Should Exhibit */}
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl mb-8 text-white reveal-up delay-[100ms]">Who Should Exhibit?</h2>
-              <ul className="space-y-6 font-light text-gray-400 text-base">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-8 text-white reveal-up delay-[100ms]">Who Should Exhibit?</h2>
+              <ul className="space-y-4 sm:space-y-6 font-light text-gray-400 text-sm sm:text-base">
                 {[
                   "Manufacturers and exporters",
                   "Startups and emerging brands",
@@ -495,7 +497,7 @@ const Home = () => {
                   "Industry associations and trade bodies",
                   "Technology providers and service companies"
                 ].map((item, i) => (
-                  <li key={i} className={`pb-4 border-b border-gray-800 reveal-up delay-[${(i+2)*100}ms] hover:text-brand-accent hover:border-brand-accent/50 hover:translate-x-3 transition-all duration-300 cursor-default ${i === 4 ? 'border-transparent' : ''}`}>
+                  <li key={i} className={`pb-3 sm:pb-4 border-b border-gray-800 reveal-up delay-[${(i+2)*100}ms] hover:text-brand-accent hover:border-brand-accent/50 hover:translate-x-3 transition-all duration-300 cursor-default ${i === 4 ? 'border-transparent' : ''}`}>
                     {item}
                   </li>
                 ))}
@@ -504,26 +506,26 @@ const Home = () => {
           </div>
 
           {/* IndiGlobalExpo Overview & Vision (Shifted here with matching luxury dark theme) */}
-          <div id="about" className="border-t border-gray-800 pt-20 mt-20">
-            <div className="text-center mb-16 reveal-up">
+          <div id="about" className="border-t border-gray-800 pt-12 sm:pt-16 md:pt-20 mt-12 sm:mt-16 md:mt-20">
+            <div className="text-center mb-10 sm:mb-16 reveal-up">
               <img 
                 src={logoWhiteImg} 
                 alt="IndiGlobal Expo - Connect • Collaborate • Grow" 
-                className="h-16 md:h-20 w-auto object-contain mx-auto mb-8 hover:scale-105 transition-transform drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]" 
+                className="h-12 sm:h-16 md:h-20 w-auto object-contain mx-auto mb-6 sm:mb-8 hover:scale-105 transition-transform drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]" 
               />
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-tight text-white max-w-4xl mx-auto">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight text-white max-w-4xl mx-auto px-2">
                 IndiGlobalExpo is a premier international trade fair platform designed to connect Asian businesses with <span className="italic text-brand-accent font-light">global markets.</span>
               </h2>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-gray-300 font-light text-base leading-relaxed items-stretch">
-              <div className="reveal-up delay-100 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 text-gray-300 font-light text-sm sm:text-base leading-relaxed items-stretch">
+              <div className="reveal-up delay-100 space-y-4 sm:space-y-6">
                 <p>Bringing together companies from diverse sectors, the expo travels across key international destinations, creating powerful opportunities for Asian brands to showcase their products, services, innovation, and capabilities on a global stage.</p>
                 <p>From established enterprises to emerging brands, IndiGlobalExpo serves as a gateway for Asian industries to expand their footprint, build strategic partnerships, and explore new markets worldwide.</p>
               </div>
-              <div className="bg-gradient-to-br from-white/10 to-white/0 border border-white/10 border-l-4 border-l-brand-accent p-8 md:p-10 rounded-sm reveal-up delay-200 flex flex-col justify-center">
-                <h4 className="text-[10px] font-bold uppercase tracking-widest mb-4 text-brand-accent">Our Vision</h4>
-                <p className="font-serif text-xl sm:text-2xl text-white italic leading-relaxed">
+              <div className="bg-gradient-to-br from-white/10 to-white/0 border border-white/10 border-l-4 border-l-brand-accent p-6 sm:p-8 md:p-10 rounded-sm reveal-up delay-200 flex flex-col justify-center">
+                <h4 className="text-[10px] font-bold uppercase tracking-widest mb-3 sm:mb-4 text-brand-accent">Our Vision</h4>
+                <p className="font-serif text-lg sm:text-xl md:text-2xl text-white italic leading-relaxed">
                   "To position Asia as a global hub of innovation, quality, and excellence by enabling businesses to access international opportunities and build lasting global connections."
                 </p>
               </div>
@@ -531,39 +533,39 @@ const Home = () => {
           </div>
 
           {/* Global Reach */}
-          <div className="border-t border-gray-800 pt-16 mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="bg-gradient-to-br from-white/10 to-white/0 border border-white/10 p-10 rounded-sm reveal-up group interactive hover:-translate-y-2 hover:border-brand-accent/50 hover:shadow-[0_20px_50px_rgba(207,166,112,0.1)] transition-all duration-500">
-              <i className="ph ph-globe-hemisphere-east text-4xl text-brand-accent mb-6 block animate-float group-hover:scale-110 transition-transform duration-500"></i>
-              <h3 className="font-serif text-2xl mb-4 text-white group-hover:text-brand-accent transition-colors">Global Reach</h3>
-              <p className="font-serif text-lg text-gray-300 italic leading-relaxed group-hover:text-white transition-colors">"Connecting Asian excellence with global demand across strategic markets."</p>
+          <div className="border-t border-gray-800 pt-12 sm:pt-16 mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="bg-gradient-to-br from-white/10 to-white/0 border border-white/10 p-6 sm:p-8 md:p-10 rounded-sm reveal-up group interactive hover:-translate-y-2 hover:border-brand-accent/50 hover:shadow-[0_20px_50px_rgba(207,166,112,0.1)] transition-all duration-500">
+              <i className="ph ph-globe-hemisphere-east text-3xl sm:text-4xl text-brand-accent mb-4 sm:mb-6 block animate-float group-hover:scale-110 transition-transform duration-500"></i>
+              <h3 className="font-serif text-xl sm:text-2xl mb-3 sm:mb-4 text-white group-hover:text-brand-accent transition-colors">Global Reach</h3>
+              <p className="font-serif text-base sm:text-lg text-gray-300 italic leading-relaxed group-hover:text-white transition-colors">"Connecting Asian excellence with global demand across strategic markets."</p>
             </div>
             <div className="reveal-up delay-[200ms]">
-              <p className="text-gray-400 font-light leading-relaxed text-base">
+              <p className="text-gray-400 font-light leading-relaxed text-sm sm:text-base">
                 IndiGlobalExpo is hosted in strategically selected international locations, ensuring maximum visibility and participation from global stakeholders. Each edition is curated to align with regional market demand, enabling exhibitors to achieve meaningful business outcomes.
               </p>
             </div>
           </div>
 
           {/* Join the Movement CTA */}
-          <div className="mt-24 pt-16 border-t border-gray-800 text-center max-w-4xl mx-auto">
-            <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-4 reveal-up">Join the Movement</p>
-            <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-6 reveal-up delay-[100ms]">
+          <div className="mt-16 sm:mt-24 pt-12 sm:pt-16 border-t border-gray-800 text-center max-w-4xl mx-auto">
+            <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-3 sm:mb-4 reveal-up">Join the Movement</p>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white leading-tight mb-4 sm:mb-6 reveal-up delay-[100ms] px-2">
               IndiGlobalExpo is not just an exhibition—it is a movement to take Asia’s innovation, craftsmanship, and entrepreneurial spirit to the world.
             </h2>
-            <p className="text-gray-400 font-light mb-10 text-base reveal-up delay-[200ms]">
+            <p className="text-gray-400 font-light mb-8 sm:mb-10 text-sm sm:text-base reveal-up delay-[200ms]">
               Be a part of IndiGlobalExpo and unlock global possibilities. For participation, partnerships, and sponsorship opportunities, connect with us today and take your business beyond borders.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 reveal-up delay-[300ms]">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 reveal-up delay-[300ms]">
               <button 
                 onClick={() => handleNavigate('/tickets')} 
-                className="w-full sm:w-auto bg-brand-accent text-white px-10 py-5 text-[11px] font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-all duration-500 interactive items-center justify-center flex gap-3 shadow-xl group hover:-translate-y-1"
+                className="w-full sm:w-auto bg-brand-accent text-white px-8 sm:px-10 py-4 sm:py-5 text-[11px] font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-all duration-500 interactive items-center justify-center flex gap-3 shadow-xl group hover:-translate-y-1"
               >
                 <i className="ph ph-ticket text-xl group-hover:scale-110 transition-transform"></i> Secure Your Space
               </button>
               <button 
                 onClick={() => handleNavigate('/contact')} 
-                className="w-full sm:w-auto border border-gray-600 text-white px-10 py-5 text-[11px] font-bold uppercase tracking-widest hover:border-white transition-all duration-500 interactive items-center justify-center flex gap-3 group hover:-translate-y-1 hover:bg-white/5"
+                className="w-full sm:w-auto border border-gray-600 text-white px-8 sm:px-10 py-4 sm:py-5 text-[11px] font-bold uppercase tracking-widest hover:border-white transition-all duration-500 interactive items-center justify-center flex gap-3 group hover:-translate-y-1 hover:bg-white/5"
               >
                 <i className="ph ph-envelope-simple text-xl group-hover:-translate-y-1 group-hover:text-brand-accent transition-transform"></i> Contact Us
               </button>
@@ -573,11 +575,11 @@ const Home = () => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-28 md:py-36 bg-brand-light relative z-20 border-t border-gray-200">
+      <section id="faq" className="py-16 sm:py-24 md:py-36 bg-brand-light relative z-20 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 reveal-up">
-            <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-4">Got Questions?</p>
-            <h2 className="font-serif text-3xl md:text-4xl text-brand-dark">Frequently Asked Questions</h2>
+          <div className="text-center mb-10 sm:mb-16 reveal-up">
+            <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-3 sm:mb-4">Got Questions?</p>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brand-dark">Frequently Asked Questions</h2>
           </div>
           <div className="space-y-4 reveal-up delay-100">
             {[
@@ -586,11 +588,11 @@ const Home = () => {
               { q: "Are there age restrictions?", a: "Yes, IndiGlobal Expo is a strictly B2B trade event. To maintain a professional environment, all attendees must be 18 years or older to enter the exhibition halls.", icon: "ph-users" },
               { q: "Do you provide Visa assistance?", a: "Yes, registered international visitors and exhibitors will receive an official invitation letter upon request to assist with their Indian Business Visa applications.", icon: "ph-passport" }
             ].map((faq, i) => (
-              <div key={i} className="bg-white border border-gray-100 p-6 md:p-8 rounded-sm shadow-sm hover:border-brand-accent hover:shadow-xl transition-all duration-300">
-                <h4 className="font-serif text-lg text-brand-dark mb-3 flex items-center gap-3">
-                  <i className={`ph-fill ${faq.icon} text-brand-accent text-xl`}></i> {faq.q}
+              <div key={i} className="bg-white border border-gray-100 p-5 sm:p-6 md:p-8 rounded-sm shadow-sm hover:border-brand-accent hover:shadow-xl transition-all duration-300">
+                <h4 className="font-serif text-base sm:text-lg text-brand-dark mb-2 sm:mb-3 flex items-center gap-2.5 sm:gap-3">
+                  <i className={`ph-fill ${faq.icon} text-brand-accent text-lg sm:text-xl flex-shrink-0`}></i> {faq.q}
                 </h4>
-                <p className="text-gray-500 font-light text-[13px] leading-relaxed pl-8">{faq.a}</p>
+                <p className="text-gray-500 font-light text-xs sm:text-[13px] leading-relaxed pl-7 sm:pl-8">{faq.a}</p>
               </div>
             ))}
           </div>

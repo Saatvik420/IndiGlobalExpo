@@ -44,21 +44,21 @@ const Visitor = () => {
       <TicketWidget />
 
       {/* Visitor Hero Section */}
-      <section className="relative h-[65vh] min-h-[500px] flex items-center overflow-hidden bg-brand-dark">
+      <section className="relative min-h-[460px] sm:h-[65vh] flex items-center overflow-hidden bg-brand-dark py-20 sm:py-0">
         <img src={heroImg} alt="Exhibition Hall" className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-luminosity" />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/50 z-0"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-10 sm:mt-16">
           <div className="max-w-3xl">
-            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4 animate-fade-up">Plan Your Experience</p>
-            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-6 animate-fade-up delay-100">
+            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 animate-fade-up">Plan Your Experience</p>
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-6 animate-fade-up delay-100">
               Visitor <br /><span className="italic font-light text-brand-accent">Information.</span>
             </h2>
-            <p className="text-gray-300 font-light text-lg mb-8 max-w-xl animate-fade-up delay-200">
+            <p className="text-gray-300 font-light text-base sm:text-lg mb-6 sm:mb-8 max-w-xl animate-fade-up delay-200">
               Experience Asia’s Innovation, Craftsmanship & Excellence at IndiGlobal Expo.
             </p>
             <div className="flex items-center gap-6 text-white animate-fade-up delay-200">
-              <button onClick={() => handleNavigate('/tickets')} className="interactive bg-brand-accent text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors">
+              <button onClick={() => handleNavigate('/tickets')} className="interactive bg-brand-accent text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors shadow-lg">
                 Register Now
               </button>
             </div>
@@ -67,31 +67,31 @@ const Visitor = () => {
       </section>
 
       {/* Venue Context & Stats */}
-      <section className="py-24 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section className="py-16 sm:py-20 md:py-24 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 items-center">
             <div className="reveal-up">
-              <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4">Visit IndiGlobalExpo</p>
-              <h3 className="font-serif text-4xl md:text-5xl text-brand-dark mb-6 leading-snug">
+              <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4">Visit IndiGlobalExpo</p>
+              <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark mb-4 sm:mb-6 leading-snug">
                 Discover the Best of Asia – <span className="italic text-brand-accent">All in One Place.</span>
               </h3>
-              <div className="space-y-6 text-gray-500 font-light leading-relaxed">
+              <div className="space-y-4 sm:space-y-6 text-gray-500 font-light leading-relaxed text-sm sm:text-base">
                 <p>IndiGlobalExpo is not just an exhibition—it is a movement to take Asia’s innovation, craftsmanship, and entrepreneurial spirit to the world. We offer a unique opportunity for businesses to access high-potential international markets, build global partnerships, and showcase "Made in Asia" excellence.</p>
                 <p>Whether you are a buyer, investor, or an industry enthusiast, IndiGlobalExpo provides a platform to engage directly with decision-makers and explore cutting-edge solutions across 15+ high-growth sectors.</p>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-12 border-t border-gray-100 pt-10">
+              <div className="grid grid-cols-3 gap-4 sm:gap-8 mt-8 sm:mt-12 border-t border-gray-100 pt-8 sm:pt-10">
                 <div>
-                  <h4 className="font-serif text-3xl text-brand-dark mb-1">20k+</h4>
-                  <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Attendees</p>
+                  <h4 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-1">20k+</h4>
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-400 font-bold">Attendees</p>
                 </div>
                 <div>
-                  <h4 className="font-serif text-3xl text-brand-dark mb-1">500+</h4>
-                  <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Exhibitors</p>
+                  <h4 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-1">500+</h4>
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-400 font-bold">Exhibitors</p>
                 </div>
                 <div>
-                  <h4 className="font-serif text-3xl text-brand-dark mb-1">15+</h4>
-                  <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Sectors</p>
+                  <h4 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-1">15+</h4>
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-400 font-bold">Sectors</p>
                 </div>
               </div>
             </div>
@@ -100,8 +100,8 @@ const Visitor = () => {
               <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-2xl">
                 <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80" alt="Networking" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 hover:scale-105" />
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-brand-accent p-8 text-white hidden md:block">
-                <p className="font-serif text-2xl italic">"A Global stage for Asian excellence."</p>
+              <div className="absolute -bottom-6 -right-6 bg-brand-accent p-6 sm:p-8 text-white hidden md:block">
+                <p className="font-serif text-xl sm:text-2xl italic">"A Global stage for Asian excellence."</p>
               </div>
             </div>
           </div>
@@ -109,14 +109,14 @@ const Visitor = () => {
       </section>
 
       {/* WHY VISIT SECTION */}
-      <section className="py-24 bg-brand-light relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-20 reveal-up">
-            <h2 className="font-serif text-5xl text-brand-dark mb-4">Why Visit?</h2>
-            <div className="w-24 h-1 bg-brand-accent mx-auto"></div>
+      <section className="py-16 sm:py-20 md:py-24 bg-brand-light relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20 reveal-up">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark mb-4">Why Visit?</h2>
+            <div className="w-16 sm:w-24 h-1 bg-brand-accent mx-auto"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               { title: 'Global Exposure', icon: 'ph-globe', desc: 'Experience the latest trends and innovations from various Asian industries under one roof.' },
               { title: 'B2B Networking', icon: 'ph-users-three', desc: 'Connect directly with manufacturers, suppliers, and distributors for strategic partnerships.' },
@@ -125,10 +125,10 @@ const Visitor = () => {
               { title: 'Industry Insights', icon: 'ph-lightbulb', desc: 'Attend summits and seminars featuring industry leaders and market experts.' },
               { title: 'Cultural Experience', icon: 'ph-mask-happy', desc: 'Witness the rich heritage and contemporary craftsmanship of Asia in Bangkok.' }
             ].map((item, i) => (
-              <div key={i} className="bg-white p-10 border border-gray-100 hover:border-brand-accent transition-all duration-500 reveal-up group">
-                <i className={`ph ${item.icon} text-4xl text-brand-dark group-hover:text-brand-accent mb-6 block transition-colors`}></i>
-                <h4 className="font-serif text-2xl text-brand-dark mb-3">{item.title}</h4>
-                <p className="text-gray-500 text-sm font-light leading-relaxed">{item.desc}</p>
+              <div key={i} className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 hover:border-brand-accent transition-all duration-500 reveal-up group rounded-sm shadow-xs">
+                <i className={`ph ${item.icon} text-3xl sm:text-4xl text-brand-dark group-hover:text-brand-accent mb-4 sm:mb-6 block transition-colors`}></i>
+                <h4 className="font-serif text-xl sm:text-2xl text-brand-dark mb-2 sm:mb-3">{item.title}</h4>
+                <p className="text-gray-500 text-xs sm:text-sm font-light leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -136,87 +136,87 @@ const Visitor = () => {
       </section>
 
       {/* TRAVEL & LOGISTICS */}
-      <section className="py-24 bg-white relative z-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-1px bg-gray-100 border border-gray-100 reveal-up">
+      <section className="py-16 sm:py-20 md:py-24 bg-white relative z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-1px bg-transparent lg:bg-gray-100 lg:border lg:border-gray-100 reveal-up">
             {/* Logistic 1 */}
-            <div className="bg-white p-12 hover:bg-brand-dark group transition-colors duration-500">
-              <i className="ph ph-map-pin text-4xl text-brand-accent mb-8"></i>
-              <h4 className="font-serif text-3xl text-brand-dark group-hover:text-white mb-6 transition-colors">The Venue</h4>
-              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">Bangkok, Thailand</p>
-              <div className="flex flex-col gap-4 items-start">
-                <a href="https://maps.app.goo.gl/9ZpZ" target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-2">View on Maps</a>
+            <div className="bg-white p-6 sm:p-8 md:p-12 hover:bg-brand-dark group transition-colors duration-500 border lg:border-none border-gray-100 rounded-sm">
+              <i className="ph ph-map-pin text-3xl sm:text-4xl text-brand-accent mb-6 sm:mb-8"></i>
+              <h4 className="font-serif text-2xl sm:text-3xl text-brand-dark group-hover:text-white mb-4 sm:mb-6 transition-colors">The Venue</h4>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base">Bangkok, Thailand</p>
+              <div className="flex flex-col gap-3 sm:gap-4 items-start">
+                <a href="https://maps.app.goo.gl/9ZpZ" target="_blank" rel="noreferrer" className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-1 sm:pb-2">View on Maps</a>
                 <a href={factsheetPdf} download className="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-white/60 hover:text-brand-accent transition-colors">Download Factsheet</a>
               </div>
             </div>
             {/* Logistic 2 */}
-            <div className="bg-white p-12 hover:bg-brand-dark group transition-colors duration-500">
-              <i className="ph ph-calendar-blank text-4xl text-brand-accent mb-8"></i>
-              <h4 className="font-serif text-3xl text-brand-dark group-hover:text-white mb-6 transition-colors">Date & Time</h4>
-              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">January 22, 2027 <br />09:00 AM – 06:00 PM (ICT)</p>
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-2">Save to Calendar</span>
+            <div className="bg-white p-6 sm:p-8 md:p-12 hover:bg-brand-dark group transition-colors duration-500 border lg:border-none border-gray-100 rounded-sm">
+              <i className="ph ph-calendar-blank text-3xl sm:text-4xl text-brand-accent mb-6 sm:mb-8"></i>
+              <h4 className="font-serif text-2xl sm:text-3xl text-brand-dark group-hover:text-white mb-4 sm:mb-6 transition-colors">Date & Time</h4>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base">January 22, 2027 <br />09:00 AM – 06:00 PM (ICT)</p>
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-1 sm:pb-2">Save to Calendar</span>
             </div>
             {/* Logistic 3 */}
-            <div className="bg-white p-12 hover:bg-brand-dark group transition-colors duration-500">
-              <i className="ph ph-airplane-tilt text-4xl text-brand-accent mb-8"></i>
-              <h4 className="font-serif text-3xl text-brand-dark group-hover:text-white mb-6 transition-colors">Accommodation</h4>
-              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-8">Exclusive rates available at partner hotels in Bangkok for registered attendees.</p>
-              <button onClick={() => handleNavigate('/contact')} className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-2">Inquire Now</button>
+            <div className="bg-white p-6 sm:p-8 md:p-12 hover:bg-brand-dark group transition-colors duration-500 border lg:border-none border-gray-100 rounded-sm">
+              <i className="ph ph-airplane-tilt text-3xl sm:text-4xl text-brand-accent mb-6 sm:mb-8"></i>
+              <h4 className="font-serif text-2xl sm:text-3xl text-brand-dark group-hover:text-white mb-4 sm:mb-6 transition-colors">Accommodation</h4>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base">Exclusive rates available at partner hotels in Bangkok for registered attendees.</p>
+              <button onClick={() => handleNavigate('/contact')} className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-1 sm:pb-2">Inquire Now</button>
             </div>
           </div>
         </div>
       </section>
 
       {/* SCHEDULE PREVIEW */}
-      <section className="py-24 bg-brand-dark text-white relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16 reveal-up">
-            <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-4">What to Expect</p>
-            <h2 className="font-serif text-5xl mb-6">Event Schedule</h2>
+      <section className="py-16 sm:py-20 md:py-24 bg-brand-dark text-white relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-10 sm:mb-16 reveal-up">
+            <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-3 sm:mb-4">What to Expect</p>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">Event Schedule</h2>
           </div>
 
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-12">
             {/* Day 1 */}
-            <div className="border-l-2 border-brand-accent/30 pl-8 relative reveal-up">
-              <div className="absolute w-4 h-4 bg-brand-accent rounded-full -left-[9px] top-2"></div>
-              <h4 className="font-serif text-3xl text-brand-accent mb-2">Day 1: Opening & Networking</h4>
-              <p className="text-gray-400 mb-6 uppercase tracking-widest text-xs font-bold">Jan 22, 2027</p>
-              <ul className="space-y-4 text-gray-300 font-light">
-                <li className="flex gap-4">
-                  <span className="text-white font-bold min-w-[80px]">09:00 AM</span>
+            <div className="border-l-2 border-brand-accent/30 pl-5 sm:pl-8 relative reveal-up">
+              <div className="absolute w-3.5 h-3.5 sm:w-4 sm:h-4 bg-brand-accent rounded-full -left-[8px] sm:-left-[9px] top-2"></div>
+              <h4 className="font-serif text-xl sm:text-2xl md:text-3xl text-brand-accent mb-1 sm:mb-2">Day 1: Opening & Networking</h4>
+              <p className="text-gray-400 mb-4 sm:mb-6 uppercase tracking-widest text-[10px] sm:text-xs font-bold">Jan 22, 2027</p>
+              <ul className="space-y-3 sm:space-y-4 text-gray-300 font-light text-xs sm:text-base">
+                <li className="flex gap-3 sm:gap-4">
+                  <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">09:00 AM</span>
                   <span>Inauguration & VIP Keynote Speeches</span>
                 </li>
-                <li className="flex gap-4">
-                  <span className="text-white font-bold min-w-[80px]">11:00 AM</span>
+                <li className="flex gap-3 sm:gap-4">
+                  <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">11:00 AM</span>
                   <span>Exhibition Hall Open & B2B Meetings Begin</span>
                 </li>
-                <li className="flex gap-4">
-                  <span className="text-white font-bold min-w-[80px]">02:00 PM</span>
+                <li className="flex gap-3 sm:gap-4">
+                  <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">02:00 PM</span>
                   <span>Sector-specific Innovation Summits</span>
                 </li>
-                <li className="flex gap-4">
-                  <span className="text-white font-bold min-w-[80px]">07:00 PM</span>
+                <li className="flex gap-3 sm:gap-4">
+                  <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">07:00 PM</span>
                   <span>Networking Dinner (Exhibitors & VIPs)</span>
                 </li>
               </ul>
             </div>
 
             {/* Day 2 */}
-            <div className="border-l-2 border-brand-accent/30 pl-8 relative reveal-up delay-200">
-              <div className="absolute w-4 h-4 bg-brand-accent rounded-full -left-[9px] top-2"></div>
-              <h4 className="font-serif text-3xl text-brand-accent mb-2">Day 2: Trade & Closing</h4>
-              <p className="text-gray-400 mb-6 uppercase tracking-widest text-xs font-bold">Jan 23, 2027</p>
-              <ul className="space-y-4 text-gray-300 font-light">
-                <li className="flex gap-4">
-                  <span className="text-white font-bold min-w-[80px]">10:00 AM</span>
+            <div className="border-l-2 border-brand-accent/30 pl-5 sm:pl-8 relative reveal-up delay-200">
+              <div className="absolute w-3.5 h-3.5 sm:w-4 sm:h-4 bg-brand-accent rounded-full -left-[8px] sm:-left-[9px] top-2"></div>
+              <h4 className="font-serif text-xl sm:text-2xl md:text-3xl text-brand-accent mb-1 sm:mb-2">Day 2: Trade & Closing</h4>
+              <p className="text-gray-400 mb-4 sm:mb-6 uppercase tracking-widest text-[10px] sm:text-xs font-bold">Jan 23, 2027</p>
+              <ul className="space-y-3 sm:space-y-4 text-gray-300 font-light text-xs sm:text-base">
+                <li className="flex gap-3 sm:gap-4">
+                  <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">10:00 AM</span>
                   <span>Global Investors & Buyers Round-table</span>
                 </li>
-                <li className="flex gap-4">
-                  <span className="text-white font-bold min-w-[80px]">01:00 PM</span>
+                <li className="flex gap-3 sm:gap-4">
+                  <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">01:00 PM</span>
                   <span>Workshops on Market Entry Strategies</span>
                 </li>
-                <li className="flex gap-4">
-                  <span className="text-white font-bold min-w-[80px]">04:00 PM</span>
+                <li className="flex gap-3 sm:gap-4">
+                  <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">04:00 PM</span>
                   <span>Closing Ceremony & Excellence Awards</span>
                 </li>
               </ul>
@@ -226,14 +226,14 @@ const Visitor = () => {
       </section>
 
       {/* CALL TO ACTION */}
-      <section className="py-24 bg-white text-center">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 reveal-up">
-          <h2 className="font-serif text-5xl text-brand-dark leading-tight mb-8">Ready to join the premier <br /><span className="italic text-brand-accent">Trade Experience?</span></h2>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <button onClick={() => handleNavigate('/tickets')} className="w-full sm:w-auto bg-brand-dark text-white px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-brand-accent transition-all duration-500 interactive">
+      <section className="py-16 sm:py-20 md:py-24 bg-white text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-brand-dark leading-tight mb-6 sm:mb-8">Ready to join the premier <br /><span className="italic text-brand-accent">Trade Experience?</span></h2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <button onClick={() => handleNavigate('/tickets')} className="w-full sm:w-auto bg-brand-dark text-white px-8 sm:px-10 py-4 sm:py-5 text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-brand-accent transition-all duration-500 interactive shadow-lg">
               Get Your Tickets
             </button>
-            <button onClick={() => handleNavigate('/contact')} className="w-full sm:w-auto border border-gray-200 text-brand-dark px-10 py-5 text-sm font-bold uppercase tracking-widest hover:border-brand-dark transition-all duration-500 interactive">
+            <button onClick={() => handleNavigate('/contact')} className="w-full sm:w-auto border border-gray-200 text-brand-dark px-8 sm:px-10 py-4 sm:py-5 text-xs sm:text-sm font-bold uppercase tracking-widest hover:border-brand-dark transition-all duration-500 interactive">
               Contact for Group Visits
             </button>
           </div>

@@ -78,44 +78,44 @@ const Contact = () => {
       <TicketWidget />
 
       {/* Hero Section */}
-      <section className="relative h-[55vh] min-h-[450px] flex items-center overflow-hidden bg-brand-dark">
+      <section className="relative min-h-[380px] sm:h-[55vh] flex items-center overflow-hidden bg-brand-dark py-16 sm:py-0">
         <img src={heroImg} alt="Office building" className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-luminosity" />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/50 z-0"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-10 sm:mt-16">
           <div className="max-w-2xl text-center md:text-left">
-            <div className="animate-fade-up overflow-hidden mb-4">
+            <div className="animate-fade-up overflow-hidden mb-3 sm:mb-4">
               <p className="text-brand-accent font-bold tracking-widest uppercase text-xs">We are here to help</p>
             </div>
-            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 animate-fade-up delay-100">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-3 sm:mb-4 animate-fade-up delay-100">
               Get In <span className="italic text-brand-accent">Touch.</span>
             </h2>
-            <p className="text-gray-300 font-light text-lg animate-fade-up delay-200">Have questions about exhibiting, visiting, or partnering? Reach out to our dedicated support team.</p>
+            <p className="text-gray-300 font-light text-base sm:text-lg animate-fade-up delay-200">Have questions about exhibiting, visiting, or partnering? Reach out to our dedicated support team.</p>
           </div>
         </div>
       </section>
 
       {/* Main Content: Contact Form & Info */}
-      <main className="flex-grow relative z-20 -mt-20 pb-24 px-4 sm:px-6 lg:px-8">
+      <main className="flex-grow relative z-20 -mt-12 sm:-mt-16 md:-mt-20 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="bg-white rounded-sm shadow-2xl flex flex-col lg:flex-row overflow-hidden border border-gray-100 animate-fade-up delay-300">
             
             {/* Left: Contact Info */}
-            <div className="lg:w-2/5 bg-brand-dark p-12 md:p-16 text-white flex flex-col justify-between relative overflow-hidden">
+            <div className="lg:w-2/5 bg-brand-dark p-6 sm:p-10 md:p-16 text-white flex flex-col justify-between relative overflow-hidden">
               {/* Decorative Background element */}
               <div className="absolute -bottom-10 -right-10 text-[250px] text-white/5 pointer-events-none transform -rotate-12">
                 <Globe size={250} />
               </div>
               
               <div className="relative z-10">
-                <h3 className="font-serif text-3xl mb-10">Contact Information</h3>
+                <h3 className="font-serif text-2xl sm:text-3xl mb-6 sm:mb-10">Contact Information</h3>
                 
-                <div className="space-y-8">
-                  <div className="flex items-start gap-5">
-                    <Buildings className="text-2xl text-brand-accent mt-1" />
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <Buildings className="text-xl sm:text-2xl text-brand-accent mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2">Corporate Office</h4>
-                      <p className="font-light text-gray-300 leading-relaxed">
+                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-1 sm:mb-2">Corporate Office</h4>
+                      <p className="font-light text-gray-300 leading-relaxed text-sm sm:text-base">
                         IndiGlobalExpo<br />
                         C/O GTTCI<br />
                         Areness House, 5, Sardar Patel Marg,<br />
@@ -125,35 +125,35 @@ const Contact = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-start gap-5">
-                    <MapPin className="text-2xl text-brand-accent mt-1" />
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <MapPin className="text-xl sm:text-2xl text-brand-accent mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2">Venue Address</h4>
-                      <p className="font-light text-gray-300 leading-relaxed">Bangkok, Thailand</p>
+                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-1 sm:mb-2">Venue Address</h4>
+                      <p className="font-light text-gray-300 leading-relaxed text-sm sm:text-base">Bangkok, Thailand</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-start gap-5">
-                    <EnvelopeSimple className="text-2xl text-brand-accent mt-1" />
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <EnvelopeSimple className="text-xl sm:text-2xl text-brand-accent mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2">Email Us</h4>
-                      <a href="mailto:info@indiglobalexpo.com" className="font-light text-gray-300 hover:text-brand-accent transition-colors interactive">info@indiglobalexpo.com</a><br />
-                      <a href="mailto:support@indiglobalexpo.com" className="font-light text-gray-300 hover:text-brand-accent transition-colors interactive">support@indiglobalexpo.com</a>
+                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-1 sm:mb-2">Email Us</h4>
+                      <a href="mailto:info@indiglobalexpo.com" className="font-light text-gray-300 hover:text-brand-accent transition-colors interactive text-sm sm:text-base">info@indiglobalexpo.com</a><br />
+                      <a href="mailto:support@indiglobalexpo.com" className="font-light text-gray-300 hover:text-brand-accent transition-colors interactive text-sm sm:text-base">support@indiglobalexpo.com</a>
                     </div>
                   </div>
                   
-                  <div className="flex items-start gap-5">
-                    <Phone className="text-2xl text-brand-accent mt-1" />
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <Phone className="text-xl sm:text-2xl text-brand-accent mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2">Call Us</h4>
-                      <p className="font-light text-gray-300">+91 (11) 4567 8900<br />Mon-Fri, 9:00 AM - 6:00 PM (IST)</p>
+                      <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-1 sm:mb-2">Call Us</h4>
+                      <p className="font-light text-gray-300 text-sm sm:text-base">+91 (11) 4567 8900<br />Mon-Fri, 9:00 AM - 6:00 PM (IST)</p>
                     </div>
                   </div>
                 </div>
               </div>
               
               {/* Social Links in Contact Card */}
-              <div className="mt-12 pt-8 border-t border-white/10 relative z-10">
+              <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10 relative z-10">
                 <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-4">Follow Us</h4>
                 <div className="flex items-center gap-6">
                   <a href="#" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Facebook"><FacebookLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
@@ -165,31 +165,31 @@ const Contact = () => {
             </div>
             
             {/* Right: Contact Form */}
-            <div className="lg:w-3/5 p-12 md:p-16 bg-white">
-              <h3 className="font-serif text-3xl text-brand-dark mb-2">Send us a message</h3>
-              <p className="text-gray-500 font-light text-sm mb-10">Fill out the form below and we will get back to you within 24 hours.</p>
+            <div className="lg:w-3/5 p-6 sm:p-10 md:p-16 bg-white">
+              <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-2">Send us a message</h3>
+              <p className="text-gray-500 font-light text-sm mb-6 sm:mb-10">Fill out the form below and we will get back to you within 24 hours.</p>
               
               <form id="contact-form" onSubmit={handleContactSubmit}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
                   <div>
                     <label htmlFor="firstName" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">First Name *</label>
-                    <input type="text" id="firstName" name="firstName" required className="w-full bg-transparent border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive" placeholder="Jane" />
+                    <input type="text" id="firstName" name="firstName" required className="w-full bg-transparent border-none border-b border-gray-200 py-3 sm:py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive text-sm sm:text-base" placeholder="Jane" />
                   </div>
                   <div>
                     <label htmlFor="lastName" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Last Name *</label>
-                    <input type="text" id="lastName" name="lastName" required className="w-full bg-transparent border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive" placeholder="Doe" />
+                    <input type="text" id="lastName" name="lastName" required className="w-full bg-transparent border-none border-b border-gray-200 py-3 sm:py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive text-sm sm:text-base" placeholder="Doe" />
                   </div>
                   <div className="md:col-span-2">
                     <label htmlFor="email" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Email Address *</label>
-                    <input type="email" id="email" name="email" required className="w-full bg-transparent border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive" placeholder="jane.doe@example.com" />
+                    <input type="email" id="email" name="email" required className="w-full bg-transparent border-none border-b border-gray-200 py-3 sm:py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive text-sm sm:text-base" placeholder="jane.doe@example.com" />
                   </div>
                   <div className="md:col-span-2">
                     <label htmlFor="mobile" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Mobile Number *</label>
-                    <input type="tel" id="mobile" name="mobile" required className="w-full bg-transparent border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive" placeholder="+91 98765 43210" />
+                    <input type="tel" id="mobile" name="mobile" required className="w-full bg-transparent border-none border-b border-gray-200 py-3 sm:py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive text-sm sm:text-base" placeholder="+91 98765 43210" />
                   </div>
                   <div className="md:col-span-2">
                     <label htmlFor="inquiryType" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Subject / Inquiry Type *</label>
-                    <select id="inquiryType" name="inquiryType" required className="w-full bg-white border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive cursor-none">
+                    <select id="inquiryType" name="inquiryType" required className="w-full bg-white border-none border-b border-gray-200 py-3 sm:py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive cursor-pointer text-sm sm:text-base">
                       <option value="" disabled>Select an option</option>
                       <option value="Exhibiting Inquiry">Exhibiting Inquiry</option>
                       <option value="Visitor & Tickets Support">Visitor & Tickets Support</option>
@@ -200,14 +200,14 @@ const Contact = () => {
                   </div>
                   <div className="md:col-span-2">
                     <label htmlFor="message" className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Your Message *</label>
-                    <textarea id="message" name="message" required rows="4" className="w-full bg-transparent border-none border-b border-gray-200 py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive resize-none" placeholder="How can we help you?"></textarea>
+                    <textarea id="message" name="message" required rows="4" className="w-full bg-transparent border-none border-b border-gray-200 py-3 sm:py-4 font-light text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive resize-none text-sm sm:text-base" placeholder="How can we help you?"></textarea>
                   </div>
                 </div>
                 
-                <div className="mt-10">
-                  <button type="submit" disabled={isSubmitting} className={`w-full sm:w-auto bg-brand-dark text-white px-12 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2 ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}>
+                <div className="mt-8 sm:mt-10">
+                  <button type="submit" disabled={isSubmitting} className={`w-full sm:w-auto bg-brand-dark text-white px-8 sm:px-12 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2 ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}>
                     {isSubmitting ? (
-                      <><CircleNotch className="animate-spin text-lg" /> Sending...</>
+                      <><Spinner className="animate-spin text-lg" /> Sending...</>
                     ) : (
                       <><PaperPlaneTilt /> Send Message</>
                     )}
@@ -217,8 +217,8 @@ const Contact = () => {
                 {/* Success Message */}
                 {showSuccess && (
                   <div className="mt-6 p-4 bg-green-50 text-green-700 text-sm border border-green-100 rounded-sm flex items-center gap-3">
-                    <CheckCircle weight="fill" className="text-xl" />
-                    Your message has been sent successfully. We will be in touch shortly!
+                    <CheckCircle weight="fill" className="text-xl flex-shrink-0" />
+                    <span>Your message has been sent successfully. We will be in touch shortly!</span>
                   </div>
                 )}
 
@@ -235,18 +235,18 @@ const Contact = () => {
       </main>
 
       {/* Global Maps Section */}
-      <section className="py-12 bg-white reveal-up">
+      <section className="py-8 sm:py-12 bg-white reveal-up">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-[400px] w-full bg-gray-200 rounded-sm border border-gray-100 overflow-hidden relative interactive group">
+          <div className="h-[280px] sm:h-[350px] md:h-[400px] w-full bg-gray-200 rounded-sm border border-gray-100 overflow-hidden relative interactive group">
             {/* Interactive Google Map Embed */}
             <iframe src="https://maps.google.com/maps?q=Bangkok,%20Thailand&t=&z=14&ie=UTF8&iwloc=&output=embed" className="absolute inset-0 w-full h-full grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
             
             <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
             
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center bg-white p-6 shadow-xl rounded-sm pointer-events-none group-hover:opacity-0 transition-opacity duration-700">
-              <MapPin weight="fill" className="text-4xl text-brand-accent mb-2 animate-bounce" />
-              <p className="font-serif text-lg text-brand-dark font-bold">Bangkok, Thailand</p>
-              <p className="text-xs uppercase tracking-widest text-gray-500 font-bold mt-1">Thailand</p>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center bg-white p-4 sm:p-6 shadow-xl rounded-sm pointer-events-none group-hover:opacity-0 transition-opacity duration-700">
+              <MapPin weight="fill" className="text-3xl sm:text-4xl text-brand-accent mb-2 animate-bounce" />
+              <p className="font-serif text-base sm:text-lg text-brand-dark font-bold">Bangkok, Thailand</p>
+              <p className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 font-bold mt-1">Thailand</p>
             </div>
           </div>
         </div>

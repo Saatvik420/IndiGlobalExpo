@@ -161,28 +161,28 @@ const AdminDashboard = () => {
       <CustomCursor />
       <Header logoColor="text-white" />
 
-      <section className="min-h-screen bg-brand-light pt-32 pb-24">
+      <section className="min-h-screen bg-brand-light pt-24 sm:pt-32 pb-16 sm:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Debug Info */}
-          <div className="mb-4 p-2 bg-black text-green-400 text-[10px] font-mono rounded">
+          <div className="mb-4 p-2 bg-black text-green-400 text-[10px] font-mono rounded overflow-x-auto">
             DEBUG: User Email: {user?.email} | Roles: {JSON.stringify(user?.roles)} | User Count: {users.length} | Queries: {queries.length} | Loading: {isLoading ? 'YES' : 'NO'}
           </div>
           
-          <div className="flex justify-between items-center mb-12">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8 sm:mb-12">
             <div>
-              <h2 className="text-4xl font-serif text-brand-dark mb-2">Management Console</h2>
-              <p className="text-gray-500 font-light">Welcome back, Admin. System is running smoothly.</p>
+              <h2 className="text-2xl sm:text-4xl font-serif text-brand-dark mb-1 sm:mb-2">Management Console</h2>
+              <p className="text-gray-500 font-light text-xs sm:text-sm">Welcome back, Admin. System is running smoothly.</p>
             </div>
             <button 
               onClick={handleLogout}
-              className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-700 transition-colors"
+              className="flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-700 transition-colors w-fit"
             >
               <SignOut size={20} /> Logout
             </button>
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-4 mb-8 border-b border-gray-200 pb-px overflow-x-auto">
+          <div className="flex gap-2 sm:gap-4 mb-6 sm:mb-8 border-b border-gray-200 pb-px overflow-x-auto">
             {[
               { id: 'visitors', label: 'All Registered Users', icon: <User size={20} /> },
               { id: 'exhibitors_users', label: 'Exhibitors Status', icon: <ShieldCheck size={20} /> },
@@ -191,7 +191,7 @@ const AdminDashboard = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-4 text-sm font-bold uppercase tracking-widest transition-all relative whitespace-nowrap ${
+                className={`flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-widest transition-all relative whitespace-nowrap ${
                   activeTab === tab.id ? 'text-brand-accent' : 'text-gray-400 hover:text-brand-dark'
                 }`}
               >
@@ -208,7 +208,7 @@ const AdminDashboard = () => {
             ))}
           </div>
 
-          <div className="bg-white border border-gray-100 shadow-xl p-8 rounded-sm">
+          <div className="bg-white border border-gray-100 shadow-xl p-4 sm:p-8 rounded-sm">
             {fetchError && (
               <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded">
                 <p className="font-bold uppercase tracking-widest text-[10px] mb-1">System Error:</p>
@@ -225,19 +225,19 @@ const AdminDashboard = () => {
               <>
                 {activeTab === 'visitors' && (
                   <div>
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                       <div>
-                        <h3 className="text-2xl font-serif text-brand-dark">User Directory</h3>
+                        <h3 className="text-xl sm:text-2xl font-serif text-brand-dark">User Directory</h3>
                         <p className="text-xs text-gray-400 mt-1">Total Registered: {users.length}</p>
                       </div>
-                      <div className="relative">
+                      <div className="relative w-full sm:w-auto">
                         <MagnifyingGlass size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input
                           type="text"
                           placeholder="Search email or name..."
                           value={visitorSearch}
                           onChange={(e) => setVisitorSearch(e.target.value)}
-                          className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent w-64"
+                          className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent w-full sm:w-64"
                         />
                       </div>
                     </div>

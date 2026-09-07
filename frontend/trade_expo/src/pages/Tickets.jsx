@@ -190,7 +190,7 @@ const Tickets = () => {
       <FullscreenMenu />
 
       {/* Cinematic Hero Section */}
-      <section className="relative h-[45vh] min-h-[350px] flex items-center overflow-hidden bg-brand-dark">
+      <section className="relative min-h-[320px] sm:h-[45vh] flex items-center overflow-hidden bg-brand-dark py-14 sm:py-0">
         <img 
           src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2000&q=80" 
           alt="Expo Conference Event" 
@@ -198,12 +198,12 @@ const Tickets = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/50 z-0" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-10 sm:mt-14">
           <div className="max-w-2xl text-center md:text-left">
-            <div className="reveal-up overflow-hidden mb-4">
+            <div className="reveal-up overflow-hidden mb-3 sm:mb-4">
               <p className="text-brand-accent font-bold tracking-widest uppercase text-xs">Join The Experience</p>
             </div>
-            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 reveal-up delay-100">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-3 sm:mb-4 reveal-up delay-100">
               Registration <span className="italic text-brand-accent">Portal.</span>
             </h2>
           </div>
@@ -211,29 +211,29 @@ const Tickets = () => {
       </section>
 
       {/* Main Content Area */}
-      <main className="flex-grow relative z-20 -mt-16 pb-24 px-4 sm:px-6 lg:px-8" id="checkout-area">
+      <main className="flex-grow relative z-20 -mt-10 sm:-mt-14 md:-mt-16 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8" id="checkout-area">
         <div className="w-full max-w-5xl mx-auto relative z-10">
           
           {/* Progress Stepper */}
           {step !== 0 && step !== 'login' && (
-            <div className="mb-12 reveal-up">
+            <div className="mb-8 sm:mb-12 reveal-up">
               <div className="flex items-center justify-center relative max-w-xl mx-auto">
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] h-[1px] bg-gray-200 z-0"></div>
                 <div className="absolute left-[10%] top-1/2 transform -translate-y-1/2 h-[1px] bg-brand-accent z-0 transition-all duration-700" style={{ width: step === 1 ? '40%' : '80%' }}></div>
                 
                 <div className="flex w-full justify-between relative z-10">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-brand-accent text-white flex items-center justify-center font-bold text-xs shadow-lg border-2 border-brand-light"><Check size={14} weight="bold" /></div>
+                  <div className="flex flex-col items-center gap-2 sm:gap-3">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-brand-accent text-white flex items-center justify-center font-bold text-xs shadow-lg border-2 border-brand-light"><Check size={14} weight="bold" /></div>
                     <span className="text-[10px] uppercase tracking-widest font-bold text-brand-accent">Role</span>
                   </div>
-                  <div className="flex flex-col items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-lg transition-colors duration-300 border-2 ${step >= 1 ? 'bg-brand-accent text-white border-brand-light' : 'bg-white text-gray-400 border-gray-200'}`}>
+                  <div className="flex flex-col items-center gap-2 sm:gap-3">
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-lg transition-colors duration-300 border-2 ${step >= 1 ? 'bg-brand-accent text-white border-brand-light' : 'bg-white text-gray-400 border-gray-200'}`}>
                       {step > 1 ? <Check size={14} weight="bold" /> : '1'}
                     </div>
                     <span className={`text-[10px] uppercase tracking-widest font-bold transition-colors duration-300 ${step >= 1 ? 'text-brand-accent' : 'text-gray-400'}`}>Register</span>
                   </div>
-                  <div className="flex flex-col items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-sm transition-colors duration-300 border-2 ${step >= 2 ? 'bg-brand-accent text-white border-brand-light' : 'bg-white text-gray-400 border-gray-200'}`}>
+                  <div className="flex flex-col items-center gap-2 sm:gap-3">
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-sm transition-colors duration-300 border-2 ${step >= 2 ? 'bg-brand-accent text-white border-brand-light' : 'bg-white text-gray-400 border-gray-200'}`}>
                       2
                     </div>
                     <span className={`text-[10px] uppercase tracking-widest font-bold transition-colors duration-300 ${step >= 2 ? 'text-brand-accent' : 'text-gray-400'}`}>Select Pass</span>
@@ -246,41 +246,43 @@ const Tickets = () => {
           {/* STEP 0: ROLE SELECTION */}
           {step === 0 && (
             <div className="reveal-up">
-              <div className="text-center mb-12">
-                <h2 className="text-5xl md:text-6xl font-serif text-brand-dark mb-4">Choose Your Path</h2>
-                <p className="text-gray-500 font-light text-lg">Select how you would like to participate in IndiGlobal Expo 2027.</p>
+              <div className="text-center mb-8 sm:mb-12">
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif text-brand-dark mb-3 sm:mb-4">Choose Your Path</h2>
+                <p className="text-gray-500 font-light text-base sm:text-lg">Select how you would like to participate in IndiGlobal Expo 2027.</p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                 {/* Visitor Choice */}
-                <div className="bg-white border border-gray-100 shadow-xl p-10 md:p-14 rounded-sm hover:shadow-2xl hover:border-brand-accent transition-all duration-500 group flex flex-col items-center text-center transform hover:-translate-y-2">
-                  <div className="w-24 h-24 rounded-full bg-brand-light flex items-center justify-center mb-8 group-hover:bg-brand-accent transition-colors duration-500 shadow-inner">
-                    <IdentificationBadge size={48} className="text-brand-dark group-hover:text-white transition-colors duration-500" />
+                <div className="bg-white border border-gray-100 shadow-xl p-6 sm:p-10 md:p-14 rounded-sm hover:shadow-2xl hover:border-brand-accent transition-all duration-500 group flex flex-col items-center text-center transform hover:-translate-y-2">
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-brand-light flex items-center justify-center mb-4 sm:mb-8 group-hover:bg-brand-accent transition-colors duration-500 shadow-inner">
+                    <IdentificationBadge size={36} className="text-brand-dark group-hover:text-white transition-colors duration-500 sm:hidden" />
+                    <IdentificationBadge size={48} className="text-brand-dark group-hover:text-white transition-colors duration-500 hidden sm:block" />
                   </div>
-                  <h3 className="font-serif text-3xl text-brand-dark mb-4 transition-colors duration-500">Visitor</h3>
-                  <p className="text-gray-500 font-light text-sm mb-8 transition-colors duration-500">I want to attend the event, network, explore exhibits, and secure an entry pass.</p>
-                  <div className="mt-auto flex flex-col sm:flex-row gap-4 w-full">
-                    <button onClick={() => { setCurrentRole('Visitor'); setStep('login'); }} className="flex-1 py-4 border border-gray-200 text-gray-600 text-xs font-bold uppercase tracking-widest hover:border-brand-accent hover:text-brand-accent transition-colors interactive flex justify-center items-center gap-2">
+                  <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-3 sm:mb-4 transition-colors duration-500">Visitor</h3>
+                  <p className="text-gray-500 font-light text-sm mb-6 sm:mb-8 transition-colors duration-500">I want to attend the event, network, explore exhibits, and secure an entry pass.</p>
+                  <div className="mt-auto flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
+                    <button onClick={() => { setCurrentRole('Visitor'); setStep('login'); }} className="flex-1 py-3.5 sm:py-4 border border-gray-200 text-gray-600 text-xs font-bold uppercase tracking-widest hover:border-brand-accent hover:text-brand-accent transition-colors interactive flex justify-center items-center gap-2">
                       <SignIn /> Log In
                     </button>
-                    <button onClick={() => { setCurrentRole('Visitor'); setStep(1); }} className="flex-1 py-4 bg-brand-dark text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2">
+                    <button onClick={() => { setCurrentRole('Visitor'); setStep(1); }} className="flex-1 py-3.5 sm:py-4 bg-brand-dark text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2">
                       <UserPlus /> Register
                     </button>
                   </div>
                 </div>
 
                 {/* Exhibitor Choice */}
-                <div className="bg-white border border-gray-100 shadow-xl p-10 md:p-14 rounded-sm hover:shadow-2xl hover:border-brand-accent transition-all duration-500 group flex flex-col items-center text-center transform hover:-translate-y-2">
-                  <div className="w-24 h-24 rounded-full bg-brand-light flex items-center justify-center mb-8 group-hover:bg-brand-accent transition-colors duration-500 shadow-inner">
-                    <Storefront size={48} className="text-brand-dark group-hover:text-white transition-colors duration-500" />
+                <div className="bg-white border border-gray-100 shadow-xl p-6 sm:p-10 md:p-14 rounded-sm hover:shadow-2xl hover:border-brand-accent transition-all duration-500 group flex flex-col items-center text-center transform hover:-translate-y-2">
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-brand-light flex items-center justify-center mb-4 sm:mb-8 group-hover:bg-brand-accent transition-colors duration-500 shadow-inner">
+                    <Storefront size={36} className="text-brand-dark group-hover:text-white transition-colors duration-500 sm:hidden" />
+                    <Storefront size={48} className="text-brand-dark group-hover:text-white transition-colors duration-500 hidden sm:block" />
                   </div>
-                  <h3 className="font-serif text-3xl text-brand-dark mb-4 transition-colors duration-500">Exhibitor</h3>
-                  <p className="text-gray-500 font-light text-sm mb-8 transition-colors duration-500">I want to book a booth, showcase my products, and manage my company profile.</p>
-                  <div className="mt-auto flex flex-col sm:flex-row gap-4 w-full">
-                    <button onClick={() => { setCurrentRole('Exhibitor'); setStep('login'); }} className="flex-1 py-4 border border-gray-200 text-gray-600 text-xs font-bold uppercase tracking-widest hover:border-brand-accent hover:text-brand-accent transition-colors interactive flex justify-center items-center gap-2">
+                  <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-3 sm:mb-4 transition-colors duration-500">Exhibitor</h3>
+                  <p className="text-gray-500 font-light text-sm mb-6 sm:mb-8 transition-colors duration-500">I want to book a booth, showcase my products, and manage my company profile.</p>
+                  <div className="mt-auto flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
+                    <button onClick={() => { setCurrentRole('Exhibitor'); setStep('login'); }} className="flex-1 py-3.5 sm:py-4 border border-gray-200 text-gray-600 text-xs font-bold uppercase tracking-widest hover:border-brand-accent hover:text-brand-accent transition-colors interactive flex justify-center items-center gap-2">
                       <SignIn /> Log In
                     </button>
-                    <button onClick={() => { setCurrentRole('Exhibitor'); setStep(1); }} className="flex-1 py-4 bg-brand-dark text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2">
+                    <button onClick={() => { setCurrentRole('Exhibitor'); setStep(1); }} className="flex-1 py-3.5 sm:py-4 bg-brand-dark text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2">
                       <UserPlus /> Register
                     </button>
                   </div>
@@ -292,38 +294,39 @@ const Tickets = () => {
           {/* STEP LOGIN */}
           {step === 'login' && (
             <div className="reveal-up">
-              <div className="bg-white p-10 md:p-16 rounded-sm shadow-2xl max-w-md mx-auto w-full border border-gray-100">
-                <div className="mb-10 text-center">
-                  <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-100">
-                    <UserIcon size={32} weight="fill" className="text-brand-accent" />
+              <div className="bg-white p-6 sm:p-10 md:p-16 rounded-sm shadow-2xl max-w-md mx-auto w-full border border-gray-100">
+                <div className="mb-6 sm:mb-10 text-center">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 border border-gray-100">
+                    <UserIcon size={28} weight="fill" className="text-brand-accent sm:hidden" />
+                    <UserIcon size={32} weight="fill" className="text-brand-accent hidden sm:block" />
                   </div>
-                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Welcome Back</p>
-                  <h2 className="font-serif text-4xl text-brand-dark mb-2">{currentRole} Login</h2>
-                  <p className="text-gray-500 font-light text-sm">Log in to manage your bookings and access passes.</p>
+                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-1 sm:mb-2">Welcome Back</p>
+                  <h2 className="font-serif text-2xl sm:text-4xl text-brand-dark mb-1 sm:mb-2">{currentRole} Login</h2>
+                  <p className="text-gray-500 font-light text-xs sm:text-sm">Log in to manage your bookings and access passes.</p>
                 </div>
                 
                 <form onSubmit={handleLogin}>
-                  <div className="space-y-6 mb-8">
+                  <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
                     <div>
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Email Address</label>
-                      <input type="email" name="email" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="jane@company.com" />
+                      <input type="email" name="email" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="jane@company.com" />
                     </div>
                     <div>
                       <div className="flex justify-between items-end mb-1">
                         <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400">Password</label>
                         <button type="button" className="text-[10px] text-brand-accent hover:underline interactive">Forgot?</button>
                       </div>
-                      <input type="password" name="password" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="••••••••" />
+                      <input type="password" name="password" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="••••••••" />
                     </div>
                   </div>
                   
                   {error && <p className="text-red-500 text-xs font-bold text-center mb-4">{error}</p>}
                   
-                  <button type="submit" disabled={isLoggingIn} className="w-full bg-brand-dark text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2">
+                  <button type="submit" disabled={isLoggingIn} className="w-full bg-brand-dark text-white px-8 sm:px-10 py-3.5 sm:py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive flex justify-center items-center gap-2">
                     {isLoggingIn ? <CircleNotch size={18} className="animate-spin" /> : 'Log In'} <ArrowRight size={16} />
                   </button>
                   
-                  <div className="flex flex-col items-center gap-4 mt-8 pt-8 border-t border-gray-100">
+                  <div className="flex flex-col items-center gap-3 sm:gap-4 mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100">
                     <button type="button" onClick={() => setStep(1)} className="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-brand-dark transition-colors interactive">
                       Create an Account Instead
                     </button>
@@ -339,53 +342,53 @@ const Tickets = () => {
           {/* STEP 1: REGISTRATION */}
           {step === 1 && (
             <div className="reveal-up">
-              <div className="bg-white p-10 md:p-16 rounded-sm shadow-2xl max-w-2xl mx-auto border border-gray-100">
-                <div className="mb-10 text-center">
-                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 1 of 2</p>
-                  <h2 className="font-serif text-4xl text-brand-dark mb-2">{currentRole} Registration</h2>
-                  <p className="text-gray-500 font-light text-sm">Register to secure your access to the portal.</p>
+              <div className="bg-white p-6 sm:p-10 md:p-16 rounded-sm shadow-2xl max-w-2xl mx-auto border border-gray-100">
+                <div className="mb-6 sm:mb-10 text-center">
+                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-1 sm:mb-2">Step 1 of 2</p>
+                  <h2 className="font-serif text-2xl sm:text-4xl text-brand-dark mb-1 sm:mb-2">{currentRole} Registration</h2>
+                  <p className="text-gray-500 font-light text-xs sm:text-sm">Register to secure your access to the portal.</p>
                 </div>
                 
                 <form onSubmit={handleRegister}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-6 sm:mb-8">
                     <div>
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">First Name *</label>
-                      <input type="text" name="firstName" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="Jane" />
+                      <input type="text" name="firstName" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="Jane" />
                     </div>
                     <div>
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Last Name *</label>
-                      <input type="text" name="lastName" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="Doe" />
+                      <input type="text" name="lastName" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="Doe" />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Work Email Address *</label>
-                      <input type="email" name="email" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="jane.doe@company.com" />
+                      <input type="email" name="email" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="jane.doe@company.com" />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Create Password *</label>
-                      <input type="password" name="password" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="••••••••" />
+                      <input type="password" name="password" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="••••••••" />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Company / Organization *</label>
-                      <input type="text" name="company" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="Design Studio LLC" />
+                      <input type="text" name="company" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="Design Studio LLC" />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Mobile / Phone Number *</label>
-                      <input type="tel" name="mobile" required className="w-full bg-transparent border-b border-gray-200 py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light" placeholder="+91 98765 43210" />
+                      <input type="tel" name="mobile" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="+91 98765 43210" />
                     </div>
                   </div>
                   
                   {error && <p className="text-red-500 text-xs font-bold text-center mb-6">{error}</p>}
                   
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-gray-100 mt-4">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-gray-100 mt-4">
                     <button type="button" onClick={() => setStep(0)} className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-brand-dark transition-colors interactive flex items-center gap-2">
                       <ArrowLeft /> Change Role
                     </button>
-                    <button type="submit" disabled={isLoggingIn} className="w-full sm:w-auto bg-brand-dark text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive">
+                    <button type="submit" disabled={isLoggingIn} className="w-full sm:w-auto bg-brand-dark text-white px-8 sm:px-10 py-3.5 sm:py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive">
                       {isLoggingIn ? <CircleNotch size={18} className="animate-spin" /> : 'Create Account'}
                     </button>
                   </div>
                   
-                  <p className="text-center text-xs text-gray-400 mt-8 pt-6 border-t border-gray-50">
+                  <p className="text-center text-xs text-gray-400 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-50">
                     Already have an account? 
                     <button type="button" onClick={() => setStep('login')} className="text-brand-accent hover:underline font-bold interactive ml-1">Log In Here</button>
                   </p>
@@ -397,20 +400,20 @@ const Tickets = () => {
           {/* STEP 2: SELECT PASS */}
           {step === 2 && (
             <div className="reveal-up w-full">
-              <div className="text-center mb-6">
-                <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-2">Step 2 of 2</p>
-                <h2 className="font-serif text-4xl text-brand-dark mb-2">
+              <div className="text-center mb-4 sm:mb-6">
+                <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-1 sm:mb-2">Step 2 of 2</p>
+                <h2 className="font-serif text-2xl sm:text-4xl text-brand-dark mb-2">
                   {currentRole === 'Exhibitor' ? 'Select Your Booth' : 'Select Your Pass'}
                 </h2>
               </div>
 
               {/* Role Toggle Switch */}
-              <div className="flex justify-center mb-10">
+              <div className="flex justify-center mb-6 sm:mb-10">
                 <div className="inline-flex p-1 bg-gray-100 rounded-sm border border-gray-200">
                   <button
                     type="button"
                     onClick={() => setCurrentRole('Visitor')}
-                    className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all rounded-sm ${
+                    className={`px-4 sm:px-6 py-2 sm:py-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-widest transition-all rounded-sm ${
                       currentRole === 'Visitor'
                         ? 'bg-brand-dark text-white shadow'
                         : 'text-gray-600 hover:text-brand-dark'
@@ -421,7 +424,7 @@ const Tickets = () => {
                   <button
                     type="button"
                     onClick={() => setCurrentRole('Exhibitor')}
-                    className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all rounded-sm ${
+                    className={`px-4 sm:px-6 py-2 sm:py-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-widest transition-all rounded-sm ${
                       currentRole === 'Exhibitor'
                         ? 'bg-brand-dark text-white shadow'
                         : 'text-gray-600 hover:text-brand-dark'
@@ -432,28 +435,28 @@ const Tickets = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                 {(currentRole === 'Visitor' ? visitorTickets : exhibitorTickets).map((ticket, index) => (
-                  <div key={index} className={`p-10 shadow-xl hover:-translate-y-2 transition-all duration-500 rounded-sm flex flex-col interactive border ${index === 1 ? 'bg-brand-dark border-brand-accent shadow-2xl relative' : 'bg-white border-gray-100'}`}>
-                    {index === 1 && <div className="absolute top-0 right-0 bg-brand-accent text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1">Recommended</div>}
-                    <h3 className={`font-serif text-2xl mb-2 ${index === 1 ? 'text-white' : 'text-brand-dark'}`}>{ticket.type}</h3>
-                    <p className={`text-xs tracking-widest uppercase font-bold mb-8 pb-6 border-b ${index === 1 ? 'text-brand-accent border-gray-800' : 'text-gray-400 border-gray-100'}`}>
+                  <div key={index} className={`p-6 sm:p-10 shadow-xl hover:-translate-y-2 transition-all duration-500 rounded-sm flex flex-col interactive border ${index === 1 ? 'bg-brand-dark border-brand-accent shadow-2xl relative' : 'bg-white border-gray-100'}`}>
+                    {index === 1 && <div className="absolute top-0 right-0 bg-brand-accent text-white text-[10px] font-bold uppercase tracking-widest px-3 sm:px-4 py-1">Recommended</div>}
+                    <h3 className={`font-serif text-xl sm:text-2xl mb-2 ${index === 1 ? 'text-white' : 'text-brand-dark'}`}>{ticket.type}</h3>
+                    <p className={`text-xs tracking-widest uppercase font-bold mb-6 sm:mb-8 pb-4 sm:pb-6 border-b ${index === 1 ? 'text-brand-accent border-gray-800' : 'text-gray-400 border-gray-100'}`}>
                       {ticket.badge}
                     </p>
-                    <ul className="space-y-4 mb-10 flex-1">
+                    <ul className="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
                       {ticket.features.map((feature, i) => (
-                        <li key={i} className={`flex items-center gap-3 text-sm font-light ${index === 1 ? 'text-gray-300' : 'text-gray-600'}`}>
-                          <CheckCircle weight="fill" className="text-brand-accent text-lg" /> {feature}
+                        <li key={i} className={`flex items-center gap-3 text-xs sm:text-sm font-light ${index === 1 ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <CheckCircle weight="fill" className="text-brand-accent text-base sm:text-lg flex-shrink-0" /> <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
-                    <button onClick={() => selectPass(ticket.type)} className={`w-full py-4 font-bold uppercase tracking-widest text-xs transition-colors interactive ${index === 1 ? 'bg-brand-accent text-white hover:bg-white hover:text-brand-dark' : 'border border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white'}`}>
+                    <button onClick={() => selectPass(ticket.type)} className={`w-full py-3.5 sm:py-4 font-bold uppercase tracking-widest text-xs transition-colors interactive ${index === 1 ? 'bg-brand-accent text-white hover:bg-white hover:text-brand-dark' : 'border border-brand-dark text-brand-dark hover:bg-brand-dark hover:text-white'}`}>
                       {currentRole === 'Exhibitor' ? 'Reserve Booth' : 'Select Pass'}
                     </button>
                   </div>
                 ))}
               </div>
-              <div className="mt-10 text-center">
+              <div className="mt-8 sm:mt-10 text-center">
                 <button type="button" onClick={() => setStep(isLoggedIn ? 0 : 1)} className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-brand-dark transition-colors interactive inline-flex items-center gap-2">
                   <ArrowLeft /> Go Back
                 </button>
@@ -464,7 +467,7 @@ const Tickets = () => {
           {/* Interest Dialogue Box / Modal */}
           {showInterestModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn">
-              <div className="bg-white rounded-sm shadow-2xl max-w-lg w-full p-8 md:p-10 relative text-center border border-gray-100 transform transition-all">
+              <div className="bg-white rounded-sm shadow-2xl max-w-lg w-full p-6 sm:p-8 md:p-10 relative text-center border border-gray-100 transform transition-all">
                 <button 
                   onClick={() => setShowInterestModal(false)}
                   className="absolute top-4 right-4 text-gray-400 hover:text-brand-dark transition-colors p-2 rounded-full hover:bg-gray-100"
@@ -473,13 +476,14 @@ const Tickets = () => {
                   <X size={20} />
                 </button>
 
-                <div className="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-6 border border-brand-accent/20">
-                  <CheckCircle size={48} weight="fill" className="text-brand-accent" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 border border-brand-accent/20">
+                  <CheckCircle size={40} weight="fill" className="text-brand-accent sm:hidden" />
+                  <CheckCircle size={48} weight="fill" className="text-brand-accent hidden sm:block" />
                 </div>
 
-                <h3 className="font-serif text-3xl text-brand-dark mb-4">Interest Received</h3>
+                <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-3 sm:mb-4">Interest Received</h3>
                 
-                <p className="text-gray-600 font-light text-base leading-relaxed mb-8">
+                <p className="text-gray-600 font-light text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
                   Thank you for your interest. The team will get in touch with you soon to complete the registration process.
                 </p>
 
@@ -489,13 +493,13 @@ const Tickets = () => {
                       setShowInterestModal(false);
                       navigate('/');
                     }}
-                    className="bg-brand-dark text-white px-8 py-3.5 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive shadow-lg"
+                    className="bg-brand-dark text-white px-6 sm:px-8 py-3 sm:py-3.5 text-xs font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors interactive shadow-lg"
                   >
                     Return to Home
                   </button>
                   <button
                     onClick={() => setShowInterestModal(false)}
-                    className="border border-gray-200 text-gray-600 px-6 py-3.5 text-xs font-bold uppercase tracking-widest hover:border-brand-dark hover:text-brand-dark transition-colors interactive"
+                    className="border border-gray-200 text-gray-600 px-6 py-3 sm:py-3.5 text-xs font-bold uppercase tracking-widest hover:border-brand-dark hover:text-brand-dark transition-colors interactive"
                   >
                     Close
                   </button>

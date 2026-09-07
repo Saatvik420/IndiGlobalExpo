@@ -37,17 +37,17 @@ const Press = () => {
       <TicketWidget />
       
       {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center overflow-hidden bg-brand-dark">
+      <section className="relative min-h-[380px] sm:h-[60vh] flex items-center overflow-hidden bg-brand-dark py-16 sm:py-0">
         <img 
           src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=2000&q=80" 
           alt="Media Event" 
           className="absolute inset-0 w-full h-full object-cover z-0 opacity-30 mix-blend-luminosity"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/60 z-0" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-16">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-12 sm:mt-16 text-center md:text-left">
           <div className="max-w-3xl">
-            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-4 reveal-up">News & Resources</p>
-            <h2 className="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-8 reveal-up delay-100">
+            <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 reveal-up">News & Resources</p>
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-8 reveal-up delay-100">
               Press & <span className="italic font-light text-brand-accent">Media.</span>
             </h2>
           </div>
@@ -55,36 +55,36 @@ const Press = () => {
       </section>
 
       {/* Press Releases Section */}
-      <section className="py-24 bg-brand-light border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-4xl text-brand-dark mb-12 reveal-up">Latest Announcements</h3>
+      <section className="py-14 sm:py-20 md:py-24 bg-brand-light border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brand-dark mb-8 sm:mb-12 reveal-up">Latest Announcements</h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {/* PR 1 */}
-            <div className="bg-white p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-accent/50 transition-all duration-500 rounded-sm reveal-up delay-100 group flex flex-col justify-between h-full">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-accent/50 transition-all duration-500 rounded-sm reveal-up delay-100 group flex flex-col justify-between h-full">
               <div>
-                <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-3">Press Release • March 15, 2026</p>
-                <h4 className="font-serif text-2xl text-brand-dark mb-4 group-hover:text-brand-accent transition-colors">IndiGlobal Expo 2026 Announces Expanded Tech Pavilion</h4>
+                <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3">Press Release • March 15, 2026</p>
+                <h4 className="font-serif text-xl sm:text-2xl text-brand-dark mb-3 sm:mb-4 group-hover:text-brand-accent transition-colors">IndiGlobal Expo 2026 Announces Expanded Tech Pavilion</h4>
                 <p className="text-gray-500 font-light text-sm mb-6 leading-relaxed">Due to overwhelming international demand, the upcoming expo will feature a newly expanded pavilion dedicated entirely to Asia's booming IT and SaaS startup sectors.</p>
               </div>
               <button className="interactive text-brand-dark font-medium text-sm flex items-center gap-2 hover:text-brand-accent transition-colors group-hover:translate-x-2 w-fit"><ArrowRight size={16} /> Read Full Story</button>
             </div>
             
             {/* PR 2 */}
-            <div className="bg-white p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-accent/50 transition-all duration-500 rounded-sm reveal-up delay-200 group flex flex-col justify-between h-full">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-accent/50 transition-all duration-500 rounded-sm reveal-up delay-200 group flex flex-col justify-between h-full">
               <div>
-                <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-3">Media Advisory • January 10, 2026</p>
-                <h4 className="font-serif text-2xl text-brand-dark mb-4 group-hover:text-brand-accent transition-colors">Media Accreditation Opens for Delhi Edition</h4>
+                <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3">Media Advisory • January 10, 2026</p>
+                <h4 className="font-serif text-xl sm:text-2xl text-brand-dark mb-3 sm:mb-4 group-hover:text-brand-accent transition-colors">Media Accreditation Opens for Delhi Edition</h4>
                 <p className="text-gray-500 font-light text-sm mb-6 leading-relaxed">Journalists and media personnel are now invited to apply for press credentials for the main event taking place at Yashobhoomi Convention Centre this July.</p>
               </div>
               <button className="interactive text-brand-dark font-medium text-sm flex items-center gap-2 hover:text-brand-accent transition-colors group-hover:translate-x-2 w-fit"><Link size={16} /> Apply for Credentials</button>
             </div>
 
             {/* PR 3 */}
-            <div className="bg-white p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-accent/50 transition-all duration-500 rounded-sm reveal-up delay-300 group flex flex-col justify-between h-full">
+            <div className="bg-white p-6 sm:p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-accent/50 transition-all duration-500 rounded-sm reveal-up delay-300 group flex flex-col justify-between h-full">
               <div>
-                <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-3">Partnership • November 22, 2025</p>
-                <h4 className="font-serif text-2xl text-brand-dark mb-4 group-hover:text-brand-accent transition-colors">Strategic Partnership Signed with European Trade Council</h4>
+                <p className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3">Partnership • November 22, 2025</p>
+                <h4 className="font-serif text-xl sm:text-2xl text-brand-dark mb-3 sm:mb-4 group-hover:text-brand-accent transition-colors">Strategic Partnership Signed with European Trade Council</h4>
                 <p className="text-gray-500 font-light text-sm mb-6 leading-relaxed">IndiGlobal Expo has officially signed an MoU to increase European buyer presence by 40% in the upcoming fiscal year, bolstering export channels.</p>
               </div>
               <button className="interactive text-brand-dark font-medium text-sm flex items-center gap-2 hover:text-brand-accent transition-colors group-hover:translate-x-2 w-fit"><ArrowRight size={16} /> Read Full Story</button>
@@ -94,9 +94,9 @@ const Press = () => {
       </section>
 
       {/* Media Coverage Section */}
-      <section className="py-24 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-4xl text-brand-dark mb-12 reveal-up">Media Coverage</h3>
+      <section className="py-14 sm:py-20 md:py-24 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brand-dark mb-8 sm:mb-12 reveal-up">Media Coverage</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Group 1: Next Economy Forum */}
@@ -202,62 +202,62 @@ const Press = () => {
       </section>
 
       {/* Media Contacts & Kit */}
-      <section className="py-24 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section className="py-14 sm:py-20 md:py-24 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-16 items-center">
             {/* Contact Card */}
-            <div className="bg-brand-light p-12 border border-gray-100 shadow-sm rounded-sm reveal-up">
-              <Megaphone weight="fill" size={48} className="text-brand-accent mb-6 inline-block" />
-              <h3 className="font-serif text-3xl text-brand-dark mb-4">Media Inquiries</h3>
-              <p className="text-gray-500 font-light mb-8">For interview requests, high-res images, or general media inquiries, please reach out to our dedicated communications desk.</p>
+            <div className="bg-brand-light p-6 sm:p-10 md:p-12 border border-gray-100 shadow-sm rounded-sm reveal-up">
+              <Megaphone weight="fill" size={40} className="text-brand-accent mb-4 sm:mb-6 inline-block sm:text-5xl" />
+              <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark mb-3 sm:mb-4">Media Inquiries</h3>
+              <p className="text-gray-500 font-light text-sm sm:text-base mb-6 sm:mb-8">For interview requests, high-res images, or general media inquiries, please reach out to our dedicated communications desk.</p>
               
               <div className="space-y-4">
                 <div>
-                  <p className="font-bold text-brand-dark">Sarah Jenkins</p>
-                  <p className="text-sm text-gray-500 font-light">Director of Global Communications</p>
+                  <p className="font-bold text-brand-dark text-sm sm:text-base">Sarah Jenkins</p>
+                  <p className="text-xs sm:text-sm text-gray-500 font-light">Director of Global Communications</p>
                 </div>
-                <a href="mailto:press@indiglobalexpo.com" className="flex items-center gap-3 text-brand-accent hover:text-brand-dark transition-colors interactive w-fit">
-                  <EnvelopeSimple weight="fill" size={20} /> press@indiglobalexpo.com
+                <a href="mailto:press@indiglobalexpo.com" className="flex items-center gap-2 sm:gap-3 text-brand-accent hover:text-brand-dark transition-colors interactive w-fit text-sm sm:text-base">
+                  <EnvelopeSimple weight="fill" size={18} /> press@indiglobalexpo.com
                 </a>
-                <a href="tel:+911123456789" className="flex items-center gap-3 text-brand-accent hover:text-brand-dark transition-colors interactive w-fit">
-                  <Phone weight="fill" size={20} /> +91 11 2345 6789
+                <a href="tel:+911123456789" className="flex items-center gap-2 sm:gap-3 text-brand-accent hover:text-brand-dark transition-colors interactive w-fit text-sm sm:text-base">
+                  <Phone weight="fill" size={18} /> +91 11 2345 6789
                 </a>
               </div>
             </div>
 
             {/* Media Kit Download */}
-            <div className="text-center md:text-left reveal-up delay-100 p-6">
-              <div className="relative inline-block mb-8">
+            <div className="text-center md:text-left reveal-up delay-100 p-4 sm:p-6">
+              <div className="relative inline-block mb-6 sm:mb-8">
                 <div className="absolute inset-0 bg-brand-accent/30 rounded-full animate-pulse-slow scale-150"></div>
-                <FolderOpen weight="fill" size={60} className="text-brand-accent relative z-10" />
+                <FolderOpen weight="fill" size={48} className="text-brand-accent relative z-10 sm:text-6xl" />
               </div>
-              <h3 className="font-serif text-4xl text-brand-dark mb-6">Official Media Kit</h3>
-              <p className="text-gray-500 font-light text-lg mb-10 leading-relaxed">
+              <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brand-dark mb-4 sm:mb-6">Official Media Kit</h3>
+              <p className="text-gray-500 font-light text-base sm:text-lg mb-6 sm:mb-10 leading-relaxed">
                 Need assets for a story? Download our official media kit, which includes high-resolution logos, executive headshots, previous event B-roll video, and strict brand guidelines.
               </p>
-              <button className="interactive inline-flex items-center justify-center gap-3 bg-brand-dark text-white px-10 py-5 text-sm font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors shadow-xl w-full sm:w-auto">
+              <button className="interactive inline-flex items-center justify-center gap-2 sm:gap-3 bg-brand-dark text-white px-8 sm:px-10 py-4 sm:py-5 text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors shadow-xl w-full sm:w-auto">
                 <FileZip size={20} /> Download Kit (45MB)
               </button>
             </div>
           </div>
 
           {/* Official Logos & Brand Marks */}
-          <div className="mt-20 pt-16 border-t border-gray-200">
-            <div className="text-center mb-12 reveal-up">
+          <div className="mt-12 sm:mt-20 pt-10 sm:pt-16 border-t border-gray-200">
+            <div className="text-center mb-8 sm:mb-12 reveal-up">
               <span className="text-brand-accent font-semibold tracking-widest uppercase text-xs mb-2 block">Brand Assets</span>
-              <h3 className="font-serif text-3xl md:text-4xl text-brand-dark">Official Logo & Identity</h3>
-              <p className="text-gray-500 font-light max-w-xl mx-auto mt-2">Download official high-resolution vector and raster assets for digital and print media.</p>
+              <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brand-dark">Official Logo & Identity</h3>
+              <p className="text-gray-500 font-light text-xs sm:text-sm max-w-xl mx-auto mt-2">Download official high-resolution vector and raster assets for digital and print media.</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
               {/* Primary Color Logo */}
-              <div className="bg-white p-8 border border-gray-200 rounded-sm shadow-sm flex flex-col items-center justify-between reveal-up">
-                <div className="w-full flex items-center justify-center p-8 bg-gray-50 rounded-sm mb-6 border border-gray-100 min-h-[160px]">
-                  <img src={logoImg} alt="IndiGlobal Expo Primary Logo" className="h-14 w-auto object-contain" />
+              <div className="bg-white p-6 sm:p-8 border border-gray-200 rounded-sm shadow-sm flex flex-col items-center justify-between reveal-up">
+                <div className="w-full flex items-center justify-center p-6 sm:p-8 bg-gray-50 rounded-sm mb-4 sm:mb-6 border border-gray-100 min-h-[140px] sm:min-h-[160px]">
+                  <img src={logoImg} alt="IndiGlobal Expo Primary Logo" className="h-10 sm:h-14 w-auto object-contain" />
                 </div>
-                <div className="w-full flex justify-between items-center pt-2">
+                <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-2">
                   <div>
-                    <h5 className="font-serif text-lg text-brand-dark font-medium">Primary Logo (Full Color)</h5>
+                    <h5 className="font-serif text-base sm:text-lg text-brand-dark font-medium">Primary Logo (Full Color)</h5>
                     <p className="text-xs text-gray-400 font-light">For light backgrounds & print</p>
                   </div>
                   <a 
@@ -271,13 +271,13 @@ const Press = () => {
               </div>
 
               {/* White Logo */}
-              <div className="bg-white p-8 border border-gray-200 rounded-sm shadow-sm flex flex-col items-center justify-between reveal-up delay-100">
-                <div className="w-full flex items-center justify-center p-8 bg-brand-dark rounded-sm mb-6 min-h-[160px]">
-                  <img src={logoWhiteImg} alt="IndiGlobal Expo White Logo" className="h-14 w-auto object-contain" />
+              <div className="bg-white p-6 sm:p-8 border border-gray-200 rounded-sm shadow-sm flex flex-col items-center justify-between reveal-up delay-100">
+                <div className="w-full flex items-center justify-center p-6 sm:p-8 bg-brand-dark rounded-sm mb-4 sm:mb-6 min-h-[140px] sm:min-h-[160px]">
+                  <img src={logoWhiteImg} alt="IndiGlobal Expo White Logo" className="h-10 sm:h-14 w-auto object-contain" />
                 </div>
-                <div className="w-full flex justify-between items-center pt-2">
+                <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-2">
                   <div>
-                    <h5 className="font-serif text-lg text-brand-dark font-medium">White Logo (Light Text)</h5>
+                    <h5 className="font-serif text-base sm:text-lg text-brand-dark font-medium">White Logo (Light Text)</h5>
                     <p className="text-xs text-gray-400 font-light">For dark backgrounds & banners</p>
                   </div>
                   <a 

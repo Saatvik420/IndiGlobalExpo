@@ -136,28 +136,28 @@ const EventShowcaseSlider = () => {
   const currentSlide = slidesData[activeIndex];
 
   return (
-    <section className="relative z-20 py-20 md:py-28 bg-gradient-to-b from-[#fcfcfc] via-white to-[#f7f7f7] border-y border-gray-200/70 overflow-hidden">
+    <section className="relative z-20 py-12 sm:py-18 md:py-28 bg-gradient-to-b from-[#fcfcfc] via-white to-[#f7f7f7] border-y border-gray-200/70 overflow-hidden">
       {/* Subtle Background Glow Mesh */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Centered Heading Details */}
-        <div className="text-center max-w-3xl mx-auto mb-6 md:mb-8 reveal-up">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brand-dark font-bold leading-tight">
+        <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 md:mb-8 reveal-up px-2">
+          <h2 className="font-serif text-xl sm:text-3xl md:text-4xl text-brand-dark font-bold leading-tight">
             India–ASEAN Global <span className="italic font-light text-brand-accent">Confluence 2027</span>
           </h2>
         </div>
 
         {/* Centered Category Tabs right below Heading */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-8 md:mb-10 reveal-up delay-100">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 flex-wrap mb-6 sm:mb-8 md:mb-10 reveal-up delay-100 px-1">
           {slidesData.map((slide, idx) => {
             const isActive = idx === activeIndex;
             return (
               <button
                 key={slide.id}
                 onClick={() => goToSlide(idx)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 interactive flex items-center gap-2 ${
+                className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all duration-300 interactive flex items-center gap-1.5 sm:gap-2 ${
                   isActive
                     ? 'bg-brand-dark text-white shadow-md scale-105 border border-brand-dark'
                     : 'bg-white text-gray-600 hover:text-brand-dark hover:bg-gray-50 border border-gray-200 hover:border-brand-accent/40'
@@ -180,27 +180,27 @@ const EventShowcaseSlider = () => {
           onTouchEnd={handleTouchEnd}
         >
           {/* Main Centered Card Frame */}
-          <div className="relative rounded-2xl md:rounded-3xl bg-white p-3 sm:p-5 md:p-6 border border-gray-200/90 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1),0_10px_25px_rgba(207,166,112,0.08)] group">
+          <div className="relative rounded-2xl md:rounded-3xl bg-white p-2.5 sm:p-5 md:p-6 border border-gray-200/90 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1),0_10px_25px_rgba(207,166,112,0.08)] group">
             
             {/* Top Bar inside Banner Card */}
-            <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-3 px-2">
+            <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-gray-100 mb-2.5 sm:mb-3 px-1 sm:px-2">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
-                <span className="text-[11px] font-bold uppercase tracking-widest text-brand-dark">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-brand-dark">
                   {currentSlide.badge}
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-gray-400">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <span className="text-[11px] sm:text-xs font-mono font-bold text-gray-400">
                   0{activeIndex + 1} / 0{slidesData.length}
                 </span>
                 <button
                   onClick={() => setModalImage(currentSlide)}
-                  className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-brand-dark transition-colors interactive flex items-center gap-1 text-xs font-medium"
+                  className="p-1 sm:p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-brand-dark transition-colors interactive flex items-center gap-1 text-[10px] sm:text-xs font-medium"
                   title="Enlarge slide"
                 >
-                  <i className="ph ph-arrows-out-simple text-sm"></i>
+                  <i className="ph ph-arrows-out-simple text-xs sm:text-sm"></i>
                   <span className="hidden sm:inline text-[11px] uppercase tracking-wider font-semibold">Zoom</span>
                 </button>
               </div>
@@ -209,7 +209,7 @@ const EventShowcaseSlider = () => {
             {/* Centered Banner Image Container with Smooth Slide Animation */}
             <div
               onClick={() => setModalImage(currentSlide)}
-              className="relative w-full h-[320px] sm:h-[420px] md:h-[500px] lg:h-[540px] bg-gradient-to-b from-gray-50 via-white to-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 sm:p-4 border border-gray-100 cursor-zoom-in group/img"
+              className="relative w-full h-[200px] xs:h-[240px] sm:h-[360px] md:h-[480px] lg:h-[540px] bg-gradient-to-b from-gray-50 via-white to-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-1.5 sm:p-4 border border-gray-100 cursor-zoom-in group/img"
             >
               <img
                 key={currentSlide.id}
@@ -227,11 +227,11 @@ const EventShowcaseSlider = () => {
             </div>
 
             {/* Centered Caption & Title Below Image */}
-            <div className="pt-4 sm:pt-5 text-center px-2">
-              <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-brand-dark mb-1.5">
+            <div className="pt-3 sm:pt-5 text-center px-1 sm:px-2">
+              <h3 className="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-brand-dark mb-1">
                 {currentSlide.title}
               </h3>
-              <p className="text-gray-500 text-xs sm:text-sm font-light max-w-2xl mx-auto leading-relaxed">
+              <p className="text-gray-500 text-[11px] sm:text-sm font-light max-w-2xl mx-auto leading-relaxed">
                 {currentSlide.caption}
               </p>
             </div>
@@ -243,9 +243,9 @@ const EventShowcaseSlider = () => {
                 prevSlide();
               }}
               aria-label="Previous slide"
-              className="absolute left-2 sm:-left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-gray-200 text-brand-dark shadow-lg hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 flex items-center justify-center interactive z-20 group hover:-translate-x-1"
+              className="absolute left-1 sm:-left-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-white/95 sm:bg-white border border-gray-200 text-brand-dark shadow-md sm:shadow-lg hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 flex items-center justify-center interactive z-20 group hover:-translate-x-1"
             >
-              <i className="ph ph-caret-left text-lg font-bold group-hover:scale-110 transition-transform"></i>
+              <i className="ph ph-caret-left text-sm sm:text-lg font-bold group-hover:scale-110 transition-transform"></i>
             </button>
 
             <button
@@ -254,9 +254,9 @@ const EventShowcaseSlider = () => {
                 nextSlide();
               }}
               aria-label="Next slide"
-              className="absolute right-2 sm:-right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-gray-200 text-brand-dark shadow-lg hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 flex items-center justify-center interactive z-20 group hover:translate-x-1"
+              className="absolute right-1 sm:-right-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-white/95 sm:bg-white border border-gray-200 text-brand-dark shadow-md sm:shadow-lg hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 flex items-center justify-center interactive z-20 group hover:translate-x-1"
             >
-              <i className="ph ph-caret-right text-lg font-bold group-hover:scale-110 transition-transform"></i>
+              <i className="ph ph-caret-right text-sm sm:text-lg font-bold group-hover:scale-110 transition-transform"></i>
             </button>
 
           </div>

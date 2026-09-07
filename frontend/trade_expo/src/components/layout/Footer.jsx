@@ -10,21 +10,21 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white py-24 border-t border-gray-200 relative z-20">
+    <footer className="bg-white py-12 sm:py-16 md:py-24 border-t border-gray-200 relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-10 md:gap-8 mb-10 sm:mb-16">
           <div className="md:col-span-1">
             <div 
               onClick={() => handleNavigate('/')} 
-              className="cursor-pointer inline-block mb-6"
+              className="cursor-pointer inline-block mb-4 sm:mb-6"
             >
               <img 
                 src={logoImg} 
                 alt="IndiGlobal Expo - Connect • Collaborate • Grow" 
-                className="h-12 w-auto object-contain hover:opacity-90 transition-opacity"
+                className="h-10 sm:h-12 w-auto object-contain hover:opacity-90 transition-opacity"
               />
             </div>
-            <p className="text-gray-500 text-sm font-light mb-8 max-w-xs">
+            <p className="text-gray-500 text-xs sm:text-sm font-light mb-6 sm:mb-8 max-w-xs">
               The premier international trade fair for interiors, inspiration, and lifestyle.
             </p>
           </div>
