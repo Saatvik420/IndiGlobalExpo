@@ -254,14 +254,23 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right Column: Logo with clean white background in first row */}
+            {/* Right Column: Premium Executive Logo Badge */}
             <div className="md:col-span-5 flex items-center justify-center md:justify-end animate-fade-up delay-200">
-              <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-white/60 flex items-center justify-center max-w-[280px] sm:max-w-[340px] md:max-w-[420px] w-full transition-transform duration-500 hover:scale-105">
-                <img 
-                  src={confluenceLogo} 
-                  alt="India-ASEAN Global Confluence 2027 Logo" 
-                  className="w-full h-auto object-contain" 
-                />
+              <div className="relative group max-w-[280px] sm:max-w-[330px] md:max-w-[380px] w-full">
+                {/* Ambient Golden & Blue Aura */}
+                <div className="absolute -inset-2.5 sm:-inset-3 bg-gradient-to-tr from-brand-accent/25 via-amber-400/20 to-blue-600/15 rounded-3xl blur-xl sm:blur-2xl opacity-70 group-hover:opacity-100 group-hover:blur-3xl transition-all duration-700 pointer-events-none"></div>
+
+                {/* Frosted Glass Plaque */}
+                <div className="relative rounded-2xl p-3.5 sm:p-5 md:p-6 bg-gradient-to-b from-white/95 via-white/92 to-white/88 backdrop-blur-xl border border-amber-300/40 group-hover:border-brand-accent/70 shadow-[0_20px_50px_rgba(0,0,0,0.45),0_0_25px_rgba(207,166,112,0.18),inset_0_1px_1px_rgba(255,255,255,0.9)] transition-all duration-500 overflow-hidden">
+                  {/* Subtle Interactive Sheen */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
+
+                  <img 
+                    src={confluenceLogo} 
+                    alt="India-ASEAN Global Confluence 2027 Logo" 
+                    className="w-full h-auto object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.06)] transform group-hover:scale-[1.02] transition-transform duration-500" 
+                  />
+                </div>
               </div>
             </div>
           </div>
