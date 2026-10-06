@@ -1,10 +1,8 @@
 [build]
   base = "frontend/trade_expo"
   command = "npm run build"
-  publish = "frontend/trade_expo/dist"
+  publish = "dist"
 
-[site]
-  # Redirect all routes to index.html for React Router SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"
