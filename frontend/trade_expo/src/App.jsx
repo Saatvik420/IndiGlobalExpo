@@ -15,6 +15,8 @@ import Legal from './pages/corporate/Legal';
 import Press from './pages/corporate/Press';
 import Privacy from './pages/corporate/Privacy';
 import Teams from './pages/corporate/Teams';
+import Blogs from './pages/Blogs';
+import BlogDetail from './pages/BlogDetail';
 import apiClient from './api/client';
 
 // Main Application Component - Triggering Netlify Build with new Env Variables
@@ -46,6 +48,10 @@ function App() {
         <Route path="/teams" element={<Teams />} />
         <Route path="/tickets" element={<Tickets />} />
         <Route path="/visitor" element={<Visitor />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blogs/:id" element={<BlogDetail />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
         <Route 
           path="/profile" 
           element={

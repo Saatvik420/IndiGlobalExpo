@@ -1,6 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, ShieldCheck, SignOut, MagnifyingGlass, ChatCircleText, Check, Trash } from '@phosphor-icons/react';
+import { 
+  User, 
+  ShieldCheck, 
+  SignOut, 
+  MagnifyingGlass, 
+  ChatCircleText, 
+  Check, 
+  Trash,
+  Article,
+  Plus,
+  PencilSimple,
+  ArrowSquareOut,
+  X,
+  Sparkle,
+  BookmarkSimple
+} from '@phosphor-icons/react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import PageLoader from '../../components/layout/PageLoader';
@@ -8,6 +23,7 @@ import CustomCursor from '../../components/ui/CustomCursor';
 import { useGlobal } from '../../context/GlobalContext';
 import { adminService } from '../../services/adminService';
 import { contactService } from '../../services/contactService';
+import blogService from '../../services/blogService';
 import apiClient from '../../api/client';
 
 const AdminDashboard = () => {
@@ -18,10 +34,30 @@ const AdminDashboard = () => {
   const [exhibitors, setExhibitors] = useState([]);
   const [tickets, setTickets] = useState([]);
   const [queries, setQueries] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visitorSearch, setVisitorSearch] = useState('');
   const [exhibitorSearch, setExhibitorSearch] = useState('');
+  const [blogSearch, setBlogSearch] = useState('');
+  const [selectedBlogCategory, setSelectedBlogCategory] = useState('All');
   const [fetchError, setFetchError] = useState(null);
+
+  // Blog Management State
+  const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
+  const [editingBlog, setEditingBlog] = useState(null);
+  const [blogFormData, setBlogFormData] = useState({
+    title: '',
+    category: 'Global Trade',
+    excerpt: '',
+    content: '',
+    author: 'IndiGlobal Editorial Team',
+    authorRole: 'Global Trade Analyst',
+    readTime: '5 min read',
+    coverImage: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
+    tags: 'Exports, B2B, Logistics',
+    featured: false
+  });
+  const [isSavingBlog, setIsSavingBlog] = useState(false);
 
   // Helper functions - Using function keyword for hoisting safety
   function getUserById(userId) {
@@ -59,14 +95,20 @@ const AdminDashboard = () => {
         return []; // Return empty array so the UI doesn't crash
       });
 
-      const [usersData, exhibitorsData, ticketsData, queriesData] = await Promise.all([
-        fetchUsers, fetchExhibitors, fetchTickets, fetchQueries
+      const fetchBlogs = blogService.getAllBlogs().catch(err => {
+        console.error("Dashboard: Blogs fetch failed", err);
+        return [];
+      });
+
+      const [usersData, exhibitorsData, ticketsData, queriesData, blogsData] = await Promise.all([
+        fetchUsers, fetchExhibitors, fetchTickets, fetchQueries, fetchBlogs
       ]);
       
       setUsers(usersData || []);
       setExhibitors(exhibitorsData || []);
       setTickets(ticketsData || []);
       setQueries(queriesData || []);
+      setBlogs(blogsData || []);
       
       console.log("AdminDashboard: Sync complete.");
     } catch (error) {
@@ -74,6 +116,91 @@ const AdminDashboard = () => {
       setFetchError(error.message || 'Network Error - Backend unreachable');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleOpenCreateBlog = () => {
+    setEditingBlog(null);
+    setBlogFormData({
+      title: '',
+      category: 'Global Trade',
+      excerpt: '',
+      content: '',
+      author: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'IndiGlobal Editorial Team',
+      authorRole: 'Editorial Team',
+      readTime: '5 min read',
+      coverImage: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
+      tags: 'Exports, B2B, Trade',
+      featured: false
+    });
+    setIsBlogModalOpen(true);
+  };
+
+  const handleOpenEditBlog = (b) => {
+    setEditingBlog(b);
+    setBlogFormData({
+      title: b.title || '',
+      category: b.category || 'Global Trade',
+      excerpt: b.excerpt || '',
+      content: b.content || '',
+      author: b.author || 'IndiGlobal Editorial Team',
+      authorRole: b.authorRole || 'Editorial Team',
+      readTime: b.readTime || '5 min read',
+      coverImage: b.coverImage || '',
+      tags: Array.isArray(b.tags) ? b.tags.join(', ') : (b.tags || ''),
+      featured: Boolean(b.featured)
+    });
+    setIsBlogModalOpen(true);
+  };
+
+  const handleSaveBlog = async (e) => {
+    e.preventDefault();
+    if (!blogFormData.title.trim()) {
+      alert('Please enter a title for the blog post.');
+      return;
+    }
+    if (!blogFormData.content.trim()) {
+      alert('Please enter article content.');
+      return;
+    }
+    setIsSavingBlog(true);
+    try {
+      const tagsArray = typeof blogFormData.tags === 'string'
+        ? blogFormData.tags.split(',').map(t => t.trim()).filter(Boolean)
+        : blogFormData.tags;
+
+      const payload = {
+        ...blogFormData,
+        tags: tagsArray
+      };
+
+      if (editingBlog && (editingBlog.id || editingBlog.slug)) {
+        await blogService.updateBlog(editingBlog.id, payload);
+      } else {
+        await blogService.createBlog(payload);
+      }
+
+      setIsBlogModalOpen(false);
+      const refreshed = await blogService.getAllBlogs();
+      setBlogs(refreshed);
+    } catch (err) {
+      console.error('Failed to save blog post:', err);
+      alert('Failed to save blog post: ' + err.message);
+    } finally {
+      setIsSavingBlog(false);
+    }
+  };
+
+  const handleDeleteBlog = async (blogId, blogTitle) => {
+    if (window.confirm(`Are you sure you want to delete the blog post: "${blogTitle}"? This action CANNOT be undone.`)) {
+      try {
+        await blogService.deleteBlog(blogId);
+        const refreshed = await blogService.getAllBlogs();
+        setBlogs(refreshed);
+      } catch (err) {
+        console.error('Failed to delete blog:', err);
+        alert('Failed to delete blog: ' + err.message);
+      }
     }
   };
 
@@ -155,6 +282,17 @@ const AdminDashboard = () => {
       (u.company || '').toLowerCase().includes(s);
   });
 
+  const filteredBlogs = (blogs || []).filter(b => {
+    const s = (blogSearch || '').toLowerCase();
+    const matchesSearch = !s || 
+      (b.title || '').toLowerCase().includes(s) || 
+      (b.author || '').toLowerCase().includes(s) ||
+      (b.category || '').toLowerCase().includes(s);
+    const matchesCat = selectedBlogCategory === 'All' || 
+      (b.category && b.category.toLowerCase() === selectedBlogCategory.toLowerCase());
+    return matchesSearch && matchesCat;
+  });
+
   return (
     <>
       <PageLoader title="Admin<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Dashboard</span>" />
@@ -165,7 +303,7 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Debug Info */}
           <div className="mb-4 p-2 bg-black text-green-400 text-[10px] font-mono rounded overflow-x-auto">
-            DEBUG: User Email: {user?.email} | Roles: {JSON.stringify(user?.roles)} | User Count: {users.length} | Queries: {queries.length} | Loading: {isLoading ? 'YES' : 'NO'}
+            DEBUG: User Email: {user?.email} | Roles: {JSON.stringify(user?.roles)} | User Count: {users.length} | Queries: {queries.length} | Blogs: {blogs.length} | Loading: {isLoading ? 'YES' : 'NO'}
           </div>
           
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8 sm:mb-12">
@@ -186,7 +324,8 @@ const AdminDashboard = () => {
             {[
               { id: 'visitors', label: 'All Registered Users', icon: <User size={20} /> },
               { id: 'exhibitors_users', label: 'Exhibitors Status', icon: <ShieldCheck size={20} /> },
-              { id: 'queries', label: 'User Queries', icon: <ChatCircleText size={20} /> }
+              { id: 'queries', label: 'User Queries', icon: <ChatCircleText size={20} /> },
+              { id: 'blogs', label: 'Blog Posts', icon: <Article size={20} /> }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -202,6 +341,11 @@ const AdminDashboard = () => {
                 {tab.id === 'queries' && queries.filter(q => !q.read).length > 0 && (
                   <span className="ml-1 bg-red-500 text-white text-[8px] px-1.5 py-0.5 rounded-full">
                     {queries.filter(q => !q.read).length}
+                  </span>
+                )}
+                {tab.id === 'blogs' && blogs.length > 0 && (
+                  <span className="ml-1 bg-brand-accent text-white text-[8px] px-1.5 py-0.5 rounded-full">
+                    {blogs.length}
                   </span>
                 )}
               </button>
@@ -529,11 +673,345 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 )}
+
+                {activeTab === 'blogs' && (
+                  <div>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-serif text-brand-dark">Blog & Article Management</h3>
+                        <p className="text-xs text-gray-400 mt-1">Manage editorial pieces, expo news, and industry analyses ({blogs.length} articles)</p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                        <div className="relative flex-1 sm:w-60">
+                          <MagnifyingGlass size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                          <input
+                            type="text"
+                            placeholder="Search articles..."
+                            value={blogSearch}
+                            onChange={(e) => setBlogSearch(e.target.value)}
+                            className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent w-full"
+                          />
+                        </div>
+                        <button
+                          onClick={handleOpenCreateBlog}
+                          className="bg-brand-accent hover:bg-brand-dark text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors shadow-sm whitespace-nowrap"
+                        >
+                          <Plus size={16} weight="bold" />
+                          <span>Create New Blog</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Quick Category Filter Pills */}
+                    <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2 scrollbar-none">
+                      {['All', 'Global Trade', 'Exhibition Insights', 'Industry Trends', 'Market Insights', 'Logistics'].map(cat => (
+                        <button
+                          key={cat}
+                          onClick={() => setSelectedBlogCategory(cat)}
+                          className={`text-xs px-3.5 py-1.5 rounded-full uppercase tracking-wider font-semibold transition-all whitespace-nowrap ${
+                            selectedBlogCategory === cat
+                              ? 'bg-brand-dark text-brand-accent shadow-xs'
+                              : 'bg-gray-100 text-gray-500 hover:text-brand-dark'
+                          }`}
+                        >
+                          {cat}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Blog Posts Table */}
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-gray-100">
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Article</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Category</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Author & Date</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Status</th>
+                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50 text-sm">
+                          {filteredBlogs.map((b) => (
+                            <tr key={b.id} className="hover:bg-gray-50/80 transition-colors">
+                              <td className="py-4 pr-4">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-14 h-14 rounded-xs overflow-hidden bg-gray-100 flex-shrink-0 border border-gray-200">
+                                    <img 
+                                      src={b.coverImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=200&q=80'} 
+                                      alt={b.title}
+                                      className="w-full h-full object-cover" 
+                                    />
+                                  </div>
+                                  <div className="max-w-md">
+                                    <p className="font-serif font-bold text-brand-dark text-sm sm:text-base line-clamp-1">{b.title}</p>
+                                    <p className="text-gray-400 text-xs line-clamp-1 mt-0.5">{b.excerpt || 'No summary available'}</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="py-4 pr-4">
+                                <span className="bg-brand-accent/15 text-brand-dark text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap">
+                                  {b.category}
+                                </span>
+                              </td>
+                              <td className="py-4 pr-4 text-xs text-gray-500 whitespace-nowrap">
+                                <p className="font-semibold text-brand-dark">{b.author}</p>
+                                <p className="text-gray-400">{b.publishedDate} • {b.readTime || '5 min'}</p>
+                              </td>
+                              <td className="py-4 pr-4 whitespace-nowrap">
+                                {b.featured ? (
+                                  <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full flex items-center gap-1 w-fit">
+                                    <Sparkle size={10} weight="fill" /> Featured
+                                  </span>
+                                ) : (
+                                  <span className="bg-gray-100 text-gray-600 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full">
+                                    Published
+                                  </span>
+                                )}
+                              </td>
+                              <td className="py-4 text-right">
+                                <div className="flex items-center justify-end gap-2">
+                                  <button
+                                    onClick={() => window.open(`/blogs/${b.id || b.slug}`, '_blank')}
+                                    className="p-2 text-gray-400 hover:text-brand-accent hover:bg-gray-100 rounded transition-colors"
+                                    title="View Live Article in New Tab"
+                                  >
+                                    <ArrowSquareOut size={18} />
+                                  </button>
+                                  <button
+                                    onClick={() => handleOpenEditBlog(b)}
+                                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                    title="Edit Article"
+                                  >
+                                    <PencilSimple size={18} />
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteBlog(b.id, b.title)}
+                                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                                    title="Delete Article"
+                                  >
+                                    <Trash size={18} />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {filteredBlogs.length === 0 && (
+                            <tr>
+                              <td colSpan="5" className="py-12 text-center text-gray-400 italic text-sm">
+                                No blog posts found. Click "Create New Blog" to post one.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </div>
         </div>
       </section>
+
+      {/* Create / Edit Blog Modal */}
+      {isBlogModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-white w-full max-w-3xl rounded-sm shadow-2xl border border-gray-200 overflow-hidden my-8">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-brand-light">
+              <h3 className="font-serif text-xl text-brand-dark font-bold">
+                {editingBlog ? 'Edit Blog Article' : 'Create New Blog Article'}
+              </h3>
+              <button 
+                onClick={() => setIsBlogModalOpen(false)}
+                className="text-gray-400 hover:text-brand-dark p-1 rounded transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveBlog} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Article Title *
+                </label>
+                <input 
+                  type="text"
+                  required
+                  placeholder="e.g. Navigating Global Trade Corridors in 2027"
+                  value={blogFormData.title}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, title: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent font-serif font-bold text-brand-dark"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                    Category *
+                  </label>
+                  <select 
+                    value={blogFormData.category}
+                    onChange={(e) => setBlogFormData({ ...blogFormData, category: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent bg-white"
+                  >
+                    <option value="Global Trade">Global Trade</option>
+                    <option value="Exhibition Insights">Exhibition Insights</option>
+                    <option value="Industry Trends">Industry Trends</option>
+                    <option value="Market Insights">Market Insights</option>
+                    <option value="Logistics">Logistics</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                    Reading Time
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. 5 min read"
+                    value={blogFormData.readTime}
+                    onChange={(e) => setBlogFormData({ ...blogFormData, readTime: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                    Author Name
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. IndiGlobal Editorial Team"
+                    value={blogFormData.author}
+                    onChange={(e) => setBlogFormData({ ...blogFormData, author: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                    Author Role / Title
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. Senior Trade Analyst"
+                    value={blogFormData.authorRole}
+                    onChange={(e) => setBlogFormData({ ...blogFormData, authorRole: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Cover Image URL
+                </label>
+                <input 
+                  type="url"
+                  placeholder="https://images.unsplash.com/photo-..."
+                  value={blogFormData.coverImage}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, coverImage: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent text-xs"
+                />
+                {blogFormData.coverImage && (
+                  <div className="mt-2 w-full h-32 rounded-sm overflow-hidden bg-gray-100 border border-gray-200">
+                    <img 
+                      src={blogFormData.coverImage} 
+                      alt="Cover Preview" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Tags (comma separated)
+                </label>
+                <input 
+                  type="text"
+                  placeholder="Exports, B2B, Supply Chain, Logistics"
+                  value={blogFormData.tags}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, tags: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Executive Excerpt / Short Summary *
+                </label>
+                <textarea 
+                  rows={2}
+                  required
+                  placeholder="Brief 2-3 line summary displayed in cards and previews..."
+                  value={blogFormData.excerpt}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, excerpt: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600">
+                    Full Article Content *
+                  </label>
+                  <span className="text-[11px] text-gray-400">Supports paragraphs, ### Headings, and * bullets</span>
+                </div>
+                <textarea 
+                  rows={8}
+                  required
+                  placeholder="Write or paste the complete article content here..."
+                  value={blogFormData.content}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, content: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent font-sans leading-relaxed"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-2">
+                <input 
+                  type="checkbox"
+                  id="featuredCheckbox"
+                  checked={blogFormData.featured}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, featured: e.target.checked })}
+                  className="w-4 h-4 text-brand-accent border-gray-300 rounded focus:ring-brand-accent"
+                />
+                <label htmlFor="featuredCheckbox" className="text-xs font-bold text-brand-dark cursor-pointer flex items-center gap-1">
+                  <Sparkle size={14} className="text-brand-accent" /> Mark as Featured Story (Highlights on Blog page)
+                </label>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+                <button 
+                  type="button"
+                  onClick={() => setIsBlogModalOpen(false)}
+                  className="px-5 py-2.5 rounded-sm border border-gray-200 text-xs font-bold uppercase tracking-wider text-gray-600 hover:text-brand-dark hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  disabled={isSavingBlog}
+                  className="bg-brand-accent hover:bg-brand-dark text-white px-6 py-2.5 rounded-sm text-xs font-bold uppercase tracking-widest transition-colors flex items-center gap-2 disabled:opacity-50"
+                >
+                  {isSavingBlog ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <span>{editingBlog ? 'Update Article' : 'Publish Article'}</span>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

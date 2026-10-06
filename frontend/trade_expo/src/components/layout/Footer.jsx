@@ -65,6 +65,14 @@ const Footer = () => {
               </li>
               <li>
                 <button 
+                  onClick={() => handleNavigate('/blogs')}
+                  className="hover:text-brand-accent transition-colors interactive cursor-pointer"
+                >
+                  Blogs & Articles
+                </button>
+              </li>
+              <li>
+                <button 
                   onClick={() => handleNavigate('/exhibition-layout')}
                   className="hover:text-brand-accent transition-colors interactive cursor-pointer"
                 >

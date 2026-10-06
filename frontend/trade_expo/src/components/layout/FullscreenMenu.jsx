@@ -61,6 +61,12 @@ const FullscreenMenu = () => {
         >
           Contact Us
         </button>
+        <button 
+          onClick={() => handleNavigate('/blogs')} 
+          className={`font-serif text-3xl sm:text-4xl md:text-6xl text-white hover:text-brand-accent transition-all duration-500 interactive ${isMenuOpen ? 'opacity-100 translate-y-0 delay-500' : 'opacity-0 translate-y-5'}`}
+        >
+          Blogs & Insights
+        </button>
         
         <div className={`mt-6 sm:mt-10 md:mt-12 pt-6 sm:pt-8 md:pt-12 border-t border-white/10 flex flex-col items-center transition-all duration-500 ${isMenuOpen ? 'opacity-100 translate-y-0 delay-600' : 'opacity-0 translate-y-5'}`}>
           <button 

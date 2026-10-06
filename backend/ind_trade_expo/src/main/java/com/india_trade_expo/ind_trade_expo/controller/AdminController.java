@@ -17,6 +17,9 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
+    @Autowired
+    com.india_trade_expo.ind_trade_expo.service.BlogService blogService;
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(adminService.getAllUsers());
@@ -41,5 +44,26 @@ public class AdminController {
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
         adminService.deleteUser(id);
         return ResponseEntity.ok("User deleted successfully!");
+    }
+
+    @GetMapping("/blogs")
+    public ResponseEntity<List<com.india_trade_expo.ind_trade_expo.model.Blog>> getAllBlogs() {
+        return ResponseEntity.ok(blogService.getAllBlogs());
+    }
+
+    @PostMapping("/blogs")
+    public ResponseEntity<com.india_trade_expo.ind_trade_expo.model.Blog> createBlog(@RequestBody com.india_trade_expo.ind_trade_expo.model.Blog blog) {
+        return ResponseEntity.ok(blogService.createBlog(blog));
+    }
+
+    @PutMapping("/blogs/{id}")
+    public ResponseEntity<com.india_trade_expo.ind_trade_expo.model.Blog> updateBlog(@PathVariable String id, @RequestBody com.india_trade_expo.ind_trade_expo.model.Blog blog) {
+        return ResponseEntity.ok(blogService.updateBlog(id, blog));
+    }
+
+    @DeleteMapping("/blogs/{id}")
+    public ResponseEntity<?> deleteBlog(@PathVariable String id) {
+        blogService.deleteBlog(id);
+        return ResponseEntity.ok("Blog deleted successfully!");
     }
 }

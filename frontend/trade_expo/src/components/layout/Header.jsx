@@ -71,6 +71,21 @@ const Header = ({ logoColor = 'text-white' }) => {
               </div>
             )}
 
+            {/* Blogs Link with hover effect */}
+            <button
+              onClick={() => handleNavigate('/blogs')}
+              className={`relative group px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-1.5 rounded-full border ${
+                isMenuOpen
+                  ? 'text-white border-white/20 hover:border-brand-accent hover:text-brand-accent'
+                  : isDarkText || logoColor.includes('text-brand-dark')
+                    ? 'text-brand-dark border-brand-dark/20 hover:border-brand-accent hover:text-brand-accent hover:bg-brand-accent/5'
+                    : 'text-white border-white/30 hover:border-brand-accent hover:text-brand-accent hover:bg-white/10'
+              }`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-accent group-hover:scale-125 transition-transform duration-300"></span>
+              <span>Blogs</span>
+            </button>
+
             {/* Menu Toggle */}
             <button 
               onClick={toggleMenu}
