@@ -7,6 +7,7 @@ import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
 import EventShowcaseSlider from '../components/ui/EventShowcaseSlider';
+import blogService from '../services/blogService';
 
 // Import Assets
 import healthcareImg from '../assets/Healthcare.jpg';
@@ -57,9 +58,18 @@ const Home = () => {
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
   const [previewImg, setPreviewImg] = useState(null);
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+  const [latestBlogs, setLatestBlogs] = useState([]);
   const slideTimerRef = useRef(null);
   const horizontalSectionRef = useRef(null);
   const trackRef = useRef(null);
+
+  useEffect(() => {
+    blogService.getAllBlogs().then(blogs => {
+      if (blogs && blogs.length > 0) {
+        setLatestBlogs(blogs.slice(0, 3));
+      }
+    }).catch(err => console.error('Home: Failed to fetch blogs', err));
+  }, []);
 
   const resetSlideTimer = useCallback(() => {
     if (slideTimerRef.current) clearInterval(slideTimerRef.current);
@@ -582,6 +592,72 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Latest Articles / Blog Preview Section */}
+      {latestBlogs.length > 0 && (
+        <section id="latest-blogs" className="py-16 sm:py-24 md:py-32 bg-white relative z-20 border-t border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+              <div>
+                <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-3 flex items-center gap-2">
+                  <span className="w-8 h-px bg-brand-accent"></span>
+                  <span>Intelligence & Strategy</span>
+                </p>
+                <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark leading-tight">
+                  Latest Insights <span className="italic font-light text-brand-accent">& Chronicles.</span>
+                </h2>
+              </div>
+              <button 
+                onClick={() => handleNavigate('/blogs')}
+                className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-dark hover:text-brand-accent transition-colors pb-1 border-b border-brand-dark hover:border-brand-accent w-fit"
+              >
+                <span>Explore All Articles</span>
+                <i className="ph ph-arrow-right text-base group-hover:translate-x-1.5 transition-transform"></i>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {latestBlogs.map((blog, idx) => (
+                <div 
+                  key={blog.id || idx}
+                  onClick={() => handleNavigate(`/blogs/${blog.id || blog.slug}`)}
+                  className="bg-brand-light/30 border border-gray-200/80 hover:border-brand-accent/50 p-5 sm:p-6 rounded-sm shadow-2xs hover:shadow-xl transition-all duration-500 cursor-pointer group flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="aspect-[16/10] overflow-hidden rounded-xs mb-4 bg-gray-100 relative">
+                      <img 
+                        src={blog.coverImage} 
+                        alt={blog.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                      />
+                      <div className="absolute top-3 left-3 bg-brand-dark/90 text-brand-accent px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-xs backdrop-blur-xs">
+                        {blog.category}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-gray-400 mb-2">
+                      <span>{blog.publishedDate}</span>
+                      <span>•</span>
+                      <span>{blog.readTime || '5 min read'}</span>
+                    </div>
+                    <h3 className="font-serif text-xl text-brand-dark group-hover:text-brand-accent transition-colors font-bold leading-snug mb-3 line-clamp-2">
+                      {blog.title}
+                    </h3>
+                    <p className="text-gray-500 font-light text-xs sm:text-sm leading-relaxed line-clamp-3 mb-4">
+                      {blog.excerpt}
+                    </p>
+                  </div>
+                  <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-xs font-semibold text-gray-600">{blog.author}</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-brand-dark group-hover:text-brand-accent flex items-center gap-1 group-hover:translate-x-1 transition-all">
+                      Read Story <i className="ph ph-arrow-right text-sm"></i>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* FAQ Section */}
       <section id="faq" className="py-16 sm:py-24 md:py-36 bg-brand-light relative z-20 border-t border-gray-200">
