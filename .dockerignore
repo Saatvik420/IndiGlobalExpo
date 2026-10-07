@@ -1,0 +1,9 @@
+**/target/
+**/.gradle/
+**/build/
+**/node_modules/
+.git/
+.env
+backend/ind_trade_expo/target/
+frontend/trade_expo/node_modules/
+frontend/trade_expo/dist/
