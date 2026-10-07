@@ -19,7 +19,7 @@ import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
-import blogService from '../services/blogService';
+import blogService, { getBlogSlug } from '../services/blogService';
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -35,6 +35,12 @@ const BlogDetail = () => {
       try {
         const currentBlog = await blogService.getBlogByIdOrSlug(id);
         setBlog(currentBlog);
+
+        // Canonical URL update: If opened via ID (e.g. MongoDB ObjectId), replace URL with title slug
+        const cleanSlug = getBlogSlug(currentBlog);
+        if (cleanSlug && id !== cleanSlug) {
+          window.history.replaceState(null, '', `/blogs/${cleanSlug}`);
+        }
 
         // Fetch related blogs
         const allBlogs = await blogService.getAllBlogs();
@@ -383,7 +389,7 @@ const BlogDetail = () => {
                   <div 
                     key={relBlog.id || rIdx}
                     onClick={() => {
-                      navigate(`/blogs/${relBlog.id || relBlog.slug}`);
+                      navigate(`/blogs/${getBlogSlug(relBlog)}`);
                       window.scrollTo(0, 0);
                     }}
                     className="bg-white border border-gray-200/80 hover:border-brand-accent/50 p-5 rounded-sm shadow-2xs hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"

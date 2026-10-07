@@ -7,7 +7,7 @@ import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
 import EventShowcaseSlider from '../components/ui/EventShowcaseSlider';
-import blogService from '../services/blogService';
+import blogService, { getBlogSlug } from '../services/blogService';
 
 // Import Assets
 import healthcareImg from '../assets/Healthcare.jpg';
@@ -620,7 +620,7 @@ const Home = () => {
               {latestBlogs.map((blog, idx) => (
                 <div 
                   key={blog.id || idx}
-                  onClick={() => handleNavigate(`/blogs/${blog.id || blog.slug}`)}
+                  onClick={() => handleNavigate(`/blogs/${getBlogSlug(blog)}`)}
                   className="bg-brand-light/30 border border-gray-200/80 hover:border-brand-accent/50 p-5 sm:p-6 rounded-sm shadow-2xs hover:shadow-xl transition-all duration-500 cursor-pointer group flex flex-col justify-between"
                 >
                   <div>

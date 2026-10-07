@@ -19,7 +19,7 @@ import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
-import blogService from '../services/blogService';
+import blogService, { getBlogSlug } from '../services/blogService';
 
 const Blogs = () => {
   const navigate = useNavigate();
@@ -100,7 +100,8 @@ const Blogs = () => {
   }, [blogs]);
 
   const handleReadBlog = (blog, openInNewTab = false) => {
-    const path = `/blogs/${blog.id || blog.slug}`;
+    const slug = getBlogSlug(blog);
+    const path = `/blogs/${slug}`;
     if (openInNewTab) {
       window.open(path, '_blank', 'noopener,noreferrer');
     } else {

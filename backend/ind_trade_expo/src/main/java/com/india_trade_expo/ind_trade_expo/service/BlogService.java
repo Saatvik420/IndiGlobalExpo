@@ -19,22 +19,44 @@ public class BlogService {
     private BlogRepository blogRepository;
 
     public List<Blog> getAllBlogs() {
-        return blogRepository.findAllByOrderByCreatedAtDesc();
+        List<Blog> blogs = blogRepository.findAllByOrderByCreatedAtDesc();
+        blogs.forEach(this::ensureSlug);
+        return blogs;
     }
 
     public List<Blog> getBlogsByCategory(String category) {
         if (category == null || category.equalsIgnoreCase("All")) {
             return getAllBlogs();
         }
-        return blogRepository.findByCategoryIgnoreCase(category);
+        List<Blog> blogs = blogRepository.findByCategoryIgnoreCase(category);
+        blogs.forEach(this::ensureSlug);
+        return blogs;
     }
 
     public Optional<Blog> getBlogById(String id) {
-        return blogRepository.findById(id);
+        Optional<Blog> blog = blogRepository.findById(id);
+        if (blog.isEmpty()) {
+            blog = blogRepository.findBySlug(id);
+        }
+        return blog.map(this::ensureSlug);
     }
 
     public Optional<Blog> getBlogBySlug(String slug) {
-        return blogRepository.findBySlug(slug);
+        Optional<Blog> blog = blogRepository.findBySlug(slug);
+        if (blog.isEmpty()) {
+            blog = blogRepository.findById(slug);
+        }
+        return blog.map(this::ensureSlug);
+    }
+
+    private Blog ensureSlug(Blog blog) {
+        if (blog != null && (blog.getSlug() == null || blog.getSlug().trim().isEmpty())) {
+            blog.setSlug(generateSlug(blog.getTitle()));
+            try {
+                blogRepository.save(blog);
+            } catch (Exception ignored) {}
+        }
+        return blog;
     }
 
     public Blog createBlog(Blog blog) {

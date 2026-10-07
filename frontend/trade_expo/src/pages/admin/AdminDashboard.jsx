@@ -23,7 +23,7 @@ import CustomCursor from '../../components/ui/CustomCursor';
 import { useGlobal } from '../../context/GlobalContext';
 import { adminService } from '../../services/adminService';
 import { contactService } from '../../services/contactService';
-import blogService from '../../services/blogService';
+import blogService, { getBlogSlug } from '../../services/blogService';
 import apiClient from '../../api/client';
 
 const AdminDashboard = () => {
@@ -772,7 +772,7 @@ const AdminDashboard = () => {
                               <td className="py-4 text-right">
                                 <div className="flex items-center justify-end gap-2">
                                   <button
-                                    onClick={() => window.open(`/blogs/${b.id || b.slug}`, '_blank')}
+                                    onClick={() => window.open(`/blogs/${getBlogSlug(b)}`, '_blank')}
                                     className="p-2 text-gray-400 hover:text-brand-accent hover:bg-gray-100 rounded transition-colors"
                                     title="View Live Article in New Tab"
                                   >

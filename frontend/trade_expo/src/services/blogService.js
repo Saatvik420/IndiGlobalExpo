@@ -163,7 +163,24 @@ const saveLocalBlogs = (blogs) => {
   }
 };
 
+export const getBlogSlug = (blog) => {
+  if (!blog) return '';
+  if (blog.slug && typeof blog.slug === 'string' && blog.slug.trim()) {
+    return blog.slug.trim();
+  }
+  if (blog.title && typeof blog.title === 'string' && blog.title.trim()) {
+    return blog.title.toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  }
+  return blog.id || '';
+};
+
 export const blogService = {
+  getBlogSlug,
+
   // Get all blogs (with optional category filter)
   getAllBlogs: async (category = '') => {
     try {
@@ -172,9 +189,13 @@ export const blogService = {
         : '/blogs';
       const response = await apiClient.get(url);
       if (response && Array.isArray(response.data)) {
-        if (response.data.length > 0) {
-          saveLocalBlogs(response.data);
-          return response.data;
+        const enriched = response.data.map(b => ({
+          ...b,
+          slug: b.slug || getBlogSlug(b)
+        }));
+        if (enriched.length > 0) {
+          saveLocalBlogs(enriched);
+          return enriched;
         } else {
           return [];
         }
@@ -184,12 +205,16 @@ export const blogService = {
       try {
         const adminRes = await apiClient.get('/admin/blogs');
         if (adminRes && Array.isArray(adminRes.data)) {
-          if (adminRes.data.length > 0) {
-            saveLocalBlogs(adminRes.data);
+          const enriched = adminRes.data.map(b => ({
+            ...b,
+            slug: b.slug || getBlogSlug(b)
+          }));
+          if (enriched.length > 0) {
+            saveLocalBlogs(enriched);
             if (category && category.toLowerCase() !== 'all') {
-              return adminRes.data.filter(b => b.category?.toLowerCase() === category.toLowerCase());
+              return enriched.filter(b => b.category?.toLowerCase() === category.toLowerCase());
             }
-            return adminRes.data;
+            return enriched;
           }
         }
       } catch (adminErr) {
@@ -198,7 +223,10 @@ export const blogService = {
     }
     
     // Fallback to local cache if network/server is unreachable
-    const local = getLocalBlogs();
+    const local = getLocalBlogs().map(b => ({
+      ...b,
+      slug: b.slug || getBlogSlug(b)
+    }));
     if (category && category.toLowerCase() !== 'all') {
       return local.filter(b => b.category?.toLowerCase() === category.toLowerCase());
     }
@@ -209,21 +237,35 @@ export const blogService = {
   getBlogByIdOrSlug: async (idOrSlug) => {
     try {
       let response;
-      try {
-        response = await apiClient.get(`/blogs/${idOrSlug}`);
-      } catch (e1) {
-        response = await apiClient.get(`/blogs/slug/${idOrSlug}`);
+      const isHexId = /^[0-9a-fA-F]{24}$/.test(idOrSlug);
+      if (isHexId) {
+        try {
+          response = await apiClient.get(`/blogs/${encodeURIComponent(idOrSlug)}`);
+        } catch (e1) {
+          response = await apiClient.get(`/blogs/slug/${encodeURIComponent(idOrSlug)}`);
+        }
+      } else {
+        try {
+          response = await apiClient.get(`/blogs/slug/${encodeURIComponent(idOrSlug)}`);
+        } catch (e1) {
+          response = await apiClient.get(`/blogs/${encodeURIComponent(idOrSlug)}`);
+        }
       }
       if (response && response.data) {
-        return response.data;
+        const blog = response.data;
+        if (!blog.slug) blog.slug = getBlogSlug(blog);
+        return blog;
       }
     } catch (err) {
       console.warn('API blog fetch failed, searching local fallback:', err.message);
     }
 
     const local = getLocalBlogs();
-    const found = local.find(b => b.id === idOrSlug || b.slug === idOrSlug);
-    if (found) return found;
+    const found = local.find(b => b.slug === idOrSlug || b.id === idOrSlug || getBlogSlug(b) === idOrSlug);
+    if (found) {
+      if (!found.slug) found.slug = getBlogSlug(found);
+      return found;
+    }
     throw new Error('Blog post not found');
   },
 
