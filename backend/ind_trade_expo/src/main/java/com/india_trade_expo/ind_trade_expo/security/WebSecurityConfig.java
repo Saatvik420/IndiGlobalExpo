@@ -25,6 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.Customizer;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -72,8 +73,12 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/sectors")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/sectors/**")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/blogs")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/blogs/**")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/blogs")).permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/blogs/**")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/contact/submit")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/test/send-mail")).permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/admin/**")).hasRole("ADMIN")

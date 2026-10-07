@@ -40,14 +40,14 @@ public class BlogController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Blog> createBlog(@RequestBody Blog blog) {
         Blog created = blogService.createBlog(blog);
         return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> updateBlog(@PathVariable String id, @RequestBody Blog blog) {
         try {
             Blog updated = blogService.updateBlog(id, blog);
@@ -58,7 +58,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteBlog(@PathVariable String id) {
         try {
             blogService.deleteBlog(id);

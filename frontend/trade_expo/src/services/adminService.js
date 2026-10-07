@@ -1,4 +1,5 @@
 import apiClient from '../api/client';
+import blogService from './blogService';
 
 export const adminService = {
   getAllUsers: async () => {
@@ -27,22 +28,18 @@ export const adminService = {
   },
 
   getAllBlogs: async () => {
-    const response = await apiClient.get('/admin/blogs').catch(() => apiClient.get('/blogs'));
-    return response.data;
+    return blogService.getAllBlogs();
   },
 
   createBlog: async (blogData) => {
-    const response = await apiClient.post('/admin/blogs', blogData).catch(() => apiClient.post('/blogs', blogData));
-    return response.data;
+    return blogService.createBlog(blogData);
   },
 
   updateBlog: async (id, blogData) => {
-    const response = await apiClient.put(`/admin/blogs/${id}`, blogData).catch(() => apiClient.put(`/blogs/${id}`, blogData));
-    return response.data;
+    return blogService.updateBlog(id, blogData);
   },
 
   deleteBlog: async (id) => {
-    const response = await apiClient.delete(`/admin/blogs/${id}`).catch(() => apiClient.delete(`/blogs/${id}`));
-    return response.data;
+    return blogService.deleteBlog(id);
   }
 };

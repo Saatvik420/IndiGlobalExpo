@@ -171,15 +171,33 @@ export const blogService = {
         ? `/blogs?category=${encodeURIComponent(category)}`
         : '/blogs';
       const response = await apiClient.get(url);
-      if (response && Array.isArray(response.data) && response.data.length > 0) {
-        saveLocalBlogs(response.data);
-        return response.data;
+      if (response && Array.isArray(response.data)) {
+        if (response.data.length > 0) {
+          saveLocalBlogs(response.data);
+          return response.data;
+        } else {
+          return [];
+        }
       }
     } catch (err) {
-      console.warn('API blogs fetch failed or unavailable, using local fallback:', err.message);
+      console.warn('API blogs fetch failed, checking /admin/blogs:', err.message);
+      try {
+        const adminRes = await apiClient.get('/admin/blogs');
+        if (adminRes && Array.isArray(adminRes.data)) {
+          if (adminRes.data.length > 0) {
+            saveLocalBlogs(adminRes.data);
+            if (category && category.toLowerCase() !== 'all') {
+              return adminRes.data.filter(b => b.category?.toLowerCase() === category.toLowerCase());
+            }
+            return adminRes.data;
+          }
+        }
+      } catch (adminErr) {
+        console.warn('Admin blogs fetch also failed, using local cache:', adminErr.message);
+      }
     }
     
-    // Fallback to local
+    // Fallback to local cache if network/server is unreachable
     const local = getLocalBlogs();
     if (category && category.toLowerCase() !== 'all') {
       return local.filter(b => b.category?.toLowerCase() === category.toLowerCase());
@@ -190,9 +208,12 @@ export const blogService = {
   // Get a single blog by ID or slug
   getBlogByIdOrSlug: async (idOrSlug) => {
     try {
-      const response = await apiClient.get(`/blogs/${idOrSlug}`).catch(() => 
-        apiClient.get(`/blogs/slug/${idOrSlug}`)
-      );
+      let response;
+      try {
+        response = await apiClient.get(`/blogs/${idOrSlug}`);
+      } catch (e1) {
+        response = await apiClient.get(`/blogs/slug/${idOrSlug}`);
+      }
       if (response && response.data) {
         return response.data;
       }
@@ -216,33 +237,44 @@ export const blogService = {
 
     const newBlog = {
       ...blogData,
-      id: blogData.id || `blog-${Date.now()}`,
       slug,
       publishedDate: blogData.publishedDate || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-
-    // Try posting to API
-    try {
-      const response = await apiClient.post('/admin/blogs', newBlog).catch(() => 
-        apiClient.post('/blogs', newBlog)
-      );
-      if (response && response.data) {
-        const created = response.data;
-        const local = getLocalBlogs();
-        saveLocalBlogs([created, ...local.filter(b => b.id !== created.id)]);
-        return created;
-      }
-    } catch (err) {
-      console.warn('Backend blog creation failed, persisting to local storage:', err.message);
+    if (!newBlog.id || String(newBlog.id).startsWith('blog-')) {
+      delete newBlog.id;
     }
 
-    // Persist to local storage
-    const local = getLocalBlogs();
-    const updatedList = [newBlog, ...local];
-    saveLocalBlogs(updatedList);
-    return newBlog;
+    let created = null;
+    let lastError = null;
+
+    try {
+      try {
+        const response = await apiClient.post('/admin/blogs', newBlog);
+        if (response && response.data) {
+          created = response.data;
+        }
+      } catch (err1) {
+        console.warn('/admin/blogs failed, trying /blogs:', err1.message);
+        const response = await apiClient.post('/blogs', newBlog);
+        if (response && response.data) {
+          created = response.data;
+        }
+      }
+    } catch (err) {
+      lastError = err;
+      console.error('Backend blog creation failed:', err);
+    }
+
+    if (created) {
+      const local = getLocalBlogs();
+      saveLocalBlogs([created, ...local.filter(b => b.id !== created.id && b.slug !== created.slug)]);
+      return created;
+    }
+
+    const errorMsg = lastError?.response?.data?.message || lastError?.message || 'Failed to save blog to backend server';
+    throw new Error(errorMsg);
   },
 
   // Update blog (Admin)
@@ -252,41 +284,65 @@ export const blogService = {
       updatedAt: new Date().toISOString()
     };
 
+    let updated = null;
+    let lastError = null;
+
     try {
-      const response = await apiClient.put(`/admin/blogs/${id}`, updatedData).catch(() =>
-        apiClient.put(`/blogs/${id}`, updatedData)
-      );
-      if (response && response.data) {
-        const updated = response.data;
-        const local = getLocalBlogs();
-        saveLocalBlogs(local.map(b => b.id === id ? updated : b));
-        return updated;
+      try {
+        const response = await apiClient.put(`/admin/blogs/${id}`, updatedData);
+        if (response && response.data) {
+          updated = response.data;
+        }
+      } catch (err1) {
+        console.warn(`/admin/blogs/${id} failed, trying /blogs/${id}:`, err1.message);
+        const response = await apiClient.put(`/blogs/${id}`, updatedData);
+        if (response && response.data) {
+          updated = response.data;
+        }
       }
     } catch (err) {
-      console.warn('Backend blog update failed, updating local storage:', err.message);
+      lastError = err;
+      console.error('Backend blog update failed:', err);
     }
 
-    // Persist to local storage
-    const local = getLocalBlogs();
-    const updatedList = local.map(b => (b.id === id ? { ...b, ...updatedData } : b));
-    saveLocalBlogs(updatedList);
-    return updatedList.find(b => b.id === id);
+    if (updated) {
+      const local = getLocalBlogs();
+      saveLocalBlogs(local.map(b => (b.id === id || b.slug === id) ? updated : b));
+      return updated;
+    }
+
+    const errorMsg = lastError?.response?.data?.message || lastError?.message || 'Failed to update blog on backend server';
+    throw new Error(errorMsg);
   },
 
   // Delete blog (Admin)
   deleteBlog: async (id) => {
+    let lastError = null;
+    let success = false;
+
     try {
-      await apiClient.delete(`/admin/blogs/${id}`).catch(() => 
-        apiClient.delete(`/blogs/${id}`)
-      );
+      try {
+        await apiClient.delete(`/admin/blogs/${id}`);
+        success = true;
+      } catch (err1) {
+        console.warn(`/admin/blogs/${id} failed, trying /blogs/${id}:`, err1.message);
+        await apiClient.delete(`/blogs/${id}`);
+        success = true;
+      }
     } catch (err) {
-      console.warn('Backend blog delete failed, deleting from local storage:', err.message);
+      lastError = err;
+      console.error('Backend blog delete failed:', err);
     }
 
-    const local = getLocalBlogs();
-    const filtered = local.filter(b => b.id !== id);
-    saveLocalBlogs(filtered);
-    return true;
+    if (success) {
+      const local = getLocalBlogs();
+      const filtered = local.filter(b => b.id !== id && b.slug !== id);
+      saveLocalBlogs(filtered);
+      return true;
+    }
+
+    const errorMsg = lastError?.response?.data?.message || lastError?.message || 'Failed to delete blog from backend server';
+    throw new Error(errorMsg);
   },
 
   // Available categories

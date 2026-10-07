@@ -175,7 +175,7 @@ const AdminDashboard = () => {
       };
 
       if (editingBlog && (editingBlog.id || editingBlog.slug)) {
-        await blogService.updateBlog(editingBlog.id, payload);
+        await blogService.updateBlog(editingBlog.id || editingBlog.slug, payload);
       } else {
         await blogService.createBlog(payload);
       }

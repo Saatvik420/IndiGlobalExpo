@@ -38,12 +38,15 @@ public class BlogService {
     }
 
     public Blog createBlog(Blog blog) {
+        if (blog.getId() != null && (blog.getId().trim().isEmpty() || blog.getId().startsWith("blog-"))) {
+            blog.setId(null);
+        }
         String now = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         if (blog.getCreatedAt() == null || blog.getCreatedAt().isEmpty()) {
             blog.setCreatedAt(now);
         }
         blog.setUpdatedAt(now);
-        if (blog.getSlug() == null || blog.getSlug().isEmpty()) {
+        if (blog.getSlug() == null || blog.getSlug().trim().isEmpty()) {
             blog.setSlug(generateSlug(blog.getTitle()));
         }
         if (blog.getPublishedDate() == null || blog.getPublishedDate().isEmpty()) {
@@ -54,7 +57,8 @@ public class BlogService {
 
     public Blog updateBlog(String id, Blog updatedData) {
         Blog existingBlog = blogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Blog post not found with id: " + id));
+                .orElseGet(() -> blogRepository.findBySlug(id)
+                        .orElseThrow(() -> new RuntimeException("Blog post not found with id or slug: " + id)));
 
         existingBlog.setTitle(updatedData.getTitle());
         if (updatedData.getSlug() != null && !updatedData.getSlug().isEmpty()) {
@@ -78,10 +82,10 @@ public class BlogService {
     }
 
     public void deleteBlog(String id) {
-        if (!blogRepository.existsById(id)) {
-            throw new RuntimeException("Blog post not found with id: " + id);
-        }
-        blogRepository.deleteById(id);
+        Blog existingBlog = blogRepository.findById(id)
+                .orElseGet(() -> blogRepository.findBySlug(id)
+                        .orElseThrow(() -> new RuntimeException("Blog post not found with id or slug: " + id)));
+        blogRepository.delete(existingBlog);
     }
 
     private String generateSlug(String title) {
