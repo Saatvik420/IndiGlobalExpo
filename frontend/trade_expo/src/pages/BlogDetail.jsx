@@ -292,7 +292,7 @@ const BlogDetail = () => {
 
           {/* Main Article Content */}
           <article className="bg-white p-6 sm:p-12 rounded-sm border border-gray-200/80 shadow-sm mb-12">
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg max-w-none" style={{ textAlign: blog.textAlign || 'left' }}>
               {renderFormattedContent(blog.content)}
             </div>
 

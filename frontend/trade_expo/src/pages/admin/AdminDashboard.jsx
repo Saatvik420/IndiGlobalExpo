@@ -55,7 +55,8 @@ const AdminDashboard = () => {
     readTime: '5 min read',
     coverImage: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
     tags: 'Exports, B2B, Logistics',
-    featured: false
+    featured: false,
+    textAlign: 'left'
   });
   const [isSavingBlog, setIsSavingBlog] = useState(false);
 
@@ -131,7 +132,8 @@ const AdminDashboard = () => {
       readTime: '5 min read',
       coverImage: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
       tags: 'Exports, B2B, Trade',
-      featured: false
+      featured: false,
+      textAlign: 'left'
     });
     setIsBlogModalOpen(true);
   };
@@ -148,7 +150,8 @@ const AdminDashboard = () => {
       readTime: b.readTime || '5 min read',
       coverImage: b.coverImage || '',
       tags: Array.isArray(b.tags) ? b.tags.join(', ') : (b.tags || ''),
-      featured: Boolean(b.featured)
+      featured: Boolean(b.featured),
+      textAlign: b.textAlign || 'left'
     });
     setIsBlogModalOpen(true);
   };
@@ -956,6 +959,58 @@ const AdminDashboard = () => {
               </div>
 
               <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Article Text Alignment
+                </label>
+                <div className="grid grid-cols-4 gap-2 mb-3">
+                  <button
+                    type="button"
+                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'left' })}
+                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
+                      (blogFormData.textAlign || 'left') === 'left'
+                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
+                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    Left
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'justify' })}
+                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
+                      blogFormData.textAlign === 'justify'
+                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
+                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    Justify
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'center' })}
+                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
+                      blogFormData.textAlign === 'center'
+                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
+                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    Center
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'right' })}
+                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
+                      blogFormData.textAlign === 'right'
+                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
+                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    Right
+                  </button>
+                </div>
+              </div>
+
+              <div>
                 <div className="flex items-center justify-between mb-1">
                   <label className="block text-xs font-bold uppercase tracking-wider text-gray-600">
                     Full Article Content *
@@ -968,6 +1023,7 @@ const AdminDashboard = () => {
                   placeholder="Write or paste the complete article content here..."
                   value={blogFormData.content}
                   onChange={(e) => setBlogFormData({ ...blogFormData, content: e.target.value })}
+                  style={{ textAlign: blogFormData.textAlign || 'left' }}
                   className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent font-sans leading-relaxed"
                 />
               </div>
