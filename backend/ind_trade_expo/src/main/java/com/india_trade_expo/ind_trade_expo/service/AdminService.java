@@ -38,12 +38,13 @@ public class AdminService {
         Exhibitor exhibitor = exhibitorRepository.findById(id).orElseThrow(() -> new RuntimeException("Exhibitor not found"));
         exhibitor.setStatus(status);
         
-        if ("APPROVED".equals(status)) {
-            User user = userRepository.findById(exhibitor.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-            Set<String> roles = user.getRoles();
-            roles.add("ROLE_EXHIBITOR");
-            user.setRoles(roles);
-            userRepository.save(user);
+        if ("APPROVED".equals(status) && exhibitor.getUserId() != null) {
+            userRepository.findById(exhibitor.getUserId()).ifPresent(user -> {
+                Set<String> roles = user.getRoles() != null ? new java.util.HashSet<>(user.getRoles()) : new java.util.HashSet<>();
+                roles.add("ROLE_EXHIBITOR");
+                user.setRoles(roles);
+                userRepository.save(user);
+            });
         }
         
         return exhibitorRepository.save(exhibitor);

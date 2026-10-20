@@ -630,9 +630,6 @@ const Home = () => {
                         alt={blog.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                       />
-                      <div className="absolute top-3 left-3 bg-brand-dark/90 text-brand-accent px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-xs backdrop-blur-xs">
-                        {blog.category}
-                      </div>
                     </div>
                     <div className="flex items-center gap-3 text-xs text-gray-400 mb-2">
                       <span>{blog.publishedDate}</span>

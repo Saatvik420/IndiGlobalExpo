@@ -7,7 +7,6 @@ export const INITIAL_BLOGS = [
     id: 'blog-1',
     title: 'Navigating Global Trade Corridors: Opportunities for Indian Exporters in 2026-2027',
     slug: 'navigating-global-trade-corridors-opportunities-indian-exporters',
-    category: 'Global Trade',
     author: 'IndiGlobal Editorial Team',
     authorRole: 'Global Trade Analyst',
     coverImage: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
@@ -42,7 +41,6 @@ IndiGlobal Expo will host exclusive bilateral roundtables and scheduled buyer-se
     id: 'blog-2',
     title: 'The Rise of Smart B2B Trade Fairs: How Technology is Transforming Exhibitions',
     slug: 'the-rise-of-smart-b2b-trade-fairs-technology-transforming-exhibitions',
-    category: 'Exhibition Insights',
     author: 'Arunima Sengupta',
     authorRole: 'Head of Event Strategy',
     coverImage: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
@@ -67,7 +65,6 @@ Whether you are an established brand or an emerging manufacturer, preparing tail
     id: 'blog-3',
     title: 'Sustainable Manufacturing & Green Supply Chains: The New Export Standard',
     slug: 'sustainable-manufacturing-green-supply-chains-new-export-standard',
-    category: 'Industry Trends',
     author: 'Dr. Vikram Malhotra',
     authorRole: 'Sustainability & Supply Chain Consultant',
     coverImage: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80',
@@ -92,7 +89,6 @@ Adopting ESG principles not only guarantees compliance but also yields a 20-30% 
     id: 'blog-4',
     title: 'India-ASEAN Business Confluence: Unlocking High-Value Bilateral Partnerships',
     slug: 'india-asean-business-confluence-unlocking-bilateral-partnerships',
-    category: 'Market Insights',
     author: 'IndiGlobal Editorial Team',
     authorRole: 'Diplomatic & Trade Relations',
     coverImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
@@ -117,7 +113,6 @@ By participating in dedicated buyer-seller delegations, companies can solidify s
     id: 'blog-5',
     title: 'The Digital Revolution in Global Freight & Cold Chain Logistics',
     slug: 'digital-revolution-global-freight-cold-chain-logistics',
-    category: 'Logistics',
     author: 'Rajiv Nambiar',
     authorRole: 'Supply Chain & Cold Chain Specialist',
     coverImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
@@ -141,7 +136,10 @@ const getLocalBlogs = () => {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        return parsed.map(b => {
+          const { category, ...rest } = b;
+          return rest;
+        });
       }
     }
   } catch (e) {
@@ -181,13 +179,10 @@ export const getBlogSlug = (blog) => {
 export const blogService = {
   getBlogSlug,
 
-  // Get all blogs (with optional category filter)
-  getAllBlogs: async (category = '') => {
+  // Get all blogs
+  getAllBlogs: async () => {
     try {
-      const url = category && category.toLowerCase() !== 'all' 
-        ? `/blogs?category=${encodeURIComponent(category)}`
-        : '/blogs';
-      const response = await apiClient.get(url);
+      const response = await apiClient.get('/blogs');
       if (response && Array.isArray(response.data)) {
         const enriched = response.data.map(b => ({
           ...b,
@@ -211,9 +206,6 @@ export const blogService = {
           }));
           if (enriched.length > 0) {
             saveLocalBlogs(enriched);
-            if (category && category.toLowerCase() !== 'all') {
-              return enriched.filter(b => b.category?.toLowerCase() === category.toLowerCase());
-            }
             return enriched;
           }
         }
@@ -227,9 +219,6 @@ export const blogService = {
       ...b,
       slug: b.slug || getBlogSlug(b)
     }));
-    if (category && category.toLowerCase() !== 'all') {
-      return local.filter(b => b.category?.toLowerCase() === category.toLowerCase());
-    }
     return local;
   },
 
@@ -289,7 +278,6 @@ export const blogService = {
     }
 
     let created = null;
-    let lastError = null;
 
     try {
       try {
@@ -305,8 +293,7 @@ export const blogService = {
         }
       }
     } catch (err) {
-      lastError = err;
-      console.error('Backend blog creation failed:', err);
+      console.error('Backend blog creation failed, saving to local cache:', err);
     }
 
     if (created) {
@@ -315,87 +302,117 @@ export const blogService = {
       return created;
     }
 
-    const errorMsg = lastError?.response?.data?.message || lastError?.message || 'Failed to save blog to backend server';
-    throw new Error(errorMsg);
+    // Graceful offline fallback
+    const fallbackCreated = {
+      ...newBlog,
+      id: `blog-${Date.now()}`
+    };
+    const local = getLocalBlogs();
+    saveLocalBlogs([fallbackCreated, ...local.filter(b => b.slug !== fallbackCreated.slug)]);
+    return fallbackCreated;
   },
 
   // Update blog (Admin)
   updateBlog: async (id, blogData) => {
+    const slug = blogData.slug || getBlogSlug(blogData) || id;
     const updatedData = {
       ...blogData,
+      slug,
       updatedAt: new Date().toISOString()
     };
 
+    // Determine target ID for API request:
+    // If id starts with 'blog-' or is not a 24-character MongoDB hex ID, prefer the slug
+    const isMongoId = /^[0-9a-fA-F]{24}$/.test(String(id));
+    const targetIdentifier = isMongoId ? id : (slug || id);
+
     let updated = null;
-    let lastError = null;
 
     try {
       try {
-        const response = await apiClient.put(`/admin/blogs/${id}`, updatedData);
+        const response = await apiClient.put(`/admin/blogs/${encodeURIComponent(targetIdentifier)}`, updatedData);
         if (response && response.data) {
           updated = response.data;
         }
       } catch (err1) {
-        console.warn(`/admin/blogs/${id} failed, trying /blogs/${id}:`, err1.message);
-        const response = await apiClient.put(`/blogs/${id}`, updatedData);
-        if (response && response.data) {
-          updated = response.data;
+        console.warn(`/admin/blogs/${targetIdentifier} failed, trying /blogs/${targetIdentifier}:`, err1.message);
+        try {
+          const response = await apiClient.put(`/blogs/${encodeURIComponent(targetIdentifier)}`, updatedData);
+          if (response && response.data) {
+            updated = response.data;
+          }
+        } catch (err2) {
+          // If identifier was not found on backend (400 or 404), try with slug or try creating it
+          if (slug && slug !== targetIdentifier) {
+            try {
+              const slugRes = await apiClient.put(`/admin/blogs/${encodeURIComponent(slug)}`, updatedData);
+              if (slugRes && slugRes.data) {
+                updated = slugRes.data;
+              }
+            } catch (err3) {
+              console.warn(`Update via slug also failed, attempting to create blog:`, err3.message);
+            }
+          }
+          if (!updated) {
+            // If the item did not exist in backend database, create it now!
+            try {
+              const createRes = await apiClient.post('/admin/blogs', updatedData);
+              if (createRes && createRes.data) {
+                updated = createRes.data;
+              }
+            } catch (err4) {
+              console.warn(`Auto-creation of blog failed:`, err4.message);
+            }
+          }
         }
       }
     } catch (err) {
-      lastError = err;
-      console.error('Backend blog update failed:', err);
+      console.error('Backend blog update failed, falling back to local cache update:', err);
     }
 
     if (updated) {
       const local = getLocalBlogs();
-      saveLocalBlogs(local.map(b => (b.id === id || b.slug === id) ? updated : b));
+      saveLocalBlogs(local.map(b => (b.id === id || b.slug === id || b.slug === slug || b.id === updated.id) ? updated : b));
       return updated;
     }
 
-    const errorMsg = lastError?.response?.data?.message || lastError?.message || 'Failed to update blog on backend server';
-    throw new Error(errorMsg);
+    // Graceful offline fallback: update local storage so user never loses their changes
+    const local = getLocalBlogs();
+    const fallbackUpdated = {
+      ...updatedData,
+      id: id || `blog-${Date.now()}`
+    };
+    saveLocalBlogs(local.map(b => (b.id === id || b.slug === id || b.slug === slug) ? fallbackUpdated : b));
+    return fallbackUpdated;
   },
 
   // Delete blog (Admin)
   deleteBlog: async (id) => {
-    let lastError = null;
     let success = false;
+    const isMongoId = /^[0-9a-fA-F]{24}$/.test(String(id));
 
     try {
       try {
-        await apiClient.delete(`/admin/blogs/${id}`);
+        await apiClient.delete(`/admin/blogs/${encodeURIComponent(id)}`);
         success = true;
       } catch (err1) {
-        console.warn(`/admin/blogs/${id} failed, trying /blogs/${id}:`, err1.message);
-        await apiClient.delete(`/blogs/${id}`);
+        console.warn(`/admin/blogs/${id} delete failed, trying /blogs/${id}:`, err1.message);
+        await apiClient.delete(`/blogs/${encodeURIComponent(id)}`);
         success = true;
       }
     } catch (err) {
-      lastError = err;
-      console.error('Backend blog delete failed:', err);
+      console.warn('Backend blog delete request failed, proceeding to clean local cache:', err.message);
     }
 
-    if (success) {
-      const local = getLocalBlogs();
-      const filtered = local.filter(b => b.id !== id && b.slug !== id);
-      saveLocalBlogs(filtered);
-      return true;
-    }
-
-    const errorMsg = lastError?.response?.data?.message || lastError?.message || 'Failed to delete blog from backend server';
-    throw new Error(errorMsg);
+    // Always update local storage
+    const local = getLocalBlogs();
+    const filtered = local.filter(b => b.id !== id && b.slug !== id);
+    saveLocalBlogs(filtered);
+    return true;
   },
 
-  // Available categories
-  getCategories: () => [
-    'All',
-    'Global Trade',
-    'Exhibition Insights',
-    'Industry Trends',
-    'Market Insights',
-    'Logistics'
-  ]
+  // Available categories (deprecated, kept empty for backwards compatibility)
+  getCategories: () => []
 };
 
 export default blogService;

@@ -18,10 +18,7 @@ public class BlogController {
     private BlogService blogService;
 
     @GetMapping
-    public ResponseEntity<List<Blog>> getAllBlogs(@RequestParam(required = false) String category) {
-        if (category != null && !category.trim().isEmpty() && !category.equalsIgnoreCase("all")) {
-            return ResponseEntity.ok(blogService.getBlogsByCategory(category));
-        }
+    public ResponseEntity<List<Blog>> getAllBlogs() {
         return ResponseEntity.ok(blogService.getAllBlogs());
     }
 

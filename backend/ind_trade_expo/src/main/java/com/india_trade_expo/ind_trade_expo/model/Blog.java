@@ -1,5 +1,6 @@
 package com.india_trade_expo.ind_trade_expo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "blogs")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Blog {
     @Id
     private String id;
@@ -14,7 +16,6 @@ public class Blog {
     private String slug;
     private String excerpt;
     private String content;
-    private String category;
     private List<String> tags = new ArrayList<>();
     private String author;
     private String authorRole;
@@ -22,12 +23,13 @@ public class Blog {
     private String readTime;
     private String publishedDate;
     private boolean featured;
+    private String textAlign = "left";
     private String createdAt;
     private String updatedAt;
 
     public Blog() {}
 
-    public Blog(String id, String title, String slug, String excerpt, String content, String category,
+    public Blog(String id, String title, String slug, String excerpt, String content,
                 List<String> tags, String author, String authorRole, String coverImage,
                 String readTime, String publishedDate, boolean featured, String createdAt, String updatedAt) {
         this.id = id;
@@ -35,7 +37,6 @@ public class Blog {
         this.slug = slug;
         this.excerpt = excerpt;
         this.content = content;
-        this.category = category;
         this.tags = tags != null ? tags : new ArrayList<>();
         this.author = author;
         this.authorRole = authorRole;
@@ -67,9 +68,6 @@ public class Blog {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
-
     public List<String> getTags() { return tags; }
     public void setTags(List<String> tags) { this.tags = tags; }
 
@@ -91,6 +89,9 @@ public class Blog {
     public boolean isFeatured() { return featured; }
     public void setFeatured(boolean featured) { this.featured = featured; }
 
+    public String getTextAlign() { return textAlign != null ? textAlign : "left"; }
+    public void setTextAlign(String textAlign) { this.textAlign = textAlign; }
+
     public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
@@ -103,7 +104,6 @@ public class Blog {
         private String slug;
         private String excerpt;
         private String content;
-        private String category;
         private List<String> tags = new ArrayList<>();
         private String author;
         private String authorRole;
@@ -111,6 +111,7 @@ public class Blog {
         private String readTime;
         private String publishedDate;
         private boolean featured;
+        private String textAlign = "left";
         private String createdAt;
         private String updatedAt;
 
@@ -119,7 +120,6 @@ public class Blog {
         public BlogBuilder slug(String slug) { this.slug = slug; return this; }
         public BlogBuilder excerpt(String excerpt) { this.excerpt = excerpt; return this; }
         public BlogBuilder content(String content) { this.content = content; return this; }
-        public BlogBuilder category(String category) { this.category = category; return this; }
         public BlogBuilder tags(List<String> tags) { this.tags = tags; return this; }
         public BlogBuilder author(String author) { this.author = author; return this; }
         public BlogBuilder authorRole(String authorRole) { this.authorRole = authorRole; return this; }
@@ -127,12 +127,15 @@ public class Blog {
         public BlogBuilder readTime(String readTime) { this.readTime = readTime; return this; }
         public BlogBuilder publishedDate(String publishedDate) { this.publishedDate = publishedDate; return this; }
         public BlogBuilder featured(boolean featured) { this.featured = featured; return this; }
+        public BlogBuilder textAlign(String textAlign) { this.textAlign = textAlign; return this; }
         public BlogBuilder createdAt(String createdAt) { this.createdAt = createdAt; return this; }
         public BlogBuilder updatedAt(String updatedAt) { this.updatedAt = updatedAt; return this; }
 
         public Blog build() {
-            return new Blog(id, title, slug, excerpt, content, category, tags, author, authorRole,
+            Blog blog = new Blog(id, title, slug, excerpt, content, tags, author, authorRole,
                     coverImage, readTime, publishedDate, featured, createdAt, updatedAt);
+            blog.setTextAlign(textAlign);
+            return blog;
         }
     }
 }

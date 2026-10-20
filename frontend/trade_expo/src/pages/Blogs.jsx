@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   MagnifyingGlass, 
-  Funnel, 
   CalendarBlank, 
   Clock, 
   User, 
@@ -25,11 +24,8 @@ const Blogs = () => {
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest'); // newest, oldest, readingTime
-
-  const categories = useMemo(() => blogService.getCategories(), []);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -59,14 +55,11 @@ const Blogs = () => {
 
     document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
     return () => revealObserver.disconnect();
-  }, [blogs, selectedCategory, searchQuery]);
+  }, [blogs, searchQuery]);
 
   // Filter and sort blogs
   const filteredBlogs = useMemo(() => {
     let result = blogs.filter(blog => {
-      const matchesCategory = selectedCategory === 'All' || 
-        (blog.category && blog.category.toLowerCase() === selectedCategory.toLowerCase());
-      
       const query = searchQuery.trim().toLowerCase();
       const matchesSearch = !query || 
         blog.title?.toLowerCase().includes(query) ||
@@ -74,7 +67,7 @@ const Blogs = () => {
         blog.author?.toLowerCase().includes(query) ||
         (Array.isArray(blog.tags) && blog.tags.some(t => t.toLowerCase().includes(query)));
 
-      return matchesCategory && matchesSearch;
+      return matchesSearch;
     });
 
     // Sorting
@@ -92,7 +85,7 @@ const Blogs = () => {
     });
 
     return result;
-  }, [blogs, selectedCategory, searchQuery, sortBy]);
+  }, [blogs, searchQuery, sortBy]);
 
   // Featured blog (first featured or first blog)
   const featuredBlog = useMemo(() => {
@@ -143,8 +136,8 @@ const Blogs = () => {
         </div>
       </section>
 
-      {/* Featured Blog Highlight (shown if not actively searching/filtering) */}
-      {featuredBlog && selectedCategory === 'All' && !searchQuery && (
+      {/* Featured Blog Highlight (shown if not actively searching) */}
+      {featuredBlog && !searchQuery && (
         <section className="py-12 bg-white border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-2 mb-6">
@@ -166,8 +159,6 @@ const Blogs = () => {
               <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
-                    <span className="font-semibold text-brand-accent uppercase tracking-wider">{featuredBlog.category}</span>
-                    <span>•</span>
                     <span className="flex items-center gap-1"><CalendarBlank size={14} /> {featuredBlog.publishedDate}</span>
                     <span>•</span>
                     <span className="flex items-center gap-1"><Clock size={14} /> {featuredBlog.readTime}</span>
@@ -218,13 +209,13 @@ const Blogs = () => {
         </section>
       )}
 
-      {/* Main Filter & Blog Grid Section */}
+      {/* Main Blog Grid Section */}
       <section className="py-12 sm:py-16 md:py-20 bg-brand-light min-h-[600px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Controls: Search, Categories, Sort */}
+          {/* Controls: Search & Sort */}
           <div className="bg-white p-6 sm:p-8 rounded-sm border border-gray-200/80 shadow-sm mb-12">
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center pb-6 border-b border-gray-100">
+            <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
               
               {/* Search Bar */}
               <div className="relative flex-1 max-w-md">
@@ -267,26 +258,6 @@ const Blogs = () => {
                 </div>
               </div>
             </div>
-
-            {/* Category Filter Pills */}
-            <div className="pt-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mr-2 flex items-center gap-1.5 whitespace-nowrap">
-                <Funnel size={14} /> Filters:
-              </span>
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider transition-all duration-300 uppercase whitespace-nowrap ${
-                    selectedCategory === cat
-                      ? 'bg-brand-dark text-brand-accent shadow-sm'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-brand-dark'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Blogs Grid */}
@@ -300,13 +271,13 @@ const Blogs = () => {
               <BookmarkSimple size={48} className="mx-auto text-gray-300 mb-4" />
               <h3 className="font-serif text-2xl text-brand-dark mb-2">No Articles Found</h3>
               <p className="text-gray-500 text-sm font-light max-w-md mx-auto mb-6">
-                We couldn't find any articles matching your search criteria or filter. Try clearing filters or using different keywords.
+                We couldn't find any articles matching your search query. Try using different keywords.
               </p>
               <button 
-                onClick={() => { setSelectedCategory('All'); setSearchQuery(''); }}
+                onClick={() => setSearchQuery('')}
                 className="bg-brand-accent text-white px-6 py-2.5 text-xs font-bold uppercase tracking-widest hover:bg-brand-dark transition-colors rounded-sm"
               >
-                Reset All Filters
+                Clear Search
               </button>
             </div>
           ) : (
@@ -323,9 +294,6 @@ const Blogs = () => {
                       alt={blog.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                     />
-                    <div className="absolute top-3 left-3 bg-brand-dark/90 backdrop-blur-sm text-brand-accent px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-xs">
-                      {blog.category}
-                    </div>
                     <div className="absolute top-3 right-3 flex gap-1">
                       <button 
                         onClick={(e) => {

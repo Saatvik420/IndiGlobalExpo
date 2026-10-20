@@ -18,17 +18,11 @@ public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
+    @Autowired(required = false)
+    private org.springframework.data.mongodb.core.MongoTemplate mongoTemplate;
+
     public List<Blog> getAllBlogs() {
         List<Blog> blogs = blogRepository.findAllByOrderByCreatedAtDesc();
-        blogs.forEach(this::ensureSlug);
-        return blogs;
-    }
-
-    public List<Blog> getBlogsByCategory(String category) {
-        if (category == null || category.equalsIgnoreCase("All")) {
-            return getAllBlogs();
-        }
-        List<Blog> blogs = blogRepository.findByCategoryIgnoreCase(category);
         blogs.forEach(this::ensureSlug);
         return blogs;
     }
@@ -80,7 +74,18 @@ public class BlogService {
     public Blog updateBlog(String id, Blog updatedData) {
         Blog existingBlog = blogRepository.findById(id)
                 .orElseGet(() -> blogRepository.findBySlug(id)
-                        .orElseThrow(() -> new RuntimeException("Blog post not found with id or slug: " + id)));
+                        .orElseGet(() -> (updatedData.getSlug() != null && !updatedData.getSlug().isEmpty())
+                                ? blogRepository.findBySlug(updatedData.getSlug()).orElse(null)
+                                : null));
+
+        if (existingBlog == null && updatedData.getTitle() != null && !updatedData.getTitle().isEmpty()) {
+            existingBlog = blogRepository.findByTitleIgnoreCase(updatedData.getTitle()).orElse(null);
+        }
+
+        // If not found in DB at all (e.g. initial seeded blog or client offline), create it gracefully
+        if (existingBlog == null) {
+            return createBlog(updatedData);
+        }
 
         existingBlog.setTitle(updatedData.getTitle());
         if (updatedData.getSlug() != null && !updatedData.getSlug().isEmpty()) {
@@ -88,13 +93,15 @@ public class BlogService {
         }
         existingBlog.setExcerpt(updatedData.getExcerpt());
         existingBlog.setContent(updatedData.getContent());
-        existingBlog.setCategory(updatedData.getCategory());
         existingBlog.setTags(updatedData.getTags());
         existingBlog.setAuthor(updatedData.getAuthor());
         existingBlog.setAuthorRole(updatedData.getAuthorRole());
         existingBlog.setCoverImage(updatedData.getCoverImage());
         existingBlog.setReadTime(updatedData.getReadTime());
         existingBlog.setFeatured(updatedData.isFeatured());
+        if (updatedData.getTextAlign() != null) {
+            existingBlog.setTextAlign(updatedData.getTextAlign());
+        }
         if (updatedData.getPublishedDate() != null) {
             existingBlog.setPublishedDate(updatedData.getPublishedDate());
         }
@@ -104,10 +111,11 @@ public class BlogService {
     }
 
     public void deleteBlog(String id) {
-        Blog existingBlog = blogRepository.findById(id)
-                .orElseGet(() -> blogRepository.findBySlug(id)
-                        .orElseThrow(() -> new RuntimeException("Blog post not found with id or slug: " + id)));
-        blogRepository.delete(existingBlog);
+        Optional<Blog> existingBlog = blogRepository.findById(id);
+        if (existingBlog.isEmpty()) {
+            existingBlog = blogRepository.findBySlug(id);
+        }
+        existingBlog.ifPresent(blog -> blogRepository.delete(blog));
     }
 
     private String generateSlug(String title) {
@@ -122,13 +130,18 @@ public class BlogService {
     @PostConstruct
     public void seedInitialBlogs() {
         try {
+            if (mongoTemplate != null) {
+                org.springframework.data.mongodb.core.query.Query q = new org.springframework.data.mongodb.core.query.Query();
+                org.springframework.data.mongodb.core.query.Update u = new org.springframework.data.mongodb.core.query.Update().unset("category");
+                mongoTemplate.updateMulti(q, u, "blogs");
+            }
+
             if (blogRepository.count() == 0) {
                 String now = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 
                 Blog b1 = Blog.builder()
                         .title("Navigating Global Trade Corridors: Opportunities for Indian Exporters in 2026-2027")
                         .slug("navigating-global-trade-corridors-opportunities-indian-exporters")
-                        .category("Global Trade")
                         .author("IndiGlobal Editorial Team")
                         .authorRole("Global Trade Analyst")
                         .coverImage("https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80")
@@ -145,7 +158,6 @@ public class BlogService {
                 Blog b2 = Blog.builder()
                         .title("The Rise of Smart B2B Trade Fairs: How Technology is Transforming Exhibitions")
                         .slug("the-rise-of-smart-b2b-trade-fairs-technology-transforming-exhibitions")
-                        .category("Exhibition Insights")
                         .author("Arunima Sengupta")
                         .authorRole("Head of Event Strategy")
                         .coverImage("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80")
@@ -162,7 +174,6 @@ public class BlogService {
                 Blog b3 = Blog.builder()
                         .title("Sustainable Manufacturing & Green Supply Chains: The New Export Standard")
                         .slug("sustainable-manufacturing-green-supply-chains-new-export-standard")
-                        .category("Industry Trends")
                         .author("Dr. Vikram Malhotra")
                         .authorRole("Sustainability & Supply Chain Consultant")
                         .coverImage("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80")
@@ -179,7 +190,6 @@ public class BlogService {
                 Blog b4 = Blog.builder()
                         .title("India-ASEAN Business Confluence: Unlocking High-Value Bilateral Partnerships")
                         .slug("india-asean-business-confluence-unlocking-bilateral-partnerships")
-                        .category("Market Insights")
                         .author("IndiGlobal Editorial Team")
                         .authorRole("Diplomatic & Trade Relations")
                         .coverImage("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80")

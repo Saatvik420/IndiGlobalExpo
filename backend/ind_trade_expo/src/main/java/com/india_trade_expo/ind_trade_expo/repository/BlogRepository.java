@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BlogRepository extends MongoRepository<Blog, String> {
     Optional<Blog> findBySlug(String slug);
-    List<Blog> findByCategoryIgnoreCase(String category);
+    Optional<Blog> findByTitleIgnoreCase(String title);
     List<Blog> findAllByOrderByCreatedAtDesc();
 }

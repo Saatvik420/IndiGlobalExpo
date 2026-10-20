@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   User, 
@@ -14,7 +14,23 @@ import {
   ArrowSquareOut,
   X,
   Sparkle,
-  BookmarkSimple
+  BookmarkSimple,
+  TextB,
+  TextItalic,
+  TextUnderline,
+  TextAlignLeft,
+  TextAlignCenter,
+  TextAlignRight,
+  TextAlignJustify,
+  TextHTwo,
+  TextHThree,
+  ListBullets,
+  ListNumbers,
+  Quotes,
+  Eye,
+  Key,
+  ArrowsClockwise,
+  CircleNotch
 } from '@phosphor-icons/react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
@@ -24,30 +40,35 @@ import { useGlobal } from '../../context/GlobalContext';
 import { adminService } from '../../services/adminService';
 import { contactService } from '../../services/contactService';
 import blogService, { getBlogSlug } from '../../services/blogService';
+import FormattedArticleContent from '../../components/blog/FormattedArticleContent';
+import { authService } from '../../services/authService';
 import apiClient from '../../api/client';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const { user, logout } = useGlobal();
+  const { user, login, logout } = useGlobal();
   const [activeTab, setActiveTab] = useState('visitors');
-  const [users, setUsers] = useState([]);
-  const [exhibitors, setExhibitors] = useState([]);
-  const [tickets, setTickets] = useState([]);
+  const [users, setUsers] = useState(() => adminService.getCachedUsers());
+  const [exhibitors, setExhibitors] = useState(() => adminService.getCachedExhibitors());
+  const [tickets, setTickets] = useState(() => adminService.getCachedTickets());
   const [queries, setQueries] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visitorSearch, setVisitorSearch] = useState('');
   const [exhibitorSearch, setExhibitorSearch] = useState('');
   const [blogSearch, setBlogSearch] = useState('');
-  const [selectedBlogCategory, setSelectedBlogCategory] = useState('All');
   const [fetchError, setFetchError] = useState(null);
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const [isReauthenticating, setIsReauthenticating] = useState(false);
+  const [reauthPassword, setReauthPassword] = useState('');
+  const [reauthError, setReauthError] = useState(null);
+  const [showReauthModal, setShowReauthModal] = useState(false);
 
   // Blog Management State
   const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null);
   const [blogFormData, setBlogFormData] = useState({
     title: '',
-    category: 'Global Trade',
     excerpt: '',
     content: '',
     author: 'IndiGlobal Editorial Team',
@@ -59,6 +80,94 @@ const AdminDashboard = () => {
     textAlign: 'left'
   });
   const [isSavingBlog, setIsSavingBlog] = useState(false);
+  const [editorTab, setEditorTab] = useState('write'); // 'write' or 'preview'
+  const contentTextareaRef = useRef(null);
+
+  const applyFormat = (prefix, suffix = prefix, placeholder = 'text') => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const oldText = blogFormData.content || '';
+    const selectedText = oldText.substring(start, end);
+
+    let newText;
+    let newCursorStart;
+    let newCursorEnd;
+
+    if (selectedText.length > 0) {
+      if (selectedText.startsWith(prefix) && selectedText.endsWith(suffix) && selectedText.length >= prefix.length + suffix.length) {
+        // Toggle off if already wrapped
+        const unwrapped = selectedText.slice(prefix.length, -suffix.length);
+        newText = oldText.substring(0, start) + unwrapped + oldText.substring(end);
+        newCursorStart = start;
+        newCursorEnd = start + unwrapped.length;
+      } else {
+        newText = oldText.substring(0, start) + prefix + selectedText + suffix + oldText.substring(end);
+        newCursorStart = start + prefix.length;
+        newCursorEnd = end + prefix.length;
+      }
+    } else {
+      newText = oldText.substring(0, start) + prefix + placeholder + suffix + oldText.substring(end);
+      newCursorStart = start + prefix.length;
+      newCursorEnd = newCursorStart + placeholder.length;
+    }
+
+    setBlogFormData(prev => ({ ...prev, content: newText }));
+
+    requestAnimationFrame(() => {
+      if (contentTextareaRef.current) {
+        contentTextareaRef.current.focus();
+        contentTextareaRef.current.setSelectionRange(newCursorStart, newCursorEnd);
+      }
+    });
+  };
+
+  const applyLinePrefix = (prefix) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const oldText = blogFormData.content || '';
+
+    const lineStart = oldText.lastIndexOf('\n', start - 1) + 1;
+    let lineEnd = oldText.indexOf('\n', end);
+    if (lineEnd === -1) lineEnd = oldText.length;
+
+    const affectedText = oldText.substring(lineStart, lineEnd);
+    const lines = affectedText.split('\n');
+
+    const allHavePrefix = lines.every(l => l.startsWith(prefix));
+    const newLines = lines.map(line => allHavePrefix ? line.slice(prefix.length) : prefix + line);
+    const replacement = newLines.join('\n');
+    const newText = oldText.substring(0, lineStart) + replacement + oldText.substring(lineEnd);
+
+    setBlogFormData(prev => ({ ...prev, content: newText }));
+
+    requestAnimationFrame(() => {
+      if (contentTextareaRef.current) {
+        contentTextareaRef.current.focus();
+        contentTextareaRef.current.setSelectionRange(lineStart, lineStart + replacement.length);
+      }
+    });
+  };
+
+  const handleEditorKeyDown = (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        applyFormat('**', '**', 'bold text');
+      } else if (e.key === 'i' || e.key === 'I') {
+        e.preventDefault();
+        applyFormat('*', '*', 'italic text');
+      } else if (e.key === 'u' || e.key === 'U') {
+        e.preventDefault();
+        applyFormat('<u>', '</u>', 'underlined text');
+      }
+    }
+  };
 
   // Helper functions - Using function keyword for hoisting safety
   function getUserById(userId) {
@@ -72,28 +181,34 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     setIsLoading(true);
     setFetchError(null);
+    let hadAuthError = false;
+
     try {
       console.log("AdminDashboard: Syncing data components...");
       
       // Fetch each component individually to prevent one failure from breaking the whole dashboard
       const fetchUsers = adminService.getAllUsers().catch(err => {
         console.error("Dashboard: User fetch failed", err);
-        return [];
+        if (err.response?.status === 401 || err.response?.status === 403) hadAuthError = true;
+        return adminService.getCachedUsers();
       });
       
       const fetchExhibitors = adminService.getAllExhibitors().catch(err => {
         console.error("Dashboard: Exhibitor fetch failed", err);
-        return [];
+        if (err.response?.status === 401 || err.response?.status === 403) hadAuthError = true;
+        return adminService.getCachedExhibitors();
       });
       
       const fetchTickets = adminService.getAllTickets().catch(err => {
         console.error("Dashboard: Ticket fetch failed", err);
-        return [];
+        if (err.response?.status === 401 || err.response?.status === 403) hadAuthError = true;
+        return adminService.getCachedTickets();
       });
       
       const fetchQueries = contactService.getAllInquiries().catch(err => {
-        console.error("Dashboard: Queries fetch failed (500 Error)", err);
-        return []; // Return empty array so the UI doesn't crash
+        console.error("Dashboard: Queries fetch failed", err);
+        if (err.response?.status === 401 || err.response?.status === 403) hadAuthError = true;
+        return [];
       });
 
       const fetchBlogs = blogService.getAllBlogs().catch(err => {
@@ -105,13 +220,23 @@ const AdminDashboard = () => {
         fetchUsers, fetchExhibitors, fetchTickets, fetchQueries, fetchBlogs
       ]);
       
-      setUsers(usersData || []);
-      setExhibitors(exhibitorsData || []);
-      setTickets(ticketsData || []);
+      if (usersData?._error?.response?.status === 401 || 
+          exhibitorsData?._error?.response?.status === 401 || 
+          ticketsData?._error?.response?.status === 401 || 
+          hadAuthError) {
+        setSessionExpired(true);
+        setFetchError('Your admin security session has expired. Displaying cached records. Please re-authenticate below to sync live updates.');
+      } else {
+        setSessionExpired(false);
+      }
+
+      setUsers(usersData && usersData.length > 0 ? usersData : adminService.getCachedUsers());
+      setExhibitors(exhibitorsData && exhibitorsData.length > 0 ? exhibitorsData : adminService.getCachedExhibitors());
+      setTickets(ticketsData && ticketsData.length > 0 ? ticketsData : adminService.getCachedTickets());
       setQueries(queriesData || []);
       setBlogs(blogsData || []);
       
-      console.log("AdminDashboard: Sync complete.");
+      console.log("AdminDashboard: Sync complete. Users:", usersData?.length, "Exhibitors:", exhibitorsData?.length);
     } catch (error) {
       console.error('AdminDashboard: Global Fetch failed', error);
       setFetchError(error.message || 'Network Error - Backend unreachable');
@@ -120,11 +245,52 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleQuickReauth = async (e) => {
+    e.preventDefault();
+    setIsReauthenticating(true);
+    setReauthError(null);
+    try {
+      const email = user?.email || 'admin@indiatradeexpo.com';
+      const data = await authService.login(email, reauthPassword);
+      if (data && data.token) {
+        const updatedUser = {
+          ...user,
+          ...data
+        };
+        login(updatedUser);
+        setSessionExpired(false);
+        setReauthPassword('');
+        setFetchError(null);
+        await fetchData();
+      } else {
+        throw new Error('Authentication succeeded but no token received.');
+      }
+    } catch (err) {
+      console.error('Re-authentication failed:', err);
+      setReauthError(err.response?.data?.message || err.response?.data || err.message || 'Invalid password.');
+    } finally {
+      setIsReauthenticating(false);
+    }
+  };
+
+  const getTargetBlogIdentifier = (b) => {
+    if (!b) return '';
+    if (b.id && /^[0-9a-fA-F]{24}$/.test(String(b.id))) {
+      return String(b.id);
+    }
+    if (b.slug && typeof b.slug === 'string' && b.slug.trim()) {
+      return b.slug.trim();
+    }
+    if (b.title && typeof b.title === 'string' && b.title.trim()) {
+      return blogService.getBlogSlug(b);
+    }
+    return b.id || '';
+  };
+
   const handleOpenCreateBlog = () => {
     setEditingBlog(null);
     setBlogFormData({
       title: '',
-      category: 'Global Trade',
       excerpt: '',
       content: '',
       author: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'IndiGlobal Editorial Team',
@@ -135,6 +301,7 @@ const AdminDashboard = () => {
       featured: false,
       textAlign: 'left'
     });
+    setEditorTab('write');
     setIsBlogModalOpen(true);
   };
 
@@ -142,7 +309,6 @@ const AdminDashboard = () => {
     setEditingBlog(b);
     setBlogFormData({
       title: b.title || '',
-      category: b.category || 'Global Trade',
       excerpt: b.excerpt || '',
       content: b.content || '',
       author: b.author || 'IndiGlobal Editorial Team',
@@ -153,6 +319,7 @@ const AdminDashboard = () => {
       featured: Boolean(b.featured),
       textAlign: b.textAlign || 'left'
     });
+    setEditorTab('write');
     setIsBlogModalOpen(true);
   };
 
@@ -177,8 +344,9 @@ const AdminDashboard = () => {
         tags: tagsArray
       };
 
-      if (editingBlog && (editingBlog.id || editingBlog.slug)) {
-        await blogService.updateBlog(editingBlog.id || editingBlog.slug, payload);
+      const targetId = getTargetBlogIdentifier(editingBlog);
+      if (editingBlog && targetId) {
+        await blogService.updateBlog(targetId, payload);
       } else {
         await blogService.createBlog(payload);
       }
@@ -287,13 +455,10 @@ const AdminDashboard = () => {
 
   const filteredBlogs = (blogs || []).filter(b => {
     const s = (blogSearch || '').toLowerCase();
-    const matchesSearch = !s || 
+    return !s || 
       (b.title || '').toLowerCase().includes(s) || 
       (b.author || '').toLowerCase().includes(s) ||
-      (b.category || '').toLowerCase().includes(s);
-    const matchesCat = selectedBlogCategory === 'All' || 
-      (b.category && b.category.toLowerCase() === selectedBlogCategory.toLowerCase());
-    return matchesSearch && matchesCat;
+      (b.excerpt || '').toLowerCase().includes(s);
   });
 
   return (
@@ -314,12 +479,21 @@ const AdminDashboard = () => {
               <h2 className="text-2xl sm:text-4xl font-serif text-brand-dark mb-1 sm:mb-2">Management Console</h2>
               <p className="text-gray-500 font-light text-xs sm:text-sm">Welcome back, Admin. System is running smoothly.</p>
             </div>
-            <button 
-              onClick={handleLogout}
-              className="flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-700 transition-colors w-fit"
-            >
-              <SignOut size={20} /> Logout
-            </button>
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setShowReauthModal(prev => !prev)}
+                className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-gray-200 hover:border-brand-accent text-brand-dark hover:text-brand-accent text-xs font-bold uppercase tracking-wider rounded-sm transition-all shadow-xs cursor-pointer interactive"
+                title="Re-enter Admin Password to refresh session or sync live data"
+              >
+                <Key size={16} /> Re-enter Password / Live Sync
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-700 transition-colors w-fit"
+              >
+                <SignOut size={20} /> Logout
+              </button>
+            </div>
           </div>
 
           {/* Tabs */}
@@ -356,13 +530,62 @@ const AdminDashboard = () => {
           </div>
 
           <div className="bg-white border border-gray-100 shadow-xl p-4 sm:p-8 rounded-sm">
-            {fetchError && (
+            {(sessionExpired || showReauthModal) ? (
+              <div className="mb-6 p-4 sm:p-5 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 text-amber-900 rounded-sm shadow-xs animate-fade-in">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div>
+                    <p className="font-bold uppercase tracking-widest text-xs flex items-center gap-1.5 text-amber-900">
+                      <ShieldCheck size={18} className="text-brand-accent" weight="bold" /> Admin Session Authentication / Live MongoDB Sync
+                    </p>
+                    <p className="text-xs text-amber-700 mt-1">
+                      {sessionExpired 
+                        ? 'Your token expired (24h security timeout). Displaying cached records. Re-enter password to sync live MongoDB data.' 
+                        : 'Re-authenticate with admin password to refresh session token and sync live MongoDB records.'}
+                    </p>
+                    <p className="text-[11px] text-gray-500 font-mono mt-1">
+                      Admin Email: <span className="font-bold text-brand-dark">{user?.email || 'admin@indiatradeexpo.com'}</span> | Default: <span className="font-bold text-brand-dark">Admin@123456</span>
+                    </p>
+                  </div>
+                  <form onSubmit={handleQuickReauth} className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <input
+                      type="password"
+                      placeholder="Admin Password (Admin@123456)"
+                      value={reauthPassword}
+                      onChange={(e) => setReauthPassword(e.target.value)}
+                      required
+                      autoFocus
+                      className="px-3 py-2 bg-white border border-amber-300 rounded-sm text-xs focus:outline-none focus:ring-2 focus:ring-brand-accent text-brand-dark min-w-[220px]"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isReauthenticating}
+                      className="px-4 py-2 bg-brand-dark text-white hover:bg-brand-accent text-xs font-bold uppercase tracking-wider rounded-sm transition-colors whitespace-nowrap disabled:opacity-50 flex items-center gap-1.5 cursor-pointer interactive"
+                    >
+                      {isReauthenticating ? <CircleNotch size={14} className="animate-spin" /> : <ArrowsClockwise size={14} />}
+                      {isReauthenticating ? 'Verifying...' : 'Re-Authenticate Live'}
+                    </button>
+                    {showReauthModal && !sessionExpired && (
+                      <button
+                        type="button"
+                        onClick={() => setShowReauthModal(false)}
+                        className="px-3 py-2 text-xs font-bold text-gray-400 hover:text-brand-dark transition-colors cursor-pointer"
+                      >
+                        Close
+                      </button>
+                    )}
+                  </form>
+                </div>
+                {reauthError && (
+                  <p className="text-xs text-red-600 font-semibold mt-2">{reauthError}</p>
+                )}
+              </div>
+            ) : fetchError ? (
               <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded">
                 <p className="font-bold uppercase tracking-widest text-[10px] mb-1">System Error:</p>
                 <p className="text-sm">{fetchError}</p>
                 <button onClick={fetchData} className="mt-4 text-[10px] font-bold uppercase tracking-widest bg-red-600 text-white px-4 py-2 hover:bg-red-700 transition-colors">Retry Sync</button>
               </div>
-            )}
+            ) : null}
             
             {isLoading ? (
               <div className="py-24 text-center">
@@ -705,30 +928,12 @@ const AdminDashboard = () => {
                       </div>
                     </div>
 
-                    {/* Quick Category Filter Pills */}
-                    <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2 scrollbar-none">
-                      {['All', 'Global Trade', 'Exhibition Insights', 'Industry Trends', 'Market Insights', 'Logistics'].map(cat => (
-                        <button
-                          key={cat}
-                          onClick={() => setSelectedBlogCategory(cat)}
-                          className={`text-xs px-3.5 py-1.5 rounded-full uppercase tracking-wider font-semibold transition-all whitespace-nowrap ${
-                            selectedBlogCategory === cat
-                              ? 'bg-brand-dark text-brand-accent shadow-xs'
-                              : 'bg-gray-100 text-gray-500 hover:text-brand-dark'
-                          }`}
-                        >
-                          {cat}
-                        </button>
-                      ))}
-                    </div>
-
                     {/* Blog Posts Table */}
                     <div className="overflow-x-auto">
                       <table className="w-full text-left">
                         <thead>
                           <tr className="border-b border-gray-100">
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Article</th>
-                            <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Category</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Author & Date</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark">Status</th>
                             <th className="pb-4 text-xs font-bold uppercase tracking-widest text-brand-dark text-right">Actions</th>
@@ -751,11 +956,6 @@ const AdminDashboard = () => {
                                     <p className="text-gray-400 text-xs line-clamp-1 mt-0.5">{b.excerpt || 'No summary available'}</p>
                                   </div>
                                 </div>
-                              </td>
-                              <td className="py-4 pr-4">
-                                <span className="bg-brand-accent/15 text-brand-dark text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap">
-                                  {b.category}
-                                </span>
                               </td>
                               <td className="py-4 pr-4 text-xs text-gray-500 whitespace-nowrap">
                                 <p className="font-semibold text-brand-dark">{b.author}</p>
@@ -820,7 +1020,7 @@ const AdminDashboard = () => {
       {/* Create / Edit Blog Modal */}
       {isBlogModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
-          <div className="bg-white w-full max-w-3xl rounded-sm shadow-2xl border border-gray-200 overflow-hidden my-8">
+          <div className="bg-white w-full max-w-4xl rounded-sm shadow-2xl border border-gray-200 overflow-hidden my-8">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-brand-light">
               <h3 className="font-serif text-xl text-brand-dark font-bold">
                 {editingBlog ? 'Edit Blog Article' : 'Create New Blog Article'}
@@ -848,36 +1048,17 @@ const AdminDashboard = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
-                    Category *
-                  </label>
-                  <select 
-                    value={blogFormData.category}
-                    onChange={(e) => setBlogFormData({ ...blogFormData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent bg-white"
-                  >
-                    <option value="Global Trade">Global Trade</option>
-                    <option value="Exhibition Insights">Exhibition Insights</option>
-                    <option value="Industry Trends">Industry Trends</option>
-                    <option value="Market Insights">Market Insights</option>
-                    <option value="Logistics">Logistics</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
-                    Reading Time
-                  </label>
-                  <input 
-                    type="text"
-                    placeholder="e.g. 5 min read"
-                    value={blogFormData.readTime}
-                    onChange={(e) => setBlogFormData({ ...blogFormData, readTime: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
-                  />
-                </div>
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Estimated Reading Time
+                </label>
+                <input 
+                  type="text"
+                  placeholder="e.g. 5 min read"
+                  value={blogFormData.readTime}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, readTime: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent"
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -958,74 +1139,280 @@ const AdminDashboard = () => {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
-                  Article Text Alignment
-                </label>
-                <div className="grid grid-cols-4 gap-2 mb-3">
-                  <button
-                    type="button"
-                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'left' })}
-                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
-                      (blogFormData.textAlign || 'left') === 'left'
-                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
-                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                    }`}
-                  >
-                    Left
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'justify' })}
-                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
-                      blogFormData.textAlign === 'justify'
-                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
-                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                    }`}
-                  >
-                    Justify
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'center' })}
-                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
-                      blogFormData.textAlign === 'center'
-                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
-                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                    }`}
-                  >
-                    Center
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'right' })}
-                    className={`px-3 py-1.5 rounded-xs border text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 ${
-                      blogFormData.textAlign === 'right'
-                        ? 'bg-brand-accent text-white border-brand-accent shadow-xs'
-                        : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                    }`}
-                  >
-                    Right
-                  </button>
-                </div>
-              </div>
+              {/* Content & Rich Formatting Section */}
+              <div className="pt-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-gray-100">
+                  <div className="flex items-center gap-2">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-brand-dark">
+                      Article Content & Formatting *
+                    </label>
+                    <span className="text-[11px] text-gray-400 font-normal hidden sm:inline">
+                      (Bold, Italic, Underline & Alignment supported)
+                    </span>
+                  </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-600">
-                    Full Article Content *
-                  </label>
-                  <span className="text-[11px] text-gray-400">Supports paragraphs, ### Headings, and * bullets</span>
+                  {/* Mode Tabs: Edit vs Live Preview */}
+                  <div className="flex items-center bg-gray-100 p-0.5 rounded-sm self-start sm:self-auto border border-gray-200">
+                    <button
+                      type="button"
+                      onClick={() => setEditorTab('write')}
+                      className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-xs transition-colors ${
+                        editorTab === 'write'
+                          ? 'bg-white text-brand-dark shadow-2xs'
+                          : 'text-gray-500 hover:text-brand-dark'
+                      }`}
+                    >
+                      <PencilSimple size={13} weight="bold" />
+                      <span>Write / Format</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditorTab('preview')}
+                      className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-xs transition-colors ${
+                        editorTab === 'preview'
+                          ? 'bg-white text-brand-accent shadow-2xs'
+                          : 'text-gray-500 hover:text-brand-accent'
+                      }`}
+                    >
+                      <Eye size={13} weight="bold" />
+                      <span>Live Preview</span>
+                    </button>
+                  </div>
                 </div>
-                <textarea 
-                  rows={8}
-                  required
-                  placeholder="Write or paste the complete article content here..."
-                  value={blogFormData.content}
-                  onChange={(e) => setBlogFormData({ ...blogFormData, content: e.target.value })}
-                  style={{ textAlign: blogFormData.textAlign || 'left' }}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent font-sans leading-relaxed"
-                />
+
+                {editorTab === 'write' ? (
+                  <div className="border border-gray-200 rounded-sm overflow-hidden focus-within:ring-1 focus-within:ring-brand-accent focus-within:border-brand-accent transition-all bg-white">
+                    {/* Rich Formatting Toolbar */}
+                    <div className="flex flex-wrap items-center gap-1.5 p-2 bg-gray-50 border-b border-gray-200 text-gray-700">
+                      
+                      {/* Font Styles: Bold, Italic, Underline */}
+                      <div className="flex items-center gap-0.5 bg-white p-0.5 rounded-xs border border-gray-200 shadow-2xs">
+                        <button
+                          type="button"
+                          onClick={() => applyFormat('**', '**', 'bold text')}
+                          title="Bold (Ctrl+B)"
+                          className="p-1.5 rounded-xs hover:bg-gray-100 hover:text-brand-accent text-gray-700 transition-colors"
+                        >
+                          <TextB size={16} weight="bold" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyFormat('*', '*', 'italic text')}
+                          title="Italic (Ctrl+I)"
+                          className="p-1.5 rounded-xs hover:bg-gray-100 hover:text-brand-accent text-gray-700 transition-colors"
+                        >
+                          <TextItalic size={16} weight="bold" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyFormat('<u>', '</u>', 'underlined text')}
+                          title="Underline (Ctrl+U)"
+                          className="p-1.5 rounded-xs hover:bg-gray-100 hover:text-brand-accent text-gray-700 transition-colors"
+                        >
+                          <TextUnderline size={16} weight="bold" />
+                        </button>
+                      </div>
+
+                      <div className="w-px h-5 bg-gray-300 mx-0.5 hidden sm:block" />
+
+                      {/* Headings */}
+                      <div className="flex items-center gap-0.5 bg-white p-0.5 rounded-xs border border-gray-200 shadow-2xs">
+                        <button
+                          type="button"
+                          onClick={() => applyLinePrefix('## ')}
+                          title="Heading 2 (## Heading)"
+                          className="px-2 py-1 text-xs font-serif font-bold hover:bg-gray-100 hover:text-brand-accent text-gray-700 rounded-xs transition-colors"
+                        >
+                          H2
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyLinePrefix('### ')}
+                          title="Heading 3 (### Heading)"
+                          className="px-2 py-1 text-xs font-serif font-bold hover:bg-gray-100 hover:text-brand-accent text-gray-700 rounded-xs transition-colors"
+                        >
+                          H3
+                        </button>
+                      </div>
+
+                      <div className="w-px h-5 bg-gray-300 mx-0.5 hidden sm:block" />
+
+                      {/* Lists and Quotes */}
+                      <div className="flex items-center gap-0.5 bg-white p-0.5 rounded-xs border border-gray-200 shadow-2xs">
+                        <button
+                          type="button"
+                          onClick={() => applyLinePrefix('* ')}
+                          title="Bullet List (* Item)"
+                          className="p-1.5 rounded-xs hover:bg-gray-100 hover:text-brand-accent text-gray-700 transition-colors"
+                        >
+                          <ListBullets size={16} weight="bold" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyLinePrefix('1. ')}
+                          title="Numbered List (1. Item)"
+                          className="p-1.5 rounded-xs hover:bg-gray-100 hover:text-brand-accent text-gray-700 transition-colors"
+                        >
+                          <ListNumbers size={16} weight="bold" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyLinePrefix('> ')}
+                          title="Quote Block (> Quote)"
+                          className="p-1.5 rounded-xs hover:bg-gray-100 hover:text-brand-accent text-gray-700 transition-colors"
+                        >
+                          <Quotes size={16} weight="bold" />
+                        </button>
+                      </div>
+
+                      <div className="w-px h-5 bg-gray-300 mx-0.5 hidden sm:block" />
+
+                      {/* Text Alignment */}
+                      <div className="flex items-center gap-0.5 bg-white p-0.5 rounded-xs border border-gray-200 shadow-2xs">
+                        <button
+                          type="button"
+                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'left' })}
+                          title="Align Left"
+                          className={`p-1.5 rounded-xs transition-colors ${
+                            (blogFormData.textAlign || 'left') === 'left'
+                              ? 'bg-brand-accent text-white shadow-2xs'
+                              : 'text-gray-600 hover:bg-gray-100 hover:text-brand-dark'
+                          }`}
+                        >
+                          <TextAlignLeft size={16} weight="bold" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'center' })}
+                          title="Align Center"
+                          className={`p-1.5 rounded-xs transition-colors ${
+                            blogFormData.textAlign === 'center'
+                              ? 'bg-brand-accent text-white shadow-2xs'
+                              : 'text-gray-600 hover:bg-gray-100 hover:text-brand-dark'
+                          }`}
+                        >
+                          <TextAlignCenter size={16} weight="bold" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'right' })}
+                          title="Align Right"
+                          className={`p-1.5 rounded-xs transition-colors ${
+                            blogFormData.textAlign === 'right'
+                              ? 'bg-brand-accent text-white shadow-2xs'
+                              : 'text-gray-600 hover:bg-gray-100 hover:text-brand-dark'
+                          }`}
+                        >
+                          <TextAlignRight size={16} weight="bold" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'justify' })}
+                          title="Align Justify"
+                          className={`p-1.5 rounded-xs transition-colors ${
+                            blogFormData.textAlign === 'justify'
+                              ? 'bg-brand-accent text-white shadow-2xs'
+                              : 'text-gray-600 hover:bg-gray-100 hover:text-brand-dark'
+                          }`}
+                        >
+                          <TextAlignJustify size={16} weight="bold" />
+                        </button>
+                      </div>
+
+                      {/* Keyboard shortcuts label */}
+                      <span className="hidden lg:inline ml-auto text-[10px] text-gray-400 font-mono">
+                        Shortcuts: Ctrl+B (Bold) • Ctrl+I (Italic) • Ctrl+U (Underline)
+                      </span>
+                    </div>
+
+                    {/* Writing Textarea */}
+                    <textarea 
+                      ref={contentTextareaRef}
+                      rows={10}
+                      required
+                      placeholder="Write your article here...&#10;&#10;Use the toolbar above or shortcuts:&#10;• Ctrl+B for **bold**&#10;• Ctrl+I for *italic*&#10;• Ctrl+U for <u>underline</u>&#10;• ## for Heading 2, ### for Heading 3&#10;• * or - for bullet lists&#10;• 1. for numbered lists"
+                      value={blogFormData.content}
+                      onChange={(e) => setBlogFormData({ ...blogFormData, content: e.target.value })}
+                      onKeyDown={handleEditorKeyDown}
+                      style={{ 
+                        textAlign: blogFormData.textAlign || 'left',
+                        textJustify: blogFormData.textAlign === 'justify' ? 'inter-word' : undefined 
+                      }}
+                      className="w-full px-4 py-3 border-none rounded-none text-sm focus:outline-none font-sans leading-relaxed text-gray-800 bg-white resize-y"
+                    />
+
+                    {/* Editor footer status bar */}
+                    <div className="flex flex-wrap items-center justify-between px-3 py-1.5 bg-gray-50 border-t border-gray-100 text-[11px] text-gray-500">
+                      <div className="flex items-center gap-3">
+                        <span>Alignment: <strong className="uppercase text-brand-dark font-semibold">{blogFormData.textAlign || 'left'}</strong></span>
+                        <span>•</span>
+                        <span>Words: <strong>{blogFormData.content ? blogFormData.content.trim().split(/\s+/).filter(Boolean).length : 0}</strong></span>
+                        <span>•</span>
+                        <span>Characters: <strong>{blogFormData.content?.length || 0}</strong></span>
+                      </div>
+                      <div className="flex items-center gap-1.5 mt-1 sm:mt-0">
+                        <span className="text-[10px] text-gray-400">Quick blocks:</span>
+                        <button
+                          type="button"
+                          onClick={() => applyFormat('[align=center]\n', '\n[/align]', 'Centered paragraph block')}
+                          className="text-[10px] bg-white border border-gray-200 px-1.5 py-0.5 rounded-xs hover:border-brand-accent hover:text-brand-accent transition-colors"
+                        >
+                          Center Block
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyFormat('[align=right]\n', '\n[/align]', 'Right-aligned paragraph block')}
+                          className="text-[10px] bg-white border border-gray-200 px-1.5 py-0.5 rounded-xs hover:border-brand-accent hover:text-brand-accent transition-colors"
+                        >
+                          Right Block
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Live Preview Box */
+                  <div className="border border-gray-200 rounded-sm bg-gray-50/50 p-4 sm:p-6 max-h-[420px] overflow-y-auto">
+                    <div className="bg-white p-6 sm:p-8 rounded-sm border border-gray-200/80 shadow-2xs">
+                      <div className="pb-4 mb-6 border-b border-gray-100 flex items-center justify-between">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-accent">
+                            Live Article Preview
+                          </span>
+                          <h4 className="font-serif text-xl sm:text-2xl font-bold text-brand-dark mt-1">
+                            {blogFormData.title || 'Untitled Article'}
+                          </h4>
+                          <p className="text-xs text-gray-400 mt-1">
+                            By {blogFormData.author || 'Author'} • {blogFormData.readTime || '5 min read'} • Text Align: {blogFormData.textAlign || 'left'}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setEditorTab('write')}
+                          className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-brand-light text-brand-dark hover:bg-brand-accent hover:text-white rounded-xs transition-colors flex items-center gap-1"
+                        >
+                          <PencilSimple size={14} /> Back to Edit
+                        </button>
+                      </div>
+
+                      {blogFormData.excerpt && (
+                        <div className="mb-6 p-4 bg-brand-dark text-white rounded-xs border-l-4 border-brand-accent text-sm italic">
+                          "{blogFormData.excerpt}"
+                        </div>
+                      )}
+
+                      {blogFormData.content ? (
+                        <FormattedArticleContent 
+                          content={blogFormData.content} 
+                          textAlign={blogFormData.textAlign || 'left'} 
+                        />
+                      ) : (
+                        <p className="text-gray-400 italic text-sm text-center py-8">
+                          No content written yet. Switch to "Write / Format" to compose your article.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-2 pt-2">

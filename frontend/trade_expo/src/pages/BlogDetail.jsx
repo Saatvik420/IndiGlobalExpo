@@ -20,6 +20,7 @@ import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
 import blogService, { getBlogSlug } from '../services/blogService';
+import FormattedArticleContent from '../components/blog/FormattedArticleContent';
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -87,69 +88,7 @@ const BlogDetail = () => {
     window.open(window.location.href, '_blank', 'noopener,noreferrer');
   };
 
-  // Render paragraphs and headers safely
-  const renderFormattedContent = (content) => {
-    if (!content) return null;
 
-    const sections = content.split('\n\n');
-    return sections.map((section, idx) => {
-      const trimmed = section.trim();
-      
-      // Header 3: ### Heading
-      if (trimmed.startsWith('### ')) {
-        return (
-          <h3 key={idx} className="font-serif text-2xl sm:text-3xl text-brand-dark font-bold mt-8 mb-4">
-            {trimmed.replace('### ', '')}
-          </h3>
-        );
-      }
-      
-      // Header 2: ## Heading
-      if (trimmed.startsWith('## ')) {
-        return (
-          <h2 key={idx} className="font-serif text-3xl sm:text-4xl text-brand-dark font-bold mt-10 mb-5">
-            {trimmed.replace('## ', '')}
-          </h2>
-        );
-      }
-
-      // Numbered List item or bullet list block
-      if (trimmed.includes('\n1.') || trimmed.startsWith('1.') || trimmed.includes('\n*') || trimmed.startsWith('*')) {
-        const lines = trimmed.split('\n');
-        return (
-          <div key={idx} className="my-6 space-y-3 pl-2 sm:pl-4 border-l-2 border-brand-accent/40">
-            {lines.map((line, lIdx) => {
-              const cleanLine = line.replace(/^\d+\.\s*/, '').replace(/^\*\s*/, '');
-              // Check for bold prefix e.g. **Title:**
-              const parts = cleanLine.split('**');
-              return (
-                <div key={lIdx} className="text-gray-700 leading-relaxed text-base sm:text-lg flex items-start gap-2">
-                  <span className="text-brand-accent font-bold mt-1 text-sm">•</span>
-                  <span>
-                    {parts.length >= 3 ? (
-                      <>
-                        <strong className="text-brand-dark font-semibold">{parts[1]}</strong>
-                        {parts.slice(2).join('')}
-                      </>
-                    ) : (
-                      cleanLine
-                    )}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        );
-      }
-
-      // Standard paragraph
-      return (
-        <p key={idx} className="text-gray-700 text-base sm:text-lg leading-relaxed mb-6 font-light">
-          {trimmed}
-        </p>
-      );
-    });
-  };
 
   if (isLoading) {
     return (
@@ -209,7 +148,7 @@ const BlogDetail = () => {
               <CaretRight size={12} className="text-gray-400" />
               <Link to="/blogs" className="hover:text-brand-accent transition-colors font-medium">Blogs & Articles</Link>
               <CaretRight size={12} className="text-gray-400" />
-              <span className="text-brand-accent font-semibold truncate max-w-[200px] sm:max-w-xs">{blog.category}</span>
+              <span className="text-brand-accent font-semibold truncate max-w-[200px] sm:max-w-xs">{blog.title}</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -234,10 +173,6 @@ const BlogDetail = () => {
 
           {/* Article Header Card */}
           <header className="mb-10">
-            <div className="inline-block bg-brand-accent text-white px-3 py-1 text-xs font-bold uppercase tracking-widest rounded-xs mb-4 shadow-xs">
-              {blog.category}
-            </div>
-
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-brand-dark font-bold leading-tight mb-6">
               {blog.title}
             </h1>
@@ -292,9 +227,7 @@ const BlogDetail = () => {
 
           {/* Main Article Content */}
           <article className="bg-white p-6 sm:p-12 rounded-sm border border-gray-200/80 shadow-sm mb-12">
-            <div className="prose prose-lg max-w-none" style={{ textAlign: blog.textAlign || 'left' }}>
-              {renderFormattedContent(blog.content)}
-            </div>
+            <FormattedArticleContent content={blog.content} textAlign={blog.textAlign || 'left'} />
 
             {/* Tags section */}
             {Array.isArray(blog.tags) && blog.tags.length > 0 && (
@@ -402,9 +335,6 @@ const BlogDetail = () => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                         />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-brand-accent block mb-1">
-                        {relBlog.category}
-                      </span>
                       <h4 className="font-serif text-base text-brand-dark group-hover:text-brand-accent transition-colors font-bold line-clamp-2 leading-snug mb-2">
                         {relBlog.title}
                       </h4>

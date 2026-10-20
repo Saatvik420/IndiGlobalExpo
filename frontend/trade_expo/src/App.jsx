@@ -47,6 +47,8 @@ function App() {
         <Route path="/sectors" element={<Sectors />} />
         <Route path="/teams" element={<Teams />} />
         <Route path="/tickets" element={<Tickets />} />
+        <Route path="/login" element={<Tickets />} />
+        <Route path="/admin/login" element={<Tickets />} />
         <Route path="/visitor" element={<Visitor />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog" element={<Blogs />} />

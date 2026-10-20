@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   IdentificationBadge, Storefront, CreditCard, Check, CircleNotch, Ticket, 
-  User as UserIcon, ArrowRight, X, SignIn, UserPlus, ArrowLeft, CheckCircle, FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo
+  User as UserIcon, ArrowRight, X, SignIn, UserPlus, ArrowLeft, CheckCircle, FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo, ShieldCheck
 } from '@phosphor-icons/react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -16,9 +16,17 @@ import { getErrorMessage } from '../utils/errorHelper';
 
 const Tickets = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn, login, user, addTicket } = useGlobal();
-  const [step, setStep] = useState(0);
-  const [currentRole, setCurrentRole] = useState('');
+
+  const isAdminRoute = 
+    location.pathname === '/login' || 
+    location.pathname === '/admin/login' || 
+    location.state?.from?.pathname === '/admin' || 
+    new URLSearchParams(location.search).get('role') === 'admin';
+
+  const [step, setStep] = useState(() => isAdminRoute ? 'login' : 0);
+  const [currentRole, setCurrentRole] = useState(() => isAdminRoute ? 'Admin' : '');
   const [currentTicket, setCurrentTicket] = useState({ type: '', price: 0 });
   const [userDetails, setUserDetails] = useState({ firstName: '', lastName: '', email: '', company: '', mobile: '', designation: '', country: '' });
   const [isProcessing, setIsProcessing] = useState(false);
@@ -44,6 +52,10 @@ const Tickets = () => {
 
   useEffect(() => {
     if (isLoggedIn && user) {
+      if (user.roles?.includes('ROLE_ADMIN') || location.state?.from?.pathname === '/admin') {
+        navigate('/admin');
+        return;
+      }
       setUserDetails(user);
       if (user.roles?.includes('ROLE_EXHIBITOR')) {
         setCurrentRole('Exhibitor');
@@ -55,7 +67,7 @@ const Tickets = () => {
         setStep(2);
       }
     }
-  }, [isLoggedIn, user]);
+  }, [isLoggedIn, user, navigate, location.state]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -68,7 +80,12 @@ const Tickets = () => {
       const response = await authService.login(email, password);
       login(response);
       setUserDetails(response);
-      setStep(2);
+      const fromPath = location.state?.from?.pathname;
+      if (response.roles?.includes('ROLE_ADMIN') || fromPath === '/admin' || currentRole === 'Admin') {
+        navigate('/admin');
+      } else {
+        setStep(2);
+      }
     } catch (err) {
       setError(getErrorMessage(err, 'Login failed. Please check your credentials.'));
     } finally {
@@ -288,6 +305,25 @@ const Tickets = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Admin Portal Quick Access */}
+              <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto text-center sm:text-left bg-white p-5 sm:p-6 rounded-sm border border-gray-100 shadow-sm">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-brand-dark flex items-center justify-center sm:justify-start gap-2">
+                    <ShieldCheck size={18} className="text-brand-accent" weight="bold" /> Administrator Console Access
+                  </p>
+                  <p className="text-xs text-gray-500 font-light mt-1">
+                    Managing users, viewing inquiries, or publishing blogs? Log in with your admin credentials.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { setCurrentRole('Admin'); setStep('login'); }}
+                  className="px-5 py-2.5 bg-brand-dark hover:bg-brand-accent text-white text-xs font-bold uppercase tracking-widest transition-all rounded-sm flex items-center gap-2 whitespace-nowrap cursor-pointer interactive"
+                >
+                  <SignIn size={16} /> Admin Login
+                </button>
+              </div>
             </div>
           )}
 
@@ -297,28 +333,62 @@ const Tickets = () => {
               <div className="bg-white p-6 sm:p-10 md:p-16 rounded-sm shadow-2xl max-w-md mx-auto w-full border border-gray-100">
                 <div className="mb-6 sm:mb-10 text-center">
                   <div className="w-14 h-14 sm:w-16 sm:h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 border border-gray-100">
-                    <UserIcon size={28} weight="fill" className="text-brand-accent sm:hidden" />
-                    <UserIcon size={32} weight="fill" className="text-brand-accent hidden sm:block" />
+                    {currentRole === 'Admin' ? (
+                      <ShieldCheck size={32} weight="bold" className="text-brand-accent" />
+                    ) : (
+                      <>
+                        <UserIcon size={28} weight="fill" className="text-brand-accent sm:hidden" />
+                        <UserIcon size={32} weight="fill" className="text-brand-accent hidden sm:block" />
+                      </>
+                    )}
                   </div>
-                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-1 sm:mb-2">Welcome Back</p>
+                  <p className="text-brand-accent tracking-widest uppercase text-xs font-bold mb-1 sm:mb-2">
+                    {currentRole === 'Admin' ? 'Management Console' : 'Welcome Back'}
+                  </p>
                   <h2 className="font-serif text-2xl sm:text-4xl text-brand-dark mb-1 sm:mb-2">{currentRole} Login</h2>
-                  <p className="text-gray-500 font-light text-xs sm:text-sm">Log in to manage your bookings and access passes.</p>
+                  <p className="text-gray-500 font-light text-xs sm:text-sm">
+                    {currentRole === 'Admin' 
+                      ? 'Enter admin credentials to access registered users, exhibitors, and blog tools.' 
+                      : 'Log in to manage your bookings and access passes.'}
+                  </p>
                 </div>
                 
                 <form onSubmit={handleLogin}>
                   <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
                     <div>
                       <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Email Address</label>
-                      <input type="email" name="email" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="jane@company.com" />
+                      <input 
+                        type="email" 
+                        name="email" 
+                        required 
+                        defaultValue={currentRole === 'Admin' ? 'admin@indiatradeexpo.com' : ''}
+                        className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" 
+                        placeholder={currentRole === 'Admin' ? 'admin@indiatradeexpo.com' : 'jane@company.com'} 
+                      />
                     </div>
                     <div>
                       <div className="flex justify-between items-end mb-1">
                         <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400">Password</label>
-                        <button type="button" className="text-[10px] text-brand-accent hover:underline interactive">Forgot?</button>
+                        {currentRole !== 'Admin' && (
+                          <button type="button" className="text-[10px] text-brand-accent hover:underline interactive">Forgot?</button>
+                        )}
                       </div>
-                      <input type="password" name="password" required className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" placeholder="••••••••" />
+                      <input 
+                        type="password" 
+                        name="password" 
+                        required 
+                        autoFocus={currentRole === 'Admin'}
+                        className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" 
+                        placeholder={currentRole === 'Admin' ? '•••••••• (Admin@123456)' : '••••••••'} 
+                      />
                     </div>
                   </div>
+
+                  {currentRole === 'Admin' && (
+                    <div className="mb-4 p-2.5 bg-brand-light rounded border border-gray-200 text-[11px] text-gray-600">
+                      <span className="font-bold text-brand-dark">Default Admin:</span> admin@indiatradeexpo.com / Admin@123456
+                    </div>
+                  )}
                   
                   {error && <p className="text-red-500 text-xs font-bold text-center mb-4">{error}</p>}
                   
@@ -327,10 +397,12 @@ const Tickets = () => {
                   </button>
                   
                   <div className="flex flex-col items-center gap-3 sm:gap-4 mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100">
-                    <button type="button" onClick={() => setStep(1)} className="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-brand-dark transition-colors interactive">
-                      Create an Account Instead
-                    </button>
-                    <button type="button" onClick={() => setStep(0)} className="text-[10px] uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors interactive flex items-center gap-1">
+                    {currentRole !== 'Admin' && (
+                      <button type="button" onClick={() => setStep(1)} className="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-brand-dark transition-colors interactive">
+                        Create an Account Instead
+                      </button>
+                    )}
+                    <button type="button" onClick={() => { setCurrentRole(''); setStep(0); }} className="text-[10px] uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors interactive flex items-center gap-1">
                       <ArrowLeft /> Back to Role Selection
                     </button>
                   </div>

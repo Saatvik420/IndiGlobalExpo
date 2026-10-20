@@ -86,6 +86,19 @@ const Header = ({ logoColor = 'text-white' }) => {
               <span>Blogs</span>
             </button>
 
+            {!user && !isMenuOpen && (
+              <button
+                onClick={() => handleNavigate('/login')}
+                className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold uppercase tracking-widest transition-all rounded-full border ${
+                  isDarkText || logoColor.includes('text-brand-dark')
+                    ? 'text-brand-dark border-brand-dark/20 hover:border-brand-accent hover:text-brand-accent'
+                    : 'text-white border-white/30 hover:border-brand-accent hover:text-brand-accent'
+                }`}
+              >
+                <span>Sign In</span>
+              </button>
+            )}
+
             {/* Menu Toggle */}
             <button 
               onClick={toggleMenu}

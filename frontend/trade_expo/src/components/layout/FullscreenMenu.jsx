@@ -68,12 +68,18 @@ const FullscreenMenu = () => {
           Blogs & Insights
         </button>
         
-        <div className={`mt-6 sm:mt-10 md:mt-12 pt-6 sm:pt-8 md:pt-12 border-t border-white/10 flex flex-col items-center transition-all duration-500 ${isMenuOpen ? 'opacity-100 translate-y-0 delay-600' : 'opacity-0 translate-y-5'}`}>
+        <div className={`mt-6 sm:mt-10 md:mt-12 pt-6 sm:pt-8 md:pt-12 border-t border-white/10 flex flex-col items-center gap-3 transition-all duration-500 ${isMenuOpen ? 'opacity-100 translate-y-0 delay-600' : 'opacity-0 translate-y-5'}`}>
           <button 
             onClick={() => handleNavigate('/tickets')} 
             className="bg-brand-accent text-white px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-bold tracking-widest hover:bg-white hover:text-brand-dark transition-all duration-300 uppercase interactive shadow-lg"
           >
             Get Tickets Now
+          </button>
+          <button 
+            onClick={() => handleNavigate('/login')} 
+            className="text-xs uppercase tracking-widest text-white/60 hover:text-brand-accent transition-colors font-bold pt-1 interactive"
+          >
+            Sign In / Admin Console
           </button>
         </div>
       </nav>
