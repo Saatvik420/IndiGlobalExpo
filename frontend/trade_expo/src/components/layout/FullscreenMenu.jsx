@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
 import { useGlobal } from '../../context/GlobalContext';
 import logoWhiteImg from '../../assets/IndiGlobal Expo Logo White.png';
 
@@ -81,6 +82,37 @@ const FullscreenMenu = () => {
           >
             Sign In / Admin Console
           </button>
+
+          {/* Social Media Links */}
+          <div className="flex items-center gap-6 mt-4 pt-4 border-t border-white/10">
+            <a 
+              href="https://www.facebook.com/profile.php?id=61593776497418" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-white/60 hover:text-brand-accent transition-colors interactive p-1"
+              aria-label="Facebook"
+            >
+              <FacebookLogo weight="fill" size={24} className="hover:scale-110 transition-transform" />
+            </a>
+            <a 
+              href="https://www.instagram.com/indiglobalexpo?obrf=cDY3aWE0dTRxZmUx" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-white/60 hover:text-brand-accent transition-colors interactive p-1"
+              aria-label="Instagram"
+            >
+              <InstagramLogo weight="fill" size={24} className="hover:scale-110 transition-transform" />
+            </a>
+            <a 
+              href="https://www.linkedin.com/company/indiglobal-expo" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-white/60 hover:text-brand-accent transition-colors interactive p-1"
+              aria-label="LinkedIn"
+            >
+              <LinkedinLogo weight="fill" size={24} className="hover:scale-110 transition-transform" />
+            </a>
+          </div>
         </div>
       </nav>
     </div>

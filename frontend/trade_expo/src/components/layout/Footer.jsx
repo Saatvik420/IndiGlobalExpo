@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo } from '@phosphor-icons/react';
 import logoImg from '../../assets/IndiGlobal Expo Logo.png';
 
 const Footer = () => {
@@ -145,35 +146,35 @@ const Footer = () => {
               href="https://www.facebook.com/profile.php?id=61593776497418" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive flex items-center justify-center" 
               aria-label="Facebook"
             >
-              <i className="ph-fill ph-facebook-logo text-xl hover:scale-110 transition-transform"></i>
+              <FacebookLogo weight="fill" size={22} className="hover:scale-110 transition-transform" />
             </a>
             <a 
               href="https://www.instagram.com/indiglobalexpo?obrf=cDY3aWE0dTRxZmUx" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive flex items-center justify-center" 
               aria-label="Instagram"
             >
-              <i className="ph-fill ph-instagram-logo text-xl hover:scale-110 transition-transform"></i>
+              <InstagramLogo weight="fill" size={22} className="hover:scale-110 transition-transform" />
             </a>
             <a 
               href="https://www.linkedin.com/company/indiglobal-expo" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive flex items-center justify-center" 
               aria-label="LinkedIn"
             >
-              <i className="ph-fill ph-linkedin-logo text-xl hover:scale-110 transition-transform"></i>
+              <LinkedinLogo weight="fill" size={22} className="hover:scale-110 transition-transform" />
             </a>
             <a 
               href="#" 
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
+              className="text-gray-400 hover:text-brand-accent transition-colors interactive flex items-center justify-center" 
               aria-label="Twitter"
             >
-              <i className="ph-fill ph-twitter-logo text-xl hover:scale-110 transition-transform"></i>
+              <TwitterLogo weight="fill" size={22} className="hover:scale-110 transition-transform" />
             </a>
           </div>
         </div>
