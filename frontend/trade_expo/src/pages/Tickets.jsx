@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   IdentificationBadge, Storefront, CreditCard, Check, CircleNotch, Ticket, 
-  User as UserIcon, ArrowRight, X, SignIn, UserPlus, ArrowLeft, CheckCircle, FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo, ShieldCheck
+  User as UserIcon, ArrowRight, X, SignIn, UserPlus, ArrowLeft, CheckCircle, ShieldCheck
 } from '@phosphor-icons/react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';

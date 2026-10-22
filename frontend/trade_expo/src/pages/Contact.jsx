@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   EnvelopeSimple, Phone, MapPin, Globe, FacebookLogo, 
-  InstagramLogo, LinkedinLogo, TwitterLogo, ArrowRight, Buildings, PaperPlaneTilt, CheckCircle, Spinner
+  InstagramLogo, LinkedinLogo, ArrowRight, Buildings, PaperPlaneTilt, CheckCircle, Spinner
 } from '@phosphor-icons/react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -159,7 +159,6 @@ const Contact = () => {
                   <a href="https://www.facebook.com/profile.php?id=61593776497418" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Facebook"><FacebookLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
                   <a href="https://www.instagram.com/indiglobalexpo?obrf=cDY3aWE0dTRxZmUx" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Instagram"><InstagramLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
                   <a href="https://www.linkedin.com/company/indiglobal-expo" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="LinkedIn"><LinkedinLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
-                  <a href="#" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Twitter"><TwitterLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
                 </div>
               </div>
             </div>

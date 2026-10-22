@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FacebookLogo, InstagramLogo, LinkedinLogo, TwitterLogo } from '@phosphor-icons/react';
+import { FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
 import logoImg from '../../assets/IndiGlobal Expo Logo.png';
 
 const Footer = () => {
@@ -168,13 +168,6 @@ const Footer = () => {
               aria-label="LinkedIn"
             >
               <LinkedinLogo weight="fill" size={22} className="hover:scale-110 transition-transform" />
-            </a>
-            <a 
-              href="#" 
-              className="text-gray-400 hover:text-brand-accent transition-colors interactive flex items-center justify-center" 
-              aria-label="Twitter"
-            >
-              <TwitterLogo weight="fill" size={22} className="hover:scale-110 transition-transform" />
             </a>
           </div>
         </div>
