@@ -156,9 +156,9 @@ const Contact = () => {
               <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10 relative z-10">
                 <h4 className="text-xs uppercase tracking-widest font-bold text-gray-400 mb-4">Follow Us</h4>
                 <div className="flex items-center gap-6">
-                  <a href="#" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Facebook"><FacebookLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
-                  <a href="#" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Instagram"><InstagramLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
-                  <a href="#" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="LinkedIn"><LinkedinLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
+                  <a href="https://www.facebook.com/profile.php?id=61593776497418" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Facebook"><FacebookLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
+                  <a href="https://www.instagram.com/indiglobalexpo?obrf=cDY3aWE0dTRxZmUx" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Instagram"><InstagramLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
+                  <a href="https://www.linkedin.com/company/indiglobal-expo" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="LinkedIn"><LinkedinLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
                   <a href="#" className="text-white hover:text-brand-accent transition-colors interactive" aria-label="Twitter"><TwitterLogo weight="fill" className="text-2xl hover:scale-110 transition-transform" /></a>
                 </div>
               </div>

@@ -27,6 +27,7 @@ import {
   ListBullets,
   ListNumbers,
   Quotes,
+  LinkSimple,
   Eye,
   Key,
   ArrowsClockwise,
@@ -82,6 +83,88 @@ const AdminDashboard = () => {
   const [isSavingBlog, setIsSavingBlog] = useState(false);
   const [editorTab, setEditorTab] = useState('write'); // 'write' or 'preview'
   const contentTextareaRef = useRef(null);
+
+  // Hyperlink Modal state
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+  const [linkModalData, setLinkModalData] = useState({ text: '', url: '' });
+  const linkUrlInputRef = useRef(null);
+
+  const handleOpenLinkModal = () => {
+    const textarea = contentTextareaRef.current;
+    let selected = '';
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      if (start !== end) {
+        selected = (blogFormData.content || '').substring(start, end);
+      }
+    }
+    setLinkModalData({
+      text: selected,
+      url: ''
+    });
+    setIsLinkModalOpen(true);
+    setTimeout(() => {
+      if (linkUrlInputRef.current) {
+        linkUrlInputRef.current.focus();
+      }
+    }, 100);
+  };
+
+  const handleInsertLink = (e) => {
+    if (e) e.preventDefault();
+    const text = (linkModalData.text || '').trim() || 'Link Text';
+    let url = (linkModalData.url || '').trim();
+    if (!url) {
+      alert('Please enter a destination URL.');
+      return;
+    }
+
+    if (!/^(https?:\/\/|mailto:|tel:|\/|#)/i.test(url)) {
+      url = `https://${url}`;
+    }
+
+    const linkMarkdown = `[${text}](${url})`;
+
+    const textarea = contentTextareaRef.current;
+    if (!textarea) {
+      setBlogFormData(prev => ({
+        ...prev,
+        content: (prev.content || '') + linkMarkdown
+      }));
+      setIsLinkModalOpen(false);
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const oldText = blogFormData.content || '';
+    const newText = oldText.substring(0, start) + linkMarkdown + oldText.substring(end);
+    const newCursor = start + linkMarkdown.length;
+
+    setBlogFormData(prev => ({ ...prev, content: newText }));
+    setIsLinkModalOpen(false);
+
+    requestAnimationFrame(() => {
+      if (contentTextareaRef.current) {
+        contentTextareaRef.current.focus();
+        contentTextareaRef.current.setSelectionRange(newCursor, newCursor);
+      }
+    });
+  };
+
+  const handleSetAlignment = (alignment) => {
+    const textarea = contentTextareaRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      if (start !== end) {
+        applyFormat(`[align=${alignment}]\n`, `\n[/align]`, `${alignment} aligned block`);
+        return;
+      }
+    }
+    setBlogFormData(prev => ({ ...prev, textAlign: alignment }));
+  };
 
   const applyFormat = (prefix, suffix = prefix, placeholder = 'text') => {
     const textarea = contentTextareaRef.current;
@@ -165,6 +248,9 @@ const AdminDashboard = () => {
       } else if (e.key === 'u' || e.key === 'U') {
         e.preventDefault();
         applyFormat('<u>', '</u>', 'underlined text');
+      } else if (e.key === 'k' || e.key === 'K') {
+        e.preventDefault();
+        handleOpenLinkModal();
       }
     }
   };
@@ -1267,12 +1353,27 @@ const AdminDashboard = () => {
 
                       <div className="w-px h-5 bg-gray-300 mx-0.5 hidden sm:block" />
 
+                      {/* Hyperlink */}
+                      <div className="flex items-center gap-0.5 bg-white p-0.5 rounded-xs border border-gray-200 shadow-2xs">
+                        <button
+                          type="button"
+                          onClick={handleOpenLinkModal}
+                          title="Insert Hyperlink (Ctrl+K)"
+                          className="px-2 py-1.5 rounded-xs hover:bg-gray-100 hover:text-brand-accent text-gray-700 transition-colors flex items-center gap-1.5"
+                        >
+                          <LinkSimple size={16} weight="bold" />
+                          <span className="text-xs font-semibold">Link</span>
+                        </button>
+                      </div>
+
+                      <div className="w-px h-5 bg-gray-300 mx-0.5 hidden sm:block" />
+
                       {/* Text Alignment */}
                       <div className="flex items-center gap-0.5 bg-white p-0.5 rounded-xs border border-gray-200 shadow-2xs">
                         <button
                           type="button"
-                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'left' })}
-                          title="Align Left"
+                          onClick={() => handleSetAlignment('left')}
+                          title="Align Left (Sets default or wraps selected text in [align=left])"
                           className={`p-1.5 rounded-xs transition-colors ${
                             (blogFormData.textAlign || 'left') === 'left'
                               ? 'bg-brand-accent text-white shadow-2xs'
@@ -1283,8 +1384,8 @@ const AdminDashboard = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'center' })}
-                          title="Align Center"
+                          onClick={() => handleSetAlignment('center')}
+                          title="Align Center (Sets default or wraps selected text in [align=center])"
                           className={`p-1.5 rounded-xs transition-colors ${
                             blogFormData.textAlign === 'center'
                               ? 'bg-brand-accent text-white shadow-2xs'
@@ -1295,8 +1396,8 @@ const AdminDashboard = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'right' })}
-                          title="Align Right"
+                          onClick={() => handleSetAlignment('right')}
+                          title="Align Right (Sets default or wraps selected text in [align=right])"
                           className={`p-1.5 rounded-xs transition-colors ${
                             blogFormData.textAlign === 'right'
                               ? 'bg-brand-accent text-white shadow-2xs'
@@ -1307,8 +1408,8 @@ const AdminDashboard = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setBlogFormData({ ...blogFormData, textAlign: 'justify' })}
-                          title="Align Justify"
+                          onClick={() => handleSetAlignment('justify')}
+                          title="Align Justify (Sets default or wraps selected text in [align=justify])"
                           className={`p-1.5 rounded-xs transition-colors ${
                             blogFormData.textAlign === 'justify'
                               ? 'bg-brand-accent text-white shadow-2xs'
@@ -1321,7 +1422,7 @@ const AdminDashboard = () => {
 
                       {/* Keyboard shortcuts label */}
                       <span className="hidden lg:inline ml-auto text-[10px] text-gray-400 font-mono">
-                        Shortcuts: Ctrl+B (Bold) • Ctrl+I (Italic) • Ctrl+U (Underline)
+                        Shortcuts: Ctrl+B (Bold) • Ctrl+I (Italic) • Ctrl+U (Underline) • Ctrl+K (Link)
                       </span>
                     </div>
 
@@ -1330,7 +1431,7 @@ const AdminDashboard = () => {
                       ref={contentTextareaRef}
                       rows={10}
                       required
-                      placeholder="Write your article here...&#10;&#10;Use the toolbar above or shortcuts:&#10;• Ctrl+B for **bold**&#10;• Ctrl+I for *italic*&#10;• Ctrl+U for <u>underline</u>&#10;• ## for Heading 2, ### for Heading 3&#10;• * or - for bullet lists&#10;• 1. for numbered lists"
+                      placeholder="Write your article here...&#10;&#10;Use the toolbar above or shortcuts:&#10;• Ctrl+K to add Hyperlinks [Link Text](https://url)&#10;• Ctrl+B for **bold**, Ctrl+I for *italic*, Ctrl+U for <u>underline</u>&#10;• Align Justify button or [align=justify]text[/align] for justified text&#10;• ## for Heading 2, ### for Heading 3&#10;• * or - for bullet lists, 1. for numbered lists"
                       value={blogFormData.content}
                       onChange={(e) => setBlogFormData({ ...blogFormData, content: e.target.value })}
                       onKeyDown={handleEditorKeyDown}
@@ -1344,7 +1445,12 @@ const AdminDashboard = () => {
                     {/* Editor footer status bar */}
                     <div className="flex flex-wrap items-center justify-between px-3 py-1.5 bg-gray-50 border-t border-gray-100 text-[11px] text-gray-500">
                       <div className="flex items-center gap-3">
-                        <span>Alignment: <strong className="uppercase text-brand-dark font-semibold">{blogFormData.textAlign || 'left'}</strong></span>
+                        <span>
+                          Alignment: <strong className="uppercase text-brand-dark font-semibold">{blogFormData.textAlign || 'left'}</strong>
+                          {blogFormData.textAlign === 'justify' && (
+                            <span className="ml-1.5 text-[10px] text-brand-accent font-medium">(View in 'Live Preview' tab for justified layout)</span>
+                          )}
+                        </span>
                         <span>•</span>
                         <span>Words: <strong>{blogFormData.content ? blogFormData.content.trim().split(/\s+/).filter(Boolean).length : 0}</strong></span>
                         <span>•</span>
@@ -1352,6 +1458,20 @@ const AdminDashboard = () => {
                       </div>
                       <div className="flex items-center gap-1.5 mt-1 sm:mt-0">
                         <span className="text-[10px] text-gray-400">Quick blocks:</span>
+                        <button
+                          type="button"
+                          onClick={handleOpenLinkModal}
+                          className="text-[10px] bg-white border border-gray-200 px-1.5 py-0.5 rounded-xs hover:border-brand-accent hover:text-brand-accent transition-colors flex items-center gap-1 font-medium"
+                        >
+                          <LinkSimple size={12} weight="bold" /> Add Link
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyFormat('[align=justify]\n', '\n[/align]', 'Justified paragraph block')}
+                          className="text-[10px] bg-white border border-gray-200 px-1.5 py-0.5 rounded-xs hover:border-brand-accent hover:text-brand-accent transition-colors font-medium"
+                        >
+                          Justify Block
+                        </button>
                         <button
                           type="button"
                           onClick={() => applyFormat('[align=center]\n', '\n[/align]', 'Centered paragraph block')}
@@ -1449,6 +1569,76 @@ const AdminDashboard = () => {
                   ) : (
                     <span>{editingBlog ? 'Update Article' : 'Publish Article'}</span>
                   )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Insert Hyperlink Modal */}
+      {isLinkModalOpen && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-2xs animate-fade-in">
+          <div className="bg-white rounded-lg shadow-2xl border border-gray-200 max-w-md w-full p-6 relative">
+            <div className="flex items-center justify-between pb-3 mb-4 border-b border-gray-100">
+              <div className="flex items-center gap-2 text-brand-dark font-serif font-bold text-lg">
+                <LinkSimple size={20} className="text-brand-accent" weight="bold" />
+                <span>Insert Hyperlink</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsLinkModalOpen(false)}
+                className="p-1 text-gray-400 hover:text-brand-dark transition-colors rounded-xs"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleInsertLink} className="space-y-4">
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Display Text (Anchor)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Visit Our Official Portal"
+                  value={linkModalData.text}
+                  onChange={(e) => setLinkModalData({ ...linkModalData, text: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:border-brand-accent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Destination URL *
+                </label>
+                <input
+                  ref={linkUrlInputRef}
+                  type="text"
+                  required
+                  placeholder="https://indiglobalexpo.com or /tickets"
+                  value={linkModalData.url}
+                  onChange={(e) => setLinkModalData({ ...linkModalData, url: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:border-brand-accent"
+                />
+                <p className="text-[11px] text-gray-400 mt-1">
+                  Enter full web URL (e.g. https://...), email (mailto:...), or site path.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setIsLinkModalOpen(false)}
+                  className="px-4 py-2 border border-gray-200 text-xs font-bold uppercase tracking-wider text-gray-600 hover:bg-gray-50 rounded-sm transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-brand-accent hover:bg-brand-dark text-white text-xs font-bold uppercase tracking-wider rounded-sm transition-colors shadow-sm"
+                >
+                  Insert Link
                 </button>
               </div>
             </form>

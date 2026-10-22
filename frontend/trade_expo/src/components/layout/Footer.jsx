@@ -142,21 +142,27 @@ const Footer = () => {
           <p>&copy; 2027 IndiGlobal Expo. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a 
-              href="#" 
+              href="https://www.facebook.com/profile.php?id=61593776497418" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
               aria-label="Facebook"
             >
               <i className="ph-fill ph-facebook-logo text-xl hover:scale-110 transition-transform"></i>
             </a>
             <a 
-              href="#" 
+              href="https://www.instagram.com/indiglobalexpo?obrf=cDY3aWE0dTRxZmUx" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
               aria-label="Instagram"
             >
               <i className="ph-fill ph-instagram-logo text-xl hover:scale-110 transition-transform"></i>
             </a>
             <a 
-              href="#" 
+              href="https://www.linkedin.com/company/indiglobal-expo" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-brand-accent transition-colors interactive" 
               aria-label="LinkedIn"
             >
