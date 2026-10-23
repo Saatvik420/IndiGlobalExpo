@@ -40,7 +40,7 @@ import CustomCursor from '../../components/ui/CustomCursor';
 import { useGlobal } from '../../context/GlobalContext';
 import { adminService } from '../../services/adminService';
 import { contactService } from '../../services/contactService';
-import blogService, { getBlogSlug } from '../../services/blogService';
+import blogService, { getBlogSlug, unpackBlogMeta } from '../../services/blogService';
 import FormattedArticleContent from '../../components/blog/FormattedArticleContent';
 import { authService } from '../../services/authService';
 import apiClient from '../../api/client';
@@ -402,21 +402,22 @@ const AdminDashboard = () => {
   };
 
   const handleOpenEditBlog = (b) => {
-    setEditingBlog(b);
+    const unpacked = unpackBlogMeta(b);
+    setEditingBlog(unpacked);
     setBlogFormData({
-      title: b.title || '',
-      titleDescription: b.titleDescription || '',
-      tabTitle: b.tabTitle || b.metaTitle || '',
-      tabDescription: b.tabDescription || b.metaDescription || '',
-      excerpt: b.excerpt || '',
-      content: b.content || '',
-      author: b.author || 'IndiGlobal Editorial Team',
-      authorRole: b.authorRole || 'Editorial Team',
-      readTime: b.readTime || '5 min read',
-      coverImage: b.coverImage || '',
-      tags: Array.isArray(b.tags) ? b.tags.join(', ') : (b.tags || ''),
-      featured: Boolean(b.featured),
-      textAlign: b.textAlign || 'left'
+      title: unpacked.title || '',
+      titleDescription: unpacked.titleDescription || '',
+      tabTitle: unpacked.tabTitle || '',
+      tabDescription: unpacked.tabDescription || '',
+      excerpt: unpacked.excerpt || '',
+      content: unpacked.content || '',
+      author: unpacked.author || 'IndiGlobal Editorial Team',
+      authorRole: unpacked.authorRole || 'Editorial Team',
+      readTime: unpacked.readTime || '5 min read',
+      coverImage: unpacked.coverImage || '',
+      tags: Array.isArray(unpacked.tags) ? unpacked.tags.join(', ') : (unpacked.tags || ''),
+      featured: Boolean(unpacked.featured),
+      textAlign: unpacked.textAlign || 'left'
     });
     setEditorTab('write');
     setIsBlogModalOpen(true);
@@ -1066,6 +1067,11 @@ const AdminDashboard = () => {
                                     {b.tabTitle && (
                                       <p className="text-[10px] text-gray-500 line-clamp-1 mt-0.5">
                                         <span className="font-semibold text-brand-accent">Tab Title:</span> {b.tabTitle}
+                                      </p>
+                                    )}
+                                    {b.tabDescription && (
+                                      <p className="text-[10px] text-gray-400 line-clamp-1">
+                                        <span className="font-semibold text-gray-500">Tab Desc:</span> {b.tabDescription}
                                       </p>
                                     )}
                                   </div>

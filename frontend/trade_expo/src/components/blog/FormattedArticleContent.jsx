@@ -172,8 +172,11 @@ export function renderInlineNodes(nodes) {
  * Headings (#, ##, ###), Quotes (>), Lists (*, 1.), Block alignment tags, and Paragraphs.
  * Supports full block alignment wrappers like [align=justify], [justify], etc.
  */
-export function parseArticleBlocks(content, defaultAlign = 'left') {
-  if (!content || typeof content !== 'string') return [];
+export function parseArticleBlocks(rawContent, defaultAlign = 'left') {
+  if (!rawContent || typeof rawContent !== 'string') return [];
+  // Strip any metadata comment header to ensure article body is clean
+  const content = rawContent.replace(/<!--\[indiglobal-meta:[\s\S]*?\]-->/, '').trimStart();
+  if (!content) return [];
 
   // Match alignment wrapper blocks:
   // 1. [align=left|center|right|justify]...[/align]

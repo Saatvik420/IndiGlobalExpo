@@ -152,20 +152,11 @@ export const getLocalBlogs = () => {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed.map(b => {
-          const { category, ...rest } = b;
-          const initialMatch = INITIAL_BLOGS.find(ib => ib.slug === rest.slug || ib.id === rest.id || ib.title === rest.title);
-          
-          // Backfill titleDescription, tabTitle, tabDescription if missing from local cache
-          if (!rest.titleDescription && initialMatch?.titleDescription) {
-            rest.titleDescription = initialMatch.titleDescription;
-          }
-          if (!rest.tabTitle) {
-            rest.tabTitle = rest.metaTitle || initialMatch?.tabTitle || (rest.title ? `${rest.title} | IndiGlobal Expo` : '');
-          }
-          if (!rest.tabDescription) {
-            rest.tabDescription = rest.metaDescription || initialMatch?.tabDescription || rest.titleDescription || rest.excerpt || '';
-          }
-          return rest;
+          const unpacked = unpackBlogMeta(b);
+          return {
+            ...unpacked,
+            slug: unpacked.slug || getBlogSlug(unpacked)
+          };
         });
       }
     }
@@ -176,7 +167,7 @@ export const getLocalBlogs = () => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_BLOGS));
   } catch (e) {}
-  return INITIAL_BLOGS;
+  return INITIAL_BLOGS.map(unpackBlogMeta);
 };
 
 // Helper to save local stored blogs
@@ -186,6 +177,64 @@ const saveLocalBlogs = (blogs) => {
   } catch (e) {
     console.error('Error saving blogs to localStorage', e);
   }
+};
+
+const META_TAG_REGEX = /<!--\[indiglobal-meta:([\s\S]*?)\]-->/;
+
+export const unpackBlogMeta = (blog) => {
+  if (!blog) return blog;
+  let cleanContent = blog.content || '';
+  let meta = {};
+
+  const match = cleanContent.match(META_TAG_REGEX);
+  if (match) {
+    try {
+      meta = JSON.parse(match[1]);
+      cleanContent = cleanContent.replace(META_TAG_REGEX, '').trimStart();
+    } catch (e) {
+      console.warn('Failed to parse blog metadata header:', e);
+    }
+  }
+
+  // Fallback match with INITIAL_BLOGS by slug, id, or title if meta is missing
+  const initialMatch = INITIAL_BLOGS.find(ib => 
+    (ib.slug && blog.slug && ib.slug === blog.slug) || 
+    (ib.id && blog.id && ib.id === blog.id) ||
+    (ib.title && blog.title && ib.title.toLowerCase().trim() === blog.title.toLowerCase().trim())
+  );
+
+  const titleDescription = (blog.titleDescription || meta.titleDescription || initialMatch?.titleDescription || '').trim();
+  const tabTitle = (blog.tabTitle || meta.tabTitle || initialMatch?.tabTitle || '').trim();
+  const tabDescription = (blog.tabDescription || meta.tabDescription || initialMatch?.tabDescription || '').trim();
+
+  return {
+    ...blog,
+    titleDescription,
+    tabTitle,
+    tabDescription,
+    content: cleanContent
+  };
+};
+
+export const packBlogMeta = (blog) => {
+  if (!blog) return blog;
+  const meta = {
+    titleDescription: blog.titleDescription || '',
+    tabTitle: blog.tabTitle || '',
+    tabDescription: blog.tabDescription || ''
+  };
+
+  // Strip any existing metadata comment first to prevent nesting
+  let cleanContent = (blog.content || '').replace(META_TAG_REGEX, '').trimStart();
+  const packedContent = `<!--[indiglobal-meta:${JSON.stringify(meta)}]-->\n\n${cleanContent}`;
+
+  return {
+    ...blog,
+    titleDescription: meta.titleDescription,
+    tabTitle: meta.tabTitle,
+    tabDescription: meta.tabDescription,
+    content: packedContent
+  };
 };
 
 export const getBlogSlug = (blog) => {
@@ -206,16 +255,21 @@ export const getBlogSlug = (blog) => {
 export const blogService = {
   getBlogSlug,
   getLocalBlogs,
+  unpackBlogMeta,
+  packBlogMeta,
 
   // Get all blogs
   getAllBlogs: async () => {
     try {
       const response = await apiClient.get('/blogs');
       if (response && Array.isArray(response.data)) {
-        const enriched = response.data.map(b => ({
-          ...b,
-          slug: b.slug || getBlogSlug(b)
-        }));
+        const enriched = response.data.map(b => {
+          const unpacked = unpackBlogMeta(b);
+          return {
+            ...unpacked,
+            slug: unpacked.slug || getBlogSlug(unpacked)
+          };
+        });
         if (enriched.length > 0) {
           saveLocalBlogs(enriched);
           return enriched;
@@ -228,10 +282,13 @@ export const blogService = {
       try {
         const adminRes = await apiClient.get('/admin/blogs');
         if (adminRes && Array.isArray(adminRes.data)) {
-          const enriched = adminRes.data.map(b => ({
-            ...b,
-            slug: b.slug || getBlogSlug(b)
-          }));
+          const enriched = adminRes.data.map(b => {
+            const unpacked = unpackBlogMeta(b);
+            return {
+              ...unpacked,
+              slug: unpacked.slug || getBlogSlug(unpacked)
+            };
+          });
           if (enriched.length > 0) {
             saveLocalBlogs(enriched);
             return enriched;
@@ -243,10 +300,13 @@ export const blogService = {
     }
     
     // Fallback to local cache if network/server is unreachable
-    const local = getLocalBlogs().map(b => ({
-      ...b,
-      slug: b.slug || getBlogSlug(b)
-    }));
+    const local = getLocalBlogs().map(b => {
+      const unpacked = unpackBlogMeta(b);
+      return {
+        ...unpacked,
+        slug: unpacked.slug || getBlogSlug(unpacked)
+      };
+    });
     return local;
   },
 
@@ -269,7 +329,7 @@ export const blogService = {
         }
       }
       if (response && response.data) {
-        const blog = response.data;
+        const blog = unpackBlogMeta(response.data);
         if (!blog.slug) blog.slug = getBlogSlug(blog);
         return blog;
       }
@@ -277,7 +337,7 @@ export const blogService = {
       console.warn('API blog fetch failed, searching local fallback:', err.message);
     }
 
-    const local = getLocalBlogs();
+    const local = getLocalBlogs().map(unpackBlogMeta);
     const found = local.find(b => b.slug === idOrSlug || b.id === idOrSlug || getBlogSlug(b) === idOrSlug);
     if (found) {
       if (!found.slug) found.slug = getBlogSlug(found);
@@ -288,16 +348,17 @@ export const blogService = {
 
   // Create blog (Admin)
   createBlog: async (blogData) => {
-    const slug = blogData.slug || blogData.title.toLowerCase()
+    const packed = packBlogMeta(blogData);
+    const slug = packed.slug || packed.title.toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .trim();
 
     const newBlog = {
-      ...blogData,
+      ...packed,
       slug,
-      publishedDate: blogData.publishedDate || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+      publishedDate: packed.publishedDate || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -311,13 +372,13 @@ export const blogService = {
       try {
         const response = await apiClient.post('/admin/blogs', newBlog);
         if (response && response.data) {
-          created = response.data;
+          created = unpackBlogMeta(response.data);
         }
       } catch (err1) {
         console.warn('/admin/blogs failed, trying /blogs:', err1.message);
         const response = await apiClient.post('/blogs', newBlog);
         if (response && response.data) {
-          created = response.data;
+          created = unpackBlogMeta(response.data);
         }
       }
     } catch (err) {
@@ -325,16 +386,22 @@ export const blogService = {
     }
 
     if (created) {
+      const fullyMerged = {
+        ...created,
+        titleDescription: blogData.titleDescription || created.titleDescription,
+        tabTitle: blogData.tabTitle || created.tabTitle,
+        tabDescription: blogData.tabDescription || created.tabDescription
+      };
       const local = getLocalBlogs();
-      saveLocalBlogs([created, ...local.filter(b => b.id !== created.id && b.slug !== created.slug)]);
-      return created;
+      saveLocalBlogs([fullyMerged, ...local.filter(b => b.id !== fullyMerged.id && b.slug !== fullyMerged.slug)]);
+      return fullyMerged;
     }
 
     // Graceful offline fallback
-    const fallbackCreated = {
+    const fallbackCreated = unpackBlogMeta({
       ...newBlog,
       id: `blog-${Date.now()}`
-    };
+    });
     const local = getLocalBlogs();
     saveLocalBlogs([fallbackCreated, ...local.filter(b => b.slug !== fallbackCreated.slug)]);
     return fallbackCreated;
@@ -342,9 +409,10 @@ export const blogService = {
 
   // Update blog (Admin)
   updateBlog: async (id, blogData) => {
-    const slug = blogData.slug || getBlogSlug(blogData) || id;
+    const packed = packBlogMeta(blogData);
+    const slug = packed.slug || getBlogSlug(packed) || id;
     const updatedData = {
-      ...blogData,
+      ...packed,
       slug,
       updatedAt: new Date().toISOString()
     };
@@ -360,33 +428,31 @@ export const blogService = {
       try {
         const response = await apiClient.put(`/admin/blogs/${encodeURIComponent(targetIdentifier)}`, updatedData);
         if (response && response.data) {
-          updated = response.data;
+          updated = unpackBlogMeta(response.data);
         }
       } catch (err1) {
         console.warn(`/admin/blogs/${targetIdentifier} failed, trying /blogs/${targetIdentifier}:`, err1.message);
         try {
           const response = await apiClient.put(`/blogs/${encodeURIComponent(targetIdentifier)}`, updatedData);
           if (response && response.data) {
-            updated = response.data;
+            updated = unpackBlogMeta(response.data);
           }
         } catch (err2) {
-          // If identifier was not found on backend (400 or 404), try with slug or try creating it
           if (slug && slug !== targetIdentifier) {
             try {
               const slugRes = await apiClient.put(`/admin/blogs/${encodeURIComponent(slug)}`, updatedData);
               if (slugRes && slugRes.data) {
-                updated = slugRes.data;
+                updated = unpackBlogMeta(slugRes.data);
               }
             } catch (err3) {
               console.warn(`Update via slug also failed, attempting to create blog:`, err3.message);
             }
           }
           if (!updated) {
-            // If the item did not exist in backend database, create it now!
             try {
               const createRes = await apiClient.post('/admin/blogs', updatedData);
               if (createRes && createRes.data) {
-                updated = createRes.data;
+                updated = unpackBlogMeta(createRes.data);
               }
             } catch (err4) {
               console.warn(`Auto-creation of blog failed:`, err4.message);
@@ -398,20 +464,18 @@ export const blogService = {
       console.error('Backend blog update failed, falling back to local cache update:', err);
     }
 
-    if (updated) {
-      const local = getLocalBlogs();
-      saveLocalBlogs(local.map(b => (b.id === id || b.slug === id || b.slug === slug || b.id === updated.id) ? updated : b));
-      return updated;
-    }
-
-    // Graceful offline fallback: update local storage so user never loses their changes
-    const local = getLocalBlogs();
-    const fallbackUpdated = {
-      ...updatedData,
-      id: id || `blog-${Date.now()}`
+    const fullyUpdated = {
+      ...(updated || updatedData),
+      id: updated?.id || id,
+      titleDescription: blogData.titleDescription || updated?.titleDescription || '',
+      tabTitle: blogData.tabTitle || updated?.tabTitle || '',
+      tabDescription: blogData.tabDescription || updated?.tabDescription || '',
+      content: (blogData.content || '').replace(META_TAG_REGEX, '').trimStart()
     };
-    saveLocalBlogs(local.map(b => (b.id === id || b.slug === id || b.slug === slug) ? fallbackUpdated : b));
-    return fallbackUpdated;
+
+    const local = getLocalBlogs();
+    saveLocalBlogs(local.map(b => (b.id === id || b.slug === id || b.slug === slug || (updated && b.id === updated.id)) ? fullyUpdated : b));
+    return fullyUpdated;
   },
 
   // Delete blog (Admin)
