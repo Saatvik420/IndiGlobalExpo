@@ -48,6 +48,10 @@ import apiClient from '../../api/client';
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, login, logout } = useGlobal();
+
+  useEffect(() => {
+    document.title = 'Admin Management Console | IndiGlobal Expo';
+  }, []);
   const [activeTab, setActiveTab] = useState('visitors');
   const [users, setUsers] = useState(() => adminService.getCachedUsers());
   const [exhibitors, setExhibitors] = useState(() => adminService.getCachedExhibitors());

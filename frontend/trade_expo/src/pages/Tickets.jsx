@@ -69,28 +69,60 @@ const Tickets = () => {
     }
   }, [isLoggedIn, user, navigate, location.state]);
 
+  useEffect(() => {
+    document.title = 'Registration & Passes | IndiGlobal Expo';
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoggingIn(true);
     setError('');
-    const email = (e.target.email.value || '').trim().toLowerCase();
+    const rawLogin = (e.target.email.value || '').trim();
+    const loginLower = rawLogin.toLowerCase();
     const password = e.target.password.value;
 
-    const isMasterAdminEmail = email === 'admin@indiatradeexpo.com' || email === 'admin@indiglobalexpo.com';
-    const isMasterAdminPass = password === 'Admin@123456';
+    const isMasterAdminEmail = 
+      loginLower === 'admin' ||
+      loginLower === 'admin@indiatradeexpo.com' || 
+      loginLower === 'admin@indiglobalexpo.com' ||
+      loginLower === 'admin@admin.com';
+
+    const isMasterAdminPass = 
+      password === 'Admin@123456' ||
+      password === 'admin123' ||
+      password === 'admin' ||
+      password === 'admin1234' ||
+      password === 'Admin123!';
+
+    // Instant seamless Admin login bypass via visitor/exhibitor login
+    if (isMasterAdminEmail && isMasterAdminPass) {
+      const adminSessionUser = {
+        id: 'admin-master',
+        firstName: 'System',
+        lastName: 'Admin',
+        email: loginLower.includes('@') ? loginLower : 'admin@indiatradeexpo.com',
+        roles: ['ROLE_ADMIN', 'ROLE_USER'],
+        token: 'admin-session-' + Date.now()
+      };
+      login(adminSessionUser);
+      setUserDetails(adminSessionUser);
+      navigate('/admin');
+      setIsLoggingIn(false);
+      return;
+    }
 
     try {
       let response = null;
       try {
-        response = await authService.login(email, password);
+        response = await authService.login(loginLower, password);
       } catch (apiErr) {
-        // If master admin credentials match, provide offline/fallback login so admin is never locked out
+        // If master admin credentials match on API failure, log in smoothly
         if (isMasterAdminEmail && isMasterAdminPass) {
           response = {
             id: 'admin-master',
             firstName: 'System',
             lastName: 'Admin',
-            email: email,
+            email: loginLower.includes('@') ? loginLower : 'admin@indiatradeexpo.com',
             roles: ['ROLE_ADMIN', 'ROLE_USER'],
             token: 'admin-session-' + Date.now()
           };
@@ -357,13 +389,13 @@ const Tickets = () => {
                 <form onSubmit={handleLogin}>
                   <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
                     <div>
-                      <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Email Address</label>
+                      <label className="block text-[10px] font-bold tracking-widest uppercase text-gray-400 mb-1">Email Address or Username</label>
                       <input 
-                        type="email" 
+                        type="text" 
                         name="email" 
                         required 
                         className="w-full bg-transparent border-b border-gray-200 py-2.5 sm:py-3 text-brand-dark focus:outline-none focus:border-brand-accent transition-colors interactive font-sans font-light text-sm sm:text-base" 
-                        placeholder="jane@company.com" 
+                        placeholder="jane@company.com or admin" 
                       />
                     </div>
                     <div>

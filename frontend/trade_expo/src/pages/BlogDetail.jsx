@@ -19,80 +19,106 @@ import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
-import blogService, { getBlogSlug } from '../services/blogService';
+import blogService, { getBlogSlug, getLocalBlogs } from '../services/blogService';
 import FormattedArticleContent from '../components/blog/FormattedArticleContent';
 
 const BlogDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [blog, setBlog] = useState(null);
-  const [relatedBlogs, setRelatedBlogs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Instant synchronous initialization from cache so tab title and content are instant (0ms delay)
+  const [blog, setBlog] = useState(() => {
+    try {
+      const local = getLocalBlogs();
+      return local.find(b => b.slug === id || b.id === id || getBlogSlug(b) === id) || null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const [relatedBlogs, setRelatedBlogs] = useState(() => {
+    try {
+      const local = getLocalBlogs();
+      return local
+        .filter(b => b.slug !== id && b.id !== id && getBlogSlug(b) !== id)
+        .slice(0, 3);
+    } catch (e) {
+      return [];
+    }
+  });
+
+  const [isLoading, setIsLoading] = useState(() => !blog);
   const [copySuccess, setCopySuccess] = useState(false);
 
   // Dynamic Browser Tab Title and Meta Description authority for new/opened blogs
   useEffect(() => {
-    if (blog) {
-      // Use custom Tab Title configured by Admin, or fallback to article title
-      const activeTabTitle = (blog.tabTitle || blog.metaTitle || '').trim() || 
-        (blog.title ? `${blog.title} | IndiGlobal Expo` : 'IndiGlobal Expo Blog');
-      
-      document.title = activeTabTitle;
-
-      // Use custom Tab Description (Meta Description) configured by Admin, or fallback
-      const activeTabDesc = (blog.tabDescription || blog.metaDescription || blog.titleDescription || blog.excerpt || '').trim();
-      if (activeTabDesc) {
-        let metaDescTag = document.querySelector('meta[name="description"]');
-        if (!metaDescTag) {
-          metaDescTag = document.createElement('meta');
-          metaDescTag.setAttribute('name', 'description');
-          document.head.appendChild(metaDescTag);
-        }
-        metaDescTag.setAttribute('content', activeTabDesc);
-
-        let ogDescTag = document.querySelector('meta[property="og:description"]');
-        if (ogDescTag) ogDescTag.setAttribute('content', activeTabDesc);
-      }
-
-      let ogTitleTag = document.querySelector('meta[property="og:title"]');
-      if (ogTitleTag) ogTitleTag.setAttribute('content', activeTabTitle);
-    } else {
-      document.title = 'Loading Article... | IndiGlobal Expo';
+    // 1. Determine active browser tab title with fallback hierarchy
+    let activeTabTitle = (blog?.tabTitle || blog?.metaTitle || '').trim();
+    if (!activeTabTitle && blog?.title) {
+      activeTabTitle = `${blog.title} | IndiGlobal Expo`;
+    }
+    if (!activeTabTitle && id) {
+      const humanizedSlug = id.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      activeTabTitle = `${humanizedSlug} | IndiGlobal Expo`;
+    }
+    if (!activeTabTitle) {
+      activeTabTitle = 'IndiGlobal Expo | Blog Article';
     }
 
-    return () => {
-      document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
-    };
-  }, [blog]);
+    document.title = activeTabTitle;
+
+    // 2. Determine active Tab / Meta Description configured by Admin or fallback
+    const activeTabDesc = (blog?.tabDescription || blog?.metaDescription || blog?.titleDescription || blog?.excerpt || '').trim();
+    if (activeTabDesc) {
+      let metaDescTag = document.querySelector('meta[name="description"]');
+      if (!metaDescTag) {
+        metaDescTag = document.createElement('meta');
+        metaDescTag.setAttribute('name', 'description');
+        document.head.appendChild(metaDescTag);
+      }
+      metaDescTag.setAttribute('content', activeTabDesc);
+
+      let ogDescTag = document.querySelector('meta[property="og:description"]');
+      if (ogDescTag) ogDescTag.setAttribute('content', activeTabDesc);
+    }
+
+    let ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (ogTitleTag) ogTitleTag.setAttribute('content', activeTabTitle);
+  }, [blog, id]);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchBlogData = async () => {
-      setIsLoading(true);
       try {
         const currentBlog = await blogService.getBlogByIdOrSlug(id);
-        setBlog(currentBlog);
+        if (isMounted && currentBlog) {
+          setBlog(currentBlog);
 
-        // Canonical URL update: If opened via ID (e.g. MongoDB ObjectId), replace URL with title slug
-        const cleanSlug = getBlogSlug(currentBlog);
-        if (cleanSlug && id !== cleanSlug) {
-          window.history.replaceState(null, '', `/blogs/${cleanSlug}`);
+          // Canonical URL update: If opened via ID (e.g. MongoDB ObjectId), replace URL with title slug
+          const cleanSlug = getBlogSlug(currentBlog);
+          if (cleanSlug && id !== cleanSlug) {
+            window.history.replaceState(null, '', `/blogs/${cleanSlug}`);
+          }
+
+          // Fetch related blogs
+          const allBlogs = await blogService.getAllBlogs();
+          if (isMounted && Array.isArray(allBlogs)) {
+            const related = allBlogs
+              .filter(b => b.id !== currentBlog.id && b.slug !== currentBlog.slug)
+              .slice(0, 3);
+            setRelatedBlogs(related);
+          }
         }
-
-        // Fetch related blogs
-        const allBlogs = await blogService.getAllBlogs();
-        const related = allBlogs
-          .filter(b => b.id !== currentBlog.id && b.slug !== currentBlog.slug)
-          .slice(0, 3);
-        setRelatedBlogs(related);
       } catch (err) {
-        console.error('Error loading blog post:', err);
+        console.warn('Network blog load failed, utilizing cached fallback:', err.message);
       } finally {
-        setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     };
 
     fetchBlogData();
     window.scrollTo(0, 0);
+    return () => { isMounted = false; };
   }, [id]);
 
   const handleCopyLink = () => {

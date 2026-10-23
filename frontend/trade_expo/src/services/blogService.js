@@ -7,6 +7,8 @@ export const INITIAL_BLOGS = [
     id: 'blog-1',
     title: 'Navigating Global Trade Corridors: Opportunities for Indian Exporters in 2026-2027',
     titleDescription: 'Unlocking high-growth bilateral trade corridors, emerging market routes, and tariff optimizations for Indian global exporters.',
+    tabTitle: 'Navigating Global Trade Corridors 2026-2027 | IndiGlobal Expo',
+    tabDescription: 'Unlocking high-growth bilateral trade corridors, emerging market routes, and tariff optimizations for Indian global exporters at IndiGlobal Expo.',
     slug: 'navigating-global-trade-corridors-opportunities-indian-exporters',
     author: 'IndiGlobal Editorial Team',
     authorRole: 'Global Trade Analyst',
@@ -42,6 +44,8 @@ IndiGlobal Expo will host exclusive bilateral roundtables and scheduled buyer-se
     id: 'blog-2',
     title: 'The Rise of Smart B2B Trade Fairs: How Technology is Transforming Exhibitions',
     titleDescription: 'How predictive buyer matching, digital stall telemetry, and immersive expo technology are redefining commercial ROI.',
+    tabTitle: 'The Rise of Smart B2B Trade Fairs & Technology | IndiGlobal Expo',
+    tabDescription: 'How predictive buyer matching, digital stall telemetry, and immersive expo technology are redefining commercial ROI at IndiGlobal Expo.',
     slug: 'the-rise-of-smart-b2b-trade-fairs-technology-transforming-exhibitions',
     author: 'Arunima Sengupta',
     authorRole: 'Head of Event Strategy',
@@ -67,6 +71,8 @@ Whether you are an established brand or an emerging manufacturer, preparing tail
     id: 'blog-3',
     title: 'Sustainable Manufacturing & Green Supply Chains: The New Export Standard',
     titleDescription: 'Navigating European CBAM regulations, carbon accounting metrics, and circular sustainability standards in global supply chains.',
+    tabTitle: 'Sustainable Manufacturing & Green Supply Chains | IndiGlobal Expo',
+    tabDescription: 'Navigating European CBAM regulations, carbon accounting metrics, and circular sustainability standards in global supply chains at IndiGlobal Expo.',
     slug: 'sustainable-manufacturing-green-supply-chains-new-export-standard',
     author: 'Dr. Vikram Malhotra',
     authorRole: 'Sustainability & Supply Chain Consultant',
@@ -92,6 +98,8 @@ Adopting ESG principles not only guarantees compliance but also yields a 20-30% 
     id: 'blog-4',
     title: 'India-ASEAN Business Confluence: Unlocking High-Value Bilateral Partnerships',
     titleDescription: 'Capitalizing on bilateral FTAs, duty exemptions, and cross-border strategic distribution alliances across ASEAN economies.',
+    tabTitle: 'India-ASEAN Business Confluence & Bilateral Growth | IndiGlobal Expo',
+    tabDescription: 'Capitalizing on bilateral FTAs, duty exemptions, and cross-border strategic distribution alliances across ASEAN economies at IndiGlobal Expo.',
     slug: 'india-asean-business-confluence-unlocking-bilateral-partnerships',
     author: 'IndiGlobal Editorial Team',
     authorRole: 'Diplomatic & Trade Relations',
@@ -117,6 +125,8 @@ By participating in dedicated buyer-seller delegations, companies can solidify s
     id: 'blog-5',
     title: 'The Digital Revolution in Global Freight & Cold Chain Logistics',
     titleDescription: 'Next-generation telemetry, automated temperature control, and blockchain cold chains transforming high-value perishable exports.',
+    tabTitle: 'Digital Revolution in Global Freight & Cold Chain | IndiGlobal Expo',
+    tabDescription: 'Next-generation telemetry, automated temperature control, and blockchain cold chains transforming high-value perishable exports at IndiGlobal Expo.',
     slug: 'digital-revolution-global-freight-cold-chain-logistics',
     author: 'Rajiv Nambiar',
     authorRole: 'Supply Chain & Cold Chain Specialist',
@@ -135,7 +145,7 @@ At the IndiGlobal Expo Logistics Pavilion, international freight forwarders, por
 ];
 
 // Helper to get local stored blogs
-const getLocalBlogs = () => {
+export const getLocalBlogs = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
@@ -143,18 +153,17 @@ const getLocalBlogs = () => {
       if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed.map(b => {
           const { category, ...rest } = b;
+          const initialMatch = INITIAL_BLOGS.find(ib => ib.slug === rest.slug || ib.id === rest.id || ib.title === rest.title);
+          
           // Backfill titleDescription, tabTitle, tabDescription if missing from local cache
-          if (!rest.titleDescription) {
-            const initialMatch = INITIAL_BLOGS.find(ib => ib.slug === rest.slug || ib.id === rest.id || ib.title === rest.title);
-            if (initialMatch && initialMatch.titleDescription) {
-              rest.titleDescription = initialMatch.titleDescription;
-            }
+          if (!rest.titleDescription && initialMatch?.titleDescription) {
+            rest.titleDescription = initialMatch.titleDescription;
           }
           if (!rest.tabTitle) {
-            rest.tabTitle = rest.metaTitle || (rest.title ? `${rest.title} | IndiGlobal Expo` : '');
+            rest.tabTitle = rest.metaTitle || initialMatch?.tabTitle || (rest.title ? `${rest.title} | IndiGlobal Expo` : '');
           }
           if (!rest.tabDescription) {
-            rest.tabDescription = rest.metaDescription || rest.titleDescription || rest.excerpt || '';
+            rest.tabDescription = rest.metaDescription || initialMatch?.tabDescription || rest.titleDescription || rest.excerpt || '';
           }
           return rest;
         });
@@ -196,6 +205,7 @@ export const getBlogSlug = (blog) => {
 
 export const blogService = {
   getBlogSlug,
+  getLocalBlogs,
 
   // Get all blogs
   getAllBlogs: async () => {

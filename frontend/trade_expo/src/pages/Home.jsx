@@ -53,8 +53,11 @@ const heroSlides = [
 ];
 
 const Home = () => {
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
+  }, []);
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
   const [previewImg, setPreviewImg] = useState(null);
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);

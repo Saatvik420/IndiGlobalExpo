@@ -18,12 +18,19 @@ import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
-import blogService, { getBlogSlug } from '../services/blogService';
+import blogService, { getBlogSlug, getLocalBlogs } from '../services/blogService';
 
 const Blogs = () => {
   const navigate = useNavigate();
-  const [blogs, setBlogs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // Instant synchronous initialization from cache so articles display immediately
+  const [blogs, setBlogs] = useState(() => {
+    try {
+      return getLocalBlogs();
+    } catch (e) {
+      return [];
+    }
+  });
+  const [isLoading, setIsLoading] = useState(() => blogs.length === 0);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest'); // newest, oldest, readingTime
 
@@ -34,24 +41,26 @@ const Blogs = () => {
     if (metaDescTag) {
       metaDescTag.setAttribute('content', 'Deep dives, sector analyses, policy briefings, and behind-the-scenes insights curated for international trade leaders, manufacturers, and exhibitors at IndiGlobal Expo.');
     }
-    return () => {
-      document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
-    };
+    let ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (ogTitleTag) ogTitleTag.setAttribute('content', 'Global Trade & Expo Chronicles | IndiGlobal Expo Blogs');
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchBlogs = async () => {
-      setIsLoading(true);
       try {
         const data = await blogService.getAllBlogs();
-        setBlogs(data || []);
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setBlogs(data);
+        }
       } catch (err) {
-        console.error('Error fetching blogs:', err);
+        console.warn('Network blogs fetch failed, cached blogs retained:', err.message);
       } finally {
-        setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     };
     fetchBlogs();
+    return () => { isMounted = false; };
   }, []);
 
   useEffect(() => {
