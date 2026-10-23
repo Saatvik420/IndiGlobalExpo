@@ -306,24 +306,7 @@ const Tickets = () => {
                 </div>
               </div>
 
-              {/* Admin Portal Quick Access */}
-              <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto text-center sm:text-left bg-white p-5 sm:p-6 rounded-sm border border-gray-100 shadow-sm">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-brand-dark flex items-center justify-center sm:justify-start gap-2">
-                    <ShieldCheck size={18} className="text-brand-accent" weight="bold" /> Administrator Console Access
-                  </p>
-                  <p className="text-xs text-gray-500 font-light mt-1">
-                    Managing users, viewing inquiries, or publishing blogs? Log in with your admin credentials.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => { setCurrentRole('Admin'); setStep('login'); }}
-                  className="px-5 py-2.5 bg-brand-dark hover:bg-brand-accent text-white text-xs font-bold uppercase tracking-widest transition-all rounded-sm flex items-center gap-2 whitespace-nowrap cursor-pointer interactive"
-                >
-                  <SignIn size={16} /> Admin Login
-                </button>
-              </div>
+
             </div>
           )}
 
