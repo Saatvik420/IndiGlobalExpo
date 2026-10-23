@@ -24,7 +24,11 @@ public class AdminSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String adminEmail = "admin@indiatradeexpo.com";
+        seedAdminAccount("admin@indiatradeexpo.com");
+        seedAdminAccount("admin@indiglobalexpo.com");
+    }
+
+    private void seedAdminAccount(String adminEmail) {
         Optional<User> existingAdmin = userRepository.findByEmail(adminEmail);
 
         if (existingAdmin.isEmpty()) {
@@ -50,7 +54,7 @@ public class AdminSeeder implements CommandLineRunner {
                 roles.add("ROLE_USER");
                 admin.setRoles(roles);
                 userRepository.save(admin);
-                System.out.println("✅ ADMIN SEEDER: Updated existing admin account with ROLE_ADMIN");
+                System.out.println("✅ ADMIN SEEDER: Updated existing admin account with ROLE_ADMIN (" + adminEmail + ")");
             }
         }
     }
