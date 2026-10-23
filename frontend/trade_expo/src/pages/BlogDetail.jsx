@@ -30,6 +30,41 @@ const BlogDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [copySuccess, setCopySuccess] = useState(false);
 
+  // Dynamic Browser Tab Title and Meta Description authority for new/opened blogs
+  useEffect(() => {
+    if (blog) {
+      // Use custom Tab Title configured by Admin, or fallback to article title
+      const activeTabTitle = (blog.tabTitle || blog.metaTitle || '').trim() || 
+        (blog.title ? `${blog.title} | IndiGlobal Expo` : 'IndiGlobal Expo Blog');
+      
+      document.title = activeTabTitle;
+
+      // Use custom Tab Description (Meta Description) configured by Admin, or fallback
+      const activeTabDesc = (blog.tabDescription || blog.metaDescription || blog.titleDescription || blog.excerpt || '').trim();
+      if (activeTabDesc) {
+        let metaDescTag = document.querySelector('meta[name="description"]');
+        if (!metaDescTag) {
+          metaDescTag = document.createElement('meta');
+          metaDescTag.setAttribute('name', 'description');
+          document.head.appendChild(metaDescTag);
+        }
+        metaDescTag.setAttribute('content', activeTabDesc);
+
+        let ogDescTag = document.querySelector('meta[property="og:description"]');
+        if (ogDescTag) ogDescTag.setAttribute('content', activeTabDesc);
+      }
+
+      let ogTitleTag = document.querySelector('meta[property="og:title"]');
+      if (ogTitleTag) ogTitleTag.setAttribute('content', activeTabTitle);
+    } else {
+      document.title = 'Loading Article... | IndiGlobal Expo';
+    }
+
+    return () => {
+      document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
+    };
+  }, [blog]);
+
   useEffect(() => {
     const fetchBlogData = async () => {
       setIsLoading(true);

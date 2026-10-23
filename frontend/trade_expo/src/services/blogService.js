@@ -143,12 +143,18 @@ const getLocalBlogs = () => {
       if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed.map(b => {
           const { category, ...rest } = b;
-          // Backfill titleDescription if missing from local cache
+          // Backfill titleDescription, tabTitle, tabDescription if missing from local cache
           if (!rest.titleDescription) {
             const initialMatch = INITIAL_BLOGS.find(ib => ib.slug === rest.slug || ib.id === rest.id || ib.title === rest.title);
             if (initialMatch && initialMatch.titleDescription) {
               rest.titleDescription = initialMatch.titleDescription;
             }
+          }
+          if (!rest.tabTitle) {
+            rest.tabTitle = rest.metaTitle || (rest.title ? `${rest.title} | IndiGlobal Expo` : '');
+          }
+          if (!rest.tabDescription) {
+            rest.tabDescription = rest.metaDescription || rest.titleDescription || rest.excerpt || '';
           }
           return rest;
         });

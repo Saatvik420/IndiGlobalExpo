@@ -91,6 +91,12 @@ public class BlogService {
         if (updatedData.getTitleDescription() != null) {
             existingBlog.setTitleDescription(updatedData.getTitleDescription());
         }
+        if (updatedData.getTabTitle() != null) {
+            existingBlog.setTabTitle(updatedData.getTabTitle());
+        }
+        if (updatedData.getTabDescription() != null) {
+            existingBlog.setTabDescription(updatedData.getTabDescription());
+        }
         if (updatedData.getSlug() != null && !updatedData.getSlug().isEmpty()) {
             existingBlog.setSlug(updatedData.getSlug());
         }

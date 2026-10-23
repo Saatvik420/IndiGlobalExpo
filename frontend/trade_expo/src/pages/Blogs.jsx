@@ -27,6 +27,18 @@ const Blogs = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest'); // newest, oldest, readingTime
 
+  // Dynamic Browser Tab Title and Meta Description for Blogs page
+  useEffect(() => {
+    document.title = 'Global Trade & Expo Chronicles | IndiGlobal Expo Blogs';
+    let metaDescTag = document.querySelector('meta[name="description"]');
+    if (metaDescTag) {
+      metaDescTag.setAttribute('content', 'Deep dives, sector analyses, policy briefings, and behind-the-scenes insights curated for international trade leaders, manufacturers, and exhibitors at IndiGlobal Expo.');
+    }
+    return () => {
+      document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
+    };
+  }, []);
+
   useEffect(() => {
     const fetchBlogs = async () => {
       setIsLoading(true);

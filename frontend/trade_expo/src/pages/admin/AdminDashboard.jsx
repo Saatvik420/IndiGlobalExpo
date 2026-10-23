@@ -71,6 +71,8 @@ const AdminDashboard = () => {
   const [blogFormData, setBlogFormData] = useState({
     title: '',
     titleDescription: '',
+    tabTitle: '',
+    tabDescription: '',
     excerpt: '',
     content: '',
     author: 'IndiGlobal Editorial Team',
@@ -379,6 +381,8 @@ const AdminDashboard = () => {
     setBlogFormData({
       title: '',
       titleDescription: '',
+      tabTitle: '',
+      tabDescription: '',
       excerpt: '',
       content: '',
       author: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'IndiGlobal Editorial Team',
@@ -398,6 +402,8 @@ const AdminDashboard = () => {
     setBlogFormData({
       title: b.title || '',
       titleDescription: b.titleDescription || '',
+      tabTitle: b.tabTitle || b.metaTitle || '',
+      tabDescription: b.tabDescription || b.metaDescription || '',
       excerpt: b.excerpt || '',
       content: b.content || '',
       author: b.author || 'IndiGlobal Editorial Team',
@@ -547,6 +553,7 @@ const AdminDashboard = () => {
     return !s || 
       (b.title || '').toLowerCase().includes(s) || 
       (b.titleDescription || '').toLowerCase().includes(s) || 
+      (b.tabTitle || '').toLowerCase().includes(s) || 
       (b.author || '').toLowerCase().includes(s) ||
       (b.excerpt || '').toLowerCase().includes(s);
   });
@@ -1047,6 +1054,11 @@ const AdminDashboard = () => {
                                       <p className="text-brand-accent text-xs line-clamp-1 mt-0.5 font-medium">{b.titleDescription}</p>
                                     )}
                                     <p className="text-gray-400 text-xs line-clamp-1 mt-0.5">{b.excerpt || 'No summary available'}</p>
+                                    {b.tabTitle && (
+                                      <p className="text-[10px] text-gray-500 line-clamp-1 mt-0.5">
+                                        <span className="font-semibold text-brand-accent">Tab Title:</span> {b.tabTitle}
+                                      </p>
+                                    )}
                                   </div>
                                 </div>
                               </td>
@@ -1155,6 +1167,75 @@ const AdminDashboard = () => {
                 <p className="text-[11px] text-gray-400 mt-1">
                   Secondary title description or tagline displayed below the headline.
                 </p>
+              </div>
+
+              {/* Browser Tab Authority Section */}
+              <div className="bg-brand-light/70 p-4 rounded-sm border border-brand-accent/30 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+                    <label className="text-xs font-bold uppercase tracking-wider text-brand-dark">
+                      Browser Tab Authority (Tab Title & Tab Description)
+                    </label>
+                  </div>
+                  <span className="text-[10px] text-gray-500 bg-white px-2 py-0.5 rounded border border-gray-200">
+                    Controls the browser tab name and Google preview
+                  </span>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider">
+                      Browser Tab Title
+                    </label>
+                    <span className="text-[10px] text-gray-400">
+                      {(blogFormData.tabTitle || '').length}/70 chars
+                    </span>
+                  </div>
+                  <input 
+                    type="text"
+                    placeholder={blogFormData.title ? `${blogFormData.title} | IndiGlobal Expo` : 'e.g. Global Trade Insights 2027 | IndiGlobal Expo'}
+                    value={blogFormData.tabTitle}
+                    onChange={(e) => setBlogFormData({ ...blogFormData, tabTitle: e.target.value })}
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent text-brand-dark font-medium"
+                  />
+                  <p className="text-[11px] text-gray-400 mt-1">
+                    When visitors open this blog, this exact title will appear on their browser window/tab. Defaults to "{blogFormData.title || 'Article Title'} | IndiGlobal Expo" if left empty.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-[11px] font-bold text-gray-700 uppercase tracking-wider">
+                      Browser Tab Description (Meta Description)
+                    </label>
+                    <span className="text-[10px] text-gray-400">
+                      {(blogFormData.tabDescription || '').length}/160 chars
+                    </span>
+                  </div>
+                  <textarea 
+                    rows={2}
+                    placeholder={blogFormData.titleDescription || blogFormData.excerpt || 'Brief description shown in browser link previews and search engines...'}
+                    value={blogFormData.tabDescription}
+                    onChange={(e) => setBlogFormData({ ...blogFormData, tabDescription: e.target.value })}
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent text-gray-700"
+                  />
+                  <p className="text-[11px] text-gray-400 mt-0.5">
+                    Meta description shown when sharing link or appearing in search results. Defaults to Title Description or Excerpt if left empty.
+                  </p>
+                </div>
+
+                {/* Live Tab Preview Box */}
+                <div className="pt-2 border-t border-brand-accent/15">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 block mb-1.5">Live Browser Tab Preview:</span>
+                  <div className="inline-flex items-center gap-2 bg-white border border-gray-300 rounded-t-md px-3 py-1.5 shadow-2xs max-w-full">
+                    <div className="w-3.5 h-3.5 rounded-full bg-brand-dark flex items-center justify-center text-[8px] text-white font-bold">i</div>
+                    <span className="text-xs font-semibold text-gray-800 truncate max-w-[280px] sm:max-w-md">
+                      {blogFormData.tabTitle || (blogFormData.title ? `${blogFormData.title} | IndiGlobal Expo` : 'IndiGlobal Expo | New Article')}
+                    </span>
+                    <span className="text-gray-400 text-xs ml-1 font-bold">×</span>
+                  </div>
+                </div>
               </div>
 
               <div>
