@@ -10,8 +10,41 @@ const LAST_ACTIVITY_KEY = 'last_active_time';
 export const GlobalProvider = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+
+  // Synchronous session initialization so protected routes never bounce on reload
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('user');
+      const lastActive = localStorage.getItem(LAST_ACTIVITY_KEY);
+      const now = Date.now();
+      if (savedUser) {
+        if (lastActive && (now - Number(lastActive) > SESSION_TIMEOUT_MS)) {
+          localStorage.removeItem('user');
+          localStorage.removeItem(LAST_ACTIVITY_KEY);
+          return null;
+        }
+        return JSON.parse(savedUser);
+      }
+    } catch (e) {
+      console.error('Failed to parse saved user from localStorage', e);
+    }
+    return null;
+  });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('user');
+      const lastActive = localStorage.getItem(LAST_ACTIVITY_KEY);
+      const now = Date.now();
+      if (savedUser) {
+        if (lastActive && (now - Number(lastActive) > SESSION_TIMEOUT_MS)) {
+          return false;
+        }
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  });
 
   const lastActivityRef = useRef(Date.now());
 

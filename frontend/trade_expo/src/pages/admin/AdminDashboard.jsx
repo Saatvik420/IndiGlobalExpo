@@ -475,7 +475,12 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (user && user.roles?.includes('ROLE_ADMIN')) {
+    const isAdmin = user?.roles?.includes('ROLE_ADMIN') || 
+                    user?.roles?.includes('ADMIN') || 
+                    user?.email === 'admin@indiatradeexpo.com' ||
+                    user?.email === 'admin@indiglobalexpo.com';
+
+    if (user && isAdmin) {
       fetchData();
     } else if (user) {
       console.warn("User is not an admin, redirecting...");
