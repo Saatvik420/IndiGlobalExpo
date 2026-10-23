@@ -636,9 +636,14 @@ const Home = () => {
                       <span>•</span>
                       <span>{blog.readTime || '5 min read'}</span>
                     </div>
-                    <h3 className="font-serif text-xl text-brand-dark group-hover:text-brand-accent transition-colors font-bold leading-snug mb-3 line-clamp-2">
+                    <h3 className="font-serif text-xl text-brand-dark group-hover:text-brand-accent transition-colors font-bold leading-snug mb-2 line-clamp-2">
                       {blog.title}
                     </h3>
+                    {blog.titleDescription && (
+                      <p className="text-brand-accent text-xs font-medium mb-3 line-clamp-2 leading-relaxed">
+                        {blog.titleDescription}
+                      </p>
+                    )}
                     <p className="text-gray-500 font-light text-xs sm:text-sm leading-relaxed line-clamp-3 mb-4">
                       {blog.excerpt}
                     </p>

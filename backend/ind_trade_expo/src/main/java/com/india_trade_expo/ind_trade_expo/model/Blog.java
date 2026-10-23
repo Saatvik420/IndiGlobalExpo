@@ -13,6 +13,7 @@ public class Blog {
     @Id
     private String id;
     private String title;
+    private String titleDescription;
     private String slug;
     private String excerpt;
     private String content;
@@ -59,6 +60,9 @@ public class Blog {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
+    public String getTitleDescription() { return titleDescription; }
+    public void setTitleDescription(String titleDescription) { this.titleDescription = titleDescription; }
+
     public String getSlug() { return slug; }
     public void setSlug(String slug) { this.slug = slug; }
 
@@ -101,6 +105,7 @@ public class Blog {
     public static class BlogBuilder {
         private String id;
         private String title;
+        private String titleDescription;
         private String slug;
         private String excerpt;
         private String content;
@@ -117,6 +122,7 @@ public class Blog {
 
         public BlogBuilder id(String id) { this.id = id; return this; }
         public BlogBuilder title(String title) { this.title = title; return this; }
+        public BlogBuilder titleDescription(String titleDescription) { this.titleDescription = titleDescription; return this; }
         public BlogBuilder slug(String slug) { this.slug = slug; return this; }
         public BlogBuilder excerpt(String excerpt) { this.excerpt = excerpt; return this; }
         public BlogBuilder content(String content) { this.content = content; return this; }
@@ -135,6 +141,7 @@ public class Blog {
             Blog blog = new Blog(id, title, slug, excerpt, content, tags, author, authorRole,
                     coverImage, readTime, publishedDate, featured, createdAt, updatedAt);
             blog.setTextAlign(textAlign);
+            blog.setTitleDescription(titleDescription);
             return blog;
         }
     }

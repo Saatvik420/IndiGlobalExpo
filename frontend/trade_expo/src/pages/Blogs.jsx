@@ -63,6 +63,7 @@ const Blogs = () => {
       const query = searchQuery.trim().toLowerCase();
       const matchesSearch = !query || 
         blog.title?.toLowerCase().includes(query) ||
+        blog.titleDescription?.toLowerCase().includes(query) ||
         blog.excerpt?.toLowerCase().includes(query) ||
         blog.author?.toLowerCase().includes(query) ||
         (Array.isArray(blog.tags) && blog.tags.some(t => t.toLowerCase().includes(query)));
@@ -92,15 +93,11 @@ const Blogs = () => {
     return blogs.find(b => b.featured) || blogs[0] || null;
   }, [blogs]);
 
-  const handleReadBlog = (blog, openInNewTab = false) => {
+  // Opens blog in a new tab from /blogs as requested
+  const handleReadBlog = (blog) => {
     const slug = getBlogSlug(blog);
     const path = `/blogs/${slug}`;
-    if (openInNewTab) {
-      window.open(path, '_blank', 'noopener,noreferrer');
-    } else {
-      navigate(path);
-      window.scrollTo(0, 0);
-    }
+    window.open(path, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -146,7 +143,10 @@ const Blogs = () => {
             </div>
             
             <div className="bg-brand-light/40 border border-gray-200/70 hover:border-brand-accent/60 transition-all duration-500 rounded-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12 group">
-              <div className="lg:col-span-7 relative min-h-[280px] sm:min-h-[380px] overflow-hidden">
+              <div 
+                onClick={() => handleReadBlog(featuredBlog)}
+                className="lg:col-span-7 relative min-h-[280px] sm:min-h-[380px] overflow-hidden cursor-pointer"
+              >
                 <img 
                   src={featuredBlog.coverImage} 
                   alt={featuredBlog.title}
@@ -166,10 +166,18 @@ const Blogs = () => {
                   
                   <h2 
                     onClick={() => handleReadBlog(featuredBlog)}
-                    className="font-serif text-2xl sm:text-3xl lg:text-4xl text-brand-dark group-hover:text-brand-accent transition-colors cursor-pointer leading-tight mb-4"
+                    className="font-serif text-2xl sm:text-3xl lg:text-4xl text-brand-dark group-hover:text-brand-accent transition-colors cursor-pointer leading-tight mb-2"
                   >
                     {featuredBlog.title}
                   </h2>
+
+                  {/* Title Description / Subtitle */}
+                  {featuredBlog.titleDescription && (
+                    <p className="text-brand-accent font-medium text-xs sm:text-sm mb-4 leading-snug">
+                      {featuredBlog.titleDescription}
+                    </p>
+                  )}
+
                   <p className="text-gray-600 font-light text-sm sm:text-base leading-relaxed mb-6 line-clamp-3">
                     {featuredBlog.excerpt}
                   </p>
@@ -188,7 +196,7 @@ const Blogs = () => {
 
                   <div className="flex items-center gap-2">
                     <button 
-                      onClick={() => handleReadBlog(featuredBlog, true)}
+                      onClick={() => handleReadBlog(featuredBlog)}
                       title="Open in new tab"
                       className="p-2.5 rounded-sm border border-gray-200 text-gray-600 hover:text-brand-accent hover:border-brand-accent transition-colors"
                     >
@@ -196,7 +204,7 @@ const Blogs = () => {
                     </button>
                     <button 
                       onClick={() => handleReadBlog(featuredBlog)}
-                      className="bg-brand-dark hover:bg-brand-accent text-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-2 group-hover:gap-3"
+                      className="bg-brand-dark hover:bg-brand-accent text-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-2 group-hover:gap-3 cursor-pointer"
                     >
                       <span>Read Full Article</span>
                       <ArrowRight size={14} />
@@ -288,7 +296,10 @@ const Blogs = () => {
                   className="bg-white border border-gray-200/80 hover:border-brand-accent/50 shadow-sm hover:shadow-xl transition-all duration-500 rounded-sm overflow-hidden flex flex-col justify-between group"
                 >
                   {/* Image Header */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                  <div 
+                    onClick={() => handleReadBlog(blog)}
+                    className="relative aspect-[16/10] overflow-hidden bg-gray-100 cursor-pointer"
+                  >
                     <img 
                       src={blog.coverImage || 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80'} 
                       alt={blog.title}
@@ -298,10 +309,10 @@ const Blogs = () => {
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleReadBlog(blog, true);
+                          handleReadBlog(blog);
                         }}
                         title="Open in separate tab"
-                        className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 hover:text-brand-accent hover:bg-white flex items-center justify-center transition-all shadow"
+                        className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 hover:text-brand-accent hover:bg-white flex items-center justify-center transition-all shadow cursor-pointer"
                       >
                         <ArrowSquareOut size={15} />
                       </button>
@@ -321,10 +332,17 @@ const Blogs = () => {
                       {/* Title */}
                       <h3 
                         onClick={() => handleReadBlog(blog)}
-                        className="font-serif text-xl sm:text-2xl text-brand-dark group-hover:text-brand-accent transition-colors duration-300 leading-snug mb-3 cursor-pointer line-clamp-2"
+                        className="font-serif text-xl sm:text-2xl text-brand-dark group-hover:text-brand-accent transition-colors duration-300 leading-snug mb-2 cursor-pointer line-clamp-2"
                       >
                         {blog.title}
                       </h3>
+
+                      {/* Title Description / Subtitle */}
+                      {blog.titleDescription && (
+                        <p className="text-brand-accent text-xs font-medium mb-3 line-clamp-2 leading-relaxed">
+                          {blog.titleDescription}
+                        </p>
+                      )}
 
                       {/* Excerpt */}
                       <p className="text-gray-500 font-light text-xs sm:text-sm leading-relaxed mb-4 line-clamp-3">
@@ -360,7 +378,7 @@ const Blogs = () => {
 
                         <button 
                           onClick={() => handleReadBlog(blog)}
-                          className="interactive text-brand-dark text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 hover:text-brand-accent transition-colors group-hover:translate-x-1"
+                          className="interactive text-brand-dark text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 hover:text-brand-accent transition-colors group-hover:translate-x-1 cursor-pointer"
                         >
                           <span>Read</span>
                           <ArrowRight size={14} />

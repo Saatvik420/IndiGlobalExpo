@@ -40,7 +40,13 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       console.warn("Unauthorized request detected (401).");
-      // Removing automatic redirect to /tickets to allow debugging
+      try {
+        localStorage.removeItem('user');
+        localStorage.removeItem('last_active_time');
+        window.dispatchEvent(new Event('auth:unauthorized'));
+      } catch (e) {
+        console.error("Error clearing session on 401", e);
+      }
     }
     return Promise.reject(error);
   }

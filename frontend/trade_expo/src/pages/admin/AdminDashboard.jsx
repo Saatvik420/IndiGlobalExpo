@@ -70,6 +70,7 @@ const AdminDashboard = () => {
   const [editingBlog, setEditingBlog] = useState(null);
   const [blogFormData, setBlogFormData] = useState({
     title: '',
+    titleDescription: '',
     excerpt: '',
     content: '',
     author: 'IndiGlobal Editorial Team',
@@ -377,6 +378,7 @@ const AdminDashboard = () => {
     setEditingBlog(null);
     setBlogFormData({
       title: '',
+      titleDescription: '',
       excerpt: '',
       content: '',
       author: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'IndiGlobal Editorial Team',
@@ -395,6 +397,7 @@ const AdminDashboard = () => {
     setEditingBlog(b);
     setBlogFormData({
       title: b.title || '',
+      titleDescription: b.titleDescription || '',
       excerpt: b.excerpt || '',
       content: b.content || '',
       author: b.author || 'IndiGlobal Editorial Team',
@@ -543,6 +546,7 @@ const AdminDashboard = () => {
     const s = (blogSearch || '').toLowerCase();
     return !s || 
       (b.title || '').toLowerCase().includes(s) || 
+      (b.titleDescription || '').toLowerCase().includes(s) || 
       (b.author || '').toLowerCase().includes(s) ||
       (b.excerpt || '').toLowerCase().includes(s);
   });
@@ -625,7 +629,7 @@ const AdminDashboard = () => {
                     </p>
                     <p className="text-xs text-amber-700 mt-1">
                       {sessionExpired 
-                        ? 'Your token expired (24h security timeout). Displaying cached records. Re-enter password to sync live MongoDB data.' 
+                        ? 'Your session has expired. Displaying cached records. Re-enter password to sync live MongoDB data.' 
                         : 'Re-authenticate with admin password to refresh session token and sync live MongoDB records.'}
                     </p>
                     <p className="text-[11px] text-gray-500 font-mono mt-1">
@@ -1039,6 +1043,9 @@ const AdminDashboard = () => {
                                   </div>
                                   <div className="max-w-md">
                                     <p className="font-serif font-bold text-brand-dark text-sm sm:text-base line-clamp-1">{b.title}</p>
+                                    {b.titleDescription && (
+                                      <p className="text-brand-accent text-xs line-clamp-1 mt-0.5 font-medium">{b.titleDescription}</p>
+                                    )}
                                     <p className="text-gray-400 text-xs line-clamp-1 mt-0.5">{b.excerpt || 'No summary available'}</p>
                                   </div>
                                 </div>
@@ -1132,6 +1139,22 @@ const AdminDashboard = () => {
                   onChange={(e) => setBlogFormData({ ...blogFormData, title: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent font-serif font-bold text-brand-dark"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">
+                  Title Description / Subtitle
+                </label>
+                <input 
+                  type="text"
+                  placeholder="e.g. Unlocking high-growth bilateral trade corridors and tariff optimizations for Indian global exporters"
+                  value={blogFormData.titleDescription}
+                  onChange={(e) => setBlogFormData({ ...blogFormData, titleDescription: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-brand-accent text-gray-800"
+                />
+                <p className="text-[11px] text-gray-400 mt-1">
+                  Secondary title description or tagline displayed below the headline.
+                </p>
               </div>
 
               <div>
@@ -1501,6 +1524,11 @@ const AdminDashboard = () => {
                           <h4 className="font-serif text-xl sm:text-2xl font-bold text-brand-dark mt-1">
                             {blogFormData.title || 'Untitled Article'}
                           </h4>
+                          {blogFormData.titleDescription && (
+                            <p className="text-sm text-brand-accent font-medium mt-1">
+                              {blogFormData.titleDescription}
+                            </p>
+                          )}
                           <p className="text-xs text-gray-400 mt-1">
                             By {blogFormData.author || 'Author'} • {blogFormData.readTime || '5 min read'} • Text Align: {blogFormData.textAlign || 'left'}
                           </p>

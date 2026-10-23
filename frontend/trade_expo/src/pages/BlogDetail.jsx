@@ -88,8 +88,6 @@ const BlogDetail = () => {
     window.open(window.location.href, '_blank', 'noopener,noreferrer');
   };
 
-
-
   if (isLoading) {
     return (
       <>
@@ -173,9 +171,16 @@ const BlogDetail = () => {
 
           {/* Article Header Card */}
           <header className="mb-10">
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-brand-dark font-bold leading-tight mb-6">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-brand-dark font-bold leading-tight mb-4">
               {blog.title}
             </h1>
+
+            {/* Title Description / Subtitle */}
+            {blog.titleDescription && (
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 font-light leading-relaxed mb-6">
+                {blog.titleDescription}
+              </p>
+            )}
 
             {/* Meta details bar */}
             <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-gray-200 text-xs sm:text-sm text-gray-500">
@@ -238,7 +243,7 @@ const BlogDetail = () => {
                 <div className="flex flex-wrap gap-2">
                   {blog.tags.map((tag, tIdx) => (
                     <span 
-                      key={tIdx}
+                      key={tIdx} 
                       className="bg-brand-light text-brand-dark px-3 py-1 rounded-xs text-xs font-medium border border-gray-200"
                     >
                       #{tag}
@@ -259,58 +264,42 @@ const BlogDetail = () => {
                   onClick={() => handleShare('twitter')}
                   className="px-3 py-1.5 bg-gray-100 hover:bg-black hover:text-white rounded-xs text-xs font-bold transition-colors"
                 >
-                  X / Twitter
+                  Twitter
                 </button>
                 <button 
                   onClick={() => handleShare('linkedin')}
-                  className="px-3 py-1.5 bg-[#0077b5]/10 text-[#0077b5] hover:bg-[#0077b5] hover:text-white rounded-xs text-xs font-bold transition-colors"
+                  className="px-3 py-1.5 bg-gray-100 hover:bg-[#0077b5] hover:text-white rounded-xs text-xs font-bold transition-colors"
                 >
                   LinkedIn
                 </button>
                 <button 
                   onClick={() => handleShare('whatsapp')}
-                  className="px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white rounded-xs text-xs font-bold transition-colors"
+                  className="px-3 py-1.5 bg-gray-100 hover:bg-[#25D366] hover:text-white rounded-xs text-xs font-bold transition-colors"
                 >
                   WhatsApp
                 </button>
                 <button 
                   onClick={handleCopyLink}
-                  className="px-3 py-1.5 bg-gray-100 hover:bg-brand-accent hover:text-white rounded-xs text-xs font-bold transition-colors flex items-center gap-1"
+                  className="px-3 py-1.5 bg-brand-light border border-gray-200 hover:border-brand-accent rounded-xs text-xs font-semibold flex items-center gap-1 transition-colors text-brand-dark"
                 >
-                  {copySuccess ? <Check size={14} className="text-green-600" /> : null}
+                  {copySuccess ? <Check size={14} className="text-emerald-600" /> : null}
                   <span>{copySuccess ? 'Copied!' : 'Copy Link'}</span>
                 </button>
               </div>
             </div>
           </article>
 
-          {/* Author Box */}
-          <div className="bg-white p-6 sm:p-8 rounded-sm border border-gray-200/80 shadow-sm mb-16 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            <div className="w-16 h-16 rounded-full bg-brand-dark text-brand-accent font-serif font-bold text-2xl flex items-center justify-center flex-shrink-0">
-              {blog.author?.charAt(0) || 'I'}
-            </div>
-            <div className="text-center sm:text-left">
-              <h4 className="font-serif text-xl text-brand-dark font-bold mb-1">{blog.author}</h4>
-              <p className="text-xs uppercase tracking-widest text-brand-accent font-semibold mb-3">
-                {blog.authorRole || 'IndiGlobal Expo Contributor'}
-              </p>
-              <p className="text-gray-500 font-light text-sm leading-relaxed">
-                Contributing insights on cross-border trade agreements, industrial innovations, and strategic B2B market trends shaping the future of Indian and global commerce.
-              </p>
-            </div>
-          </div>
-
           {/* Related Articles Section */}
           {relatedBlogs.length > 0 && (
             <section className="mt-16 pt-12 border-t border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <p className="text-xs uppercase font-bold tracking-widest text-brand-accent mb-1">More to Explore</p>
-                  <h3 className="font-serif text-2xl sm:text-3xl text-brand-dark">Related Articles</h3>
+                  <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">Keep Reading</span>
+                  <h3 className="font-serif text-2xl text-brand-dark mt-1">Recommended Articles</h3>
                 </div>
                 <Link 
                   to="/blogs" 
-                  className="text-xs font-bold uppercase tracking-widest text-brand-dark hover:text-brand-accent transition-colors flex items-center gap-1"
+                  className="text-xs font-bold uppercase tracking-wider text-brand-dark hover:text-brand-accent flex items-center gap-1 transition-colors"
                 >
                   <span>View All</span>
                   <CaretRight size={14} />
@@ -322,8 +311,8 @@ const BlogDetail = () => {
                   <div 
                     key={relBlog.id || rIdx}
                     onClick={() => {
-                      navigate(`/blogs/${getBlogSlug(relBlog)}`);
-                      window.scrollTo(0, 0);
+                      const path = `/blogs/${getBlogSlug(relBlog)}`;
+                      window.open(path, '_blank', 'noopener,noreferrer');
                     }}
                     className="bg-white border border-gray-200/80 hover:border-brand-accent/50 p-5 rounded-sm shadow-2xs hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
                   >
@@ -335,9 +324,14 @@ const BlogDetail = () => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                         />
                       </div>
-                      <h4 className="font-serif text-base text-brand-dark group-hover:text-brand-accent transition-colors font-bold line-clamp-2 leading-snug mb-2">
+                      <h4 className="font-serif text-base text-brand-dark group-hover:text-brand-accent transition-colors font-bold line-clamp-2 leading-snug mb-1">
                         {relBlog.title}
                       </h4>
+                      {relBlog.titleDescription && (
+                        <p className="text-brand-accent text-xs font-medium line-clamp-1 mb-2">
+                          {relBlog.titleDescription}
+                        </p>
+                      )}
                     </div>
                     <div className="text-[11px] text-gray-400 pt-3 border-t border-gray-100 flex items-center justify-between">
                       <span>{relBlog.publishedDate}</span>

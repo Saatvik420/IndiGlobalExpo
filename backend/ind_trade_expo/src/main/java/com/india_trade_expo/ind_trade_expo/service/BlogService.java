@@ -88,6 +88,9 @@ public class BlogService {
         }
 
         existingBlog.setTitle(updatedData.getTitle());
+        if (updatedData.getTitleDescription() != null) {
+            existingBlog.setTitleDescription(updatedData.getTitleDescription());
+        }
         if (updatedData.getSlug() != null && !updatedData.getSlug().isEmpty()) {
             existingBlog.setSlug(updatedData.getSlug());
         }
@@ -141,6 +144,7 @@ public class BlogService {
                 
                 Blog b1 = Blog.builder()
                         .title("Navigating Global Trade Corridors: Opportunities for Indian Exporters in 2026-2027")
+                        .titleDescription("Unlocking high-growth bilateral trade corridors, emerging market routes, and tariff optimizations for Indian global exporters.")
                         .slug("navigating-global-trade-corridors-opportunities-indian-exporters")
                         .author("IndiGlobal Editorial Team")
                         .authorRole("Global Trade Analyst")
@@ -157,6 +161,7 @@ public class BlogService {
 
                 Blog b2 = Blog.builder()
                         .title("The Rise of Smart B2B Trade Fairs: How Technology is Transforming Exhibitions")
+                        .titleDescription("How predictive buyer matching, digital stall telemetry, and immersive expo technology are redefining commercial ROI.")
                         .slug("the-rise-of-smart-b2b-trade-fairs-technology-transforming-exhibitions")
                         .author("Arunima Sengupta")
                         .authorRole("Head of Event Strategy")
@@ -173,6 +178,7 @@ public class BlogService {
 
                 Blog b3 = Blog.builder()
                         .title("Sustainable Manufacturing & Green Supply Chains: The New Export Standard")
+                        .titleDescription("Navigating European CBAM regulations, carbon accounting metrics, and circular sustainability standards in global supply chains.")
                         .slug("sustainable-manufacturing-green-supply-chains-new-export-standard")
                         .author("Dr. Vikram Malhotra")
                         .authorRole("Sustainability & Supply Chain Consultant")
@@ -189,6 +195,7 @@ public class BlogService {
 
                 Blog b4 = Blog.builder()
                         .title("India-ASEAN Business Confluence: Unlocking High-Value Bilateral Partnerships")
+                        .titleDescription("Capitalizing on bilateral FTAs, duty exemptions, and cross-border strategic distribution alliances across ASEAN economies.")
                         .slug("india-asean-business-confluence-unlocking-bilateral-partnerships")
                         .author("IndiGlobal Editorial Team")
                         .authorRole("Diplomatic & Trade Relations")
