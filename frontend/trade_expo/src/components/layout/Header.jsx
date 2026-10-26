@@ -72,8 +72,10 @@ const Header = ({ logoColor = 'text-white' }) => {
             )}
 
             {/* Blogs Link with hover effect */}
-            <button
-              onClick={() => handleNavigate('/blogs')}
+            <a
+              href="/blogs"
+              target="_blank"
+              rel="noopener noreferrer"
               className={`relative group px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-1.5 rounded-full border ${
                 isMenuOpen
                   ? 'text-white border-white/20 hover:border-brand-accent hover:text-brand-accent'
@@ -84,7 +86,7 @@ const Header = ({ logoColor = 'text-white' }) => {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent group-hover:scale-125 transition-transform duration-300"></span>
               <span>Blogs</span>
-            </button>
+            </a>
 
             {!user && !isMenuOpen && (
               <button

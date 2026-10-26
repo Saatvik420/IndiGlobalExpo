@@ -439,8 +439,13 @@ const AdminDashboard = () => {
         ? blogFormData.tags.split(',').map(t => t.trim()).filter(Boolean)
         : blogFormData.tags;
 
+      const finalTabTitle = (blogFormData.tabTitle || '').trim() || (blogFormData.title ? `${blogFormData.title.trim()} | IndiGlobal Expo` : '');
+      const finalTabDesc = (blogFormData.tabDescription || '').trim() || (blogFormData.titleDescription || blogFormData.excerpt || (blogFormData.title ? `${blogFormData.title.trim()} - Explore international trade insights and opportunities at IndiGlobal Expo.` : '')).trim();
+
       const payload = {
         ...blogFormData,
+        tabTitle: finalTabTitle,
+        tabDescription: finalTabDesc,
         tags: tagsArray
       };
 

@@ -50,41 +50,57 @@ const BlogDetail = () => {
   const [isLoading, setIsLoading] = useState(() => !blog);
   const [copySuccess, setCopySuccess] = useState(false);
 
+  // 1. Determine active browser tab title with fallback hierarchy
+  let activeTabTitle = (blog?.tabTitle || blog?.metaTitle || '').trim();
+  if (!activeTabTitle && blog?.title) {
+    activeTabTitle = `${blog.title} | IndiGlobal Expo`;
+  }
+  if (!activeTabTitle && id) {
+    const humanizedSlug = id.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    activeTabTitle = `${humanizedSlug} | IndiGlobal Expo`;
+  }
+  if (!activeTabTitle) {
+    activeTabTitle = 'IndiGlobal Expo | Blog Article';
+  }
+
+  // 2. Determine active Tab / Meta Description configured by Admin or intelligent fallback
+  let activeTabDesc = (blog?.tabDescription || blog?.metaDescription || blog?.titleDescription || blog?.excerpt || '').trim();
+  if (!activeTabDesc && blog?.title) {
+    activeTabDesc = `${blog.title} - Explore global trade opportunities, bilateral partnerships, and market insights at IndiGlobal Expo.`;
+  }
+  if (!activeTabDesc && id) {
+    const humanizedSlug = id.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    activeTabDesc = `${humanizedSlug} - Read the latest international trade insights and business analysis on IndiGlobal Expo.`;
+  }
+  if (!activeTabDesc) {
+    activeTabDesc = 'IndiGlobal Expo Blog - Global trade insights, market entry strategies, and B2B opportunities.';
+  }
+
   // Dynamic Browser Tab Title and Meta Description authority for new/opened blogs
   useEffect(() => {
-    // 1. Determine active browser tab title with fallback hierarchy
-    let activeTabTitle = (blog?.tabTitle || blog?.metaTitle || '').trim();
-    if (!activeTabTitle && blog?.title) {
-      activeTabTitle = `${blog.title} | IndiGlobal Expo`;
-    }
-    if (!activeTabTitle && id) {
-      const humanizedSlug = id.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-      activeTabTitle = `${humanizedSlug} | IndiGlobal Expo`;
-    }
-    if (!activeTabTitle) {
-      activeTabTitle = 'IndiGlobal Expo | Blog Article';
-    }
-
     document.title = activeTabTitle;
 
-    // 2. Determine active Tab / Meta Description configured by Admin or fallback
-    const activeTabDesc = (blog?.tabDescription || blog?.metaDescription || blog?.titleDescription || blog?.excerpt || '').trim();
-    if (activeTabDesc) {
-      let metaDescTag = document.querySelector('meta[name="description"]');
-      if (!metaDescTag) {
-        metaDescTag = document.createElement('meta');
-        metaDescTag.setAttribute('name', 'description');
-        document.head.appendChild(metaDescTag);
-      }
-      metaDescTag.setAttribute('content', activeTabDesc);
-
-      let ogDescTag = document.querySelector('meta[property="og:description"]');
-      if (ogDescTag) ogDescTag.setAttribute('content', activeTabDesc);
+    let metaDescTag = document.querySelector('meta[name="description"]');
+    if (!metaDescTag) {
+      metaDescTag = document.createElement('meta');
+      metaDescTag.setAttribute('name', 'description');
+      document.head.appendChild(metaDescTag);
     }
+    metaDescTag.setAttribute('content', activeTabDesc);
+
+    let ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescTag) ogDescTag.setAttribute('content', activeTabDesc);
 
     let ogTitleTag = document.querySelector('meta[property="og:title"]');
     if (ogTitleTag) ogTitleTag.setAttribute('content', activeTabTitle);
-  }, [blog, id]);
+
+    return () => {
+      document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
+      const defaultDesc = 'IndiGlobal Expo - Connect • Collaborate • Grow. A Premier International Trade Fair Showcasing Asia to the World.';
+      const descTag = document.querySelector('meta[name="description"]');
+      if (descTag) descTag.setAttribute('content', defaultDesc);
+    };
+  }, [activeTabTitle, activeTabDesc]);
 
   useEffect(() => {
     let isMounted = true;
@@ -152,6 +168,10 @@ const BlogDetail = () => {
   if (isLoading) {
     return (
       <>
+        <title>{activeTabTitle}</title>
+        <meta name="description" content={activeTabDesc} />
+        <meta property="og:title" content={activeTabTitle} />
+        <meta property="og:description" content={activeTabDesc} />
         <PageLoader title="Loading<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Article...</span>" />
         <Header />
         <div className="min-h-screen bg-brand-light flex items-center justify-center">
@@ -168,6 +188,10 @@ const BlogDetail = () => {
   if (!blog) {
     return (
       <>
+        <title>{activeTabTitle}</title>
+        <meta name="description" content={activeTabDesc} />
+        <meta property="og:title" content={activeTabTitle} />
+        <meta property="og:description" content={activeTabDesc} />
         <Header />
         <div className="min-h-screen bg-brand-light flex items-center justify-center px-4">
           <div className="max-w-md w-full bg-white p-8 sm:p-10 text-center rounded-sm border border-gray-200 shadow-md">
@@ -191,6 +215,10 @@ const BlogDetail = () => {
 
   return (
     <>
+      <title>{activeTabTitle}</title>
+      <meta name="description" content={activeTabDesc} />
+      <meta property="og:title" content={activeTabTitle} />
+      <meta property="og:description" content={activeTabDesc} />
       <PageLoader title="IndiGlobal<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Chronicles</span>" />
       <CustomCursor />
       <Header logoColor="text-brand-dark" />

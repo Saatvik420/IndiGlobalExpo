@@ -610,20 +610,22 @@ const Home = () => {
                   Latest Insights <span className="italic font-light text-brand-accent">& Chronicles.</span>
                 </h2>
               </div>
-              <button 
-                onClick={() => handleNavigate('/blogs')}
+              <a 
+                href="/blogs"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-dark hover:text-brand-accent transition-colors pb-1 border-b border-brand-dark hover:border-brand-accent w-fit"
               >
                 <span>Explore All Articles</span>
                 <i className="ph ph-arrow-right text-base group-hover:translate-x-1.5 transition-transform"></i>
-              </button>
+              </a>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {latestBlogs.map((blog, idx) => (
                 <div 
                   key={blog.id || idx}
-                  onClick={() => handleNavigate(`/blogs/${getBlogSlug(blog)}`)}
+                  onClick={() => window.open(`/blogs/${getBlogSlug(blog)}`, '_blank', 'noopener,noreferrer')}
                   className="bg-brand-light/30 border border-gray-200/80 hover:border-brand-accent/50 p-5 sm:p-6 rounded-sm shadow-2xs hover:shadow-xl transition-all duration-500 cursor-pointer group flex flex-col justify-between"
                 >
                   <div>

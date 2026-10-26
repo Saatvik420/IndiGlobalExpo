@@ -65,12 +65,14 @@ const Footer = () => {
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => handleNavigate('/blogs')}
+                <a 
+                  href="/blogs" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="hover:text-brand-accent transition-colors interactive cursor-pointer"
                 >
                   Blogs & Articles
-                </button>
+                </a>
               </li>
               <li>
                 <button 
