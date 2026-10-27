@@ -93,9 +93,13 @@ public class BlogService {
         }
         if (updatedData.getTabTitle() != null) {
             existingBlog.setTabTitle(updatedData.getTabTitle());
+        } else if (updatedData.getTitleOG() != null) {
+            existingBlog.setTabTitle(updatedData.getTitleOG());
         }
         if (updatedData.getTabDescription() != null) {
             existingBlog.setTabDescription(updatedData.getTabDescription());
+        } else if (updatedData.getDescriptionOG() != null) {
+            existingBlog.setTabDescription(updatedData.getDescriptionOG());
         }
         if (updatedData.getSlug() != null && !updatedData.getSlug().isEmpty()) {
             existingBlog.setSlug(updatedData.getSlug());

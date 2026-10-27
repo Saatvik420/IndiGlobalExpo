@@ -19,7 +19,7 @@ import FullscreenMenu from '../components/layout/FullscreenMenu';
 import PageLoader from '../components/layout/PageLoader';
 import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
-import blogService, { getBlogSlug, getLocalBlogs } from '../services/blogService';
+import blogService, { getBlogSlug, getLocalBlogs, INITIAL_BLOGS, unpackBlogMeta } from '../services/blogService';
 import FormattedArticleContent from '../components/blog/FormattedArticleContent';
 
 const BlogDetail = () => {
@@ -30,7 +30,9 @@ const BlogDetail = () => {
   const [blog, setBlog] = useState(() => {
     try {
       const local = getLocalBlogs();
-      return local.find(b => b.slug === id || b.id === id || getBlogSlug(b) === id) || null;
+      const found = local.find(b => b.slug === id || b.id === id || getBlogSlug(b) === id);
+      if (found) return found;
+      return INITIAL_BLOGS.map(unpackBlogMeta).find(b => b.slug === id || b.id === id || getBlogSlug(b) === id) || null;
     } catch (e) {
       return null;
     }
@@ -51,7 +53,7 @@ const BlogDetail = () => {
   const [copySuccess, setCopySuccess] = useState(false);
 
   // 1. Determine active browser tab title with fallback hierarchy
-  let activeTabTitle = (blog?.tabTitle || blog?.metaTitle || '').trim();
+  let activeTabTitle = (blog?.tabTitle || blog?.titleOG || blog?.ogTitle || blog?.metaTitle || '').trim();
   if (!activeTabTitle && blog?.title) {
     activeTabTitle = `${blog.title} | IndiGlobal Expo`;
   }
@@ -64,7 +66,7 @@ const BlogDetail = () => {
   }
 
   // 2. Determine active Tab / Meta Description configured by Admin or intelligent fallback
-  let activeTabDesc = (blog?.tabDescription || blog?.metaDescription || blog?.titleDescription || blog?.excerpt || '').trim();
+  let activeTabDesc = (blog?.tabDescription || blog?.descriptionOG || blog?.ogDescription || blog?.metaDescription || blog?.titleDescription || blog?.excerpt || '').trim();
   if (!activeTabDesc && blog?.title) {
     activeTabDesc = `${blog.title} - Explore global trade opportunities, bilateral partnerships, and market insights at IndiGlobal Expo.`;
   }
@@ -89,16 +91,50 @@ const BlogDetail = () => {
     metaDescTag.setAttribute('content', activeTabDesc);
 
     let ogDescTag = document.querySelector('meta[property="og:description"]');
-    if (ogDescTag) ogDescTag.setAttribute('content', activeTabDesc);
+    if (!ogDescTag) {
+      ogDescTag = document.createElement('meta');
+      ogDescTag.setAttribute('property', 'og:description');
+      document.head.appendChild(ogDescTag);
+    }
+    ogDescTag.setAttribute('content', activeTabDesc);
 
     let ogTitleTag = document.querySelector('meta[property="og:title"]');
-    if (ogTitleTag) ogTitleTag.setAttribute('content', activeTabTitle);
+    if (!ogTitleTag) {
+      ogTitleTag = document.createElement('meta');
+      ogTitleTag.setAttribute('property', 'og:title');
+      document.head.appendChild(ogTitleTag);
+    }
+    ogTitleTag.setAttribute('content', activeTabTitle);
+
+    let twitterTitleTag = document.querySelector('meta[name="twitter:title"]');
+    if (!twitterTitleTag) {
+      twitterTitleTag = document.createElement('meta');
+      twitterTitleTag.setAttribute('name', 'twitter:title');
+      document.head.appendChild(twitterTitleTag);
+    }
+    twitterTitleTag.setAttribute('content', activeTabTitle);
+
+    let twitterDescTag = document.querySelector('meta[name="twitter:description"]');
+    if (!twitterDescTag) {
+      twitterDescTag = document.createElement('meta');
+      twitterDescTag.setAttribute('name', 'twitter:description');
+      document.head.appendChild(twitterDescTag);
+    }
+    twitterDescTag.setAttribute('content', activeTabDesc);
 
     return () => {
       document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
       const defaultDesc = 'IndiGlobal Expo - Connect • Collaborate • Grow. A Premier International Trade Fair Showcasing Asia to the World.';
       const descTag = document.querySelector('meta[name="description"]');
       if (descTag) descTag.setAttribute('content', defaultDesc);
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', 'IndiGlobal Expo 2027');
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', defaultDesc);
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twTitle) twTitle.setAttribute('content', 'IndiGlobal Expo 2027');
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.setAttribute('content', defaultDesc);
     };
   }, [activeTabTitle, activeTabDesc]);
 
@@ -172,6 +208,8 @@ const BlogDetail = () => {
         <meta name="description" content={activeTabDesc} />
         <meta property="og:title" content={activeTabTitle} />
         <meta property="og:description" content={activeTabDesc} />
+        <meta name="twitter:title" content={activeTabTitle} />
+        <meta name="twitter:description" content={activeTabDesc} />
         <PageLoader title="Loading<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Article...</span>" />
         <Header />
         <div className="min-h-screen bg-brand-light flex items-center justify-center">
@@ -192,6 +230,8 @@ const BlogDetail = () => {
         <meta name="description" content={activeTabDesc} />
         <meta property="og:title" content={activeTabTitle} />
         <meta property="og:description" content={activeTabDesc} />
+        <meta name="twitter:title" content={activeTabTitle} />
+        <meta name="twitter:description" content={activeTabDesc} />
         <Header />
         <div className="min-h-screen bg-brand-light flex items-center justify-center px-4">
           <div className="max-w-md w-full bg-white p-8 sm:p-10 text-center rounded-sm border border-gray-200 shadow-md">
@@ -219,6 +259,8 @@ const BlogDetail = () => {
       <meta name="description" content={activeTabDesc} />
       <meta property="og:title" content={activeTabTitle} />
       <meta property="og:description" content={activeTabDesc} />
+      <meta name="twitter:title" content={activeTabTitle} />
+      <meta name="twitter:description" content={activeTabDesc} />
       <PageLoader title="IndiGlobal<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Chronicles</span>" />
       <CustomCursor />
       <Header logoColor="text-brand-dark" />

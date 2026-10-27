@@ -78,6 +78,18 @@ public class Blog {
     public String getMetaDescription() { return tabDescription; }
     public void setMetaDescription(String metaDescription) { if (this.tabDescription == null || this.tabDescription.isEmpty()) this.tabDescription = metaDescription; }
 
+    public String getTitleOG() { return tabTitle; }
+    public void setTitleOG(String titleOG) { if (this.tabTitle == null || this.tabTitle.isEmpty()) this.tabTitle = titleOG; }
+
+    public String getDescriptionOG() { return tabDescription; }
+    public void setDescriptionOG(String descriptionOG) { if (this.tabDescription == null || this.tabDescription.isEmpty()) this.tabDescription = descriptionOG; }
+
+    public String getOgTitle() { return tabTitle; }
+    public void setOgTitle(String ogTitle) { if (this.tabTitle == null || this.tabTitle.isEmpty()) this.tabTitle = ogTitle; }
+
+    public String getOgDescription() { return tabDescription; }
+    public void setOgDescription(String ogDescription) { if (this.tabDescription == null || this.tabDescription.isEmpty()) this.tabDescription = ogDescription; }
+
     public String getSlug() { return slug; }
     public void setSlug(String slug) { this.slug = slug; }
 
