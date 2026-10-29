@@ -4,6 +4,62 @@ const STORAGE_KEY = 'indiglobal_blogs_cache';
 
 export const INITIAL_BLOGS = [
   {
+    "id": "6ae2d8ee3dc3b318f4da6eee",
+    "title": "Healthcare and Pharmaceutical Exports",
+    "titleDescription": "",
+    "tabTitle": "Healthcare and Pharmaceutical Exports | IndiGlobalExpo",
+    "tabDescription": "Discover healthcare and pharmaceutical export opportunities in Thailand and Southeast Asia. Connect with global buyers and partners at India–ASEAN Global Confluence 2027 in Bangkok.",
+    "titleOG": "Healthcare and Pharmaceutical Exports | IndiGlobalExpo",
+    "descriptionOG": "Discover healthcare and pharmaceutical export opportunities in Thailand and Southeast Asia. Connect with global buyers and partners at India–ASEAN Global Confluence 2027 in Bangkok.",
+    "ogTitle": "Healthcare and Pharmaceutical Exports | IndiGlobalExpo",
+    "ogDescription": "Discover healthcare and pharmaceutical export opportunities in Thailand and Southeast Asia. Connect with global buyers and partners at India–ASEAN Global Confluence 2027 in Bangkok.",
+    "metaTitle": "Healthcare and Pharmaceutical Exports | IndiGlobalExpo",
+    "metaDescription": "Discover healthcare and pharmaceutical export opportunities in Thailand and Southeast Asia. Connect with global buyers and partners at India–ASEAN Global Confluence 2027 in Bangkok.",
+    "slug": "healthcare-and-pharmaceutical-exports",
+    "author": "IndiGlobal Expo",
+    "authorRole": "Admin",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/10/India-ASEAN-Healthcare-Trade-Confluence.png",
+    "readTime": "5 min read",
+    "publishedDate": "October 29, 2026",
+    "featured": true,
+    "textAlign": "left",
+    "excerpt": "Indian Pharmaceutical Exports, Medical Devices Thailand, Healthcare Distributors ASEAN",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"Healthcare and Pharmaceutical Exports | IndiGlobalExpo\",\"tabDescription\":\"Discover healthcare and pharmaceutical export opportunities in Thailand and Southeast Asia. Connect with global buyers and partners at India–ASEAN Global Confluence 2027 in Bangkok.\",\"titleOG\":\"Healthcare and Pharmaceutical Exports | IndiGlobalExpo\",\"descriptionOG\":\"Discover healthcare and pharmaceutical export opportunities in Thailand and Southeast Asia. Connect with global buyers and partners at India–ASEAN Global Confluence 2027 in Bangkok.\"}]-->\n\n[align=justify]\n**Exploring Business Opportunities Across ASEAN**\n\nHealthcare and pharmaceutical industries are creating new opportunities for international trade, innovation, and business partnerships across Southeast Asia. With increasing demand for quality medicines, medical devices, healthcare technology, and affordable treatment solutions, ASEAN markets offer promising opportunities for manufacturers, exporters, distributors, and investors.\n\n[Healthcare export opportunities in ASEAN](https://indiglobalexpo.com/) are expanding as countries strengthen their healthcare infrastructure, improve access to medical services, and invest in modern healthcare technologies. Indian pharmaceutical companies and medical equipment manufacturers can explore these markets by connecting with local distributors, understanding product registration requirements, and developing competitive pricing strategies. Thailand, Vietnam, Indonesia, Malaysia, and the Philippines are important markets to evaluate for potential cross-border business partnerships.\n\nPharmaceutical exporters must also understand each country's regulatory framework, import procedures, quality standards, and licensing requirements. Building relationships with reliable regional partners can help businesses navigate market entry challenges and develop sustainable export strategies. Similarly, medical technology companies can explore opportunities in diagnostic equipment, hospital supplies, digital health solutions, and advanced medical devices.\n\nThe [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/) provides a valuable platform for businesses seeking international connections and regional expansion. The event aims to bring together entrepreneurs, manufacturers, exporters, investors, and industry professionals to explore trade opportunities, exchange insights, and build meaningful business relationships.\n\nBy participating in industry discussions and networking opportunities, companies can identify potential buyers, connect with distributors, and understand emerging market requirements. For businesses planning regional expansion, [Healthcare export opportunities in ASEAN](https://indiglobalexpo.com/) can offer a pathway to new customers, stronger partnerships, and long-term growth.\n\nAs demand for healthcare products continues to evolve, companies that focus on regulatory compliance, product quality, innovation, and strategic collaboration can strengthen their position in Southeast Asian markets. Exploring [Healthcare export opportunities in ASEAN](https://indiglobalexpo.com/) through international business platforms can be an important step toward expanding global reach.\n\nConnect with us to explore new opportunities.\nVisit: **[https://indiglobalexpo.com](https://indiglobalexpo.com/)**/\n\n**Join India–ASEAN Global Confluence 2027 to build connections and explore cross-border trade opportunities.**[/align]\n",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
+    "id": "6ae1737c3dc3b318f4da6eed",
+    "title": "Gems and Jewellery Exports to Thailand",
+    "titleDescription": "",
+    "tabTitle": "Gems and Jewellery Exports to Thailand | IndiGlobalExpo",
+    "tabDescription": "Explore gems and jewellery export opportunities in Thailand for Indian manufacturers and brands. Discover market potential and global trade connections at India–ASEAN Global Confluence 2027.",
+    "titleOG": "Gems and Jewellery Exports to Thailand | IndiGlobalExpo",
+    "descriptionOG": "Explore gems and jewellery export opportunities in Thailand for Indian manufacturers and brands. Discover market potential and global trade connections at India–ASEAN Global Confluence 2027.",
+    "ogTitle": "Gems and Jewellery Exports to Thailand | IndiGlobalExpo",
+    "ogDescription": "Explore gems and jewellery export opportunities in Thailand for Indian manufacturers and brands. Discover market potential and global trade connections at India–ASEAN Global Confluence 2027.",
+    "metaTitle": "Gems and Jewellery Exports to Thailand | IndiGlobalExpo",
+    "metaDescription": "Explore gems and jewellery export opportunities in Thailand for Indian manufacturers and brands. Discover market potential and global trade connections at India–ASEAN Global Confluence 2027.",
+    "slug": "gems-and-jewellery-exports-to-thailand",
+    "author": "IndiGlobal Expo",
+    "authorRole": "Admin",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/10/India–Thailand-Gem-Trade-Expo-2027.png",
+    "readTime": "5 min read",
+    "publishedDate": "October 28, 2026",
+    "featured": true,
+    "textAlign": "left",
+    "excerpt": "Indian Jewellery Exporters, Gemstone Trade Thailand, Jewellery B2B Exhibition",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"Gems and Jewellery Exports to Thailand | IndiGlobalExpo\",\"tabDescription\":\"Explore gems and jewellery export opportunities in Thailand for Indian manufacturers and brands. Discover market potential and global trade connections at India–ASEAN Global Confluence 2027.\",\"titleOG\":\"Gems and Jewellery Exports to Thailand | IndiGlobalExpo\",\"descriptionOG\":\"Explore gems and jewellery export opportunities in Thailand for Indian manufacturers and brands. Discover market potential and global trade connections at India–ASEAN Global Confluence 2027.\"}]-->\n\n[align=justify]\n**Gems and Jewellery Export Opportunities in Thailand for Indian Businesses**\n\nThailand offers promising business opportunities for Indian jewellery manufacturers, gemstone suppliers, exporters and established brands seeking to expand into Southeast Asian markets. With its strong jewellery manufacturing ecosystem and international trading networks, Thailand can serve as an important destination for Indian businesses exploring [gems and jewellery export opportunities.](https://indiglobalexpo.com/)\n\nIndia has a well-established gems and jewellery industry, supported by skilled artisans, advanced manufacturing capabilities and a wide variety of products, including gold jewellery, silver ornaments, diamond jewellery, coloured gemstones and fashionable accessories. Indian manufacturers can explore [gems and jewellery export opportunities](https://indiglobalexpo.com/) by connecting with Thai importers, wholesalers, retailers and jewellery distributors.\n\n**Key Export Opportunities for Indian Businesses**\n\nIndian exporters can explore demand for loose gemstones, diamond jewellery, handcrafted ornaments, silver jewellery and customised designs. Combining traditional Indian craftsmanship with contemporary styling can help brands attract new international customers. Private-label manufacturing and customised jewellery production may also provide opportunities to establish long-term relationships with overseas buyers.\n\nBusinesses looking for [gems and jewellery export opportunities](https://indiglobalexpo.com/) should research Thai consumer preferences, identify suitable distribution partners and maintain consistent product quality. Exporters should also verify applicable customs duties, import regulations, product certification requirements and documentation before entering the Thai market.\n\n**Expand Your Business Through India–ASEAN Global Confluence 2027**\n\nThe [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/), scheduled for **21–22 January 2027 in Ayutthaya and Bangkok, Thailand**, offers a platform for businesses to explore international connections, discuss cross-border trade and develop strategic partnerships.\n\nIndian jewellery manufacturers, exporters and brands can use this business networking opportunity to connect with potential buyers, distributors, investors and industry representatives. Participation can support discussions around market expansion, distribution opportunities and partnerships across Thailand and the wider ASEAN region.\n\nThe growing interest in international trade makes it important for Indian businesses to identify suitable markets and build reliable commercial relationships. By combining India's jewellery manufacturing expertise with Thailand's established trading networks, exporters can explore new routes to market and strengthen their international presence.\n\n**Discover new gems and jewellery export opportunities through [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/) and take the next step towards expanding your business in Thailand and Southeast Asia.**\n\n[/align]",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
     "id": "6ae03f133dc3b318f4da6eec",
     "title": "How Indian Technology Companies Can Find New Customers in Thailand",
     "titleDescription": "",
