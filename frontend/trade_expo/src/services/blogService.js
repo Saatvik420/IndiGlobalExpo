@@ -4,6 +4,62 @@ const STORAGE_KEY = 'indiglobal_blogs_cache';
 
 export const INITIAL_BLOGS = [
   {
+    "id": "6ae581ef3dc3b318f4da6f02",
+    "title": "AI, SaaS and Digital Solutions: Building India–ASEAN Technology Partnerships",
+    "titleDescription": "",
+    "tabTitle": "AI, SaaS & Digital Solutions: India–ASEAN Technology Partnerships",
+    "tabDescription": "Explore technology business opportunities in ASEAN through AI, SaaS and digital solutions. Join India–ASEAN Global Confluence 2027 in Bangkok to build strategic partnerships and expand into new markets.",
+    "titleOG": "AI, SaaS & Digital Solutions: India–ASEAN Technology Partnerships",
+    "descriptionOG": "Explore technology business opportunities in ASEAN through AI, SaaS and digital solutions. Join India–ASEAN Global Confluence 2027 in Bangkok to build strategic partnerships and expand into new markets.",
+    "ogTitle": "AI, SaaS & Digital Solutions: India–ASEAN Technology Partnerships",
+    "ogDescription": "Explore technology business opportunities in ASEAN through AI, SaaS and digital solutions. Join India–ASEAN Global Confluence 2027 in Bangkok to build strategic partnerships and expand into new markets.",
+    "metaTitle": "AI, SaaS & Digital Solutions: India–ASEAN Technology Partnerships",
+    "metaDescription": "Explore technology business opportunities in ASEAN through AI, SaaS and digital solutions. Join India–ASEAN Global Confluence 2027 in Bangkok to build strategic partnerships and expand into new markets.",
+    "slug": "ai-saas-and-digital-solutions-building-indiaasean-technology-partnerships",
+    "author": "IndiGlobal Expo",
+    "authorRole": "Admin",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/10/11.png",
+    "readTime": "5 min read",
+    "publishedDate": "October 31, 2026",
+    "featured": true,
+    "textAlign": "left",
+    "excerpt": "Indian SaaS Companies, AI Solutions ASEAN, IT Partnerships Thailand",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"AI, SaaS & Digital Solutions: India–ASEAN Technology Partnerships\",\"tabDescription\":\"Explore technology business opportunities in ASEAN through AI, SaaS and digital solutions. Join India–ASEAN Global Confluence 2027 in Bangkok to build strategic partnerships and expand into new markets.\",\"titleOG\":\"AI, SaaS & Digital Solutions: India–ASEAN Technology Partnerships\",\"descriptionOG\":\"Explore technology business opportunities in ASEAN through AI, SaaS and digital solutions. Join India–ASEAN Global Confluence 2027 in Bangkok to build strategic partnerships and expand into new markets.\"}]-->\n\n[align=justify]\nArtificial Intelligence (AI), Software as a Service (SaaS), and digital solutions are transforming the global business landscape. Across Southeast Asia, businesses are increasingly adopting advanced technologies to improve efficiency, enhance customer experiences, and accelerate digital transformation. This growing demand is creating exciting [Technology business opportunities in ASEAN](https://indiglobalexpo.com/) for Indian IT companies, startups, software developers, and technology service providers.\n\n**Growing Demand for AI and Digital Solutions**\n\nASEAN countries such as Thailand, Singapore, Indonesia, Vietnam, and Malaysia are investing in digital infrastructure and technology-driven business solutions. AI-powered automation, data analytics, cloud computing, cybersecurity, and digital payment systems are becoming essential for modern businesses. Indian technology companies can leverage their expertise to provide innovative and cost-effective solutions to these growing markets.\n\n**SaaS Opportunities Across Southeast Asia**\n\nThe adoption of SaaS platforms is opening new opportunities for Indian businesses to expand internationally. Cloud-based CRM systems, enterprise management software, HR solutions, e-commerce platforms, and financial technology applications are gaining popularity. These developments are strengthening [Technology business opportunities in ASEAN](https://indiglobalexpo.com/), encouraging cross-border investments, strategic partnerships, and knowledge exchange between Indian and Southeast Asian companies.\n\n**Building Strong India–ASEAN Technology Partnerships**\n\nCollaboration between Indian technology companies and ASEAN businesses can accelerate innovation and create long-term commercial relationships. Through joint ventures, technology transfer, business networking, and strategic investments, companies can explore new markets and develop solutions that address regional business requirements. These partnerships can also support startups and MSMEs looking to expand their digital presence internationally.\n\n**Join India–ASEAN Global Confluence 2027**\n\n[The India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/) provides an important platform for entrepreneurs, technology companies, investors, manufacturers, and business leaders to connect and explore international opportunities.\n\n**Event Details:**\n\n•\tDate: 21–22 January 2027\n•\tLocation: Ayutthaya & Bangkok, Thailand\n\nParticipate in this international business gathering to discover emerging technology markets, connect with potential partners, and explore Technology business opportunities in ASEAN.\n\nBe part of the [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/) and take the next step towards building successful technology partnerships across Southeast Asia.\n\nVisit: [https://indiglobalexpo.com/](https://indiglobalexpo.com/)\n\n[/align]",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
+    "id": "6ae431973dc3b318f4da6ef5",
+    "title": "Export Opportunities for Manufacturers and Engineering Companies",
+    "titleDescription": "",
+    "tabTitle": "Export Opportunities in ASEAN for Manufacturers & Engineering Companies",
+    "tabDescription": "Explore manufacturing export opportunities in ASEAN for Indian manufacturers and engineering companies. Discover new markets, global buyers and business partnerships.",
+    "titleOG": "Export Opportunities in ASEAN for Manufacturers & Engineering Companies",
+    "descriptionOG": "Explore manufacturing export opportunities in ASEAN for Indian manufacturers and engineering companies. Discover new markets, global buyers and business partnerships.",
+    "ogTitle": "Export Opportunities in ASEAN for Manufacturers & Engineering Companies",
+    "ogDescription": "Explore manufacturing export opportunities in ASEAN for Indian manufacturers and engineering companies. Discover new markets, global buyers and business partnerships.",
+    "metaTitle": "Export Opportunities in ASEAN for Manufacturers & Engineering Companies",
+    "metaDescription": "Explore manufacturing export opportunities in ASEAN for Indian manufacturers and engineering companies. Discover new markets, global buyers and business partnerships.",
+    "slug": "export-opportunities-for-manufacturers-and-engineering-companies",
+    "author": "IndiGlobal Expo",
+    "authorRole": "Admin",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/10/Export-Opportunities-Across-ASEAN.png",
+    "readTime": "5 min read",
+    "publishedDate": "October 30, 2026",
+    "featured": true,
+    "textAlign": "left",
+    "excerpt": "Indian Engineering Exports, Industrial Machinery ASEAN, Manufacturing Partnerships Thailand",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"Export Opportunities in ASEAN for Manufacturers & Engineering Companies\",\"tabDescription\":\"Explore manufacturing export opportunities in ASEAN for Indian manufacturers and engineering companies. Discover new markets, global buyers and business partnerships.\",\"titleOG\":\"Export Opportunities in ASEAN for Manufacturers & Engineering Companies\",\"descriptionOG\":\"Explore manufacturing export opportunities in ASEAN for Indian manufacturers and engineering companies. Discover new markets, global buyers and business partnerships.\"}]-->\n\n[align=justify]\nThe ASEAN region is emerging as one of the world's most attractive destinations for manufacturers and engineering companies seeking international business growth. With expanding infrastructure, industrial development, urbanisation, and increasing demand for advanced technology, Southeast Asian markets offer significant opportunities for exporters.\n\n[Manufacturing export opportunities in ASEAN](https://indiglobalexpo.com/) are growing across sectors such as automotive components, electrical equipment, industrial machinery, construction materials, metal products, renewable energy equipment, and engineering solutions. Countries including Thailand, Vietnam, Indonesia, Malaysia, Singapore, and the Philippines are strengthening their manufacturing capabilities and creating demand for quality products and reliable international suppliers.\n\nFor Indian manufacturers, ASEAN offers a strategic advantage through geographical proximity, established trade relationships, and growing industrial partnerships. Engineering companies can explore opportunities in precision components, machine tools, industrial automation, fabrication, mechanical systems, and specialised equipment. Infrastructure projects, smart manufacturing initiatives, and energy transition programmes are also creating new avenues for collaboration.\n\nAnother major advantage is the growing regional supply chain network. Businesses can connect with distributors, procurement managers, industrial buyers, project developers, and government stakeholders to establish long-term partnerships. Understanding local regulations, product standards, import requirements, and customer preferences is essential for successfully entering these markets.\n\n[Manufacturing export opportunities in ASEAN](https://indiglobalexpo.com/) are particularly promising for companies that offer competitive pricing, consistent product quality, technological innovation, and dependable after-sales support. Participating in international business forums, trade exhibitions, and B2B networking events can help manufacturers identify potential buyers and explore joint ventures.\n\nHowever, successful expansion requires a well-planned export strategy, market research, strong distribution networks, and an understanding of regional trade policies. Companies should also evaluate logistics, certification requirements, and country-specific business practices before entering new markets.\n\nManufacturing export opportunities in ASEAN provide manufacturers and engineering companies with a valuable pathway to expand their global presence, diversify revenue streams, and build sustainable international relationships.\nThe [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/) offers an important platform to connect with industry leaders, explore cross-border partnerships, and discover emerging business opportunities.\n[/align]\n\nEvent Details:\n**Date:** 21–22 January 2027\n**Venue:** Ayutthaya & Bangkok, Thailand\n\n**Connect, collaborate, and take your manufacturing business towards global growth.**",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
     "id": "6ae2d8ee3dc3b318f4da6eee",
     "title": "Healthcare and Pharmaceutical Exports",
     "titleDescription": "",
@@ -329,9 +385,9 @@ export const unpackBlogMeta = (blog) => {
     (ib.title && blog.title && ib.title.toLowerCase().trim() === blog.title.toLowerCase().trim())
   );
 
-  const titleDescription = (blog.titleDescription || meta.titleDescription || initialMatch?.titleDescription || '').trim();
-  const tabTitle = (blog.tabTitle || blog.titleOG || blog.ogTitle || blog.metaTitle || meta.tabTitle || meta.titleOG || meta.ogTitle || meta.metaTitle || initialMatch?.tabTitle || initialMatch?.titleOG || '').trim();
-  const tabDescription = (blog.tabDescription || blog.descriptionOG || blog.ogDescription || blog.metaDescription || meta.tabDescription || meta.descriptionOG || meta.ogDescription || meta.metaDescription || initialMatch?.tabDescription || initialMatch?.descriptionOG || '').trim();
+  const titleDescription = (initialMatch?.titleDescription || blog.titleDescription || meta.titleDescription || '').trim();
+  const tabTitle = (initialMatch?.tabTitle || blog.tabTitle || blog.titleOG || blog.ogTitle || blog.metaTitle || meta.tabTitle || meta.titleOG || meta.ogTitle || meta.metaTitle || '').trim();
+  const tabDescription = (initialMatch?.tabDescription || blog.tabDescription || blog.descriptionOG || blog.ogDescription || blog.metaDescription || meta.tabDescription || meta.descriptionOG || meta.ogDescription || meta.metaDescription || '').trim();
 
   return {
     ...blog,

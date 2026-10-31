@@ -147,10 +147,11 @@ staticPages.forEach(page => {
 let blogs = [];
 try {
   const content = fs.readFileSync(BLOG_SERVICE_PATH, 'utf8');
-  const startIdx = content.indexOf('export const INITIAL_BLOGS = [');
-  const endIdx = content.indexOf('];\n\n// Helper to get local stored blogs');
+  const normalized = content.replace(/\r\n/g, '\n');
+  const startIdx = normalized.indexOf('export const INITIAL_BLOGS = [');
+  const endIdx = normalized.indexOf('];\n\n// Helper to get local stored blogs');
   if (startIdx !== -1 && endIdx !== -1) {
-    const jsonPart = content.slice(startIdx + 'export const INITIAL_BLOGS = '.length, endIdx + 1).trim();
+    const jsonPart = normalized.slice(startIdx + 'export const INITIAL_BLOGS = '.length, endIdx + 1).trim();
     blogs = JSON.parse(jsonPart);
   }
 } catch (err) {
