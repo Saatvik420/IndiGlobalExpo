@@ -4,6 +4,62 @@ const STORAGE_KEY = 'indiglobal_blogs_cache';
 
 export const INITIAL_BLOGS = [
   {
+    "id": "6ae974533dc3b318f4da6f07",
+    "title": "Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027 in Bangkok",
+    "titleDescription": "",
+    "tabTitle": "Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027",
+    "tabDescription": "Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships.",
+    "titleOG": "Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027",
+    "descriptionOG": "Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships.",
+    "ogTitle": "Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027",
+    "ogDescription": "Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships.",
+    "metaTitle": "Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027",
+    "metaDescription": "Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships.",
+    "slug": "why-indian-companies-should-exhibit-at-indiaasean-global-confluence-2027-in-bangkok",
+    "author": "IndiGlobal Expo",
+    "authorRole": "Admin",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/11/3rd-Nove-1.png",
+    "readTime": "5 min read",
+    "publishedDate": "November 3, 2026",
+    "featured": true,
+    "textAlign": "left",
+    "excerpt": "Trade exhibition Thailand, Exhibitor Opportunities Bangkok, India ASEAN exhibition",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027\",\"tabDescription\":\"Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships.\",\"titleOG\":\"Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027\",\"descriptionOG\":\"Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships.\"}]-->\n\n[align=justify]\nIndian companies looking to expand their businesses internationally can explore new opportunities through the [India–ASEAN Global Confluence 2027.](https://indiglobalexpo.com/) This [Exhibition in Bangkok 2027](https://indiglobalexpo.com/) will provide a platform for Indian manufacturers, exporters, MSMEs, entrepreneurs and business leaders to connect with international buyers, investors and industry professionals.\n\nBangkok, Thailand, offers an excellent opportunity for Indian businesses to explore Southeast Asian markets and develop valuable international business relationships.\n\n**Key Benefits of Exhibiting**\n\n> Explore New International Markets\n\nExhibiting at the event can help Indian companies showcase their products and services to potential buyers and business partners from Thailand and other ASEAN countries.\n\n> Connect with Global Buyers and Investors\n\nThe event offers opportunities to interact with international buyers, distributors, importers, investors and industry representatives, helping businesses explore potential partnerships.\n\n> Promote Indian Products and Services\n\nCompanies can present their latest products, technologies and innovations while highlighting India's manufacturing capabilities and business strengths.\n\n> Build Strategic Business Partnerships\n\nFace-to-face networking can help Indian businesses develop relationships with distributors, suppliers, trade associations and potential collaborators.\n\n> Understand ASEAN Market Opportunities\n\nParticipating companies can gain insights into regional business trends, customer requirements, market preferences and export opportunities.\n\n**Who Should Exhibit?**\n\nThe [Exhibition in Bangkok 2027](https://indiglobalexpo.com/) is relevant to businesses across multiple sectors, including:\n\n•\tManufacturing and engineering\n•\tInformation technology and AI\n•\tGems and jewellery\n•\tHealthcare and pharmaceuticals\n•\tAgriculture and food processing\n•\tRenewable energy and clean technology\n•\tLogistics and infrastructure\n•\tStartups and emerging enterprises\n\n**Be Part of India–ASEAN Global Confluence 2027**\n\nThe [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/) aims to strengthen business relationships between India, Thailand and the wider ASEAN region through international networking, industrial exposure and business engagement.\n\n**Event Details**\n\n•\tEvent: [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/)\n\n•\tDates: 21–22 January 2027\n\n•\tLocation: Ayutthaya and Bangkok, Thailand\n\n•\tWebsite: [https://indiglobalexpo.com/](https://indiglobalexpo.com/)\n\nParticipate in this [Exhibition in Bangkok 2027](https://indiglobalexpo.com/) to showcase your business, explore international markets and build connections beyond borders.\n\n**Exhibit. Connect. Collaborate. Expand Beyond Borders.**\n[/align]",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
+    "id": "6ae865e03dc3b318f4da6f06",
+    "title": "Opportunities for Indian Consumer Products, Industrial Suppliers and Service Providers in Southeast Asia",
+    "titleDescription": "",
+    "tabTitle": "Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo",
+    "tabDescription": "Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities.",
+    "titleOG": "Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo",
+    "descriptionOG": "Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities.",
+    "ogTitle": "Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo",
+    "ogDescription": "Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities.",
+    "metaTitle": "Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo",
+    "metaDescription": "Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities.",
+    "slug": "opportunities-for-indian-consumer-products-industrial-suppliers-and-service-providers-in-southeast-asia",
+    "author": "IndiGlobal Expo",
+    "authorRole": "Admin",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/11/2027.png",
+    "readTime": "5 min read",
+    "publishedDate": "November 2, 2026",
+    "featured": false,
+    "textAlign": "left",
+    "excerpt": "Indian Product Exporters, B2B Trade Opportunities, ASEAN Distribution Network",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo\",\"tabDescription\":\"Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities.\",\"titleOG\":\"Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo\",\"descriptionOG\":\"Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities.\"}]-->\n\n[align=justify]\nOpportunities for Indian Consumer Products, Industrial Suppliers and Service Providers in Southeast Asia\nSoutheast Asia is becoming an attractive destination for Indian businesses looking to expand their international presence. Growing consumer demand, industrial development, infrastructure investment and digital transformation are creating new opportunities for [Indian products export to Southeast Asia](https://indiglobalexpo.com/). Countries such as Thailand, Vietnam, Indonesia, Malaysia, and Singapore offer promising markets for Indian manufacturers, suppliers, and service providers.\n\n**Growing Demand for Indian Consumer Products**\n\nIndian consumer products, including packaged foods, textiles, personal care products, home essentials, pharmaceuticals, and lifestyle goods, have strong potential across ASEAN markets. Changing consumer preferences and increasing demand for quality and competitively priced products are creating opportunities for Indian product exporters. By understanding local customer preferences, product standards, and import regulations, Indian businesses can develop effective export strategies.\n\n**Opportunities for Industrial Suppliers and Manufacturers**\n\nSoutheast Asia's expanding manufacturing and infrastructure sectors are increasing demand for industrial machinery, engineering components, electrical equipment, construction materials, and automotive supplies. Indian manufacturers can connect with regional buyers and explore [B2B trade opportunities](https://indiglobalexpo.com/) through distributor partnerships, supplier agreements, and industrial collaborations.\n\n**Expanding Service Businesses Across ASEAN**\n\nBeyond physical goods, Indian IT companies, software developers, logistics providers, consulting firms, digital marketing agencies, and professional service providers can explore new opportunities. Businesses offering AI, SaaS, technology solutions, and specialised services can build partnerships with Southeast Asian companies and strengthen their regional presence.\n\n**Building an ASEAN Distribution Network**\n\nSuccessful market expansion requires reliable local distributors, strong business relationships, competitive pricing, and knowledge of regional regulations. Developing an effective [ASEAN distribution network](https://indiglobalexpo.com/) can help Indian businesses reach customers, improve supply chains, and establish long-term commercial partnerships. These strategies can make [Indian products export to Southeast Asia](https://indiglobalexpo.com/) more accessible and sustainable.\n\n**Explore Opportunities at India–ASEAN Global Confluence 2027**\n\nThe [India–ASEAN Global Confluence 2027](https://indiglobalexpo.com/) provides a platform for manufacturers, exporters, investors, service providers, and business leaders to connect, collaborate, and discover international growth opportunities.\n\n📅 Date: 21–22 January 2027\n📍 Location: Ayutthaya & Bangkok, Thailand\n\nJoin this international business gathering to explore new buyers, build strategic partnerships, and discover opportunities for [Indian products export to Southeast Asia.](https://indiglobalexpo.com/)\n\n📝 **Register Now and take the next step towards expanding your business across ASEAN markets.**\n\n🌐 Website: [https://indiglobalexpo.com/](https://indiglobalexpo.com/)\n\n[/align]",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
     "id": "6ae581ef3dc3b318f4da6f02",
     "title": "AI, SaaS and Digital Solutions: Building India–ASEAN Technology Partnerships",
     "titleDescription": "",

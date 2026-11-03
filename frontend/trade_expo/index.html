@@ -4,13 +4,44 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="description" content="IndiGlobal Expo - Connect • Collaborate • Grow. A Premier International Trade Fair Showcasing Asia to the World." />
-    <meta property="og:title" content="IndiGlobal Expo 2027" />
-    <meta property="og:description" content="IndiGlobal Expo - Connect • Collaborate • Grow. The premier international trade fair for Asian industries and global markets." />
+
+    <!-- https://indiglobalexpo.com/blogs/opportunities-for-indian-consumer-products-industrial-suppliers-and-service-providers-in-southeast-asia -->
+    <meta name="description" content="Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities." />
+    <meta property="og:title" content="Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo" />
+    <meta property="og:description" content="Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities." />
+
+    <!-- https://indiglobalexpo.com/blogs/why-indian-companies-should-exhibit-at-indiaasean-global-confluence-2027-in-bangkok -->
+    <meta name="description" content="Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships." />
+    <meta property="og:title" content="Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027" />
+    <meta property="og:description" content="Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships." />
     <meta property="og:image" content="/indiglobal_expo_logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline' https://accounts.google.com https://apis.google.com https://js.stripe.com https://unpkg.com https://www.googletagmanager.com; connect-src 'self' https://api.stripe.com ws://localhost:5173 *;">
-    <title>IndiGlobal Expo | Connect • Collaborate • Grow</title>
+    <title>Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027 | IndiGlobal Expo</title>
+
+    <!-- Dynamic Route Meta Resolver for Blog Articles -->
+    <script>
+      (function() {
+        try {
+          var p = window.location.pathname;
+          if (p.indexOf('opportunities-for-indian-consumer-products-industrial-suppliers-and-service-providers-in-southeast-asia') !== -1) {
+            var title = "Business Opportunities for Indian Companies in Southeast Asia | IndiGlobal Expo";
+            var desc = "Explore business opportunities for Indian consumer brands, industrial suppliers and service providers in Southeast Asia. Discover new markets, partnerships and export opportunities.";
+            document.title = title;
+            var mDesc = document.querySelector('meta[name="description"]'); if (mDesc) mDesc.setAttribute('content', desc);
+            var ogT = document.querySelector('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', title);
+            var ogD = document.querySelector('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', desc);
+          } else if (p.indexOf('why-indian-companies-should-exhibit-at-indiaasean-global-confluence-2027-in-bangkok') !== -1) {
+            var title = "Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027";
+            var desc = "Explore why Indian companies should exhibit at India–ASEAN Global Confluence 2027 in Bangkok to connect with global buyers, discover export opportunities and build international partnerships.";
+            document.title = title;
+            var mDesc = document.querySelector('meta[name="description"]'); if (mDesc) mDesc.setAttribute('content', desc);
+            var ogT = document.querySelector('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', title);
+            var ogD = document.querySelector('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', desc);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
