@@ -41,6 +41,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/exhibitor" element={<Exhibitor />} />
         <Route path="/exhibition-layout" element={<ExhibitionLayout />} />
+        <Route path="/event-layout" element={<ExhibitionLayout />} />
         <Route path="/legal" element={<Legal />} />
         <Route path="/press" element={<Press />} />
         <Route path="/privacy" element={<Privacy />} />

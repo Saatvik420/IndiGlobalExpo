@@ -17,11 +17,14 @@ import manufacturingImg from '../../assets/manufacturing.jpg';
 import ITImg from '../../assets/Information Tech.jpg';
 import textilesImg from '../../assets/textiles.jpg';
 import logoImg from '../../assets/IndiGlobal Expo Logo.png';
+import brandVistaLogo from '../../assets/brand_vista_logo.png';
 
 const Teams = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = 'About the Organizing Partner | IndiGlobal Expo';
+
     // Scroll reveal observer
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -39,7 +42,7 @@ const Teams = () => {
 
   return (
     <>
-      <PageLoader title="Organising Partner" />
+      <PageLoader title="Organizing Partner" />
       <CustomCursor />
       <Header />
       <FullscreenMenu />
@@ -48,12 +51,20 @@ const Teams = () => {
       <section className="relative min-h-[380px] sm:h-[60vh] flex items-center overflow-hidden bg-brand-dark py-16 sm:py-0">
         <img src={heroPosterImg} alt="Corporate Vision" className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-luminosity" />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-dark/60 z-0"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-12 sm:mt-16 text-center md:text-left">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-12 sm:mt-16 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-3xl">
             <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 reveal-up">The Visionaries Behind The Platform</p>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-8 reveal-up delay-100">
-              About The <br /><span className="italic font-light text-brand-accent">Organizer.</span>
+              About the <br /><span className="italic font-light text-brand-accent">Organizing Partner.</span>
             </h2>
+          </div>
+          {/* Brand Vista Consulting Logo on Right Side with White Background */}
+          <div className="reveal-up delay-200 bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-white/20 flex items-center justify-center max-w-[260px] sm:max-w-[320px] w-full">
+            <img 
+              src={brandVistaLogo} 
+              alt="Brand Vista Consulting" 
+              className="w-full h-auto max-h-16 sm:max-h-20 object-contain" 
+            />
           </div>
         </div>
       </section>
@@ -62,7 +73,7 @@ const Teams = () => {
       <section className="py-16 sm:py-24 md:py-32 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-20 reveal-up">
-            <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark mb-4 sm:mb-6 leading-tight">Brand Vista Consulting Solutions</h3>
+            <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark mb-4 sm:mb-6 leading-tight">Brand Vista Consulting</h3>
             <p className="text-gray-500 font-light text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
               A UK-based global consulting firm delivering transformative solutions in Management, Marketing, and Strategy. With a worldwide presence, we partner with organizations to drive growth, market expansion, and long-term competitiveness.
             </p>
@@ -162,7 +173,7 @@ const Teams = () => {
           <Handshake weight="fill" className="text-4xl sm:text-5xl text-brand-accent mb-4 sm:mb-6 inline-block" />
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">Empowering Growth</h2>
           <p className="text-gray-400 font-light text-base sm:text-lg mb-8 sm:mb-10 leading-relaxed">
-            Brand Vista Consulting Solutions continues its mission of connecting ideas, industries, and opportunities—empowering businesses to grow beyond borders and contributing to a stronger global ecosystem.
+            Brand Vista Consulting continues its mission of connecting ideas, industries, and opportunities—empowering businesses to grow beyond borders and contributing to a stronger global ecosystem.
           </p>
           <button onClick={() => navigate('/contact')} className="interactive inline-flex items-center gap-2 sm:gap-3 bg-brand-accent text-white px-8 sm:px-10 py-4 sm:py-5 text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors shadow-xl">
             <EnvelopeSimple size={20} className="sm:text-2xl" /> Contact Us Today
