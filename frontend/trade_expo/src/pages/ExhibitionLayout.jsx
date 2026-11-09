@@ -32,7 +32,7 @@ const ExhibitionLayout = () => {
     <>
       <PageLoader title="Exhibition<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Layout</span>" />
       <CustomCursor />
-      <Header />
+      <Header translucent="dark" />
       <FullscreenMenu />
       <TicketWidget />
 

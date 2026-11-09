@@ -4,7 +4,11 @@ import { useGlobal } from '../../context/GlobalContext';
 import logoColorImg from '../../assets/IndiGlobal Expo Logo.png';
 import logoWhiteImg from '../../assets/IndiGlobal Expo Logo White.png';
 
-const Header = ({ logoColor = 'text-white' }) => {
+const Header = ({ 
+  logoColor = 'text-white',
+  translucent = false,
+  variant = 'default'
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isMenuOpen, toggleMenu, closeMenu } = useGlobal();
@@ -24,19 +28,48 @@ const Header = ({ logoColor = 'text-white' }) => {
     window.scrollTo(0, 0);
   };
 
+  // Determine if translucent variant is explicitly requested
+  const isTranslucentDark = variant === 'translucent-dark' || translucent === 'dark' || (variant === 'default' && translucent === true && logoColor === 'text-white');
+  const isTranslucentLight = variant === 'translucent-light' || translucent === 'light' || (variant === 'default' && translucent === true && logoColor === 'text-brand-dark');
+
   // Determine if header should have a dark text based on scroll or background
-  const isDarkText = (isScrolled && !isMenuOpen);
-  const displayLogoColor = isMenuOpen ? 'text-white' : (isDarkText ? 'text-brand-dark' : logoColor);
-  const displayMenuColor = isMenuOpen ? 'text-white' : (isDarkText ? 'text-brand-dark' : logoColor);
+  const isDarkText = isTranslucentLight || (!isTranslucentDark && isScrolled && !isMenuOpen);
+  const displayLogoColor = isMenuOpen 
+    ? 'text-white' 
+    : (isTranslucentDark 
+      ? 'text-white' 
+      : (isDarkText || logoColor.includes('text-brand-dark') ? 'text-brand-dark' : logoColor));
+  const displayMenuColor = isMenuOpen 
+    ? 'text-white' 
+    : (isTranslucentDark 
+      ? 'text-white' 
+      : (isDarkText || logoColor.includes('text-brand-dark') ? 'text-brand-dark' : logoColor));
+
+  // Determine header classes
+  const getHeaderClass = () => {
+    if (isMenuOpen) {
+      return 'bg-transparent border-b border-transparent h-20 sm:h-24';
+    }
+    if (isTranslucentDark) {
+      return isScrolled
+        ? 'bg-brand-dark/95 backdrop-blur-md border-b border-brand-accent/20 shadow-lg h-16 sm:h-20'
+        : 'bg-brand-dark/85 backdrop-blur-md border-b border-brand-accent/20 shadow-md h-16 sm:h-20';
+    }
+    if (isTranslucentLight) {
+      return isScrolled
+        ? 'bg-white/95 backdrop-blur-md border-b border-black/10 shadow-md h-16 sm:h-20'
+        : 'bg-white/85 backdrop-blur-md border-b border-black/5 shadow-xs h-16 sm:h-20';
+    }
+    if (isScrolled) {
+      return 'bg-white/85 backdrop-blur-md border-b border-black/5 h-16 sm:h-20';
+    }
+    return 'bg-transparent border-b border-transparent h-20 sm:h-24';
+  };
 
   return (
     <header 
       id="mainHeader"
-      className={`fixed w-full top-0 z-[60] transition-all duration-500 ${
-        isScrolled && !isMenuOpen
-          ? 'bg-white/85 backdrop-blur-md border-b border-black/5 h-16 sm:h-20' 
-          : 'bg-transparent border-b border-transparent h-20 sm:h-24'
-      }`}
+      className={`fixed w-full top-0 z-[60] transition-all duration-500 ${getHeaderClass()}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div className="flex justify-between items-center h-full">
@@ -46,7 +79,7 @@ const Header = ({ logoColor = 'text-white' }) => {
             onClick={() => handleNavigate('/')}
           >
             <img 
-              src={isMenuOpen ? logoWhiteImg : (isDarkText || logoColor.includes('text-brand-dark') ? logoColorImg : logoWhiteImg)} 
+              src={isMenuOpen ? logoWhiteImg : (isTranslucentDark ? logoWhiteImg : (isDarkText || logoColor.includes('text-brand-dark') ? logoColorImg : logoWhiteImg))} 
               alt="IndiGlobal Expo" 
               className="h-10 sm:h-12 md:h-16 w-auto max-w-[180px] sm:max-w-none object-contain transition-all duration-300 hover:scale-105"
             />
@@ -58,7 +91,7 @@ const Header = ({ logoColor = 'text-white' }) => {
               <div className="hidden md:flex items-center gap-4 mr-4 animate-fade-in">
                 <div 
                   onClick={() => handleNavigate(user.roles?.includes('ROLE_ADMIN') ? '/admin' : '/profile')}
-                  className={`flex items-center gap-2 cursor-pointer interactive group ${isDarkText ? 'text-brand-dark' : logoColor}`}
+                  className={`flex items-center gap-2 cursor-pointer interactive group ${isTranslucentDark ? 'text-white' : (isDarkText ? 'text-brand-dark' : logoColor)}`}
                 >
                   <div className="text-right">
                     <p className="text-[10px] font-bold uppercase tracking-widest opacity-50">Welcome</p>
@@ -77,8 +110,8 @@ const Header = ({ logoColor = 'text-white' }) => {
               target="_blank"
               rel="noopener noreferrer"
               className={`relative group px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-1.5 rounded-full border ${
-                isMenuOpen
-                  ? 'text-white border-white/20 hover:border-brand-accent hover:text-brand-accent'
+                isMenuOpen || isTranslucentDark
+                  ? 'text-white border-white/30 hover:border-brand-accent hover:text-brand-accent hover:bg-white/10'
                   : isDarkText || logoColor.includes('text-brand-dark')
                     ? 'text-brand-dark border-brand-dark/20 hover:border-brand-accent hover:text-brand-accent hover:bg-brand-accent/5'
                     : 'text-white border-white/30 hover:border-brand-accent hover:text-brand-accent hover:bg-white/10'
@@ -92,9 +125,11 @@ const Header = ({ logoColor = 'text-white' }) => {
               <button
                 onClick={() => handleNavigate('/login')}
                 className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold uppercase tracking-widest transition-all rounded-full border ${
-                  isDarkText || logoColor.includes('text-brand-dark')
-                    ? 'text-brand-dark border-brand-dark/20 hover:border-brand-accent hover:text-brand-accent'
-                    : 'text-white border-white/30 hover:border-brand-accent hover:text-brand-accent'
+                  isMenuOpen || isTranslucentDark
+                    ? 'text-white border-white/30 hover:border-brand-accent hover:text-brand-accent hover:bg-white/10'
+                    : isDarkText || logoColor.includes('text-brand-dark')
+                      ? 'text-brand-dark border-brand-dark/20 hover:border-brand-accent hover:text-brand-accent'
+                      : 'text-white border-white/30 hover:border-brand-accent hover:text-brand-accent'
                 }`}
               >
                 <span>Sign In</span>
