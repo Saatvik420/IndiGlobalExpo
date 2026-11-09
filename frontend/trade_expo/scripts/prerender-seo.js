@@ -128,18 +128,6 @@ const staticPages = [
     url: `${BASE_URL}/blogs`
   },
   {
-    path: 'exhibition-layout',
-    title: 'Event Layout | IndiGlobal Expo 2027',
-    description: 'Explore the detailed event master plan, floor layout, exhibitor stalls, and key networking zones at India–ASEAN Global Confluence 2027 in Bangkok, Thailand.',
-    url: `${BASE_URL}/exhibition-layout`
-  },
-  {
-    path: 'event-layout',
-    title: 'Event Layout | IndiGlobal Expo 2027',
-    description: 'Explore the detailed event master plan, floor layout, exhibitor stalls, and key networking zones at India–ASEAN Global Confluence 2027 in Bangkok, Thailand.',
-    url: `${BASE_URL}/event-layout`
-  },
-  {
     path: 'teams',
     title: 'About the Organizing Partner | IndiGlobal Expo 2027',
     description: 'Learn about Brand Vista Consulting, the organizing partner behind India–ASEAN Global Confluence 2027 connecting industries across Asia and the world.',

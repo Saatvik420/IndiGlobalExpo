@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Train, Bed, Info } from '@phosphor-icons/react';
+import { DownloadSimple, Train, Bed, Info } from '@phosphor-icons/react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import FullscreenMenu from '../components/layout/FullscreenMenu';
@@ -8,13 +8,11 @@ import CustomCursor from '../components/ui/CustomCursor';
 import TicketWidget from '../components/ui/TicketWidget';
 
 // Import Assets
-import eventLogo from '../assets/slides/Indian Asean Global Confluence Logo with GTTCI Logo.png';
-import heroImg from '../assets/slides/Official Banner.png';
+import heroImg from '../assets/Hero poster (unsplash).jfif';
+import layoutPdf from '../assets/Factsheet business facilities - Novotel Amsterdam City-1 copy (1).pdf';
 
 const ExhibitionLayout = () => {
   useEffect(() => {
-    document.title = 'Event Layout | IndiGlobal Expo';
-
     // Scroll reveal observer
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -32,7 +30,7 @@ const ExhibitionLayout = () => {
 
   return (
     <>
-      <PageLoader title="Event<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Layout</span>" />
+      <PageLoader title="Exhibition<span class='font-sans font-light text-brand-accent text-3xl ml-1'>Layout</span>" />
       <CustomCursor />
       <Header />
       <FullscreenMenu />
@@ -41,18 +39,8 @@ const ExhibitionLayout = () => {
       <main className="min-h-screen pt-24 sm:pt-32 md:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 md:px-12 flex flex-col items-center">
         
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 reveal-up">
-          {/* Official Event Logo */}
-          <div className="flex justify-center mb-4 sm:mb-6">
-            <div className="bg-white p-3 sm:p-4 rounded-2xl shadow-md border border-gray-100 inline-block">
-              <img 
-                src={eventLogo} 
-                alt="India-ASEAN Global Confluence 2027 Logo" 
-                className="h-16 sm:h-20 w-auto object-contain" 
-              />
-            </div>
-          </div>
           <span className="text-brand-accent font-semibold tracking-widest uppercase text-xs sm:text-sm mb-2 sm:mb-3 block">Floor Plan</span>
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-bold mb-3 sm:mb-6 text-brand-dark">Event Layout</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-bold mb-3 sm:mb-6 text-brand-dark">Exhibition Layout</h1>
           <p className="text-gray-600 text-sm sm:text-base md:text-xl font-light">
             Explore the detailed master plan for the INDIGLOBAL EXPO. Navigate through our designated zones, premium exhibitor stalls, and key networking areas.
           </p>
@@ -61,18 +49,29 @@ const ExhibitionLayout = () => {
         <div className="w-full max-w-7xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-3 sm:p-6 md:p-8 reveal-up group relative overflow-hidden">
           <img 
             src={heroImg} 
-            alt="Event Layout Floor Plan" 
+            alt="Exhibition Layout Floor Plan" 
             className="w-full h-auto object-contain rounded-xl transition-transform duration-700 group-hover:scale-[1.02]"
           />
           <div className="absolute inset-0 bg-brand-dark/5 pointer-events-none rounded-2xl transition-colors duration-300"></div>
+        </div>
+
+        <div className="mt-8 sm:mt-12 reveal-up">
+          <a 
+            href={layoutPdf} 
+            download="Exhibition_Layout.pdf" 
+            className="interactive inline-flex items-center gap-2 sm:gap-3 bg-brand-dark text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-medium hover:bg-brand-accent transition-all duration-300"
+          >
+            <DownloadSimple size={20} className="sm:text-2xl" />
+            Download High-Res Layout
+          </a>
         </div>
 
         <section className="w-full max-w-7xl mx-auto mt-12 sm:mt-16 md:mt-24 py-12 sm:py-16 md:py-24 bg-brand-light rounded-sm">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-3 gap-8 sm:gap-12">
               {[
-                { title: 'Direct Access', icon: <Train size={32} />, desc: 'Easy accessibility from Suvarnabhumi International Airport.' },
-                { title: 'On-site Stay', icon: <Bed size={32} />, desc: 'Luxury rooms available at the venue for exhibitors and VIPs at contracted rates.' },
+                { title: 'Direct Access', icon: <Train size={32} />, desc: 'Easy accessibility from Amsterdam RAI station and Schiphol Airport.' },
+                { title: 'On-site Stay', icon: <Bed size={32} />, desc: 'Luxury rooms available at the venue for exhibitors and VIPs.' },
                 { title: 'Full Support', icon: <Info size={32} />, desc: 'Dedicated floor staff and support desks throughout the venue.' }
               ].map((item, i) => (
                 <div key={i} className="text-center reveal-up" style={{ transitionDelay: `${i * 100}ms` }}>

@@ -79,7 +79,7 @@ const Footer = () => {
                   onClick={() => handleNavigate('/exhibition-layout')}
                   className="hover:text-brand-accent transition-colors interactive cursor-pointer"
                 >
-                  Event Layout
+                  Exhibition Layout
                 </button>
               </li>
             </ul>
