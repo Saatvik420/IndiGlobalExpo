@@ -4,6 +4,62 @@ const STORAGE_KEY = 'indiglobal_blogs_cache';
 
 export const INITIAL_BLOGS = [
   {
+    "id": "6aec09d83dc3b318f4da6f09",
+    "title": "B2B Networking in Thailand",
+    "titleDescription": "",
+    "tabTitle": "B2B Networking in Thailand | India ASEAN Global Confluence 2027",
+    "tabDescription": "Explore B2B networking in Thailand, connect with international buyers, discover export opportunities, and build partnerships at India ASEAN Global Confluence 2027.",
+    "titleOG": "B2B Networking in Thailand | India ASEAN Global Confluence 2027",
+    "descriptionOG": "Explore B2B networking in Thailand, connect with international buyers, discover export opportunities, and build partnerships at India ASEAN Global Confluence 2027.",
+    "ogTitle": "B2B Networking in Thailand | India ASEAN Global Confluence 2027",
+    "ogDescription": "Explore B2B networking in Thailand, connect with international buyers, discover export opportunities, and build partnerships at India ASEAN Global Confluence 2027.",
+    "metaTitle": "B2B Networking in Thailand | India ASEAN Global Confluence 2027",
+    "metaDescription": "Explore B2B networking in Thailand, connect with international buyers, discover export opportunities, and build partnerships at India ASEAN Global Confluence 2027.",
+    "slug": "b2b-networking-in-thailand",
+    "author": "System Admin",
+    "authorRole": "Editorial Team",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/11/5th-Nove.png",
+    "readTime": "5 min read",
+    "publishedDate": "November 5, 2026",
+    "featured": true,
+    "textAlign": "left",
+    "excerpt": "Indian Exporters Thailand, ASEAN Distributors, International Business Meetings",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"B2B Networking in Thailand | India ASEAN Global Confluence 2027\",\"tabDescription\":\"Explore B2B networking in Thailand, connect with international buyers, discover export opportunities, and build partnerships at India ASEAN Global Confluence 2027.\",\"titleOG\":\"B2B Networking in Thailand | India ASEAN Global Confluence 2027\",\"descriptionOG\":\"Explore B2B networking in Thailand, connect with international buyers, discover export opportunities, and build partnerships at India ASEAN Global Confluence 2027.\"}]-->\n\n[align=justify]\n**Explore Global Business Opportunities at India ASEAN Global Confluence 2027**\n\nThailand has become an important destination for international trade, investment, and business networking. With its strategic location in Southeast Asia, growing economy, and strong regional trade connections, Thailand offers valuable opportunities for Indian companies looking to expand their global presence.\n\n[B2B networking in Thailand](https://indiglobalexpo.com/) provides businesses with an excellent platform to connect with international buyers, importers, distributors, manufacturers, suppliers, and industry professionals. Through business meetings, trade events, and networking sessions, companies can explore new markets, establish partnerships, and identify potential customers.\n\n**Why Is Thailand an Ideal Destination for [B2B Networking?](https://indiglobalexpo.com/)**\n\nThailand serves as an important gateway to Southeast Asian markets. Its business-friendly environment and regional connectivity make it an attractive destination for companies seeking international expansion.\n\n**Here are some key benefits of business networking in Thailand:\n**\n1. Connect with International Buyers: Meet potential buyers, distributors, and business representatives interested in Indian products and services.\n\n2. Explore New Business Markets: Discover opportunities across Thailand and other ASEAN countries while understanding regional market requirements.\n\n3. Build Strategic Partnerships: Develop long-term relationships with manufacturers, suppliers, exporters, and international business leaders.\n\n4. Discover Export Opportunities: Explore demand for Indian products, industrial solutions, consumer goods, technology, and professional services.\n\n5. Strengthen Global Business Presence: Increase brand visibility and establish valuable connections in international markets.\n\n[India ASEAN Global Confluence 2027](https://indiglobalexpo.com/) – Your Gateway to International Business Networking\n\nFor Indian businesses looking to establish connections in Southeast Asia, [India ASEAN Global Confluence 2027](https://indiglobalexpo.com/) offers an opportunity to explore international trade, business collaboration, and cross-border partnerships.\n\nThe event will take place on [21–22 January 2027 across Ayutthaya and Bangkok, Thailand.](https://indiglobalexpo.com/)\n\nBusinesses can use this platform to connect with industry professionals, explore new commercial opportunities, understand international markets, and develop meaningful business relationships.\n\n**Take Your Business Beyond Borders**\n\nSuccessful international expansion begins with the right connections. Participating in global business networking opportunities can help companies discover new customers, develop strategic partnerships, and create long-term growth opportunities.\n\n**Join [India ASEAN Global Confluence 2027](https://indiglobalexpo.com/) and explore new possibilities for international trade and business collaboration in Thailand.**\n\nDate: 21–22 January 2027\nLocations: Ayutthaya and Bangkok, Thailand\nEvent: India ASEAN Global Confluence 2027\n\n[/align]",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
+    "id": "6aeb04683dc3b318f4da6f08",
+    "title": "How to Choose the Right International Exhibition to Generate Qualified B2B Leads",
+    "titleDescription": "",
+    "tabTitle": "How to Choose the Right International Exhibition for B2B Leads",
+    "tabDescription": "Learn how to choose the right international exhibition to generate qualified B2B leads, connect with global buyers, and explore opportunities at India ASEAN Global Confluence 2027.",
+    "titleOG": "How to Choose the Right International Exhibition for B2B Leads",
+    "descriptionOG": "Learn how to choose the right international exhibition to generate qualified B2B leads, connect with global buyers, and explore opportunities at India ASEAN Global Confluence 2027.",
+    "ogTitle": "How to Choose the Right International Exhibition for B2B Leads",
+    "ogDescription": "Learn how to choose the right international exhibition to generate qualified B2B leads, connect with global buyers, and explore opportunities at India ASEAN Global Confluence 2027.",
+    "metaTitle": "How to Choose the Right International Exhibition for B2B Leads",
+    "metaDescription": "Learn how to choose the right international exhibition to generate qualified B2B leads, connect with global buyers, and explore opportunities at India ASEAN Global Confluence 2027.",
+    "slug": "how-to-choose-the-right-international-exhibition-to-generate-qualified-b2b-leads",
+    "author": "System Admin",
+    "authorRole": "Editorial Team",
+    "coverImage": "https://influence360.co.uk/wp-content/uploads/2026/11/13.png",
+    "readTime": "5 min read",
+    "publishedDate": "November 4, 2026",
+    "featured": true,
+    "textAlign": "left",
+    "excerpt": "B2B Lead Generation, Trade Show Participation, International Buyers",
+    "content": "<!--[indiglobal-meta:{\"titleDescription\":\"\",\"tabTitle\":\"How to Choose the Right International Exhibition for B2B Leads\",\"tabDescription\":\"Learn how to choose the right international exhibition to generate qualified B2B leads, connect with global buyers, and explore opportunities at India ASEAN Global Confluence 2027.\",\"titleOG\":\"How to Choose the Right International Exhibition for B2B Leads\",\"descriptionOG\":\"Learn how to choose the right international exhibition to generate qualified B2B leads, connect with global buyers, and explore opportunities at India ASEAN Global Confluence 2027.\"}]-->\n\n[align=justify]\nChoosing the right [International B2B Exhibition](https://indiglobalexpo.com/) is an important step for businesses looking to expand into global markets, connect with potential buyers, and generate qualified business leads. The right exhibition provides opportunities to meet international distributors, importers, manufacturers, suppliers, and industry professionals under one roof.\n\nHowever, not every exhibition delivers the same results. Businesses should evaluate the target audience, industry relevance, participating countries, networking opportunities, and potential return on investment before making a decision.\n\n**1. Identify Your Target Market**\n\nBefore selecting an exhibition, identify the international markets where your products or services have the highest growth potential. Research countries with increasing demand, strong trade relationships, and opportunities for your industry.\n\n**2. Check the Quality of Exhibitors and Visitors**\n\nA successful exhibition should attract genuine buyers, importers, distributors, decision-makers, and business representatives. Focus on events that offer opportunities to connect with relevant business prospects rather than simply attracting large crowds.\n\n**3. Choose an Industry-Relevant Exhibition**\n\nSelect an event that aligns with your business sector, products, and services. Industry-focused exhibitions make it easier to connect with potential customers who are genuinely interested in your offerings.\n\n**4. Evaluate B2B Networking Opportunities**\n\nLook for exhibitions that provide structured B2B meetings, business matchmaking, networking sessions, and direct interaction with international buyers. These activities can help businesses build meaningful partnerships and generate valuable leads.\n\n**5. Consider International Market Exposure**\n\nParticipating in an [International B2B Exhibition](https://indiglobalexpo.com/) can help businesses understand international market trends, explore export opportunities, identify potential distributors, and establish a presence in new markets.\nExplore New Business Opportunities at [India ASEAN Global Confluence 2027](https://indiglobalexpo.com/)\n\nFor Indian businesses looking to expand into Southeast Asian markets, [India ASEAN Global Confluence 2027](https://indiglobalexpo.com/) offers an opportunity to explore international trade, establish business connections, and develop cross-border partnerships.\n\nIndia ASEAN Global Confluence 2027\n21–22 January 2027\nEvent Locations: Ayutthaya and Bangkok, Thailand\n\nConnect with business leaders, explore new markets, discover trade opportunities, and build valuable international business relationships.\n\nBe part of [India ASEAN Global Confluence 2027](https://indiglobalexpo.com/) and take your business towards new international opportunities.\n\n[/align]",
+    "tags": [
+      "Exports",
+      "B2B",
+      "Trade"
+    ]
+  },
+  {
     "id": "6ae974533dc3b318f4da6f07",
     "title": "Why Indian Companies Should Exhibit at India–ASEAN Global Confluence 2027 in Bangkok",
     "titleDescription": "",
