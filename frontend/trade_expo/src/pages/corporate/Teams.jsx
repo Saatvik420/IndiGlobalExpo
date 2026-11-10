@@ -9,9 +9,9 @@ import CustomCursor from '../../components/ui/CustomCursor';
 import TicketWidget from '../../components/ui/TicketWidget';
 
 // Import bundled high-res images
-import partnerStrategyImg from '../../assets/partner_strategy.jpg';
-import partnerSummitsImg from '../../assets/partner_summits.jpg';
-import partnerExhibitionsImg from '../../assets/partner_exhibitions.jpg';
+import partnerStrategyImg from '../../assets/slides/global strategy.jpeg';
+import partnerSummitsImg from '../../assets/slides/high impact summits.jpeg';
+import partnerExhibitionsImg from '../../assets/slides/trade exhibition.jpeg';
 import heroPosterImg from '../../assets/Hero poster (unsplash).jfif';
 import manufacturingImg from '../../assets/manufacturing.jpg';
 import ITImg from '../../assets/Information Tech.jpg';
@@ -59,12 +59,20 @@ const Teams = () => {
             </h2>
           </div>
           {/* Brand Vista Consulting Logo on Right Side with White Background */}
-          <div className="reveal-up delay-200 bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-white/20 flex items-center justify-center max-w-[260px] sm:max-w-[320px] w-full">
-            <img 
-              src={brandVistaLogo} 
-              alt="Brand Vista Consulting" 
-              className="w-full h-auto max-h-16 sm:max-h-20 object-contain" 
-            />
+          <div className="reveal-up delay-200">
+            <a 
+              href="https://brandvistaconsulting.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white p-4 sm:p-5 rounded-xl shadow-xl hover:shadow-2xl border border-white/20 flex items-center justify-center max-w-[180px] sm:max-w-[220px] w-full transition-all duration-300 hover:scale-105 interactive group"
+              title="Visit Brand Vista Consulting"
+            >
+              <img 
+                src={brandVistaLogo} 
+                alt="Brand Vista Consulting" 
+                className="w-full h-auto max-h-10 sm:max-h-12 object-contain group-hover:opacity-90 transition-opacity" 
+              />
+            </a>
           </div>
         </div>
       </section>
