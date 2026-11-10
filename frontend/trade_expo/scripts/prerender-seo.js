@@ -132,6 +132,18 @@ const staticPages = [
     title: 'About the Organizing Partner | IndiGlobal Expo 2027',
     description: 'Learn about Brand Vista Consulting, the organizing partner behind India–ASEAN Global Confluence 2027 connecting industries across Asia and the world.',
     url: `${BASE_URL}/teams`
+  },
+  {
+    path: 'event-layout',
+    title: 'Event Layout & Floor Plan | IndiGlobal Expo 2027',
+    description: 'Explore the master event layout, floor plan, exhibition stalls, and facility map for IndiGlobal Expo 2027 in Bangkok, Thailand.',
+    url: `${BASE_URL}/event-layout`
+  },
+  {
+    path: 'exhibition-layout',
+    title: 'Event Layout & Floor Plan | IndiGlobal Expo 2027',
+    description: 'Explore the master event layout, floor plan, exhibition stalls, and facility map for IndiGlobal Expo 2027 in Bangkok, Thailand.',
+    url: `${BASE_URL}/exhibition-layout`
   }
 ];
 
