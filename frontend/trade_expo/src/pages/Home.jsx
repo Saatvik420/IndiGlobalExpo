@@ -213,7 +213,7 @@ const Home = () => {
               </div>
               
               <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-white font-bold leading-[1.1] mb-5 sm:mb-8 animate-fade-up delay-100 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-                Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World.</span>
+                Showcasing Asia <br /><span className="italic font-light text-brand-accent">to the World</span>
               </h2>
               
               <div className="flex flex-row flex-wrap sm:items-center text-white/95 gap-3 sm:gap-6 md:gap-12 mb-6 sm:mb-8 md:mb-10 animate-fade-up delay-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
@@ -536,7 +536,7 @@ const Home = () => {
                 className="h-12 sm:h-16 md:h-20 w-auto object-contain mx-auto mb-6 sm:mb-8 hover:scale-105 transition-transform drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]" 
               />
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight text-white max-w-4xl mx-auto px-2">
-                IndiGlobalExpo is a premier international trade fair platform designed to connect Asian businesses with <span className="italic text-brand-accent font-light">global markets.</span>
+                IndiGlobalExpo is a premier international trade fair platform designed to connect Asian businesses with <span className="italic text-brand-accent font-light">global markets</span>
               </h2>
             </div>
             
@@ -572,7 +572,7 @@ const Home = () => {
           <div className="mt-16 sm:mt-24 pt-12 sm:pt-16 border-t border-gray-800 text-center max-w-4xl mx-auto">
             <p className="text-brand-accent tracking-widest uppercase text-[10px] font-bold mb-3 sm:mb-4 reveal-up">Join the Movement</p>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white leading-tight mb-4 sm:mb-6 reveal-up delay-[100ms] px-2">
-              IndiGlobalExpo is not just an exhibition—it is a movement to take Asia’s innovation, craftsmanship, and entrepreneurial spirit to the world.
+              IndiGlobalExpo is not just an exhibition—it is a movement to take Asia’s innovation, craftsmanship, and entrepreneurial spirit to the world
             </h2>
             <p className="text-gray-400 font-light mb-8 sm:mb-10 text-sm sm:text-base reveal-up delay-[200ms]">
               Be a part of IndiGlobalExpo and unlock global possibilities. For participation, partnerships, and sponsorship opportunities, connect with us today and take your business beyond borders.
@@ -607,7 +607,7 @@ const Home = () => {
                   <span>Intelligence & Strategy</span>
                 </p>
                 <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark leading-tight">
-                  Latest Insights <span className="italic font-light text-brand-accent">& Chronicles.</span>
+                  Latest Insights <span className="italic font-light text-brand-accent">& Chronicles</span>
                 </h2>
               </div>
               <a 

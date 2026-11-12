@@ -272,7 +272,7 @@ const Tickets = () => {
               <p className="text-brand-accent font-bold tracking-widest uppercase text-xs">Join The Experience</p>
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-3 sm:mb-4 reveal-up delay-100">
-              Registration <span className="italic text-brand-accent">Portal.</span>
+              Registration <span className="italic text-brand-accent">Portal</span>
             </h2>
           </div>
         </div>

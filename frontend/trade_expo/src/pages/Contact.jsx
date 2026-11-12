@@ -88,7 +88,7 @@ const Contact = () => {
               <p className="text-brand-accent font-bold tracking-widest uppercase text-xs">We are here to help</p>
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-3 sm:mb-4 animate-fade-up delay-100">
-              Get In <span className="italic text-brand-accent">Touch.</span>
+              Get In <span className="italic text-brand-accent">Touch</span>
             </h2>
             <p className="text-gray-300 font-light text-base sm:text-lg animate-fade-up delay-200">Have questions about exhibiting, visiting, or partnering? Reach out to our dedicated support team.</p>
           </div>

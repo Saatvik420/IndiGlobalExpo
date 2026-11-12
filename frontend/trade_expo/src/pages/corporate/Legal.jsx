@@ -39,7 +39,7 @@ const Legal = () => {
           <div className="max-w-3xl text-center md:text-left">
             <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 reveal-up">Corporate Information</p>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-8 reveal-up delay-100">
-              Legal <span className="italic font-light text-brand-accent">Notice.</span>
+              Legal <span className="italic font-light text-brand-accent">Notice</span>
             </h2>
           </div>
         </div>

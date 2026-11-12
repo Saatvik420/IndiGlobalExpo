@@ -145,7 +145,7 @@ const Blogs = () => {
               <span>Insights, Strategy & Intelligence</span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-6">
-              Global Trade <span className="italic font-light text-brand-accent">& Expo Chronicles.</span>
+              Global Trade <span className="italic font-light text-brand-accent">& Expo Chronicles</span>
             </h1>
             <p className="text-gray-300 font-light text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl">
               Deep dives, sector analyses, policy briefings, and behind-the-scenes insights curated for international trade leaders, manufacturers, and exhibitors.

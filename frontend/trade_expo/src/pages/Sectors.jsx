@@ -67,7 +67,7 @@ const Sectors = () => {
           <div className="max-w-3xl">
             <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 animate-fade-up">Industries & Opportunities</p>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-6 animate-fade-up delay-100">
-              Explore Our <br /><span className="italic font-light text-brand-accent">Sectors.</span>
+              Explore Our <br /><span className="italic font-light text-brand-accent">Sectors</span>
             </h2>
             <p className="text-gray-300 font-light text-base sm:text-lg mb-6 sm:mb-8 max-w-xl animate-fade-up delay-200">
               Discover the dynamic industries showcased at IndiGlobal Expo, driving innovation and expanding global trade footprints.

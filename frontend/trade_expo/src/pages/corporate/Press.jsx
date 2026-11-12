@@ -48,7 +48,7 @@ const Press = () => {
           <div className="max-w-3xl">
             <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 reveal-up">News & Resources</p>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-8 reveal-up delay-100">
-              Press & <span className="italic font-light text-brand-accent">Media.</span>
+              Press & <span className="italic font-light text-brand-accent">Media</span>
             </h2>
           </div>
         </div>

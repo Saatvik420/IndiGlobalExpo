@@ -52,7 +52,7 @@ const Visitor = () => {
           <div className="max-w-3xl">
             <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 animate-fade-up">Plan Your Experience</p>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-4 sm:mb-6 animate-fade-up delay-100">
-              Visitor <br /><span className="italic font-light text-brand-accent">Information.</span>
+              Visitor <br /><span className="italic font-light text-brand-accent">Information</span>
             </h2>
             <p className="text-gray-300 font-light text-base sm:text-lg mb-6 sm:mb-8 max-w-xl animate-fade-up delay-200">
               Experience Asia’s Innovation, Craftsmanship & Excellence at IndiGlobal Expo.
@@ -73,7 +73,7 @@ const Visitor = () => {
             <div className="reveal-up">
               <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4">Visit IndiGlobalExpo</p>
               <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark mb-4 sm:mb-6 leading-snug">
-                Discover the Best of Asia – <span className="italic text-brand-accent">All in One Place.</span>
+                Discover the Best of Asia – <span className="italic text-brand-accent">All in One Place</span>
               </h3>
               <div className="space-y-4 sm:space-y-6 text-gray-500 font-light leading-relaxed text-sm sm:text-base">
                 <p>IndiGlobalExpo is not just an exhibition—it is a movement to take Asia’s innovation, craftsmanship, and entrepreneurial spirit to the world. We offer a unique opportunity for businesses to access high-potential international markets, build global partnerships, and showcase "Made in Asia" excellence.</p>

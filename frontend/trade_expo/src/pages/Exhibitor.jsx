@@ -51,7 +51,7 @@ const Exhibitor = () => {
           <div className="max-w-3xl">
             <p className="text-brand-accent font-bold tracking-widest uppercase text-xs mb-3 sm:mb-4 animate-fade-up">Exhibit at IndiGlobalExpo</p>
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-6 sm:mb-8 animate-fade-up delay-100">
-              Take Your Business <br /><span className="italic font-light text-brand-accent">Beyond Borders.</span>
+              Take Your Business <br /><span className="italic font-light text-brand-accent">Beyond Borders</span>
             </h2>
             <div className="flex items-center gap-6 text-white animate-fade-up delay-200">
               <button onClick={() => navigate('/tickets')} className="interactive bg-brand-accent text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-brand-dark transition-colors shadow-lg">
