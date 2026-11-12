@@ -30,11 +30,12 @@ function escapeHtml(str) {
 
 // Function to generate customized HTML
 function generatePageHtml(options) {
-  const { title, description, url, image, type = 'article' } = options;
+  const { title, description, author = 'IndiGlobal Expo', url, image, type = 'article' } = options;
   let html = baseHtml;
 
   const finalTitle = escapeHtml(title || 'IndiGlobal Expo | Connect • Collaborate • Grow');
   const finalDesc = escapeHtml(description || 'IndiGlobal Expo - Connect • Collaborate • Grow. A Premier International Trade Fair Showcasing Asia to the World.');
+  const finalAuthor = escapeHtml(author || 'IndiGlobal Expo');
   const finalUrl = escapeHtml(url || BASE_URL);
   const finalImage = escapeHtml(image || `${BASE_URL}/indiglobal_expo_logo.png`);
 
@@ -46,6 +47,13 @@ function generatePageHtml(options) {
     html = html.replace(/<meta\s+name=["']description["'][^>]*>/i, `<meta name="description" content="${finalDesc}" />`);
   } else {
     html = html.replace(/<\/head>/i, `  <meta name="description" content="${finalDesc}" />\n</head>`);
+  }
+
+  // Replace or add <meta name="author">
+  if (/<meta\s+name=["']author["'][^>]*>/i.test(html)) {
+    html = html.replace(/<meta\s+name=["']author["'][^>]*>/i, `<meta name="author" content="${finalAuthor}" />`);
+  } else {
+    html = html.replace(/<\/head>/i, `  <meta name="author" content="${finalAuthor}" />\n</head>`);
   }
 
   // Replace or add OpenGraph tags
@@ -187,20 +195,28 @@ blogs.forEach(b => {
 
   const title = (b.tabTitle || b.titleOG || b.ogTitle || b.metaTitle || b.title || '').trim();
   const description = (b.tabDescription || b.descriptionOG || b.ogDescription || b.metaDescription || b.titleDescription || b.excerpt || '').trim();
+  const author = (b.author || 'IndiGlobal Expo').trim();
   const url = `${BASE_URL}/blogs/${slug}`;
   const image = b.coverImage || `${BASE_URL}/indiglobal_expo_logo.png`;
 
   const html = generatePageHtml({
     title,
     description,
+    author,
     url,
     image,
     type: 'article'
   });
 
   fs.writeFileSync(path.join(targetDir, 'index.html'), html, 'utf8');
+
+  // Also write to public/blogs to preserve pre-rendered static artifacts for deployment
+  const publicTargetDir = path.resolve(__dirname, '../public/blogs', slug);
+  fs.mkdirSync(publicTargetDir, { recursive: true });
+  fs.writeFileSync(path.join(publicTargetDir, 'index.html'), html, 'utf8');
+
   console.log(`[prerender-seo] Generated blog SEO page: /blogs/${slug}/index.html`);
-  console.log(`               Title: "${title}"`);
+  console.log(`               Title: "${title}" | Author: "${author}"`);
 });
 
 console.log('[prerender-seo] All static SEO pages generated successfully!');

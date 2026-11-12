@@ -78,7 +78,10 @@ const BlogDetail = () => {
     activeTabDesc = 'IndiGlobal Expo Blog - Global trade insights, market entry strategies, and B2B opportunities.';
   }
 
-  // Dynamic Browser Tab Title and Meta Description authority for new/opened blogs
+  // 3. Determine active Author
+  const activeAuthor = (blog?.author || 'IndiGlobal Expo').trim();
+
+  // Dynamic Browser Tab Title, Author and Meta Description authority for new/opened blogs
   useEffect(() => {
     document.title = activeTabTitle;
 
@@ -89,6 +92,14 @@ const BlogDetail = () => {
       document.head.appendChild(metaDescTag);
     }
     metaDescTag.setAttribute('content', activeTabDesc);
+
+    let metaAuthorTag = document.querySelector('meta[name="author"]');
+    if (!metaAuthorTag) {
+      metaAuthorTag = document.createElement('meta');
+      metaAuthorTag.setAttribute('name', 'author');
+      document.head.appendChild(metaAuthorTag);
+    }
+    metaAuthorTag.setAttribute('content', activeAuthor);
 
     let ogDescTag = document.querySelector('meta[property="og:description"]');
     if (!ogDescTag) {
@@ -127,6 +138,8 @@ const BlogDetail = () => {
       const defaultDesc = 'IndiGlobal Expo - Connect • Collaborate • Grow. A Premier International Trade Fair Showcasing Asia to the World.';
       const descTag = document.querySelector('meta[name="description"]');
       if (descTag) descTag.setAttribute('content', defaultDesc);
+      const authorTag = document.querySelector('meta[name="author"]');
+      if (authorTag) authorTag.setAttribute('content', 'IndiGlobal Expo');
       const ogTitle = document.querySelector('meta[property="og:title"]');
       if (ogTitle) ogTitle.setAttribute('content', 'IndiGlobal Expo 2027');
       const ogDesc = document.querySelector('meta[property="og:description"]');
@@ -136,7 +149,7 @@ const BlogDetail = () => {
       const twDesc = document.querySelector('meta[name="twitter:description"]');
       if (twDesc) twDesc.setAttribute('content', defaultDesc);
     };
-  }, [activeTabTitle, activeTabDesc]);
+  }, [activeTabTitle, activeTabDesc, activeAuthor]);
 
   useEffect(() => {
     let isMounted = true;
