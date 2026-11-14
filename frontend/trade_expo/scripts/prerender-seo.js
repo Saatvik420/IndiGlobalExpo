@@ -33,8 +33,8 @@ function generatePageHtml(options) {
   const { title, description, author = 'IndiGlobal Expo', url, image, type = 'article' } = options;
   let html = baseHtml;
 
-  const finalTitle = escapeHtml(title || 'IndiGlobal Expo | Connect • Collaborate • Grow');
-  const finalDesc = escapeHtml(description || 'IndiGlobal Expo - Connect • Collaborate • Grow. A Premier International Trade Fair Showcasing Asia to the World.');
+  const finalTitle = escapeHtml(title || 'IndiGlobalExpo | International Trade Fair & Global Business Expo');
+  const finalDesc = escapeHtml(description || 'Discover IndiGlobalExpo, an international trade fair connecting businesses, manufacturers, exporters, buyers and investors for global networking and business opportunities.');
   const finalAuthor = escapeHtml(author || 'IndiGlobal Expo');
   const finalUrl = escapeHtml(url || BASE_URL);
   const finalImage = escapeHtml(image || `${BASE_URL}/indiglobal_expo_logo.png`);
@@ -131,8 +131,8 @@ const staticPages = [
   },
   {
     path: 'blogs',
-    title: 'Latest Insights & Global Trade Articles | IndiGlobal Expo',
-    description: 'Read the latest international trade insights, Southeast Asian market entry strategies, and export opportunities for Indian businesses.',
+    title: 'Business Blogs | Global Trade, Exports & International Networking',
+    description: 'Explore IndiGlobalExpo blogs featuring global trade insights, export opportunities, B2B networking, international exhibitions and business expansion strategies.',
     url: `${BASE_URL}/blogs`
   },
   {
@@ -187,36 +187,44 @@ try {
 console.log(`[prerender-seo] Processing ${blogs.length} blogs for pre-rendered SEO pages...`);
 
 blogs.forEach(b => {
-  const slug = b.slug || b.id;
-  if (!slug) return;
+  const allSlugs = [b.slug || b.id];
+  if (Array.isArray(b.aliases)) {
+    b.aliases.forEach(a => {
+      if (a && !allSlugs.includes(a)) allSlugs.push(a);
+    });
+  }
 
-  const targetDir = path.join(DIST_DIR, 'blogs', slug);
-  fs.mkdirSync(targetDir, { recursive: true });
+  allSlugs.forEach(slug => {
+    if (!slug) return;
 
-  const title = (b.tabTitle || b.titleOG || b.ogTitle || b.metaTitle || b.title || '').trim();
-  const description = (b.tabDescription || b.descriptionOG || b.ogDescription || b.metaDescription || b.titleDescription || b.excerpt || '').trim();
-  const author = (b.author || 'IndiGlobal Expo').trim();
-  const url = `${BASE_URL}/blogs/${slug}`;
-  const image = b.coverImage || `${BASE_URL}/indiglobal_expo_logo.png`;
+    const targetDir = path.join(DIST_DIR, 'blogs', slug);
+    fs.mkdirSync(targetDir, { recursive: true });
 
-  const html = generatePageHtml({
-    title,
-    description,
-    author,
-    url,
-    image,
-    type: 'article'
+    const title = (b.tabTitle || b.titleOG || b.ogTitle || b.metaTitle || b.title || '').trim();
+    const description = (b.tabDescription || b.descriptionOG || b.ogDescription || b.metaDescription || b.titleDescription || b.excerpt || '').trim();
+    const author = (b.author || 'IndiGlobal Expo').trim();
+    const url = `${BASE_URL}/blogs/${slug}`;
+    const image = b.coverImage || `${BASE_URL}/indiglobal_expo_logo.png`;
+
+    const html = generatePageHtml({
+      title,
+      description,
+      author,
+      url,
+      image,
+      type: 'article'
+    });
+
+    fs.writeFileSync(path.join(targetDir, 'index.html'), html, 'utf8');
+
+    // Also write to public/blogs to preserve pre-rendered static artifacts for deployment
+    const publicTargetDir = path.resolve(__dirname, '../public/blogs', slug);
+    fs.mkdirSync(publicTargetDir, { recursive: true });
+    fs.writeFileSync(path.join(publicTargetDir, 'index.html'), html, 'utf8');
+
+    console.log(`[prerender-seo] Generated blog SEO page: /blogs/${slug}/index.html`);
+    console.log(`               Title: "${title}" | Author: "${author}"`);
   });
-
-  fs.writeFileSync(path.join(targetDir, 'index.html'), html, 'utf8');
-
-  // Also write to public/blogs to preserve pre-rendered static artifacts for deployment
-  const publicTargetDir = path.resolve(__dirname, '../public/blogs', slug);
-  fs.mkdirSync(publicTargetDir, { recursive: true });
-  fs.writeFileSync(path.join(publicTargetDir, 'index.html'), html, 'utf8');
-
-  console.log(`[prerender-seo] Generated blog SEO page: /blogs/${slug}/index.html`);
-  console.log(`               Title: "${title}" | Author: "${author}"`);
 });
 
 console.log('[prerender-seo] All static SEO pages generated successfully!');

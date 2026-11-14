@@ -30,9 +30,9 @@ const BlogDetail = () => {
   const [blog, setBlog] = useState(() => {
     try {
       const local = getLocalBlogs();
-      const found = local.find(b => b.slug === id || b.id === id || getBlogSlug(b) === id);
+      const found = local.find(b => b.slug === id || b.id === id || getBlogSlug(b) === id || (Array.isArray(b.aliases) && b.aliases.includes(id)));
       if (found) return found;
-      return INITIAL_BLOGS.map(unpackBlogMeta).find(b => b.slug === id || b.id === id || getBlogSlug(b) === id) || null;
+      return INITIAL_BLOGS.map(unpackBlogMeta).find(b => b.slug === id || b.id === id || getBlogSlug(b) === id || (Array.isArray(b.aliases) && b.aliases.includes(id))) || null;
     } catch (e) {
       return null;
     }
@@ -42,7 +42,7 @@ const BlogDetail = () => {
     try {
       const local = getLocalBlogs();
       return local
-        .filter(b => b.slug !== id && b.id !== id && getBlogSlug(b) !== id)
+        .filter(b => b.slug !== id && b.id !== id && getBlogSlug(b) !== id && !(Array.isArray(b.aliases) && b.aliases.includes(id)))
         .slice(0, 3);
     } catch (e) {
       return [];
@@ -134,18 +134,18 @@ const BlogDetail = () => {
     twitterDescTag.setAttribute('content', activeTabDesc);
 
     return () => {
-      document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
-      const defaultDesc = 'IndiGlobal Expo - Connect • Collaborate • Grow. A Premier International Trade Fair Showcasing Asia to the World.';
+      document.title = 'IndiGlobalExpo | International Trade Fair & Global Business Expo';
+      const defaultDesc = 'Discover IndiGlobalExpo, an international trade fair connecting businesses, manufacturers, exporters, buyers and investors for global networking and business opportunities.';
       const descTag = document.querySelector('meta[name="description"]');
       if (descTag) descTag.setAttribute('content', defaultDesc);
       const authorTag = document.querySelector('meta[name="author"]');
       if (authorTag) authorTag.setAttribute('content', 'IndiGlobal Expo');
       const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute('content', 'IndiGlobal Expo 2027');
+      if (ogTitle) ogTitle.setAttribute('content', 'IndiGlobalExpo | International Trade Fair & Global Business Expo');
       const ogDesc = document.querySelector('meta[property="og:description"]');
       if (ogDesc) ogDesc.setAttribute('content', defaultDesc);
       const twTitle = document.querySelector('meta[name="twitter:title"]');
-      if (twTitle) twTitle.setAttribute('content', 'IndiGlobal Expo 2027');
+      if (twTitle) twTitle.setAttribute('content', 'IndiGlobalExpo | International Trade Fair & Global Business Expo');
       const twDesc = document.querySelector('meta[name="twitter:description"]');
       if (twDesc) twDesc.setAttribute('content', defaultDesc);
     };
@@ -161,7 +161,7 @@ const BlogDetail = () => {
 
           // Canonical URL update: If opened via ID (e.g. MongoDB ObjectId), replace URL with title slug
           const cleanSlug = getBlogSlug(currentBlog);
-          if (cleanSlug && id !== cleanSlug) {
+          if (cleanSlug && id !== cleanSlug && !(Array.isArray(currentBlog.aliases) && currentBlog.aliases.includes(id))) {
             window.history.replaceState(null, '', `/blogs/${cleanSlug}`);
           }
 
@@ -169,7 +169,7 @@ const BlogDetail = () => {
           const allBlogs = await blogService.getAllBlogs();
           if (isMounted && Array.isArray(allBlogs)) {
             const related = allBlogs
-              .filter(b => b.id !== currentBlog.id && b.slug !== currentBlog.slug)
+              .filter(b => b.id !== currentBlog.id && b.slug !== currentBlog.slug && !(Array.isArray(b.aliases) && b.aliases.includes(currentBlog.slug)))
               .slice(0, 3);
             setRelatedBlogs(related);
           }

@@ -36,13 +36,20 @@ const Blogs = () => {
 
   // Dynamic Browser Tab Title and Meta Description for Blogs page
   useEffect(() => {
-    document.title = 'Global Trade & Expo Chronicles | IndiGlobal Expo Blogs';
+    const blogsTitle = 'Business Blogs | Global Trade, Exports & International Networking';
+    const blogsDesc = 'Explore IndiGlobalExpo blogs featuring global trade insights, export opportunities, B2B networking, international exhibitions and business expansion strategies.';
+    document.title = blogsTitle;
+
     let metaDescTag = document.querySelector('meta[name="description"]');
-    if (metaDescTag) {
-      metaDescTag.setAttribute('content', 'Deep dives, sector analyses, policy briefings, and behind-the-scenes insights curated for international trade leaders, manufacturers, and exhibitors at IndiGlobal Expo.');
-    }
+    if (metaDescTag) metaDescTag.setAttribute('content', blogsDesc);
     let ogTitleTag = document.querySelector('meta[property="og:title"]');
-    if (ogTitleTag) ogTitleTag.setAttribute('content', 'Global Trade & Expo Chronicles | IndiGlobal Expo Blogs');
+    if (ogTitleTag) ogTitleTag.setAttribute('content', blogsTitle);
+    let ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescTag) ogDescTag.setAttribute('content', blogsDesc);
+    let twTitleTag = document.querySelector('meta[name="twitter:title"]');
+    if (twTitleTag) twTitleTag.setAttribute('content', blogsTitle);
+    let twDescTag = document.querySelector('meta[name="twitter:description"]');
+    if (twDescTag) twDescTag.setAttribute('content', blogsDesc);
   }, []);
 
   useEffect(() => {

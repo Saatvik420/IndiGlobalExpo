@@ -56,7 +56,20 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'IndiGlobal Expo | Connect • Collaborate • Grow';
+    const homeTitle = 'IndiGlobalExpo | International Trade Fair & Global Business Expo';
+    const homeDesc = 'Discover IndiGlobalExpo, an international trade fair connecting businesses, manufacturers, exporters, buyers and investors for global networking and business opportunities.';
+    document.title = homeTitle;
+
+    let metaDescTag = document.querySelector('meta[name="description"]');
+    if (metaDescTag) metaDescTag.setAttribute('content', homeDesc);
+    let ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (ogTitleTag) ogTitleTag.setAttribute('content', homeTitle);
+    let ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescTag) ogDescTag.setAttribute('content', homeDesc);
+    let twTitleTag = document.querySelector('meta[name="twitter:title"]');
+    if (twTitleTag) twTitleTag.setAttribute('content', homeTitle);
+    let twDescTag = document.querySelector('meta[name="twitter:description"]');
+    if (twDescTag) twDescTag.setAttribute('content', homeDesc);
   }, []);
   const [timeLeft, setTimeLeft] = useState({ days: '00', hours: '00', minutes: '00', seconds: '00' });
   const [previewImg, setPreviewImg] = useState(null);

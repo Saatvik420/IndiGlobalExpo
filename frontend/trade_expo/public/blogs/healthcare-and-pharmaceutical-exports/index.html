@@ -118,20 +118,56 @@
                     "title": "How Gujarat Global Excellence Conclave 2026 Supports Business Expansion",
                     "desc": "Discover how Gujarat Global Excellence Conclave 2026 in Ahmedabad helps businesses explore global markets, connect with investors, build partnerships, and expand their business opportunities.",
                     "author": "IndiGlobal Expo"
+          },
+          "how-gujarat-global-excellence-conclave-2026-can-support-business-expansion": {
+                    "title": "How Gujarat Global Excellence Conclave 2026 Supports Business Expansion",
+                    "desc": "Discover how Gujarat Global Excellence Conclave 2026 in Ahmedabad helps businesses explore global markets, connect with investors, build partnerships, and expand their business opportunities.",
+                    "author": "IndiGlobal Expo"
+          },
+          "why-ahmedabad-is-emerging-as-a-major-business-and-investment-hub": {
+                    "title": "Why Ahmedabad Is Emerging as a Major Business and Investment Hub",
+                    "desc": "Ahmedabad is becoming a major business and investment hub, offering global networking, business awards, export-import opportunities and international partnerships through Gujarat Global Excellence Conclave 2026.",
+                    "author": "IndiGlobal Expo"
+          },
+          "how-indian-exporters-can-connect-with-buyers-and-distributors": {
+                    "title": "How Indian Exporters Can Connect with Buyers & Distributors",
+                    "desc": "Discover how Indian exporters can connect with international buyers and distributors through B2B networking in Thailand at India ASEAN Global Confluence 2027.",
+                    "author": "IndiGlobal Expo"
+          },
+          "how-indian-businesses-can-explore-institutional-and-government-linked-opportunities-in-asean": {
+                    "title": "B2G Networking Opportunities in ASEAN for Indian Businesses",
+                    "desc": "Explore B2G networking opportunities in ASEAN, government-linked projects, institutional partnerships and international business growth for Indian companies.",
+                    "author": "IndiGlobal Expo"
+          },
+          "gujarats-industrial-growth-opportunities-for-manufacturers-and-entrepreneurs": {
+                    "title": "Gujarat's Industrial Growth: Opportunities for Businesses",
+                    "desc": "Explore Gujarat's industrial growth, manufacturing opportunities and entrepreneurship at Gujarat Global Excellence Conclave 2026 on 9 December.",
+                    "author": "IndiGlobal Expo"
           }
 };
           var p = window.location.pathname;
-          for (var slug in BLOG_META) {
-            if (p.indexOf(slug) !== -1) {
-              var item = BLOG_META[slug];
-              document.title = item.title;
-              var mDesc = document.querySelector('meta[name="description"]'); if (mDesc) mDesc.setAttribute('content', item.desc);
-              var mAuth = document.querySelector('meta[name="author"]'); if (mAuth) mAuth.setAttribute('content', item.author);
-              var ogT = document.querySelector('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', item.title);
-              var ogD = document.querySelector('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', item.desc);
-              var twT = document.querySelector('meta[name="twitter:title"]'); if (twT) twT.setAttribute('content', item.title);
-              var twD = document.querySelector('meta[name="twitter:description"]'); if (twD) twD.setAttribute('content', item.desc);
-              break;
+          if (p === '/blogs' || p === '/blogs/') {
+            var bTitle = "Business Blogs | Global Trade, Exports & International Networking";
+            var bDesc = "Explore IndiGlobalExpo blogs featuring global trade insights, export opportunities, B2B networking, international exhibitions and business expansion strategies.";
+            document.title = bTitle;
+            var mDesc = document.querySelector('meta[name="description"]'); if (mDesc) mDesc.setAttribute('content', bDesc);
+            var ogT = document.querySelector('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', bTitle);
+            var ogD = document.querySelector('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', bDesc);
+            var twT = document.querySelector('meta[name="twitter:title"]'); if (twT) twT.setAttribute('content', bTitle);
+            var twD = document.querySelector('meta[name="twitter:description"]'); if (twD) twD.setAttribute('content', bDesc);
+          } else {
+            for (var slug in BLOG_META) {
+              if (p.indexOf(slug) !== -1) {
+                var item = BLOG_META[slug];
+                document.title = item.title;
+                var mDesc = document.querySelector('meta[name="description"]'); if (mDesc) mDesc.setAttribute('content', item.desc);
+                var mAuth = document.querySelector('meta[name="author"]'); if (mAuth) mAuth.setAttribute('content', item.author);
+                var ogT = document.querySelector('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', item.title);
+                var ogD = document.querySelector('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', item.desc);
+                var twT = document.querySelector('meta[name="twitter:title"]'); if (twT) twT.setAttribute('content', item.title);
+                var twD = document.querySelector('meta[name="twitter:description"]'); if (twD) twD.setAttribute('content', item.desc);
+                break;
+              }
             }
           }
         } catch (e) {}
@@ -156,7 +192,7 @@
 
       gtag('config', 'G-DV2L15NSS9');
     </script>
-    <script type="module" crossorigin src="/assets/index-B6a6Knvg.js"></script>
+    <script type="module" crossorigin src="/assets/index-ChtMAXp8.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-QrOjuPSU.css">
       <meta property="og:url" content="https://indiglobalexpo.com/blogs/healthcare-and-pharmaceutical-exports" />
     <meta property="og:type" content="article" />
