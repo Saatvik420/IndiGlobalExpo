@@ -13,7 +13,7 @@ const slidesData = [
     title: 'India–ASEAN Global Confluence 2027',
     category: 'Official Banner',
     badge: 'Event Overview',
-    caption: 'Strengthening India–ASEAN Partnership: Trade, Investment, Innovation, Infrastructure & Sustainable Growth • Jan 21-22, 2027 | Bangkok, Thailand',
+    caption: 'Strengthening India–ASEAN Partnership: Trade, Investment, Innovation, Infrastructure & Sustainable Growth • Feb 25-26, 2027 | Bangkok, Thailand',
     image: bannerImg,
   },
   {

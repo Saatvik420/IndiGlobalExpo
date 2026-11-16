@@ -153,7 +153,7 @@ const Visitor = () => {
             <div className="bg-white p-6 sm:p-8 md:p-12 hover:bg-brand-dark group transition-colors duration-500 border lg:border-none border-gray-100 rounded-sm">
               <i className="ph ph-calendar-blank text-3xl sm:text-4xl text-brand-accent mb-6 sm:mb-8"></i>
               <h4 className="font-serif text-2xl sm:text-3xl text-brand-dark group-hover:text-white mb-4 sm:mb-6 transition-colors">Date & Time</h4>
-              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base">January 22, 2027 <br />09:00 AM – 06:00 PM (ICT)</p>
+              <p className="text-gray-500 group-hover:text-gray-400 font-light leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base">February 25, 2027 <br />09:00 AM – 06:00 PM (ICT)</p>
               <span className="text-xs font-bold uppercase tracking-widest text-brand-accent border-b border-brand-accent pb-1 sm:pb-2">Save to Calendar</span>
             </div>
             {/* Logistic 3 */}
@@ -180,7 +180,7 @@ const Visitor = () => {
             <div className="border-l-2 border-brand-accent/30 pl-5 sm:pl-8 relative reveal-up">
               <div className="absolute w-3.5 h-3.5 sm:w-4 sm:h-4 bg-brand-accent rounded-full -left-[8px] sm:-left-[9px] top-2"></div>
               <h4 className="font-serif text-xl sm:text-2xl md:text-3xl text-brand-accent mb-1 sm:mb-2">Day 1: Opening & Networking</h4>
-              <p className="text-gray-400 mb-4 sm:mb-6 uppercase tracking-widest text-[10px] sm:text-xs font-bold">Jan 22, 2027</p>
+              <p className="text-gray-400 mb-4 sm:mb-6 uppercase tracking-widest text-[10px] sm:text-xs font-bold">Feb 25, 2027</p>
               <ul className="space-y-3 sm:space-y-4 text-gray-300 font-light text-xs sm:text-base">
                 <li className="flex gap-3 sm:gap-4">
                   <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">09:00 AM</span>
@@ -205,7 +205,7 @@ const Visitor = () => {
             <div className="border-l-2 border-brand-accent/30 pl-5 sm:pl-8 relative reveal-up delay-200">
               <div className="absolute w-3.5 h-3.5 sm:w-4 sm:h-4 bg-brand-accent rounded-full -left-[8px] sm:-left-[9px] top-2"></div>
               <h4 className="font-serif text-xl sm:text-2xl md:text-3xl text-brand-accent mb-1 sm:mb-2">Day 2: Trade & Closing</h4>
-              <p className="text-gray-400 mb-4 sm:mb-6 uppercase tracking-widest text-[10px] sm:text-xs font-bold">Jan 23, 2027</p>
+              <p className="text-gray-400 mb-4 sm:mb-6 uppercase tracking-widest text-[10px] sm:text-xs font-bold">Feb 26, 2027</p>
               <ul className="space-y-3 sm:space-y-4 text-gray-300 font-light text-xs sm:text-base">
                 <li className="flex gap-3 sm:gap-4">
                   <span className="text-white font-bold min-w-[70px] sm:min-w-[80px]">10:00 AM</span>
