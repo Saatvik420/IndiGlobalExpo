@@ -152,7 +152,7 @@ const VisitorDashboard = () => {
                       <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 text-brand-accent"><Calendar size={20} /></div>
                       <div>
                         <p className="text-xs font-bold uppercase tracking-widest text-brand-accent mb-1">Date</p>
-                        <p className="text-sm font-light">February 25, 2027</p>
+                        <p className="text-sm font-light">February 24–25, 2027</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">

@@ -108,7 +108,7 @@ const staticPages = [
   {
     path: 'visitor',
     title: 'Visitor Registration | IndiGlobal Expo 2027',
-    description: 'Register as a visitor for IndiGlobal Expo 2027 on 25–26 February 2027 in Bangkok, Thailand. Explore international suppliers, B2B trade, and conferences.',
+    description: 'Register as a visitor for IndiGlobal Expo 2027 on 24–25 February 2027 in Bangkok, Thailand. Explore international suppliers, B2B trade, and conferences.',
     url: `${BASE_URL}/visitor`
   },
   {

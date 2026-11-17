@@ -117,8 +117,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Target Date: February 25, 2027
-    const targetDate = new Date('2027-02-25T09:00:00').getTime();
+    // Target Date: February 24, 2027
+    const targetDate = new Date('2027-02-24T09:00:00').getTime();
 
     const timerInterval = setInterval(() => {
       const now = new Date().getTime();
@@ -232,7 +232,7 @@ const Home = () => {
               <div className="flex flex-row flex-wrap sm:items-center text-white/95 gap-3 sm:gap-6 md:gap-12 mb-6 sm:mb-8 md:mb-10 animate-fade-up delay-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 <div className="flex items-center gap-2.5 sm:gap-3">
                   <i className="ph ph-calendar-blank text-lg sm:text-xl text-brand-accent"></i>
-                  <span className="font-light tracking-widest uppercase text-[9px] sm:text-[10px]">February 25, 2027</span>
+                  <span className="font-light tracking-widest uppercase text-[9px] sm:text-[10px]">February 24–25, 2027</span>
                 </div>
                 <div className="flex items-center gap-2.5 sm:gap-3">
                   <i className="ph ph-map-pin text-lg sm:text-xl text-brand-accent"></i>

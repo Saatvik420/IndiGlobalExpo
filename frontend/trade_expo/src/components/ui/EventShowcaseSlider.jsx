@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 // Slide Images from assets/slides
-import bannerImg from '../../assets/slides/Official Banner.png';
+import bannerImg from '../../assets/slides/banner.jpeg';
 import glanceImg from '../../assets/slides/Key Metrics.png';
 import prioritiesImg from '../../assets/slides/Strategic Vision.png';
 import sectorsImg from '../../assets/slides/Industry Focus.png';
@@ -13,7 +13,7 @@ const slidesData = [
     title: 'India–ASEAN Global Confluence 2027',
     category: 'Official Banner',
     badge: 'Event Overview',
-    caption: 'Strengthening India–ASEAN Partnership: Trade, Investment, Innovation, Infrastructure & Sustainable Growth • Feb 25-26, 2027 | Bangkok, Thailand',
+    caption: 'Strengthening India–ASEAN Partnership: Trade, Investment, Innovation, Infrastructure & Sustainable Growth • Feb 24-25, 2027 | Bangkok, Thailand',
     image: bannerImg,
   },
   {
